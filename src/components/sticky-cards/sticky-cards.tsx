@@ -9,15 +9,19 @@ import {
 } from "react-icons/fi";
 
 export const StickyCards = () => {
-  const ref = useRef(null);
+  const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
+    container: containerRef,
+    offset: ["start start", "end end"],
   });
 
   return (
-    <>
-      <div ref={ref} className="relative">
+    <div 
+      ref={containerRef}
+      className="relative h-screen overflow-y-auto"
+    >
+      {/* Inner wrapper with extended height for scroll space */}
+      <div style={{ height: `${CARD_HEIGHT * CARDS.length}px` }}>
         {CARDS.map((c, idx) => (
           <Card
             key={c.id}
@@ -27,8 +31,7 @@ export const StickyCards = () => {
           />
         ))}
       </div>
-      <div className="h-screen bg-black" />
-    </>
+    </div>
   );
 };
 
