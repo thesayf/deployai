@@ -12,7 +12,7 @@ export const StickyCards = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isAtTop, setIsAtTop] = useState(false);
-  
+
   const { scrollYProgress } = useScroll({
     container: containerRef,
     offset: ["start start", "end end"],
@@ -26,92 +26,89 @@ export const StickyCards = () => {
 
     const checkPosition = () => {
       if (!containerRef.current) return;
-      
+
       const rect = containerRef.current.getBoundingClientRect();
       const currentAtTop = rect.top <= 0;
-      
+
       // If we just reached the top (snap completed), transfer momentum
       if (currentAtTop && !wasAtTop && velocity !== 0) {
         transferMomentum(velocity);
       }
-      
+
       setIsAtTop(currentAtTop);
       wasAtTop = currentAtTop;
     };
 
     const transferMomentum = (scrollVelocity: number) => {
       if (!containerRef.current) return;
-      
-      console.log('Transferring momentum:', scrollVelocity); // Debug log
-      
+
+      console.log("Transferring momentum:", scrollVelocity); // Debug log
+
       // Convert velocity to scroll amount (larger multiplier for noticeable effect)
       const scrollAmount = Math.abs(scrollVelocity) * 100; // Increased multiplier
-      
+
       if (scrollAmount < 10) return; // Don't animate very small movements
-      
+
       // Animate the container scroll
       const startScrollTop = containerRef.current.scrollTop;
       const targetScrollTop = Math.min(
         startScrollTop + scrollAmount,
         containerRef.current.scrollHeight - containerRef.current.clientHeight
       );
-      
+
       containerRef.current.scrollTo({
         top: targetScrollTop,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     };
 
     const handleScroll = () => {
       const currentTime = Date.now();
       const currentScrollY = window.scrollY;
-      
+
       // Calculate scroll velocity
       const timeDelta = currentTime - lastTime;
       if (timeDelta > 0) {
         velocity = (currentScrollY - lastScrollY) / timeDelta;
       }
-      
+
       lastScrollY = currentScrollY;
       lastTime = currentTime;
-      
+
       requestAnimationFrame(checkPosition);
     };
 
     checkPosition();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      style={{ 
-        height: `${CARD_HEIGHT * CARDS.length}px`,
-        scrollSnapAlign: 'start'
+      style={{
+        height: '200vh', // Reduced height for tighter animations
+        scrollSnapAlign: "start",
       }}
     >
-      <div 
+      <div
         ref={containerRef}
         className="sticky top-0 h-screen"
         style={{
-          overflowY: isAtTop ? 'auto' : 'hidden'
+          overflowY: isAtTop ? "auto" : "hidden",
         }}
       >
-        {/* Inner wrapper with extended height for scroll space */}
-        <div style={{ height: `${CARD_HEIGHT * CARDS.length}px` }}>
-          {CARDS.map((c, idx) => (
-            <Card
-              key={c.id}
-              card={c}
-              scrollYProgress={scrollYProgress}
-              position={idx + 1}
-            />
-          ))}
-        </div>
+        {CARDS.map((c, idx) => (
+          <Card
+            key={c.id}
+            card={c}
+            scrollYProgress={scrollYProgress}
+            position={idx + 1}
+          />
+        ))}
       </div>
     </section>
   );
@@ -119,21 +116,37 @@ export const StickyCards = () => {
 
 interface CardProps {
   position: number;
-  card: typeof CARDS[0];
+  card: (typeof CARDS)[0];
   scrollYProgress: any;
 }
 
 const Card = ({ position, card, scrollYProgress }: CardProps) => {
-  const scaleFromPct = (position - 1) / CARDS.length;
-  const y = useTransform(scrollYProgress, [scaleFromPct, 1], [0, -CARD_HEIGHT]);
+  let y;
+  
+  if (position === CARDS.length) {
+    // Last card: stops when it reaches center (no further movement)
+    const overlap = 0.1;
+    const animStart = Math.max(0, ((position - 1) / CARDS.length) - overlap);
+    const animEnd = ((position - 1) / CARDS.length) + 0.1; // Stop animation early
+    
+    y = useTransform(scrollYProgress, [animStart, animEnd, 1], ['0vh', '0vh', '0vh']);
+  } else {
+    // Other cards: normal overlapping animation
+    const overlap = 0.1;
+    const animStart = Math.max(0, ((position - 1) / CARDS.length) - overlap);
+    const animEnd = Math.min(1, (position / CARDS.length) + overlap);
+    
+    const slideDistance = -(100 / CARDS.length);
+    y = useTransform(scrollYProgress, [animStart, animEnd], ['0vh', `${slideDistance}vh`]);
+  }
 
   const isOddCard = position % 2;
 
   return (
     <motion.div
       style={{
-        height: CARD_HEIGHT,
-        y: position === CARDS.length ? undefined : y,
+        height: '100vh',
+        y: y,
         background: isOddCard ? "black" : "white",
         color: isOddCard ? "white" : "black",
       }}
@@ -163,7 +176,6 @@ const Card = ({ position, card, scrollYProgress }: CardProps) => {
   );
 };
 
-const CARD_HEIGHT = 500;
 
 const CARDS = [
   {
@@ -171,7 +183,7 @@ const CARDS = [
     Icon: FiCalendar,
     title: "A new type of Calendar",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi illo officia atque iure voluptatibus necessitatibus odit cupiditate reprehenderit iusto quaerat!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi illo officia atque iure voluptatibus necessitatibus odit cupiditate reprehenderit iusto calendar 1!",
     ctaClasses: "bg-violet-300",
     routeTo: "#",
   },
@@ -180,7 +192,7 @@ const CARDS = [
     Icon: FiDatabase,
     title: "#1 in data privacy",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi illo officia atque iure voluptatibus necessitatibus odit cupiditate reprehenderit iusto quaerat!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi illo officia atque iure voluptatibus necessitatibus odit cupiditate reprehenderit iusto privacy 2!",
     ctaClasses: "bg-pink-300",
     routeTo: "#",
   },
@@ -189,7 +201,7 @@ const CARDS = [
     Icon: FiCopy,
     title: "Use your existing tools",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi illo officia atque iure voluptatibus necessitatibus odit cupiditate reprehenderit iusto quaerat!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi illo officia atque iure voluptatibus necessitatibus odit cupiditate reprehenderit iusto tools 3!",
     ctaClasses: "bg-red-300",
     routeTo: "#",
   },
@@ -198,7 +210,7 @@ const CARDS = [
     Icon: FiAward,
     title: "Customers love us",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi illo officia atque iure voluptatibus necessitatibus odit cupiditate reprehenderit iusto quaerat!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi illo officia atque iure voluptatibus necessitatibus odit cupiditate reprehenderit iusto love us 4!",
     ctaClasses: "bg-amber-300",
     routeTo: "#",
   },
