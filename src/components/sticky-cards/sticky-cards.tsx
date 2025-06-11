@@ -1,5 +1,5 @@
 import { useScroll, motion, useTransform } from "framer-motion";
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   FiArrowRight,
   FiAward,
@@ -9,33 +9,91 @@ import {
 } from "react-icons/fi";
 
 export const StickyCards = () => {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [canScroll, setCanScroll] = useState(false);
+  
   const { scrollYProgress } = useScroll({
     container: containerRef,
     offset: ["start start", "end end"],
   });
 
+  useEffect(() => {
+    const checkPosition = () => {
+      if (!wrapperRef.current) return;
+      
+      const rect = wrapperRef.current.getBoundingClientRect();
+      setCanScroll(rect.top <= 0);
+    };
+
+    // Use native wheel listener with non-passive flag
+    const handleWheel = (e: WheelEvent) => {
+      if (!containerRef.current || !wrapperRef.current) return;
+      
+      const rect = wrapperRef.current.getBoundingClientRect();
+      const isOverContainer = containerRef.current.contains(e.target as Node);
+      const containerScrollTop = containerRef.current.scrollTop;
+      
+      // If mouse is over container but wrapper isn't at top, redirect to page scroll
+      if (isOverContainer && rect.top > 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.scrollBy(0, e.deltaY);
+      }
+      // If scrolling up and container is at top, redirect to page scroll
+      else if (isOverContainer && e.deltaY < 0 && containerScrollTop === 0 && rect.top <= 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.scrollBy(0, e.deltaY);
+      }
+    };
+
+    checkPosition();
+    window.addEventListener('scroll', checkPosition, { passive: true });
+    document.addEventListener('wheel', handleWheel, { passive: false });
+    
+    return () => {
+      window.removeEventListener('scroll', checkPosition);
+      document.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
   return (
     <div 
-      ref={containerRef}
-      className="relative h-screen overflow-y-auto"
+      ref={wrapperRef}
+      className="sticky top-0"
+      style={{ height: `${CARD_HEIGHT * CARDS.length}px` }}
     >
-      {/* Inner wrapper with extended height for scroll space */}
-      <div style={{ height: `${CARD_HEIGHT * CARDS.length}px` }}>
-        {CARDS.map((c, idx) => (
-          <Card
-            key={c.id}
-            card={c}
-            scrollYProgress={scrollYProgress}
-            position={idx + 1}
-          />
-        ))}
+      <div 
+        ref={containerRef}
+        className="h-screen"
+        style={{
+          overflowY: canScroll ? 'auto' : 'hidden'
+        }}
+      >
+        {/* Inner wrapper with extended height for scroll space */}
+        <div style={{ height: `${CARD_HEIGHT * CARDS.length}px` }}>
+          {CARDS.map((c, idx) => (
+            <Card
+              key={c.id}
+              card={c}
+              scrollYProgress={scrollYProgress}
+              position={idx + 1}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-const Card = ({ position, card, scrollYProgress }) => {
+interface CardProps {
+  position: number;
+  card: typeof CARDS[0];
+  scrollYProgress: any;
+}
+
+const Card = ({ position, card, scrollYProgress }: CardProps) => {
   const scaleFromPct = (position - 1) / CARDS.length;
   const y = useTransform(scrollYProgress, [scaleFromPct, 1], [0, -CARD_HEIGHT]);
 

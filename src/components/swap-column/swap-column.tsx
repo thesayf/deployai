@@ -3,23 +3,25 @@ import { useEffect, useRef, useState } from "react";
 import { FiDollarSign, FiEye, FiPlay, FiSearch } from "react-icons/fi";
 
 const Example = () => {
+  const scrollRef = useRef(null);
+  
   return (
-    <>
+    <div ref={scrollRef} className="relative h-screen overflow-y-auto">
       <div className="flex h-48 flex-col items-center justify-center bg-slate-900">
         <span className="font-semibold uppercase text-white">Scroll down</span>
         <span className="mt-2 block rounded-full bg-indigo-600 px-4 py-1 text-center font-medium text-white md:hidden">
           Note: This is much cooler on desktop 😊
         </span>
       </div>
-      <SwapColumnFeatures />
+      <SwapColumnFeatures scrollContainerRef={scrollRef} />
       <div className="flex h-48 items-center justify-center bg-indigo-600">
         <span className="font-semibold uppercase text-white">Scroll up</span>
       </div>
-    </>
+    </div>
   );
 };
 
-const SwapColumnFeatures = () => {
+const SwapColumnFeatures = ({ scrollContainerRef }) => {
   const [featureInView, setFeatureInView] = useState(features[0]);
 
   return (
@@ -34,6 +36,7 @@ const SwapColumnFeatures = () => {
           key={s.id}
           featureInView={s}
           setFeatureInView={setFeatureInView}
+          scrollContainerRef={scrollContainerRef}
           {...s}
         />
       ))}
@@ -65,17 +68,19 @@ const SlidingFeatureDisplay = ({ featureInView }) => {
   );
 };
 
-const Content = ({ setFeatureInView, featureInView, ...feature }) => {
+const Content = ({ setFeatureInView, featureInView, scrollContainerRef, ...feature }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, {
-    margin: "-150px",
+    root: scrollContainerRef,
+    margin: "-50px",
+    amount: 0.5,
   });
 
   useEffect(() => {
     if (isInView) {
       setFeatureInView(feature);
     }
-  }, [isInView, feature, setFeatureInView]);
+  }, [isInView, feature.id, setFeatureInView]);
 
   return (
     <section
