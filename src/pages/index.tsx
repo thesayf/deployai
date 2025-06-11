@@ -22,7 +22,7 @@ import CollapseCardFeatures from "@/components/collapse-card/collapse-card";
 
 export default function Home() {
   return (
-    <main className={`${font.className}`} style={{ scrollSnapType: 'y proximity' }}>
+    <main className={`${font.className}`}>
       <ExpandableNavBar links={NAV_LINKS}>
         <Hero />
         {/* <HeroTwo /> */}

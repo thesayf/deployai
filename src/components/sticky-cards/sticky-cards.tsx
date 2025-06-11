@@ -19,62 +19,15 @@ export const StickyCards = () => {
   });
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
-    let lastTime = Date.now();
-    let velocity = 0;
-    let wasAtTop = false;
-
     const checkPosition = () => {
       if (!containerRef.current) return;
 
       const rect = containerRef.current.getBoundingClientRect();
       const currentAtTop = rect.top <= 0;
-
-      // If we just reached the top (snap completed), transfer momentum
-      if (currentAtTop && !wasAtTop && velocity !== 0) {
-        transferMomentum(velocity);
-      }
-
       setIsAtTop(currentAtTop);
-      wasAtTop = currentAtTop;
-    };
-
-    const transferMomentum = (scrollVelocity: number) => {
-      if (!containerRef.current) return;
-
-      console.log("Transferring momentum:", scrollVelocity); // Debug log
-
-      // Convert velocity to scroll amount (larger multiplier for noticeable effect)
-      const scrollAmount = Math.abs(scrollVelocity) * 100; // Increased multiplier
-
-      if (scrollAmount < 10) return; // Don't animate very small movements
-
-      // Animate the container scroll
-      const startScrollTop = containerRef.current.scrollTop;
-      const targetScrollTop = Math.min(
-        startScrollTop + scrollAmount,
-        containerRef.current.scrollHeight - containerRef.current.clientHeight
-      );
-
-      containerRef.current.scrollTo({
-        top: targetScrollTop,
-        behavior: "smooth",
-      });
     };
 
     const handleScroll = () => {
-      const currentTime = Date.now();
-      const currentScrollY = window.scrollY;
-
-      // Calculate scroll velocity
-      const timeDelta = currentTime - lastTime;
-      if (timeDelta > 0) {
-        velocity = (currentScrollY - lastScrollY) / timeDelta;
-      }
-
-      lastScrollY = currentScrollY;
-      lastTime = currentTime;
-
       requestAnimationFrame(checkPosition);
     };
 
@@ -91,7 +44,6 @@ export const StickyCards = () => {
       ref={sectionRef}
       style={{
         height: '200vh', // Reduced height for tighter animations
-        scrollSnapAlign: "start",
       }}
     >
       <div
