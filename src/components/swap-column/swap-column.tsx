@@ -70,15 +70,18 @@ const SlidingFeatureDisplay = ({ featureInView }) => {
 
 const Content = ({ setFeatureInView, featureInView, scrollContainerRef, ...feature }) => {
   const ref = useRef(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  
   const isInView = useInView(ref, {
     root: scrollContainerRef,
-    margin: "-50px",
-    amount: 0.5,
+    margin: "-50% 0px",
+    amount: 0,
   });
 
   useEffect(() => {
     if (isInView) {
       setFeatureInView(feature);
+      setHasAnimated(true);
     }
   }, [isInView, feature.id, setFeatureInView]);
 
@@ -94,7 +97,7 @@ const Content = ({ setFeatureInView, featureInView, scrollContainerRef, ...featu
       <div className="grid h-full w-full place-content-center px-4 py-12 md:w-2/5 md:px-8 md:py-8">
         <motion.div
           initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
         >
           <span className="rounded-full bg-indigo-600 px-2 py-1.5 text-xs font-medium text-white">
@@ -105,7 +108,7 @@ const Content = ({ setFeatureInView, featureInView, scrollContainerRef, ...featu
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 25 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
           className="mt-8 block md:hidden"
         >
