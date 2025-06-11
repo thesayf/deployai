@@ -10,8 +10,8 @@ import {
 
 export const StickyCards = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const [canScroll, setCanScroll] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isAtTop, setIsAtTop] = useState(false);
   
   const { scrollYProgress } = useScroll({
     container: containerRef,
@@ -19,56 +19,86 @@ export const StickyCards = () => {
   });
 
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let lastTime = Date.now();
+    let velocity = 0;
+    let wasAtTop = false;
+
     const checkPosition = () => {
-      if (!wrapperRef.current) return;
+      if (!containerRef.current) return;
       
-      const rect = wrapperRef.current.getBoundingClientRect();
-      setCanScroll(rect.top <= 0);
+      const rect = containerRef.current.getBoundingClientRect();
+      const currentAtTop = rect.top <= 0;
+      
+      // If we just reached the top (snap completed), transfer momentum
+      if (currentAtTop && !wasAtTop && velocity !== 0) {
+        transferMomentum(velocity);
+      }
+      
+      setIsAtTop(currentAtTop);
+      wasAtTop = currentAtTop;
     };
 
-    // Use native wheel listener with non-passive flag
-    const handleWheel = (e: WheelEvent) => {
-      if (!containerRef.current || !wrapperRef.current) return;
+    const transferMomentum = (scrollVelocity: number) => {
+      if (!containerRef.current) return;
       
-      const rect = wrapperRef.current.getBoundingClientRect();
-      const isOverContainer = containerRef.current.contains(e.target as Node);
-      const containerScrollTop = containerRef.current.scrollTop;
+      console.log('Transferring momentum:', scrollVelocity); // Debug log
       
-      // If mouse is over container but wrapper isn't at top, redirect to page scroll
-      if (isOverContainer && rect.top > 0) {
-        e.preventDefault();
-        e.stopPropagation();
-        window.scrollBy(0, e.deltaY);
+      // Convert velocity to scroll amount (larger multiplier for noticeable effect)
+      const scrollAmount = Math.abs(scrollVelocity) * 100; // Increased multiplier
+      
+      if (scrollAmount < 10) return; // Don't animate very small movements
+      
+      // Animate the container scroll
+      const startScrollTop = containerRef.current.scrollTop;
+      const targetScrollTop = Math.min(
+        startScrollTop + scrollAmount,
+        containerRef.current.scrollHeight - containerRef.current.clientHeight
+      );
+      
+      containerRef.current.scrollTo({
+        top: targetScrollTop,
+        behavior: 'smooth'
+      });
+    };
+
+    const handleScroll = () => {
+      const currentTime = Date.now();
+      const currentScrollY = window.scrollY;
+      
+      // Calculate scroll velocity
+      const timeDelta = currentTime - lastTime;
+      if (timeDelta > 0) {
+        velocity = (currentScrollY - lastScrollY) / timeDelta;
       }
-      // If scrolling up and container is at top, redirect to page scroll
-      else if (isOverContainer && e.deltaY < 0 && containerScrollTop === 0 && rect.top <= 0) {
-        e.preventDefault();
-        e.stopPropagation();
-        window.scrollBy(0, e.deltaY);
-      }
+      
+      lastScrollY = currentScrollY;
+      lastTime = currentTime;
+      
+      requestAnimationFrame(checkPosition);
     };
 
     checkPosition();
-    window.addEventListener('scroll', checkPosition, { passive: true });
-    document.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
-      window.removeEventListener('scroll', checkPosition);
-      document.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   return (
-    <div 
-      ref={wrapperRef}
-      className="sticky top-0"
-      style={{ height: `${CARD_HEIGHT * CARDS.length}px` }}
+    <section 
+      ref={sectionRef}
+      style={{ 
+        height: `${CARD_HEIGHT * CARDS.length}px`,
+        scrollSnapAlign: 'start'
+      }}
     >
       <div 
         ref={containerRef}
-        className="h-screen"
+        className="sticky top-0 h-screen"
         style={{
-          overflowY: canScroll ? 'auto' : 'hidden'
+          overflowY: isAtTop ? 'auto' : 'hidden'
         }}
       >
         {/* Inner wrapper with extended height for scroll space */}
@@ -83,7 +113,7 @@ export const StickyCards = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

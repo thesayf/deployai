@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Smoother scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduce scroll snap "hold" time */
+* {
+  scroll-snap-type: inherit;
+}
