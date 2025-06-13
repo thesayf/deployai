@@ -12,7 +12,7 @@ export const StickyCards = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isAtTop, setIsAtTop] = useState(false);
-  
+
   const { scrollYProgress } = useScroll({
     container: containerRef,
     offset: ["start start", "end end"],
@@ -26,79 +26,79 @@ export const StickyCards = () => {
 
     const checkPosition = () => {
       if (!containerRef.current) return;
-      
+
       const rect = containerRef.current.getBoundingClientRect();
       const currentAtTop = rect.top <= 0;
-      
+
       // If we just reached the top (snap completed), transfer momentum
       if (currentAtTop && !wasAtTop && velocity !== 0) {
         transferMomentum(velocity);
       }
-      
+
       setIsAtTop(currentAtTop);
       wasAtTop = currentAtTop;
     };
 
     const transferMomentum = (scrollVelocity: number) => {
       if (!containerRef.current) return;
-      
-      console.log('Transferring momentum:', scrollVelocity); // Debug log
-      
+
+      console.log("Transferring momentum:", scrollVelocity); // Debug log
+
       // Convert velocity to scroll amount (larger multiplier for noticeable effect)
       const scrollAmount = Math.abs(scrollVelocity) * 100; // Increased multiplier
-      
+
       if (scrollAmount < 10) return; // Don't animate very small movements
-      
+
       // Animate the container scroll
       const startScrollTop = containerRef.current.scrollTop;
       const targetScrollTop = Math.min(
         startScrollTop + scrollAmount,
         containerRef.current.scrollHeight - containerRef.current.clientHeight
       );
-      
+
       containerRef.current.scrollTo({
         top: targetScrollTop,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     };
 
     const handleScroll = () => {
       const currentTime = Date.now();
       const currentScrollY = window.scrollY;
-      
+
       // Calculate scroll velocity
       const timeDelta = currentTime - lastTime;
       if (timeDelta > 0) {
         velocity = (currentScrollY - lastScrollY) / timeDelta;
       }
-      
+
       lastScrollY = currentScrollY;
       lastTime = currentTime;
-      
+
       requestAnimationFrame(checkPosition);
     };
 
     checkPosition();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      style={{ 
+      style={{
         height: `${CARD_HEIGHT * CARDS.length}px`,
-        scrollSnapAlign: 'start'
+        scrollSnapAlign: "start",
       }}
     >
-      <div 
+      <div
         ref={containerRef}
         className="sticky top-0 h-screen"
         style={{
-          overflowY: isAtTop ? 'auto' : 'hidden'
+          overflowY: isAtTop ? "auto" : "hidden",
         }}
       >
         {/* Inner wrapper with extended height for scroll space */}
@@ -119,7 +119,7 @@ export const StickyCards = () => {
 
 interface CardProps {
   position: number;
-  card: typeof CARDS[0];
+  card: (typeof CARDS)[0];
   scrollYProgress: any;
 }
 
@@ -147,16 +147,16 @@ const Card = ({ position, card, scrollYProgress }: CardProps) => {
         {card.description}
       </p>
       <a
-        href={card.routeTo}
-        className={`flex items-center gap-2 rounded px-6 py-4 text-base font-medium uppercase text-black transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 md:text-lg ${
-          card.ctaClasses
-        } ${
+        href="https://calendly.com/hello-deployai/30min"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`flex items-center gap-2 rounded-full px-8 py-4 text-base font-bold uppercase transition-transform hover:scale-105 md:text-lg ${
           isOddCard
-            ? "shadow-[4px_4px_0px_white] hover:shadow-[8px_8px_0px_white]"
-            : "shadow-[4px_4px_0px_black] hover:shadow-[8px_8px_0px_black]"
+            ? "border-2 border-zinc-900 bg-white text-black shadow-[4px_4px_0px_white] hover:shadow-[8px_8px_0px_white]"
+            : "border-2 border-zinc-900 bg-black text-white shadow-[4px_4px_0px_black] hover:shadow-[8px_8px_0px_black]"
         }`}
       >
-        <span>Learn more</span>
+        <span>Book Free Strategy Call</span>
         <FiArrowRight />
       </a>
     </motion.div>

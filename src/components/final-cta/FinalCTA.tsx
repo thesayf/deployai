@@ -1,21 +1,38 @@
 import React from "react";
-import { SectionHeading } from "../shared/SectionHeading";
-import { LogoLarge } from "../navigation/Logo";
 import { Button } from "../shared/Button";
+import Image from "next/image";
 
 export const FinalCTA = () => {
   return (
-    <section className="-mt-8 bg-white px-2 py-24 md:px-4">
-      <div className="mx-auto flex max-w-5xl flex-col items-center">
-        <LogoLarge />
-        <SectionHeading>Ready to go?</SectionHeading>
-        <p className="mx-auto mb-8 text-center text-base leading-relaxed md:text-xl md:leading-relaxed">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe,
-          blanditiis?
+    <section id="final-cta" className="bg-white px-2 py-24 md:px-4">
+      <div className="mx-auto flex max-w-3xl flex-col items-center">
+        {/* Booking Screenshot Image */}
+        <div className="mb-10 w-full overflow-hidden rounded-3xl border-4 border-zinc-900 bg-zinc-200 shadow-[8px_8px_0px_0px_rgb(234,88,12)]">
+          <Image
+            src="/booking.png"
+            alt="Booking system screenshot"
+            width={900}
+            height={400}
+            className="h-auto w-full rounded-3xl object-cover"
+            priority
+          />
+        </div>
+        <h2 className="mb-4 text-center text-4xl font-black md:text-5xl">
+          Get Your Solution Built in 30 Days
+        </h2>
+        <p className="mx-auto mb-8 text-center text-lg leading-relaxed text-zinc-700 md:text-xl md:leading-relaxed">
+          Book a free strategy call and see how fast you can go from idea to
+          launch. No obligation, no credit card required.
         </p>
-        <Button intent="primary">
-          <span className="font-bold">Get started - </span> no CC required
-        </Button>
+        {/* Calendly CTA Button */}
+        <a
+          href="https://calendly.com/hello-deployai/30min"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block rounded-full border-2 border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 px-8 py-4 text-lg font-bold text-white shadow-[4px_4px_0px_0px_rgb(234,88,12)] transition-transform hover:scale-105"
+        >
+          Book Your Free Call
+        </a>
       </div>
     </section>
   );

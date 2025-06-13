@@ -19,31 +19,28 @@ import HeroTwo from "@/components/hero-two/hero-two";
 import CardCarousel from "@/components/carousel-one/carousel-one";
 import CarouselTwo from "@/components/carousel-two/carousel-two";
 import CollapseCardFeatures from "@/components/collapse-card/collapse-card";
+import { StickyScrollCards } from "@/components/sticky-scroll-cards/StickyScrollCards";
+import { PricingSection } from "@/components/pricing-section/PricingSection";
+import { TestimonialsPortfolio } from "@/components/testimonials-portfolio/TestimonialsPortfolio";
+import { ProblemAgitation } from "@/components/problem-agitation/ProblemAgitation";
+import { ClientPortfolioCarousel } from "@/components/client-portfolio/ClientPortfolioCarousel";
 
 export default function Home() {
   return (
-    <main className={`${font.className}`} style={{ scrollSnapType: 'y proximity' }}>
+    <main
+      className={`${font.className}`}
+      style={{ scrollSnapType: "y proximity" }}
+    >
       <ExpandableNavBar links={NAV_LINKS}>
         <Hero />
         {/* <HeroTwo /> */}
       </ExpandableNavBar>
-      <Logos />
-      <CollapseCardFeatures />
-      <StickyCards />
-      <SwapColumnFeatures />
-      <StaggerTestimonials />
-      <CardCarousel />
-      <CarouselTwo />
-      <div className="space-y-36 bg-zinc-50 pb-24 pt-24 md:pt-32">
-        <FeatureToggles />
-        <Stats />
-        <Supports />
-        <BenefitsGrid />
-        <Pricing />
-        <BlogCarousel />
-      </div>
-      <EmailCapture />
+      <ProblemAgitation />
+      <StickyScrollCards />
+      <TestimonialsPortfolio />
+      <PricingSection />
       <FinalCTA />
+      {/* <EmailCapture /> */}
       <Footer />
     </main>
   );

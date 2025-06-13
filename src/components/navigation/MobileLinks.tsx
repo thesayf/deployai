@@ -13,33 +13,20 @@ export const MobileLinks = ({
     <AnimatePresence mode="popLayout">
       {open && (
         <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          exit={{
-            opacity: 0,
-          }}
-          className="grid grid-cols-2 gap-6 py-6 md:hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="grid grid-cols-1 gap-6 py-6 md:hidden"
         >
-          {links.map((l) => {
-            return (
-              <div key={l.title} className="space-y-1.5">
-                <span className="text-md block font-semibold">{l.title}</span>
-                {l.sublinks.map((sl) => (
-                  <a
-                    className="text-md block text-zinc-600"
-                    href={sl.href}
-                    key={sl.title}
-                  >
-                    {sl.title}
-                  </a>
-                ))}
-              </div>
-            );
-          })}
+          {links.map((l) => (
+            <a
+              key={l.title}
+              href={l.href}
+              className="text-md block font-semibold text-zinc-950 transition-colors hover:text-orange-600"
+            >
+              {l.title}
+            </a>
+          ))}
         </motion.div>
       )}
     </AnimatePresence>

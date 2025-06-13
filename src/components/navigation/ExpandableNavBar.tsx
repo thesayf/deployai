@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { motion } from "framer-motion";
 import { FiMenu } from "react-icons/fi";
 import { Logo } from "./Logo";
@@ -6,11 +6,7 @@ import { DesktopLinks } from "./DesktopLinks";
 import { MobileLinks } from "./MobileLinks";
 import { Announcement } from "./Announcement";
 import { Button } from "../shared/Button";
-
-type LinkType = {
-  title: string;
-  sublinks: { title: string; href: string }[];
-};
+import { LinkType } from "./constants";
 
 export const ExpandableNavBar = ({
   children,
@@ -19,37 +15,26 @@ export const ExpandableNavBar = ({
   children?: ReactNode;
   links: LinkType[];
 }) => {
-  const [hovered, setHovered] = useState<string | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-
-  const activeSublinks = useMemo(() => {
-    if (!hovered) return [];
-    const link = links.find((l) => l.title === hovered);
-
-    return link ? link.sublinks : [];
-  }, [hovered]);
 
   return (
     <>
       <div className="bg-indigo-600 pt-2">
         <Announcement />
-        <nav
-          onMouseLeave={() => setHovered(null)}
-          className="rounded-t-2xl bg-white p-4"
-        >
+        <nav className="rounded-t-2xl bg-white p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <Logo />
-              <DesktopLinks
-                links={links}
-                setHovered={setHovered}
-                hovered={hovered}
-                activeSublinks={activeSublinks}
-              />
+              <DesktopLinks links={links} />
             </div>
-            <Button className="hidden md:block" intent="secondary" size="small">
-              <span className="font-bold">Get started - </span> no CC required
-            </Button>
+            <a
+              href="https://calendly.com/hello-deployai/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden rounded-full border-2 border-zinc-900 bg-zinc-900 px-6 py-2 text-sm font-bold text-white shadow transition-transform hover:scale-105 md:block"
+            >
+              Book Free AI Strategy Call
+            </a>
             <button
               onClick={() => setMobileNavOpen((pv) => !pv)}
               className="block text-2xl md:hidden"

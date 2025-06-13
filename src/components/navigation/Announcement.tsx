@@ -22,7 +22,10 @@ export const Announcement = () => {
             >
               <span className="font-semibold">🎉 Announcement 🎉</span>
               <span className="hidden sm:block">–</span>
-              <span> A thing is happening you should know about</span>
+              <span>
+                {" "}
+                Limited Time: Save 40% on AI Strategy Calls - Ends This Friday!"
+              </span>
             </Link>
             <button
               onClick={() => setDismissed(true)}
