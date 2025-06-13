@@ -14,7 +14,6 @@ export const FinalCTA = () => {
             width={900}
             height={400}
             className="h-auto w-full rounded-3xl object-cover"
-            priority
           />
         </div>
         <h2 className="mb-4 text-center text-4xl font-black md:text-5xl">
