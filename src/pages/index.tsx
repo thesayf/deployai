@@ -20,7 +20,6 @@ import {
 } from "react-icons/fi";
 import Marquee from "react-fast-marquee";
 import { motion } from "framer-motion";
-import { useRef } from "react";
 
 export default function Home() {
   return (
@@ -95,21 +94,6 @@ function WhatWeCanBuild() {
     },
   ];
 
-  const tickerExamples = [
-    "Automate Slack alerts",
-    "AI-powered onboarding",
-    "Custom dashboards",
-    "Factory order bots",
-    "Automated reporting",
-    "AI email replies",
-    "Real-time notifications",
-    "No-code integrations",
-    "Automated invoicing",
-    "Data entry bots",
-  ];
-
-  const carouselRef = useRef<HTMLDivElement>(null);
-
   return (
     <section id="what-we-can-build" className="bg-white py-24">
       <div className="mx-auto max-w-3xl px-4">
@@ -120,7 +104,7 @@ function WhatWeCanBuild() {
           Real automations, real results. Here's what we can deliver for your
           business.
         </p>
-        <div className="relative mb-24 border-l-4 border-orange-500 pl-8">
+        <div className="relative border-l-4 border-orange-500 pl-8">
           {cards.map((card, idx) => (
             <motion.div
               key={idx}
@@ -139,31 +123,6 @@ function WhatWeCanBuild() {
                 <p className="text-zinc-700">{card.description}</p>
               </div>
             </motion.div>
-          ))}
-        </div>
-        <h3 className="mb-6 text-center text-3xl font-bold text-orange-500">
-          Automate manual processes like sending emails, factory orders…
-        </h3>
-        <div
-          ref={carouselRef}
-          className="flex snap-x snap-mandatory gap-8 overflow-x-auto px-2 pb-4"
-          style={{ WebkitOverflowScrolling: "touch" }}
-        >
-          {cards.map((card, idx) => (
-            <div
-              key={idx}
-              className="flex min-w-[320px] max-w-xs flex-shrink-0 snap-center flex-col items-center rounded-3xl border-4 border-zinc-900 bg-white p-8 shadow-[8px_8px_0px_#18181b] transition-transform hover:scale-105"
-            >
-              <div
-                className={`mb-4 flex h-12 w-12 items-center justify-center rounded-full ${card.dotColor} shadow-lg`}
-              >
-                <card.icon className="text-3xl text-white" />
-              </div>
-              <h4 className="mb-2 text-center text-xl font-bold text-zinc-900">
-                {card.headline}
-              </h4>
-              <p className="text-center text-zinc-700">{card.description}</p>
-            </div>
           ))}
         </div>
       </div>
