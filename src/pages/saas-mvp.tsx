@@ -10,7 +10,17 @@ import { FiArrowRight } from "react-icons/fi";
 import { LogoTicker } from "@/components/logo-ticker/LogoTicker";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { FiZap, FiCheckCircle, FiDollarSign, FiUsers } from "react-icons/fi";
+import {
+  FiZap,
+  FiCheckCircle,
+  FiDollarSign,
+  FiUsers,
+  FiBarChart,
+  FiSettings,
+  FiCloud,
+  FiTrendingUp,
+} from "react-icons/fi";
+import { FiMail, FiTruck } from "react-icons/fi";
 
 export default function SaasMvpPage() {
   return (
@@ -23,6 +33,7 @@ export default function SaasMvpPage() {
       </ExpandableNavBar>
       <ProblemAgitationOverride />
       <StickyScrollCardsOverride />
+      <WhatWeCanBuildSaasMvp />
       <TestimonialsPortfolio />
       <PricingSection />
       <FinalCTA />
@@ -285,3 +296,90 @@ const StickyCard = ({
     </div>
   );
 };
+
+function WhatWeCanBuildSaasMvp() {
+  const cards = [
+    {
+      icon: FiZap,
+      headline: "Rapid MVP Launch",
+      description:
+        "Go from idea to market-ready SaaS MVP in weeks, not months.",
+      dotColor: "bg-orange-500",
+    },
+    {
+      icon: FiCheckCircle,
+      headline: "Market Validation",
+      description: "Test your concept with real users and iterate fast.",
+      dotColor: "bg-blue-500",
+    },
+    {
+      icon: FiDollarSign,
+      headline: "Cost-Effective Builds",
+      description: "Focus on core features to save time and budget.",
+      dotColor: "bg-green-500",
+    },
+    {
+      icon: FiUsers,
+      headline: "User Onboarding",
+      description: "Seamless onboarding flows for your first customers.",
+      dotColor: "bg-purple-500",
+    },
+    {
+      icon: FiBarChart,
+      headline: "Analytics & Insights",
+      description: "Track usage and feedback from day one.",
+      dotColor: "bg-yellow-400",
+    },
+    {
+      icon: FiSettings,
+      headline: "Custom Integrations",
+      description: "Connect your MVP to the tools you already use.",
+      dotColor: "bg-pink-500",
+    },
+    {
+      icon: FiCloud,
+      headline: "Cloud Deployment",
+      description: "Launch on scalable, secure cloud infrastructure.",
+      dotColor: "bg-cyan-500",
+    },
+    {
+      icon: FiTrendingUp,
+      headline: "Growth Ready",
+      description: "Built to scale as your user base grows.",
+      dotColor: "bg-red-500",
+    },
+  ];
+  return (
+    <section id="what-we-can-build" className="bg-white py-24">
+      <div className="mx-auto max-w-3xl px-4">
+        <h2 className="mb-4 text-center text-5xl font-black">
+          What Can We Build For Your SaaS MVP?
+        </h2>
+        <p className="mb-12 text-center text-lg text-zinc-600">
+          From idea to launch, here are the MVP essentials we deliver fast.
+        </p>
+        <div className="relative border-l-4 border-orange-500 pl-8">
+          {cards.map((card, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ delay: idx * 0.08, duration: 0.5 }}
+              className="mb-12 flex items-start gap-6"
+            >
+              <div
+                className={`mt-2 h-6 w-6 rounded-full ${card.dotColor} border-4 border-white shadow-lg`}
+              ></div>
+              <div className="rounded-2xl border-2 border-zinc-900 bg-white p-6 shadow-[4px_4px_0px_#18181b]">
+                <card.icon className="mb-2 text-3xl text-orange-500" />
+                <h3 className="mb-1 text-xl font-bold">{card.headline}</h3>
+                <p className="text-zinc-700">{card.description}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

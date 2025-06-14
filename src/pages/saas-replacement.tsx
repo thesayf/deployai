@@ -10,7 +10,17 @@ import { FiArrowRight } from "react-icons/fi";
 import { LogoTicker } from "@/components/logo-ticker/LogoTicker";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { FiDollarSign, FiLock, FiCode, FiTrendingUp } from "react-icons/fi";
+import {
+  FiDollarSign,
+  FiLock,
+  FiCode,
+  FiTrendingUp,
+  FiSettings,
+  FiUsers,
+  FiBarChart,
+  FiCloud,
+  FiDatabase,
+} from "react-icons/fi";
 
 export default function SaasReplacementPage() {
   return (
@@ -23,6 +33,7 @@ export default function SaasReplacementPage() {
       </ExpandableNavBar>
       <ProblemAgitationOverride />
       <StickyScrollCardsOverride />
+      <WhatWeCanBuildSaasReplacement />
       <TestimonialsPortfolio />
       <PricingSection />
       <FinalCTA />
@@ -275,3 +286,91 @@ const StickyCard = ({
     </div>
   );
 };
+
+function WhatWeCanBuildSaasReplacement() {
+  const cards = [
+    {
+      icon: FiDollarSign,
+      headline: "Eliminate SaaS Fees",
+      description:
+        "Replace recurring subscriptions with one-time custom builds.",
+      dotColor: "bg-orange-500",
+    },
+    {
+      icon: FiLock,
+      headline: "Full Data Ownership",
+      description: "Own your data, code, and integrations—no vendor lock-in.",
+      dotColor: "bg-blue-500",
+    },
+    {
+      icon: FiSettings,
+      headline: "Custom Integrations",
+      description: "Connect your tools and automate unique workflows.",
+      dotColor: "bg-green-500",
+    },
+    {
+      icon: FiUsers,
+      headline: "User Management",
+      description: "Tailored access, permissions, and onboarding flows.",
+      dotColor: "bg-purple-500",
+    },
+    {
+      icon: FiBarChart,
+      headline: "Reporting Dashboards",
+      description: "Real-time analytics, no extra SaaS fees.",
+      dotColor: "bg-yellow-400",
+    },
+    {
+      icon: FiCloud,
+      headline: "Cloud Migration",
+      description: "Move from SaaS to your own secure cloud.",
+      dotColor: "bg-pink-500",
+    },
+    {
+      icon: FiDatabase,
+      headline: "Data Sync & Backups",
+      description: "Automate backups and keep all your data in sync.",
+      dotColor: "bg-cyan-500",
+    },
+    {
+      icon: FiTrendingUp,
+      headline: "ROI Focused",
+      description: "Custom solutions that pay for themselves in months.",
+      dotColor: "bg-red-500",
+    },
+  ];
+  return (
+    <section id="what-we-can-build" className="bg-white py-24">
+      <div className="mx-auto max-w-3xl px-4">
+        <h2 className="mb-4 text-center text-5xl font-black">
+          What Can We Build to Replace Your SaaS?
+        </h2>
+        <p className="mb-12 text-center text-lg text-zinc-600">
+          Replace expensive SaaS tools with custom solutions built for you. Here
+          are some examples.
+        </p>
+        <div className="relative border-l-4 border-orange-500 pl-8">
+          {cards.map((card, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ delay: idx * 0.08, duration: 0.5 }}
+              className="mb-12 flex items-start gap-6"
+            >
+              <div
+                className={`mt-2 h-6 w-6 rounded-full ${card.dotColor} border-4 border-white shadow-lg`}
+              ></div>
+              <div className="rounded-2xl border-2 border-zinc-900 bg-white p-6 shadow-[4px_4px_0px_#18181b]">
+                <card.icon className="mb-2 text-3xl text-orange-500" />
+                <h3 className="mb-1 text-xl font-bold">{card.headline}</h3>
+                <p className="text-zinc-700">{card.description}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
