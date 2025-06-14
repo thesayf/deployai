@@ -84,6 +84,7 @@ const getLogoColor = (logoName: string) => {
   return colors[logoName] || "text-zinc-600";
 };
 
+export { CLIENTS };
 export const ClientPortfolioCarousel = () => {
   const [index, setIndex] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);

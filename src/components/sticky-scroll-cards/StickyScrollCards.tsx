@@ -5,7 +5,7 @@ import {
   FiCode,
   FiSettings,
   FiSend,
-  FiPlay,
+  FiArrowDown,
   FiArrowRight,
 } from "react-icons/fi";
 
@@ -25,7 +25,7 @@ const cards: Card[] = [
     title: "How It Works",
     description:
       "Our proven 4-step process transforms your business with custom AI solutions in just 30 days. From strategy to deployment, we handle everything while you maintain 100% ownership.",
-    icon: FiPlay,
+    icon: FiArrowDown,
     background: "bg-slate-900",
     textColor: "text-white",
     buttonColor: "bg-white text-slate-900",
@@ -155,8 +155,12 @@ const StickyCard = ({
 
         <div className="flex items-end justify-between">
           <div className="text-sm opacity-60">
-            {String(card.id).padStart(2, "0")} /{" "}
-            {String(totalCards).padStart(2, "0")}
+            {index === 0 ? null : (
+              <>
+                {String(index).padStart(2, "0")} /{" "}
+                {String(totalCards - 1).padStart(2, "0")}
+              </>
+            )}
           </div>
 
           <a

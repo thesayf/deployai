@@ -10,6 +10,7 @@ import {
   FiClock,
 } from "react-icons/fi";
 import { Button } from "../shared/Button";
+import Image from "next/image";
 
 export const Footer = () => {
   return (
@@ -55,24 +56,20 @@ export const Footer = () => {
             {/* Company Info */}
             <div className="lg:col-span-1">
               <div className="mb-6">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-orange-400 bg-gradient-to-br from-orange-500 to-red-500 font-black text-white">
-                    AI
-                  </div>
-                  <span className="text-2xl font-black">deployAI</span>
+                <div className="mb-4 flex items-center justify-center gap-3">
+                  <Image
+                    src="/white-logo.png"
+                    alt="deployAI logo"
+                    width={160}
+                    height={160}
+                    className="h-40 w-40 rounded-2xl object-contain"
+                  />
                 </div>
                 <p className="leading-relaxed text-zinc-300">
                   We build custom AI solutions that eliminate SaaS subscriptions
                   and give you 100% ownership. Transform your business in 30
                   days.
                 </p>
-              </div>
-
-              {/* Social Links */}
-              <div className="flex gap-3">
-                <SocialLink href="#" icon={FiTwitter} label="Twitter" />
-                <SocialLink href="#" icon={FiLinkedin} label="LinkedIn" />
-                <SocialLink href="#" icon={FiGithub} label="GitHub" />
               </div>
             </div>
 
@@ -96,15 +93,14 @@ export const Footer = () => {
                 Services
               </h3>
               <div className="space-y-3">
-                <FooterLink href="#ai-automation">AI Automation</FooterLink>
-                <FooterLink href="#custom-development">
+                <FooterLink href="/automation">AI Automation</FooterLink>
+                <FooterLink href="/custom-development">
                   Custom Development
                 </FooterLink>
-                <FooterLink href="#saas-replacement">
+                <FooterLink href="/saas-replacement">
                   SaaS Replacement
                 </FooterLink>
-                <FooterLink href="#ai-consulting">AI Consulting</FooterLink>
-                <FooterLink href="#integration">System Integration</FooterLink>
+                <FooterLink href="/saas-mvp">SaaS MVP Development</FooterLink>
               </div>
             </div>
 
@@ -118,16 +114,6 @@ export const Footer = () => {
                   icon={FiMail}
                   text="hello@deployai.studio"
                   href="mailto:hello@deployai.studio"
-                />
-                <ContactItem
-                  icon={FiPhone}
-                  text="+1 (555) 123-4567"
-                  href="tel:+15551234567"
-                />
-                <ContactItem
-                  icon={FiMapPin}
-                  text="San Francisco, CA"
-                  href="#"
                 />
               </div>
 
@@ -184,24 +170,6 @@ export const Footer = () => {
         </div>
       </div>
     </footer>
-  );
-};
-
-interface SocialLinkProps {
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-}
-
-const SocialLink = ({ href, icon: Icon, label }: SocialLinkProps) => {
-  return (
-    <a
-      href={href}
-      className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-zinc-700 bg-zinc-800 text-zinc-300 transition-all hover:scale-110 hover:border-orange-400 hover:bg-orange-500 hover:text-white"
-      aria-label={label}
-    >
-      <Icon className="h-5 w-5" />
-    </a>
   );
 };
 

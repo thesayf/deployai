@@ -8,13 +8,20 @@ export const FinalCTA = () => {
       <div className="mx-auto flex max-w-3xl flex-col items-center">
         {/* Booking Screenshot Image */}
         <div className="mb-10 w-full overflow-hidden rounded-3xl border-4 border-zinc-900 bg-zinc-200 shadow-[8px_8px_0px_0px_rgb(234,88,12)]">
-          <Image
-            src="/booking.png"
-            alt="Booking system screenshot"
-            width={900}
-            height={400}
-            className="h-auto w-full rounded-3xl object-cover"
-          />
+          <a
+            href="https://calendly.com/hello-deployai/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Book your free call"
+          >
+            <Image
+              src="/booking.png"
+              alt="Booking system screenshot"
+              width={900}
+              height={400}
+              className="h-auto w-full cursor-pointer rounded-3xl object-cover transition-transform hover:scale-105"
+            />
+          </a>
         </div>
         <h2 className="mb-4 text-center text-4xl font-black md:text-5xl">
           Get Your Solution Built in 30 Days

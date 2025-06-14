@@ -37,7 +37,10 @@ export const ProblemAgitation = () => {
           className="mb-12"
         >
           <div className="relative">
-            <p className="mb-8 text-2xl leading-relaxed text-zinc-800 md:text-3xl">
+            <p
+              className="mx-auto mb-8 max-w-4xl text-center text-2xl leading-relaxed text-zinc-800 md:text-3xl"
+              style={{ wordBreak: "break-word" }}
+            >
               <InteractiveWord
                 words={["Endless", "Countless", "Repetitive"]}
                 isAnimating={isAnimating}
@@ -214,7 +217,7 @@ const InteractiveWord = ({
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % words.length);
-    }, 2000);
+    }, 3500);
 
     return () => clearInterval(interval);
   }, [words.length, isAnimating]);

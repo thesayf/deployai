@@ -68,9 +68,15 @@ function HeroOverride() {
             Book Free SaaS MVP Strategy Call
           </span>
         </a>
-        <p className="max-w-md text-center text-sm text-zinc-600">
+        <a
+          href="https://calendly.com/hello-deployai/30min"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="max-w-md cursor-pointer text-center text-sm text-zinc-600 underline underline-offset-4 transition-colors hover:text-orange-600"
+          aria-label="Book your free SaaS MVP consult on Calendly"
+        >
           ⏱️ Only 3 spots left this week • 💰 $0 cost • 🎯 30-min MVP consult
-        </p>
+        </a>
       </div>
       <LogoTicker />
     </section>

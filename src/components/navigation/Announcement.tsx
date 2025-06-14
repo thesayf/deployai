@@ -16,7 +16,7 @@ export const Announcement = () => {
             }}
           >
             <Link
-              href="/"
+              href="https://calendly.com/hello-deployai/30min"
               target="_blank"
               className="mx-auto mb-3 flex w-fit flex-col items-center justify-center gap-1 text-sm text-white hover:underline sm:flex-row"
             >

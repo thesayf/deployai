@@ -9,7 +9,7 @@ export const Copy = () => {
     <>
       <div className="mb-1.5 rounded-full bg-zinc-600">
         <Link
-          href="https://www.producthunt.com/"
+          href="https://calendly.com/hello-deployai/30min"
           target="_blank"
           rel="nofollow"
           className="flex origin-top-left items-center rounded-full border border-zinc-900 bg-white p-0.5 text-sm transition-transform hover:-rotate-2"
