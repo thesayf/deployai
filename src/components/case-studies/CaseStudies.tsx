@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FiArrowRight } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { CaseStudyModal } from "./CaseStudyModal";
+import { ChatbotMockup } from "./ChatbotMockup";
 
 export const CaseStudies = () => {
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudyData | null>(null);
@@ -89,6 +90,8 @@ const CaseStudyCard = ({
   bgUrl,
   onClick
 }: CaseStudyCardProps) => {
+  const isCustomMockup = bgUrl === "chatbot-mockup";
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -98,11 +101,19 @@ const CaseStudyCard = ({
       onClick={onClick}
       className="group relative aspect-square w-full cursor-pointer overflow-hidden rounded-2xl border-4 border-zinc-900 bg-zinc-100 shadow-[0px_6px_0px_#18181b] shadow-[inset_0px_3px_6px_rgba(0,0,0,0.15)] transition-all duration-300 hover:shadow-[0px_8px_0px_#18181b] hover:scale-105"
     >
-      {/* Background Image - only visible by default */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center transition-all duration-500 group-hover:scale-110 group-hover:blur-sm"
-        style={{ backgroundImage: `url(${bgUrl})` }}
-      />
+      {/* Custom Mockup or Background Image */}
+      {isCustomMockup ? (
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black flex items-center justify-center p-4 transition-all duration-500 group-hover:scale-110">
+          <div className="scale-50 origin-center">
+            <ChatbotMockup />
+          </div>
+        </div>
+      ) : (
+        <div 
+          className="absolute inset-0 bg-cover bg-center transition-all duration-500 group-hover:scale-110 group-hover:blur-sm"
+          style={{ backgroundImage: `url(${bgUrl})` }}
+        />
+      )}
       
       {/* Overlay that becomes visible on hover */}
       <div className="absolute inset-0 bg-white/95 opacity-0 transition-all duration-300 group-hover:opacity-100" />
@@ -149,6 +160,30 @@ const CaseStudyCard = ({
 };
 
 const CASE_STUDIES_DATA: CaseStudyData[] = [
+  {
+    id: "jb-luxury-detailing",
+    service: "Custom CRM + AI Chatbot",
+    metric: "300%",
+    subMetric: "booking increase",
+    orderCount: "24/7",
+    description: "Luxury mobile detailing service automated customer acquisition and booking",
+    bgUrl: "chatbot-mockup", // Special identifier for our custom component
+    company: "JB Luxury Mobile Detailing",
+    industry: "Automotive Services", 
+    timeline: "3 weeks implementation",
+    challenge: "Manual phone booking system was missing 60% of potential customers who called outside business hours. No customer relationship management led to missed follow-ups and repeat business opportunities.",
+    solution: "Built intelligent chatbot integrated with custom CRM to handle bookings 24/7, qualify leads, provide instant quotes, and automatically schedule services based on availability and location.",
+    results: [
+      "300% increase in successful bookings",
+      "24/7 availability captures after-hours customers",
+      "85% of customer inquiries handled automatically",
+      "Average response time reduced from 4 hours to 30 seconds",
+      "40% increase in repeat customer bookings through automated follow-ups"
+    ],
+    techStack: ["React", "Node.js", "OpenAI GPT-4", "Stripe API", "Google Calendar API", "Twilio"],
+    testimonial: "This chatbot works better than having a full-time receptionist. It books appointments while I sleep and my customers love the instant responses. Revenue has tripled since deployment.",
+    testimonialAuthor: "James Butler, Owner of JB Luxury Detailing"
+  },
   {
     id: "automated-logistics",
     service: "Automated Logistics",
