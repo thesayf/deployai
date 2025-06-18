@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { FiArrowRight } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { CaseStudyModal } from "./CaseStudyModal";
-import { ChatbotMockup } from "./ChatbotMockup";
 
 export const CaseStudies = () => {
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudyData | null>(null);
@@ -103,9 +102,115 @@ const CaseStudyCard = ({
     >
       {/* Custom Mockup or Background Image */}
       {isCustomMockup ? (
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black flex items-center justify-center p-4 transition-all duration-500 group-hover:scale-110">
-          <div className="scale-50 origin-center">
-            <ChatbotMockup />
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black flex items-start justify-center transition-all duration-500 group-hover:scale-110 group-hover:blur-sm overflow-hidden">
+          {/* Content zoomed in - no phone frame */}
+          <div className="transform translate-y-[-100px] scale-75 w-full">
+            {/* Screen Content - Use exact same component structure as modal */}
+            <div className="bg-white overflow-hidden h-[800px] w-full max-w-[500px] mx-auto shadow-2xl">
+                    {/* Browser URL Bar */}
+                    <div className="bg-zinc-100 px-3 py-3 flex items-center gap-2 border-b border-zinc-200">
+                      <div className="flex gap-1">
+                        <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                        <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                        <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                      </div>
+                      <div className="flex-1 flex justify-center">
+                        <div className="bg-white rounded px-3 py-1 text-xs text-zinc-600 border border-zinc-300">
+                          chat.jbluxedetailing.co.uk
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* App Header */}
+                    <div className="bg-black text-white p-4 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <img src="/logos/jblogo.png" alt="JB Logo" className="h-8 w-auto" />
+                        <div>
+                          <div className="font-semibold text-lg">JB Luxe Chat</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs bg-green-600 px-2 py-1 rounded-full">Online</span>
+                      </div>
+                    </div>
+                    
+                    {/* Chat Messages */}
+                    <div className="h-[440px] overflow-hidden p-4 space-y-3 bg-zinc-50 pointer-events-none">
+                      {/* Welcome Message */}
+                      <div className="flex gap-3">
+                        <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-yellow-600 text-xs font-bold">JB</span>
+                        </div>
+                        <div className="bg-white rounded-2xl rounded-tl-sm p-3 shadow-sm max-w-[80%]">
+                          <p className="text-sm text-zinc-800 mb-2">
+                            Welcome to JB Luxe Detailing! 🚗✨ We bring top-tier mobile detailing to your location.
+                          </p>
+                          <p className="text-sm text-zinc-800">
+                            To get started, could you tell me what type of vehicle you'd like detailed?
+                          </p>
+                          <div className="text-xs text-zinc-500 mt-2">2:14 PM</div>
+                        </div>
+                      </div>
+
+                      {/* Customer Response */}
+                      <div className="flex gap-3 justify-end">
+                        <div className="bg-blue-600 text-white rounded-2xl rounded-tr-sm p-3 max-w-[80%]">
+                          <p className="text-sm">I have a 2023 Mercedes S-Class that needs detailing</p>
+                          <div className="text-xs text-blue-100 mt-2">2:15 PM</div>
+                        </div>
+                      </div>
+
+                      {/* Bot Response with Services */}
+                      <div className="flex gap-3">
+                        <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-yellow-600 text-xs font-bold">JB</span>
+                        </div>
+                        <div className="space-y-2 max-w-[80%]">
+                          <div className="bg-white rounded-2xl rounded-tl-sm p-3 shadow-sm">
+                            <p className="text-sm text-zinc-800 mb-3">
+                              Excellent choice! For your Mercedes S-Class, I recommend our premium packages. 
+                              Here are your options:
+                            </p>
+                            <div className="space-y-2">
+                              <div className="border border-zinc-200 rounded-lg p-3 bg-zinc-50">
+                                <div className="flex justify-between items-start">
+                                  <div>
+                                    <div className="font-semibold text-sm">🌟 Gold Package</div>
+                                    <div className="text-xs text-zinc-600 mt-1">
+                                      Exterior wash, wax, tyre shine, interior vacuum
+                                    </div>
+                                    <div className="text-xs text-green-600 mt-1">⏱️ 2-3 hours • Most Popular</div>
+                                  </div>
+                                  <div className="font-bold text-yellow-600">£85</div>
+                                </div>
+                              </div>
+                              
+                              <div className="border border-zinc-200 rounded-lg p-3 bg-zinc-50">
+                                <div className="flex justify-between items-start">
+                                  <div>
+                                    <div className="font-semibold text-sm">💎 Luxe Package</div>
+                                    <div className="text-xs text-zinc-600 mt-1">
+                                      Complete detail, paint enhancement, interior deep clean
+                                    </div>
+                                    <div className="text-xs text-blue-600 mt-1">⏱️ 4-5 hours • Premium Service</div>
+                                  </div>
+                                  <div className="font-bold text-yellow-600">£150</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="text-xs text-zinc-500 mt-2">2:15 PM</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* App Footer */}
+                    <div className="border-t border-zinc-200 p-4 bg-white">
+                      <div className="text-xs text-zinc-500 text-center">
+                        Powered by deployAI
+                      </div>
+                    </div>
+            </div>
           </div>
         </div>
       ) : (
@@ -126,15 +231,11 @@ const CaseStudyCard = ({
             {service}
           </div>
           
-          {/* Metrics display */}
-          <div className="mb-3">
-            <h3 className="mb-2 text-2xl font-black text-transparent bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text leading-tight">
-              {metric} {subMetric}
-            </h3>
-            <div className="text-sm font-semibold text-zinc-600">{orderCount} orders automated monthly</div>
-          </div>
+          <h3 className="mb-3 text-3xl font-black text-transparent bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text leading-tight">
+            {metric} {subMetric}
+          </h3>
           
-          <p className="text-base font-medium text-zinc-700">{description}</p>
+          <p className="text-sm text-zinc-600 mb-4">{description}</p>
         </div>
         
         {/* Bottom content */}
@@ -144,15 +245,10 @@ const CaseStudyCard = ({
           </span>
           
           {/* CTA Button with brand styling */}
-          <a
-            href="https://calendly.com/hello-deployai/30min"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 rounded-lg border-2 border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 px-3 py-2 text-sm font-bold text-white shadow-[2px_2px_0px_#18181b] transition-all hover:scale-105 hover:shadow-[3px_3px_0px_#18181b]"
-          >
-            Get Similar Results
+          <button className="inline-flex items-center gap-1 rounded-lg border-2 border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2 text-sm font-bold text-white shadow-[2px_2px_0px_#18181b] transition-all hover:scale-105 hover:shadow-[3px_3px_0px_#18181b]">
+            See Case Study
             <FiArrowRight className="h-3 w-3" />
-          </a>
+          </button>
         </div>
       </div>
     </motion.div>
@@ -166,7 +262,7 @@ const CASE_STUDIES_DATA: CaseStudyData[] = [
     metric: "300%",
     subMetric: "booking increase",
     orderCount: "24/7",
-    description: "Luxury mobile detailing service automated customer acquisition and booking",
+    description: "AI chatbot handles inquiries and books appointments 24/7",
     bgUrl: "chatbot-mockup", // Special identifier for our custom component
     company: "JB Luxury Mobile Detailing",
     industry: "Automotive Services", 

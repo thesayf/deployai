@@ -281,7 +281,7 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
                         </div>
                       )}
                       {currentScreen === 1 && (
-                        <div className="w-full bg-white rounded-lg overflow-hidden">
+                        <div className="w-full h-full bg-white rounded-lg overflow-hidden flex flex-col">
                           {/* Desktop Monitor Frame */}
                           <div className="bg-zinc-100 px-3 py-3 flex items-center gap-2 border-b border-zinc-200">
                             <div className="flex gap-1">
@@ -296,23 +296,21 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
                             </div>
                           </div>
                           
-                          {/* CRM Dashboard Interface */}
-                          <div className="bg-gradient-to-br from-zinc-50 to-white">
-                            {/* App Header */}
-                            <div className="bg-black text-white p-4 flex items-center justify-between">
-                              <div className="flex items-center gap-3">
-                                <img src="/logos/jblogo.png" alt="JB Logo" className="h-8 w-auto" />
-                                <div>
-                                  <div className="font-semibold text-lg">JB Luxe Dashboard</div>
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <span className="text-xs bg-green-600 px-2 py-1 rounded-full">Online</span>
+                          {/* App Header */}
+                          <div className="bg-black text-white p-4 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <img src="/logos/jblogo.png" alt="JB Logo" className="h-8 w-auto" />
+                              <div>
+                                <div className="font-semibold text-lg">JB Luxe Dashboard</div>
                               </div>
                             </div>
-                            
-                            {/* Dashboard Content */}
-                            <div className="p-3 grid grid-cols-12 gap-3 h-[400px] overflow-hidden pointer-events-none">
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs bg-green-600 px-2 py-1 rounded-full">Online</span>
+                            </div>
+                          </div>
+                          
+                          {/* Dashboard Content */}
+                          <div className="flex-1 p-3 grid grid-cols-12 gap-3 overflow-hidden pointer-events-none bg-zinc-50">
                               {/* Left Sidebar */}
                               <div className="col-span-4 space-y-3">
                                 <div className="bg-white rounded-lg border border-zinc-200 p-3 shadow-sm">
@@ -461,17 +459,16 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
                               </div>
                             </div>
                             
-                            {/* Powered by footer */}
-                            <div className="p-2 text-right">
-                              <p className="text-xs text-zinc-500">
-                                Powered by deployAI Custom CRM
-                              </p>
-                            </div>
+                          {/* Powered by footer */}
+                          <div className="border-t border-zinc-200 p-4 bg-white text-center">
+                            <p className="text-xs text-zinc-500">
+                              Powered by deployAI • Custom CRM Platform
+                            </p>
                           </div>
                         </div>
                       )}
                       {currentScreen === 2 && (
-                        <div className="w-full bg-white rounded-lg overflow-hidden">
+                        <div className="w-full h-full bg-white rounded-lg overflow-hidden flex flex-col">
                           {/* Browser URL Bar */}
                           <div className="bg-zinc-100 px-3 py-3 flex items-center gap-2 border-b border-zinc-200">
                             <div className="flex gap-1">
@@ -499,11 +496,8 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
                             </div>
                           </div>
                           
-                          {/* App Interface */}
-                          <div className="bg-white overflow-hidden">
-                                
-                            {/* Booking Interface */}
-                            <div className="p-3 space-y-3 bg-gradient-to-b from-zinc-50 to-white h-[400px] overflow-hidden pointer-events-none">
+                          {/* Booking Interface */}
+                          <div className="flex-1 p-3 space-y-3 bg-zinc-50 overflow-hidden pointer-events-none">
                                   {/* Vehicle Selection */}
                                   <div className="bg-white rounded-lg border border-zinc-200 p-3 shadow-sm">
                                     <h4 className="font-bold text-sm mb-2 flex items-center gap-1">
@@ -651,16 +645,13 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
                                       Confirm Booking & Pay
                                     </div>
                                   </div>
-                                  
-                              {/* Bottom Footer */}
-                              <div className="flex justify-between items-center text-xs text-zinc-500">
-                                <p>Powered by deployAI Booking System</p>
-                                <div className="flex items-center gap-1">
-                                  <span className="w-1 h-1 bg-green-400 rounded-full"></span>
-                                  Real-time availability
-                                </div>
-                              </div>
-                            </div>
+                          </div>
+                          
+                          {/* Bottom Footer */}
+                          <div className="border-t border-zinc-200 p-4 bg-white text-center">
+                            <p className="text-xs text-zinc-500">
+                              Powered by deployAI • Booking Management Platform
+                            </p>
                           </div>
                         </div>
                       )}
