@@ -23,8 +23,51 @@ import {
   FiShield,
 } from "react-icons/fi";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
+
+// Preload Calendly function
+const preloadCalendly = () => {
+  if (typeof window !== 'undefined' && window.Calendly && !(window as any).calendlyPreloaded) {
+    // Create a hidden container to preload the widget
+    const hiddenContainer = document.createElement('div');
+    hiddenContainer.style.position = 'absolute';
+    hiddenContainer.style.left = '-9999px';
+    hiddenContainer.style.top = '-9999px';
+    hiddenContainer.style.width = '1px';
+    hiddenContainer.style.height = '1px';
+    hiddenContainer.style.overflow = 'hidden';
+    document.body.appendChild(hiddenContainer);
+
+    try {
+      (window as any).Calendly.initInlineWidget({
+        url: "https://calendly.com/hello-deployai/30min?hide_event_type_details=1&hide_gdpr_banner=1&embed_domain=" + window.location.hostname + "&embed_type=Inline",
+        parentElement: hiddenContainer,
+        resize: false,
+      });
+      (window as any).calendlyPreloaded = true;
+    } catch (error) {
+      console.log('Calendly preload failed:', error);
+    }
+  }
+};
 
 export default function Home() {
+  // Preload Calendly on page load
+  useEffect(() => {
+    const handleCalendlyLoad = () => {
+      setTimeout(preloadCalendly, 1500); // Wait 1.5 seconds after script loads
+    };
+
+    if ((window as any).Calendly) {
+      handleCalendlyLoad();
+    } else {
+      const script = document.querySelector('script[src*="calendly.com"]');
+      if (script) {
+        script.addEventListener("load", handleCalendlyLoad);
+        return () => script.removeEventListener("load", handleCalendlyLoad);
+      }
+    }
+  }, []);
   return (
     <main
       className={`${font.className}`}
