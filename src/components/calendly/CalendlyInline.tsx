@@ -31,8 +31,8 @@ export const CalendlyInline = () => {
         
         // Apply brand styling directly to Calendly widget with multiple attempts
         const applyStyles = () => {
-          const widget = calendlyRef.current?.querySelector('.calendly-inline-widget');
-          const iframe = calendlyRef.current?.querySelector('iframe');
+          const widget = calendlyRef.current?.querySelector('.calendly-inline-widget') as HTMLElement;
+          const iframe = calendlyRef.current?.querySelector('iframe') as HTMLElement;
           
           if (widget) {
             widget.style.setProperty('width', '100%', 'important');
