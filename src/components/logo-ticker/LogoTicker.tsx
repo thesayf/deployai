@@ -1,79 +1,69 @@
 import React from "react";
 import { motion } from "framer-motion";
-import {
-  SiGoogle,
-  SiAmazon,
-  SiMeta,
-  SiTesla,
-  SiNetflix,
-  SiSpotify,
-  SiAirbnb,
-  SiUber,
-  SiStripe,
-  SiApple,
-  SiNvidia,
-  SiAdobe,
-} from "react-icons/si";
-import { IconType } from "react-icons";
+import Image from "next/image";
 
 const LOGOS = [
   {
-    name: "Google",
-    Icon: SiGoogle,
+    name: "Centric",
+    src: "/logos/CentricLogo.png",
+    alt: "Centric Logo"
   },
   {
-    name: "Amazon",
-    Icon: SiAmazon,
+    name: "Mindscape",
+    src: "/logos/Mindscape_logo.svg",
+    alt: "Mindscape Logo"
   },
   {
-    name: "Meta",
-    Icon: SiMeta,
+    name: "Mirza",
+    src: "/logos/Mirza_Logo.png",
+    alt: "Mirza Logo"
   },
   {
-    name: "Tesla",
-    Icon: SiTesla,
+    name: "Bookworm TP",
+    src: "/logos/bookworm-tp.svg",
+    alt: "Bookworm TP Logo"
   },
   {
-    name: "Netflix",
-    Icon: SiNetflix,
+    name: "Go Elevate AI",
+    src: "/logos/goelevateailogo.svg",
+    alt: "Go Elevate AI Logo"
   },
   {
-    name: "Spotify",
-    Icon: SiSpotify,
+    name: "Hubi",
+    src: "/logos/hubilogo.webp",
+    alt: "Hubi Logo"
   },
   {
-    name: "Airbnb",
-    Icon: SiAirbnb,
+    name: "OC",
+    src: "/logos/oclogo.svg",
+    alt: "OC Logo"
   },
   {
-    name: "Uber",
-    Icon: SiUber,
+    name: "Pink Lizard",
+    src: "/logos/pinklizardlogo.png",
+    alt: "Pink Lizard Logo"
   },
   {
-    name: "Stripe",
-    Icon: SiStripe,
+    name: "Task",
+    src: "/logos/task transparent.svg",
+    alt: "Task Logo"
   },
   {
-    name: "Apple",
-    Icon: SiApple,
-  },
-  {
-    name: "Nvidia",
-    Icon: SiNvidia,
-  },
-  {
-    name: "Adobe",
-    Icon: SiAdobe,
+    name: "JB",
+    src: "/logos/jblogo.png",
+    alt: "JB Logo"
   },
 ];
 
 export const LogoTicker = () => {
-  // Create many duplicates for truly seamless scrolling
-  const duplicatedLogos = [...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS, ...LOGOS];
+  // Create enough duplicates for truly seamless scrolling
+  const duplicatedLogos = [...LOGOS, ...LOGOS];
 
-  // Calculate the total width needed for one set of logos
-  const logoWidth = 192; // 96px for icon + 96px padding
-  const totalWidth = LOGOS.length * logoWidth;
+  // Calculate the total width - account for both logo width and gap
+  const logoWidth = 192; // Base logo container width
+  const gapWidth = 32; // gap-8 = 32px
+  const totalItemWidth = logoWidth + gapWidth;
+  const totalWidth = LOGOS.length * totalItemWidth;
 
   return (
     <div className="mt-12 w-full py-8">
@@ -96,11 +86,11 @@ export const LogoTicker = () => {
               x: {
                 repeat: Infinity,
                 repeatType: "loop",
-                duration: 30, // Normal ticker speed - 30 seconds
+                duration: 30,
                 ease: "linear",
               },
             }}
-            style={{ width: `${duplicatedLogos.length * logoWidth}px` }}
+            style={{ width: `${duplicatedLogos.length * totalItemWidth}px` }}
           >
             {duplicatedLogos.map((logo, index) => (
               <LogoCard key={`${logo.name}-${index}`} logo={logo} />
@@ -115,38 +105,32 @@ export const LogoTicker = () => {
 interface LogoCardProps {
   logo: {
     name: string;
-    Icon: IconType;
+    src: string;
+    alt: string;
   };
 }
 
 const LogoCard = ({ logo }: LogoCardProps) => {
-  const { Icon, name } = logo;
+  const { src, name, alt } = logo;
 
-  // Get brand-specific colors
-  const getLogoColor = (logoName: string) => {
-    const colors: Record<string, string> = {
-      Google: "text-blue-500 hover:text-blue-600",
-      Amazon: "text-orange-500 hover:text-orange-600",
-      Meta: "text-blue-600 hover:text-blue-700",
-      Tesla: "text-red-600 hover:text-red-700",
-      Netflix: "text-red-600 hover:text-red-700",
-      Spotify: "text-green-500 hover:text-green-600",
-      Airbnb: "text-red-500 hover:text-red-600",
-      Uber: "text-black hover:text-zinc-800",
-      Stripe: "text-indigo-600 hover:text-indigo-700",
-      Apple: "text-zinc-800 hover:text-black",
-      Nvidia: "text-green-600 hover:text-green-700",
-      Adobe: "text-red-600 hover:text-red-700",
-    };
-    return colors[logoName] || "text-zinc-600 hover:text-zinc-800";
-  };
+  // Check if this is the JB logo that needs a dark background
+  const needsDarkBackground = name === "JB";
 
   return (
     <div className="group flex flex-shrink-0 items-center justify-center px-12">
-      <Icon
-        className={`text-6xl transition-all duration-500 hover:scale-105 ${getLogoColor(name)}`}
-        title={name}
-      />
+      <div className={`relative transition-all duration-500 hover:scale-105 ${
+        needsDarkBackground 
+          ? "h-12 w-28 border-2 border-zinc-900 bg-zinc-900 shadow-[2px_2px_0px_#18181b]" 
+          : "h-16 w-24"
+      }`}>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-contain filter grayscale hover:grayscale-0 transition-all duration-500"
+          title={name}
+        />
+      </div>
     </div>
   );
 };

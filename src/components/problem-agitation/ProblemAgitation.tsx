@@ -3,14 +3,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiArrowRight, FiPlay, FiPause } from "react-icons/fi";
 
 export const ProblemAgitation = () => {
-  const [isAnimating, setIsAnimating] = useState(true);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [highlightedWord, setHighlightedWord] = useState(0);
 
   const painWords = ["exhausting", "expensive", "endless", "skyrocketing"];
   const solutionWords = ["custom", "automate", "30 days", "transparent"];
 
   return (
-    <section id="problem" className="-mt-12 bg-white pb-24">
+    <section id="problem" className="-mt-12 bg-white pb-32">
       <div className="mx-auto max-w-4xl px-4">
         {/* Prominent intro */}
         <motion.div

@@ -80,7 +80,7 @@ export const StickyScrollCards = () => {
   });
 
   return (
-    <div id="how-it-works" ref={containerRef} className="relative -mt-24">
+    <div id="how-it-works" ref={containerRef} className="relative pt-24">
       {cards.map((card, index) => (
         <StickyCard
           key={card.id}

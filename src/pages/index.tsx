@@ -8,6 +8,9 @@ import { StickyScrollCards } from "@/components/sticky-scroll-cards/StickyScroll
 import { PricingSection } from "@/components/pricing-section/PricingSection";
 import { TestimonialsPortfolio } from "@/components/testimonials-portfolio/TestimonialsPortfolio";
 import { ProblemAgitation } from "@/components/problem-agitation/ProblemAgitation";
+import { CaseStudies } from "@/components/case-studies/CaseStudies";
+import { FeatureToggles } from "@/components/feature-toggles/FeatureToggles";
+import { StaggerTestimonials } from "@/components/stagger-testimonials/StaggerTestimonials";
 import {
   FiMail,
   FiSettings,
@@ -18,7 +21,6 @@ import {
   FiZap,
   FiShield,
 } from "react-icons/fi";
-import Marquee from "react-fast-marquee";
 import { motion } from "framer-motion";
 
 export default function Home() {
@@ -31,12 +33,17 @@ export default function Home() {
         <Hero />
       </ExpandableNavBar>
       <ProblemAgitation />
+      <CaseStudies />
+      <FeatureToggles />
       <StickyScrollCards />
-      <WhatWeCanBuild />
-      <TestimonialsPortfolio />
+      <StaggerTestimonials />
+      {/*
+      - add team component here
+      */}
+      {/* <WhatWeCanBuild /> */}
+      {/* <TestimonialsPortfolio /> */}
       <PricingSection />
       <FinalCTA />
-
       <Footer />
     </main>
   );
