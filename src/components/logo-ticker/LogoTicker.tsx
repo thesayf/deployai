@@ -6,52 +6,52 @@ const LOGOS = [
   {
     name: "Centric",
     src: "/logos/CentricLogo.png",
-    alt: "Centric Logo"
+    alt: "Centric Logo",
   },
   {
     name: "Mindscape",
     src: "/logos/Mindscape_logo.svg",
-    alt: "Mindscape Logo"
+    alt: "Mindscape Logo",
   },
   {
     name: "Mirza",
     src: "/logos/Mirza_Logo.png",
-    alt: "Mirza Logo"
+    alt: "Mirza Logo",
   },
   {
     name: "Bookworm TP",
     src: "/logos/bookworm-tp.svg",
-    alt: "Bookworm TP Logo"
+    alt: "Bookworm TP Logo",
   },
   {
     name: "Go Elevate AI",
     src: "/logos/goelevateailogo.svg",
-    alt: "Go Elevate AI Logo"
+    alt: "Go Elevate AI Logo",
   },
   {
     name: "Hubi",
     src: "/logos/hubilogo.webp",
-    alt: "Hubi Logo"
+    alt: "Hubi Logo",
   },
   {
     name: "OC",
     src: "/logos/oclogo.svg",
-    alt: "OC Logo"
+    alt: "OC Logo",
   },
   {
     name: "Pink Lizard",
     src: "/logos/pinklizardlogo.png",
-    alt: "Pink Lizard Logo"
+    alt: "Pink Lizard Logo",
   },
   {
     name: "Task",
     src: "/logos/task transparent.svg",
-    alt: "Task Logo"
+    alt: "Task Logo",
   },
   {
     name: "JB",
     src: "/logos/jblogo.png",
-    alt: "JB Logo"
+    alt: "JB Logo",
   },
 ];
 
@@ -118,16 +118,18 @@ const LogoCard = ({ logo }: LogoCardProps) => {
 
   return (
     <div className="group flex flex-shrink-0 items-center justify-center px-12">
-      <div className={`relative transition-all duration-500 hover:scale-105 ${
-        needsDarkBackground 
-          ? "h-12 w-28 border-2 border-zinc-900 bg-zinc-900 shadow-[2px_2px_0px_#18181b]" 
-          : "h-16 w-24"
-      }`}>
+      <div
+        className={`relative transition-all duration-500 hover:scale-105 ${
+          needsDarkBackground
+            ? "h-12 w-28 border-2 border-zinc-900 bg-zinc-900 shadow-[2px_2px_0px_#18181b]"
+            : "h-16 w-24"
+        }`}
+      >
         <Image
           src={src}
           alt={alt}
           fill
-          className="object-contain filter grayscale hover:grayscale-0 transition-all duration-500"
+          className="object-contain transition-all duration-500"
           title={name}
         />
       </div>
