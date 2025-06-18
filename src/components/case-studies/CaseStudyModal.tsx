@@ -4,6 +4,10 @@ import { FiX, FiClock, FiDollarSign, FiTrendingUp, FiUsers } from "react-icons/f
 import { ChatbotMockup } from "./ChatbotMockup";
 import { JBCRMDashboard } from "./JBCRMDashboard";
 import { JBBookingSystem } from "./JBBookingSystem";
+import { GlobalShipControlDashboard } from "./GlobalShipControlDashboard";
+import { GlobalShipRouteOptimizer } from "./GlobalShipRouteOptimizer";
+import { TechStartAIAssistant } from "./TechStartAIAssistant";
+import { TechStartTicketDashboard } from "./TechStartTicketDashboard";
 
 interface CaseStudyModalProps {
   isOpen: boolean;
@@ -34,11 +38,23 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
   if (!caseStudy) return null;
   
   const isJBCaseStudy = caseStudy.id === "jb-luxury-detailing";
+  const isGlobalShipCaseStudy = caseStudy.id === "automated-logistics";
+  const isTechStartCaseStudy = caseStudy.id === "ai-customer-service";
   
   const jbScreens = [
     { name: "AI Chatbot", component: <ChatbotMockup /> },
     { name: "CRM Dashboard", component: <JBCRMDashboard /> },
     { name: "Booking System", component: <JBBookingSystem /> }
+  ];
+
+  const globalShipScreens = [
+    { name: "Control Dashboard", component: <GlobalShipControlDashboard /> },
+    { name: "Route Optimizer", component: <GlobalShipRouteOptimizer /> }
+  ];
+
+  const techStartScreens = [
+    { name: "AI Assistant", component: <TechStartAIAssistant /> },
+    { name: "Admin Dashboard", component: <TechStartTicketDashboard /> }
   ];
 
   return (
@@ -81,18 +97,20 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
             <div className="grid grid-cols-1 lg:grid-cols-2 max-h-[calc(90vh-100px)] overflow-y-auto">
               {/* Left Column - Image & Metrics */}
               <div className="p-6">
-                {isJBCaseStudy ? (
+                {(isJBCaseStudy || isGlobalShipCaseStudy || isTechStartCaseStudy) ? (
                   <div className="mb-6">
-                    {/* Screen Navigation for JB Case Study */}
+                    {/* Screen Navigation */}
                     <div className="mb-4 flex gap-2 justify-center">
-                      {jbScreens.map((screen, index) => (
+                      {(isJBCaseStudy ? jbScreens : isGlobalShipCaseStudy ? globalShipScreens : techStartScreens).map((screen, index) => (
                         <button
                           key={index}
                           onClick={() => setCurrentScreen(index)}
                           className={`px-3 py-1 text-sm rounded-full border-2 transition-all ${
                             currentScreen === index
-                              ? "border-yellow-600 bg-yellow-600 text-white"
-                              : "border-zinc-300 bg-white text-zinc-600 hover:border-yellow-600"
+                              ? (isJBCaseStudy ? "border-yellow-600 bg-yellow-600 text-white" : 
+                                 isGlobalShipCaseStudy ? "border-blue-600 bg-blue-600 text-white" :
+                                 "border-indigo-600 bg-indigo-600 text-white")
+                              : "border-zinc-300 bg-white text-zinc-600 hover:border-zinc-500"
                           }`}
                         >
                           {screen.name}
@@ -101,7 +119,11 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
                     </div>
                     {/* Screen Display */}
                     <div className="h-[600px] w-full rounded-2xl border-2 border-zinc-900 shadow-[4px_4px_0px_#18181b] overflow-hidden bg-gradient-to-br from-zinc-900 via-zinc-800 to-black">
-                      {currentScreen === 0 && (
+                      {isJBCaseStudy && jbScreens[currentScreen]?.component}
+                      {isGlobalShipCaseStudy && globalShipScreens[currentScreen]?.component}
+                      {isTechStartCaseStudy && techStartScreens[currentScreen]?.component}
+                    </div>
+                  </div>
                         <div className="w-full bg-white rounded-lg overflow-hidden">
                           {/* Browser URL Bar */}
                           <div className="bg-zinc-100 px-3 py-3 flex items-center gap-2 border-b border-zinc-200">
