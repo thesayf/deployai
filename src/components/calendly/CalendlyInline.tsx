@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
 declare global {
   interface Window {
@@ -16,8 +16,10 @@ declare global {
 export const CalendlyInline = () => {
   const calendlyRef = useRef<HTMLDivElement>(null);
   const isInitialized = useRef(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Initialize immediately when component mounts
     const initCalendly = () => {
       if (window.Calendly && calendlyRef.current && !isInitialized.current) {
         // Clear any existing content first
@@ -62,18 +64,29 @@ export const CalendlyInline = () => {
         setTimeout(applyStyles, 2000);
         
         isInitialized.current = true;
+        setIsLoading(false);
       }
     };
 
-    // Check if Calendly is already loaded
+    // Initialize immediately - don't wait for scroll into view
     if (window.Calendly) {
       initCalendly();
     } else {
-      // Wait for script to load
+      // Wait for script to load, then initialize immediately
       const script = document.querySelector('script[src*="calendly.com"]');
       if (script) {
         script.addEventListener("load", initCalendly);
         return () => script.removeEventListener("load", initCalendly);
+      } else {
+        // Fallback: check every 100ms for up to 5 seconds
+        const checkInterval = setInterval(() => {
+          if (window.Calendly) {
+            clearInterval(checkInterval);
+            initCalendly();
+          }
+        }, 100);
+        
+        setTimeout(() => clearInterval(checkInterval), 5000);
       }
     }
 
@@ -103,17 +116,26 @@ export const CalendlyInline = () => {
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mx-auto max-w-3xl"
         >
+          {isLoading && (
+            <div className="flex items-center justify-center h-96 rounded-xl border-4 border-zinc-900 bg-white shadow-[0px_8px_0px_#18181b]">
+              <div className="text-center">
+                <div className="animate-spin h-12 w-12 border-4 border-orange-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-zinc-600">Loading calendar...</p>
+              </div>
+            </div>
+          )}
           <div
             ref={calendlyRef}
             className="mx-auto flex justify-center"
             style={{ 
               minWidth: "320px",
-              maxWidth: "100%"
+              maxWidth: "100%",
+              opacity: isLoading ? 0 : 1,
+              transition: "opacity 0.3s ease"
             }}
           />
         </motion.div>
