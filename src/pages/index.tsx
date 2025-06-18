@@ -11,6 +11,7 @@ import { ProblemAgitation } from "@/components/problem-agitation/ProblemAgitatio
 import { CaseStudies } from "@/components/case-studies/CaseStudies";
 import { FeatureToggles } from "@/components/feature-toggles/FeatureToggles";
 import { StaggerTestimonials } from "@/components/stagger-testimonials/StaggerTestimonials";
+import { CalendlyInline } from "@/components/calendly/CalendlyInline";
 import {
   FiMail,
   FiSettings,
@@ -43,7 +44,7 @@ export default function Home() {
       {/* <WhatWeCanBuild /> */}
       {/* <TestimonialsPortfolio /> */}
       <PricingSection />
-      <FinalCTA />
+      <CalendlyInline />
       <Footer />
     </main>
   );

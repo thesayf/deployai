@@ -224,34 +224,26 @@ const ProcessOptimizationComponent = () => {
 export const data = [
   {
     id: 1,
-    title: "Email Automation",
+    title: "AI System Replacement",
     Component: EmailAutomationComponent,
-    cardTitle: "AI-Powered Email Management",
+    cardTitle: "🤖 AI-Powered System Replacement",
     cardSubtitle:
-      "Automatically respond to customer inquiries, categorize support tickets, and route emails to the right team. Cut response time by 87% like our SaaS clients.",
+      "Replace expensive SaaS tools with intelligent custom solutions. Eliminate $5K-$15K monthly software costs. AI handles tasks your current tools require manual work for. Complete ownership, unlimited scaling.",
   },
   {
     id: 2,
-    title: "Order Processing",
+    title: "Process Automation",
     Component: OrderProcessingComponent,
-    cardTitle: "Automated Order Workflows",
+    cardTitle: "⚡ AI Process Automation",
     cardSubtitle:
-      "Transform manual order processing into smart automation. Track orders, manage inventory, and process shipments without human intervention.",
+      "Deploy AI to handle your biggest operational bottlenecks. Automate hundreds of transactions, claims, or processes daily. Reduce manual work by 80% with intelligent automation. Scale operations without hiring.",
   },
   {
     id: 3,
-    title: "Data Analytics",
+    title: "Custom Platforms",
     Component: DataAnalyticsComponent,
-    cardTitle: "Real-Time Business Intelligence",
+    cardTitle: "🚀 AI-Enhanced Custom Platforms",
     cardSubtitle:
-      "Turn your data into actionable insights with custom dashboards and automated reporting. See exactly what's driving your business growth.",
-  },
-  {
-    id: 4,
-    title: "Process Optimization",
-    Component: ProcessOptimizationComponent,
-    cardTitle: "Workflow Automation",
-    cardSubtitle:
-      "Eliminate bottlenecks and reduce errors with custom AI tools. Like our manufacturing client who saved $2.4M annually through process automation.",
+      "Build intelligent platforms that learn and adapt. AI-powered features your competitors can't match. Custom solutions that evolve with your business. Deploy advanced capabilities in weeks, not years.",
   },
 ];

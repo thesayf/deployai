@@ -21,10 +21,10 @@ export const ProblemAgitation = () => {
           className="mb-16 text-center"
         >
           <p className="mb-3 text-xl text-zinc-600 md:text-2xl">
-            Enterprise Operations Teams craving transformation,
+            While your competitors deploy AI,
           </p>
           <p className="text-2xl font-bold text-zinc-900 md:text-3xl">
-            we hear you.
+            are you still paying for yesterday's tools?
           </p>
         </motion.div>
 
@@ -41,27 +41,12 @@ export const ProblemAgitation = () => {
               className="mx-auto mb-8 max-w-4xl text-center text-2xl leading-relaxed text-zinc-800 md:text-3xl"
               style={{ wordBreak: "break-word" }}
             >
+              Every month you delay AI deployment, your competitors gain ground. They're automating processes, eliminating SaaS subscriptions, and scaling without adding headcount. Meanwhile, you're still paying{" "}
               <InteractiveWord
-                words={["Endless", "Countless", "Repetitive"]}
+                words={["premium", "massive", "endless"]}
                 isAnimating={isAnimating}
               />{" "}
-              manual tasks,{" "}
-              <InteractiveWord
-                words={["skyrocketing", "rising", "mounting"]}
-                isAnimating={isAnimating}
-              />{" "}
-              operational costs, and software projects that drag on forever—
-              it's{" "}
-              <InteractiveWord
-                words={["exhausting", "draining", "overwhelming"]}
-                isAnimating={isAnimating}
-              />{" "}
-              and{" "}
-              <InteractiveWord
-                words={["expensive", "costly", "wasteful"]}
-                isAnimating={isAnimating}
-              />
-              .
+              prices for tools that AI could replace entirely.
               <motion.span
                 className="mx-2 inline-flex items-center"
                 whileHover={{ scale: 1.2, rotate: 10 }}
@@ -71,7 +56,7 @@ export const ProblemAgitation = () => {
                   😤
                 </span>
               </motion.span>
-              But what if building transformative software didn't have to be?
+              But what if catching up didn't have to take years?
             </p>
 
             {/* Interactive control */}

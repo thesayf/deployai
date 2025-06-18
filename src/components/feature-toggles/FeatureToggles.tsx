@@ -12,13 +12,12 @@ export const FeatureToggles = () => {
 
   return (
     <section className="relative mx-auto max-w-6xl px-2 md:px-4">
-      <SectionHeading>Show the people what your product does</SectionHeading>
+      <SectionHeading>How We Deploy AI Into Your Business</SectionHeading>
       <SectionSubheading>
-        It should be very clear who your product is for and what problem it
-        solves for them.
+        Three proven AI deployment paths that eliminate costs and automate your biggest challenges.
       </SectionSubheading>
       <div className="w-full">
-        <div className="mb-9 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="mb-9 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {data.map((d) => (
             <ToggleButton
               key={d.id}

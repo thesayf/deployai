@@ -19,14 +19,12 @@ export const Footer = () => {
       <div className="border-b-4 border-zinc-700 bg-zinc-800 py-16">
         <div className="mx-auto max-w-6xl px-4 text-center">
           <h2 className="mb-6 text-4xl font-black md:text-5xl">
-            Ready to Stop Paying for
+            Ready to Deploy AI and
             <br />
-            <span className="text-orange-400">Tools You Don't Own?</span>
+            <span className="text-orange-400">Eliminate Tool Costs Forever?</span>
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-lg text-zinc-300 md:text-xl">
-            Join the businesses that chose ownership over subscriptions. Book
-            your free strategy call and see how custom AI can transform your
-            operations.
+            Book a 15-minute AI strategy call. We'll analyze your current operations and show you exactly where AI can replace expensive tools and automate manual processes.
           </p>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             {/* Calendly CTA Button */}

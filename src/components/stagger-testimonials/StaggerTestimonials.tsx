@@ -130,7 +130,7 @@ const TestimonialCard = ({ position, testimonial, handleMove, cardSize }: Testim
       initial={false}
       onClick={() => handleMove(position)}
       className={`
-      absolute left-1/2 top-1/2 cursor-pointer border-zinc-900 p-8 text-zinc-900 transition-colors duration-500 ${
+      absolute left-1/2 top-1/2 cursor-pointer border-zinc-900 p-8 text-zinc-900 ${
         isActive ? "z-10 bg-gradient-to-r from-orange-500 to-red-500 text-white" : "z-0 bg-white"
       }
       `}
@@ -151,8 +151,8 @@ const TestimonialCard = ({ position, testimonial, handleMove, cardSize }: Testim
       transition={{
         type: "spring",
         mass: 3,
-        stiffness: 400,
-        damping: 50,
+        stiffness: 300,
+        damping: 60,
       }}
     >
       <span

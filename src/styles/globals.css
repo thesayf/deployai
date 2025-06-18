@@ -11,3 +11,21 @@ html {
 * {
   scroll-snap-type: inherit;
 }
+
+/* Calendly widget full container styling */
+.calendly-inline-widget {
+  height: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.calendly-inline-widget iframe {
+  height: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+}

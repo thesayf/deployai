@@ -85,6 +85,38 @@ export const PricingSection = () => {
             One-time investment. Lifetime ownership. No subscriptions, no vendor
             lock-in. Calculate your savings below.
           </p>
+          
+          {/* Key Benefits from copy.md */}
+          <div className="mx-auto mt-8 grid max-w-4xl grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="flex h-20 items-center justify-center gap-3 rounded-xl border-2 border-zinc-900 bg-white p-4 shadow-[2px_2px_0px_#18181b]">
+              <div className="flex items-center text-2xl">⚡</div>
+              <div className="flex flex-1 flex-col justify-center">
+                <div className="text-sm font-bold leading-tight">30-day deployment</div>
+                <div className="text-xs text-zinc-600 leading-tight">AI working fast</div>
+              </div>
+            </div>
+            <div className="flex h-20 items-center justify-center gap-3 rounded-xl border-2 border-zinc-900 bg-white p-4 shadow-[2px_2px_0px_#18181b]">
+              <div className="flex items-center text-2xl">💰</div>
+              <div className="flex flex-1 flex-col justify-center">
+                <div className="text-sm font-bold leading-tight">Fixed pricing</div>
+                <div className="text-xs text-zinc-600 leading-tight">No surprise costs</div>
+              </div>
+            </div>
+            <div className="flex h-20 items-center justify-center gap-3 rounded-xl border-2 border-zinc-900 bg-white p-4 shadow-[2px_2px_0px_#18181b]">
+              <div className="flex items-center text-2xl">🏆</div>
+              <div className="flex flex-1 flex-col justify-center">
+                <div className="text-sm font-bold leading-tight">100% ownership</div>
+                <div className="text-xs text-zinc-600 leading-tight">Your advantage</div>
+              </div>
+            </div>
+            <div className="flex h-20 items-center justify-center gap-3 rounded-xl border-2 border-zinc-900 bg-white p-4 shadow-[2px_2px_0px_#18181b]">
+              <div className="flex items-center text-2xl">📈</div>
+              <div className="flex flex-1 flex-col justify-center">
+                <div className="text-sm font-bold leading-tight">Immediate impact</div>
+                <div className="text-xs text-zinc-600 leading-tight">ROI through efficiency</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Pricing Cards */}
