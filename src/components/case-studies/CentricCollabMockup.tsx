@@ -1,24 +1,29 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { ScreenDemo } from "./ScreenDemo";
 
 export const CentricCollabMockup = () => {
   return (
-    <div className="relative w-full max-w-5xl mx-auto p-8">
-      {/* Tablet Frame */}
-      <div className="relative">
-        {/* Tablet Shadow */}
-        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/20 to-transparent rounded-2xl blur-2xl transform translate-y-4"></div>
+    <ScreenDemo>
+      {/* Browser Window - Clean and Centered */}
+      <div className="bg-white rounded-lg shadow-2xl overflow-hidden w-full h-full flex flex-col">
+        {/* Browser Top Bar */}
+        <div className="bg-zinc-100 px-4 py-3 flex items-center gap-2 border-b border-zinc-200">
+          <div className="flex gap-2">
+            <div className="w-3 h-3 rounded-full bg-red-500"></div>
+            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+          </div>
+          <div className="flex-1 flex justify-center">
+            <div className="bg-white rounded-md px-4 py-2 text-sm text-zinc-600 border border-zinc-300 min-w-[300px] text-center">
+              review.centric.org.uk/workspace
+            </div>
+          </div>
+        </div>
         
-        {/* Tablet Screen */}
-        <div className="relative bg-zinc-900 rounded-2xl p-1 shadow-2xl">
-          {/* Screen */}
-          <div className="bg-zinc-950 rounded-xl p-4">
-            {/* Home Button Area */}
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-zinc-800 rounded-full"></div>
-            
-            {/* App Interface - Desktop Screenshot View */}
-            <div className="bg-white rounded-lg shadow-2xl overflow-hidden h-[400px]">
+        {/* Collaborative Review Interface - Fill Available Space */}
+        <div className="bg-white flex-1 relative overflow-hidden">
               {/* App Header */}
               <div className="bg-gradient-to-r from-purple-700 to-purple-600 text-white p-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -280,23 +285,18 @@ export const CentricCollabMockup = () => {
                 </div>
               </div>
               
-              {/* Bottom Footer */}
-              <div className="absolute bottom-4 left-6 right-6 flex justify-between items-center">
-                <p className="text-xs text-zinc-500">
-                  Powered by deployAI Collaboration Platform
-                </p>
-                <div className="flex items-center gap-2 text-xs text-zinc-500">
-                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                  Real-time sync active
-                </div>
-              </div>
+          {/* Bottom Footer */}
+          <div className="absolute bottom-4 left-6 right-6 flex justify-between items-center">
+            <p className="text-xs text-zinc-500">
+              Powered by deployAI Collaboration Platform
+            </p>
+            <div className="flex items-center gap-2 text-xs text-zinc-500">
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+              Real-time sync active
             </div>
           </div>
         </div>
       </div>
-      
-      {/* Gradient Background Effect */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-600/20 via-transparent to-zinc-900/20 blur-3xl"></div>
-    </div>
+    </ScreenDemo>
   );
 };

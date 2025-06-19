@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiX, FiClock, FiDollarSign, FiTrendingUp, FiUsers } from "react-icons/fi";
+import { FiX, FiClock, FiTrendingUp, FiUsers } from "react-icons/fi";
 import { ChatbotMockup } from "./ChatbotMockup";
 import { JBCRMDashboard } from "./JBCRMDashboard";
 import { JBBookingSystem } from "./JBBookingSystem";
 import { CaseStudyScreenShell } from "./CaseStudyScreenShell";
-import { JBChatContent } from "./JBChatContent";
-import { JBDashboardContent } from "./JBDashboardContent";
-import { JBBookingContent } from "./JBBookingContent";
 import { CentricDashboardMockup } from "./CentricDashboardMockup";
 import { CentricProposalMockup } from "./CentricProposalMockup";
 import { CentricCollabMockup } from "./CentricCollabMockup";
@@ -217,7 +214,9 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
                       ))}
                     </div>
                     {/* Screen Display */}
-                    <div className="h-[450px] w-full rounded-2xl border-2 border-zinc-900 shadow-[4px_4px_0px_#18181b] bg-gradient-to-br from-zinc-900 via-zinc-800 to-black overflow-hidden">
+                    <div className={`h-[450px] w-full rounded-2xl border-2 border-zinc-900 shadow-[4px_4px_0px_#18181b] overflow-hidden ${
+                      isCentricCaseStudy ? "bg-white" : "bg-gradient-to-br from-zinc-900 via-zinc-800 to-black"
+                    }`}>
                       {isJBCaseStudy && (
                         <>
                           {currentScreen === 0 && (
@@ -778,11 +777,7 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
                       )}
                       {isGlobalShipCaseStudy && globalShipScreens[currentScreen]?.component}
                       {isTechStartCaseStudy && techStartScreens[currentScreen]?.component}
-                      {isCentricCaseStudy && (
-                        <div className="w-full h-full">
-                          {centricScreens[currentScreen]?.component}
-                        </div>
-                      )}
+                      {isCentricCaseStudy && centricScreens[currentScreen]?.component}
                     </div>
                   </div>
                 ) : (

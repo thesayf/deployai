@@ -1,12 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { ScreenDemo } from "./ScreenDemo";
 
 export const CentricDashboardMockup = () => {
   return (
-    <div className="w-full h-full p-4">
+    <ScreenDemo>
       {/* Browser Window - Clean and Centered */}
-      <div className="bg-white rounded-xl shadow-2xl overflow-hidden w-full h-full">
+      <div className="bg-white rounded-lg shadow-2xl overflow-hidden w-full h-full flex flex-col">
         {/* Browser Top Bar */}
         <div className="bg-zinc-100 px-4 py-3 flex items-center gap-2 border-b border-zinc-200">
           <div className="flex gap-2">
@@ -305,6 +306,6 @@ export const CentricDashboardMockup = () => {
           </div>
         </div>
       </div>
-    </div>
+    </ScreenDemo>
   );
 };

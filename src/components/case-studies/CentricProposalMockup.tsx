@@ -1,37 +1,29 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { ScreenDemo } from "./ScreenDemo";
 
 export const CentricProposalMockup = () => {
   return (
-    <div className="relative w-full max-w-5xl mx-auto p-8">
-      {/* Desktop Monitor Frame */}
-      <div className="relative">
-        {/* Monitor Shadow */}
-        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/20 to-transparent rounded-t-3xl blur-3xl transform translate-y-6"></div>
+    <ScreenDemo>
+      {/* Browser Window - Clean and Centered */}
+      <div className="bg-white rounded-lg shadow-2xl overflow-hidden w-full h-full flex flex-col">
+        {/* Browser Top Bar */}
+        <div className="bg-zinc-100 px-4 py-3 flex items-center gap-2 border-b border-zinc-200">
+          <div className="flex gap-2">
+            <div className="w-3 h-3 rounded-full bg-red-500"></div>
+            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+          </div>
+          <div className="flex-1 flex justify-center">
+            <div className="bg-white rounded-md px-4 py-2 text-sm text-zinc-600 border border-zinc-300 min-w-[300px] text-center">
+              generator.centric.org.uk/new-proposal
+            </div>
+          </div>
+        </div>
         
-        {/* Monitor Screen */}
-        <div className="relative bg-zinc-900 rounded-t-3xl p-2 shadow-2xl">
-          {/* Screen Bezel */}
-          <div className="bg-zinc-950 rounded-t-2xl p-6">
-            {/* Browser Window */}
-            <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
-              {/* Browser Top Bar */}
-              <div className="bg-zinc-100 px-6 py-4 flex items-center gap-3 border-b border-zinc-200">
-                <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                </div>
-                <div className="flex-1 flex justify-center">
-                  <div className="bg-white rounded-lg px-6 py-2 text-sm text-zinc-600 border border-zinc-300 min-w-[400px] text-center">
-                    generator.centric.org.uk/new-proposal
-                  </div>
-                </div>
-              </div>
-              
-              {/* Proposal Generator Interface - Desktop Screenshot View */}
-              <div className="bg-gradient-to-br from-zinc-50 to-white h-[400px] relative">
+        {/* Proposal Generator Interface - Desktop Screenshot View */}
+        <div className="bg-gradient-to-br from-zinc-50 to-white flex-1 relative overflow-hidden">
                 {/* Header */}
                 <div className="bg-gradient-to-r from-purple-700 to-purple-600 text-white p-3 flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -242,24 +234,14 @@ export const CentricProposalMockup = () => {
                   </div>
                 </div>
                 
-                {/* Powered by footer */}
-                <div className="absolute bottom-4 right-6">
-                  <p className="text-xs text-zinc-500">
-                    Powered by deployAI Proposal Engine
-                  </p>
-                </div>
-              </div>
-            </div>
+          {/* Powered by footer */}
+          <div className="absolute bottom-4 right-6">
+            <p className="text-xs text-zinc-500">
+              Powered by deployAI Proposal Engine
+            </p>
           </div>
         </div>
-        
-        {/* Monitor Stand */}
-        <div className="bg-zinc-700 h-8 w-32 mx-auto rounded-b-lg"></div>
-        <div className="bg-zinc-600 h-4 w-48 mx-auto rounded-full"></div>
       </div>
-      
-      {/* Gradient Background Effect */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-purple-600/20 via-transparent to-zinc-900/20 blur-3xl"></div>
-    </div>
+    </ScreenDemo>
   );
 };
