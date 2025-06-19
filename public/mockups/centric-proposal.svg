@@ -1,0 +1,151 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Browser Window -->
+  <rect width="800" height="600" rx="8" fill="#FFFFFF"/>
+  
+  <!-- Browser Top Bar -->
+  <rect width="800" height="48" fill="#F4F4F5"/>
+  <line x1="0" y1="48" x2="800" y2="48" stroke="#E4E4E7" stroke-width="1"/>
+  
+  <!-- Window Controls -->
+  <circle cx="24" cy="24" r="6" fill="#EF4444"/>
+  <circle cx="44" cy="24" r="6" fill="#EAB308"/>
+  <circle cx="64" cy="24" r="6" fill="#22C55E"/>
+  
+  <!-- URL Bar -->
+  <rect x="240" y="14" width="320" height="20" rx="4" fill="#FFFFFF" stroke="#D4D4D8"/>
+  <text x="400" y="27" font-family="system-ui" font-size="11" fill="#71717A" text-anchor="middle">generator.centric.org.uk/new-proposal</text>
+  
+  <!-- App Header -->
+  <defs>
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6B21A8"/>
+      <stop offset="100%" style="stop-color:#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <rect y="48" width="800" height="24" fill="url(#purpleGradient)"/>
+  
+  <!-- Logo -->
+  <rect x="8" y="54" width="12" height="12" rx="1" fill="#FFFFFF"/>
+  <text x="14" y="62" font-family="system-ui" font-size="6" font-weight="bold" fill="#6B21A8" text-anchor="middle">C</text>
+  
+  <!-- Title -->
+  <text x="24" y="62" font-family="system-ui" font-size="10" font-weight="500" fill="#FFFFFF">Proposal Generator</text>
+  
+  <!-- Status Badge -->
+  <rect x="740" y="56" width="24" height="10" rx="2" fill="#EAB308"/>
+  <text x="752" y="63" font-family="system-ui" font-size="8" fill="#000000" text-anchor="middle">Draft</text>
+  <text x="712" y="63" font-family="system-ui" font-size="8" fill="#FFFFFF">15 min avg</text>
+  
+  <!-- Main Content Area -->
+  <rect y="72" width="800" height="480" fill="#FAFAFA"/>
+  
+  <!-- 4-Step Workflow Cards -->
+  <!-- Step 1: Choose Template -->
+  <rect x="8" y="80" width="192" height="128" rx="4" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="12" y="90" font-family="system-ui" font-size="8" font-weight="500" fill="#6B21A8">Step 1: Choose Template</text>
+  <circle cx="184" cy="88" r="6" fill="#7C3AED"/>
+  <text x="184" y="91" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">1</text>
+  
+  <!-- Template List -->
+  <rect x="12" y="96" width="176" height="14" rx="2" fill="#E9D5FF" stroke="#7C3AED"/>
+  <text x="16" y="105" font-family="system-ui" font-size="6" font-weight="500" fill="#18181B">Youth Research</text>
+  <text x="60" y="105" font-family="system-ui" font-size="6" fill="#52525B">£100-200K</text>
+  <rect x="148" y="100" width="36" height="8" rx="1" fill="#D1FAE5"/>
+  <text x="166" y="106" font-family="system-ui" font-size="6" fill="#065F46" text-anchor="middle">94% match</text>
+  
+  <rect x="12" y="112" width="176" height="14" rx="2" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="16" y="121" font-family="system-ui" font-size="6" font-weight="500" fill="#18181B">Health Studies</text>
+  <text x="60" y="121" font-family="system-ui" font-size="6" fill="#52525B">£50-150K</text>
+  <rect x="148" y="116" width="36" height="8" rx="1" fill="#D1FAE5"/>
+  <text x="166" y="122" font-family="system-ui" font-size="6" fill="#065F46" text-anchor="middle">89% match</text>
+  
+  <rect x="12" y="128" width="176" height="14" rx="2" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="16" y="137" font-family="system-ui" font-size="6" font-weight="500" fill="#18181B">Digital Inclusion</text>
+  <text x="64" y="137" font-family="system-ui" font-size="6" fill="#52525B">£75-300K</text>
+  <rect x="148" y="132" width="36" height="8" rx="1" fill="#FEF3C7"/>
+  <text x="166" y="138" font-family="system-ui" font-size="6" fill="#92400E" text-anchor="middle">76% match</text>
+  
+  <!-- Step 2: Import Data -->
+  <rect x="204" y="80" width="192" height="128" rx="4" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="208" y="90" font-family="system-ui" font-size="8" font-weight="500" fill="#6B21A8">Step 2: Import Data</text>
+  <circle cx="380" cy="88" r="6" fill="#7C3AED"/>
+  <text x="380" y="91" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">2</text>
+  
+  <text x="208" y="102" font-family="system-ui" font-size="8" fill="#52525B">Select Previous Project</text>
+  <rect x="208" y="106" width="180" height="14" rx="2" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="212" y="115" font-family="system-ui" font-size="8" fill="#18181B">Birmingham Youth Voice Initiative</text>
+  
+  <rect x="208" y="126" width="180" height="14" rx="2" fill="#7C3AED"/>
+  <text x="298" y="135" font-family="system-ui" font-size="8" fill="#FFFFFF" text-anchor="middle">Import Data</text>
+  
+  <rect x="208" y="146" width="180" height="24" rx="2" fill="#D1FAE5" stroke="#10B981"/>
+  <text x="212" y="155" font-family="system-ui" font-size="7" fill="#065F46">✓ Ready to import:</text>
+  <text x="212" y="165" font-family="system-ui" font-size="7" fill="#065F46">Community engagement metrics,</text>
+  
+  <!-- Step 3: Project Details -->
+  <rect x="400" y="80" width="192" height="128" rx="4" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="404" y="90" font-family="system-ui" font-size="8" font-weight="500" fill="#6B21A8">Step 3: Project Details</text>
+  <circle cx="576" cy="88" r="6" fill="#7C3AED"/>
+  <text x="576" y="91" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">3</text>
+  
+  <text x="404" y="102" font-family="system-ui" font-size="6" fill="#52525B">Project Title</text>
+  <rect x="404" y="104" width="180" height="10" rx="1" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="406" y="111" font-family="system-ui" font-size="6" fill="#18181B">South London Youth Digital...</text>
+  
+  <text x="404" y="120" font-family="system-ui" font-size="6" fill="#52525B">Location</text>
+  <rect x="404" y="122" width="84" height="10" rx="1" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="406" y="129" font-family="system-ui" font-size="6" fill="#18181B">Lambeth</text>
+  
+  <text x="492" y="120" font-family="system-ui" font-size="6" fill="#52525B">Funding Amount</text>
+  <rect x="492" y="122" width="92" height="10" rx="1" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="494" y="129" font-family="system-ui" font-size="6" fill="#18181B">£150,000</text>
+  
+  <!-- Step 4: Add Collaborators -->
+  <rect x="596" y="80" width="196" height="128" rx="4" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="600" y="90" font-family="system-ui" font-size="8" font-weight="500" fill="#6B21A8">Step 4: Add Collaborators</text>
+  <circle cx="776" cy="88" r="6" fill="#7C3AED"/>
+  <text x="776" y="91" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">4</text>
+  
+  <text x="600" y="102" font-family="system-ui" font-size="8" fill="#52525B">Partner Email</text>
+  <rect x="600" y="106" width="140" height="14" rx="2" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="604" y="115" font-family="system-ui" font-size="8" fill="#A1A1AA">partner@organization.uk</text>
+  <rect x="744" y="106" width="28" height="14" rx="2" fill="#7C3AED"/>
+  <text x="758" y="115" font-family="system-ui" font-size="8" fill="#FFFFFF" text-anchor="middle">Send</text>
+  
+  <rect x="600" y="126" width="188" height="12" rx="2" fill="#FAFAFA"/>
+  <text x="604" y="134" font-family="system-ui" font-size="7" fill="#52525B">sarah.johnson@community.org</text>
+  <rect x="744" y="128" width="32" height="8" rx="1" fill="#D1FAE5"/>
+  <text x="760" y="134" font-family="system-ui" font-size="7" fill="#065F46" text-anchor="middle">Invited</text>
+  
+  <!-- Proposal Preview Section -->
+  <rect x="8" y="216" width="784" height="160" rx="4" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="16" y="230" font-family="system-ui" font-size="10" font-weight="500" fill="#6B21A8">📄 Your South London Youth Digital Skills Program Proposal Will Include:</text>
+  
+  <!-- Preview Items -->
+  <text x="16" y="246" font-family="system-ui" font-size="8" fill="#065F46">✓</text>
+  <text x="28" y="246" font-family="system-ui" font-size="8" fill="#52525B">Executive Summary (auto-generated)</text>
+  
+  <text x="16" y="258" font-family="system-ui" font-size="8" fill="#065F46">✓</text>
+  <text x="28" y="258" font-family="system-ui" font-size="8" fill="#52525B">Community Engagement Plan (from Birmingham Youth Voice, adapted for Lambeth)</text>
+  
+  <text x="16" y="270" font-family="system-ui" font-size="8" fill="#065F46">✓</text>
+  <text x="28" y="270" font-family="system-ui" font-size="8" fill="#52525B">Budget Breakdown (template + past data)</text>
+  
+  <text x="16" y="282" font-family="system-ui" font-size="8" fill="#065F46">✓</text>
+  <text x="28" y="282" font-family="system-ui" font-size="8" fill="#52525B">Impact Metrics (from similar projects)</text>
+  
+  <text x="16" y="294" font-family="system-ui" font-size="8" fill="#065F46">✓</text>
+  <text x="28" y="294" font-family="system-ui" font-size="8" fill="#52525B">Evaluation Framework</text>
+  
+  <text x="16" y="306" font-family="system-ui" font-size="8" fill="#EAB308">⚠️</text>
+  <text x="28" y="306" font-family="system-ui" font-size="8" fill="#52525B">Risk Assessment (needs partner input)</text>
+  
+  <!-- Generate Button -->
+  <rect x="16" y="320" width="760" height="20" rx="2" fill="#7C3AED"/>
+  <text x="396" y="333" font-family="system-ui" font-size="9" font-weight="500" fill="#FFFFFF" text-anchor="middle">Generate South London Youth Digital Skills Program Proposal</text>
+  
+  <!-- Footer -->
+  <rect y="552" width="800" height="48" fill="#FFFFFF"/>
+  <line x1="0" y1="552" x2="800" y2="552" stroke="#E4E4E7" stroke-width="1"/>
+  <text x="792" y="576" font-family="system-ui" font-size="8" fill="#71717A" text-anchor="end">Powered by deployAI Proposal Engine</text>
+</svg>

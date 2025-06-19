@@ -1,0 +1,133 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Browser Window -->
+  <rect width="800" height="600" rx="8" fill="#FFFFFF"/>
+  
+  <!-- Browser Top Bar -->
+  <rect width="800" height="48" fill="#F4F4F5"/>
+  <line x1="0" y1="48" x2="800" y2="48" stroke="#E4E4E7" stroke-width="1"/>
+  
+  <!-- Window Controls -->
+  <circle cx="24" cy="24" r="6" fill="#EF4444"/>
+  <circle cx="44" cy="24" r="6" fill="#EAB308"/>
+  <circle cx="64" cy="24" r="6" fill="#22C55E"/>
+  
+  <!-- URL Bar -->
+  <rect x="240" y="14" width="320" height="20" rx="4" fill="#FFFFFF" stroke="#D4D4D8"/>
+  <text x="400" y="27" font-family="system-ui" font-size="11" fill="#71717A" text-anchor="middle">insights.centric.org.uk/dashboard</text>
+  
+  <!-- App Header -->
+  <defs>
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6B21A8"/>
+      <stop offset="100%" style="stop-color:#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <rect y="48" width="800" height="32" fill="url(#purpleGradient)"/>
+  
+  <!-- Logo -->
+  <rect x="16" y="56" width="16" height="16" rx="2" fill="#FFFFFF"/>
+  <text x="24" y="67" font-family="system-ui" font-size="8" font-weight="bold" fill="#6B21A8" text-anchor="middle">C</text>
+  
+  <!-- Title -->
+  <text x="40" y="67" font-family="system-ui" font-size="10" font-weight="500" fill="#FFFFFF">Partnership Dashboard</text>
+  
+  <!-- Status Badge -->
+  <rect x="736" y="58" width="32" height="14" rx="3" fill="#EAB308"/>
+  <text x="752" y="67" font-family="system-ui" font-size="8" fill="#000000" text-anchor="middle">Live</text>
+  <text x="704" y="67" font-family="system-ui" font-size="8" fill="#FFFFFF">52 Projects</text>
+  
+  <!-- Toolbar -->
+  <rect y="80" width="800" height="28" fill="#FAFAFA"/>
+  <line x1="0" y1="108" x2="800" y2="108" stroke="#E4E4E7" stroke-width="1"/>
+  
+  <!-- Search Bar -->
+  <rect x="8" y="86" width="400" height="16" rx="2" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <path d="M16 94 L20 98 M18 96 A2 2 0 1 1 14 96 A2 2 0 0 1 18 96" stroke="#A1A1AA" stroke-width="1" fill="none"/>
+  <text x="26" y="97" font-family="system-ui" font-size="8" fill="#71717A">Youth engagement Birmingham</text>
+  
+  <!-- Search Button -->
+  <rect x="416" y="86" width="40" height="16" rx="2" fill="#7C3AED"/>
+  <text x="436" y="97" font-family="system-ui" font-size="8" fill="#FFFFFF" text-anchor="middle">Search</text>
+  
+  <!-- Filter Button -->
+  <text x="468" y="97" font-family="system-ui" font-size="8" fill="#71717A">Filter</text>
+  
+  <!-- Main Layout -->
+  <!-- Sidebar -->
+  <rect x="0" y="108" width="80" height="444" fill="#FAFAFA"/>
+  <line x1="80" y1="108" x2="80" y2="552" stroke="#E4E4E7" stroke-width="1"/>
+  
+  <!-- Stats Widget -->
+  <rect x="4" y="112" width="72" height="48" rx="2" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="8" y="122" font-family="system-ui" font-size="8" font-weight="500" fill="#6B21A8">Stats</text>
+  <text x="8" y="134" font-family="system-ui" font-size="7" fill="#52525B">Projects</text>
+  <text x="68" y="134" font-family="system-ui" font-size="7" font-weight="bold" fill="#7C3AED" text-anchor="end">52</text>
+  <text x="8" y="146" font-family="system-ui" font-size="7" fill="#52525B">Success</text>
+  <text x="68" y="146" font-family="system-ui" font-size="7" font-weight="bold" fill="#22C55E" text-anchor="end">94%</text>
+  
+  <!-- Relationship Filter -->
+  <rect x="4" y="164" width="72" height="60" rx="2" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <text x="8" y="174" font-family="system-ui" font-size="8" font-weight="500" fill="#6B21A8">Relationship</text>
+  <rect x="8" y="182" width="6" height="6" rx="1" fill="#7C3AED"/>
+  <text x="18" y="187" font-family="system-ui" font-size="7" fill="#18181B">Strong</text>
+  <rect x="8" y="194" width="6" height="6" rx="1" fill="#7C3AED"/>
+  <text x="18" y="199" font-family="system-ui" font-size="7" fill="#18181B">Warm</text>
+  <rect x="8" y="206" width="6" height="6" rx="1" fill="#FFFFFF" stroke="#D4D4D8"/>
+  <text x="18" y="211" font-family="system-ui" font-size="7" fill="#18181B">Cold</text>
+  
+  <!-- Main Content Area -->
+  <!-- Tab Bar -->
+  <rect x="84" y="112" width="60" height="16" rx="2" fill="#E9D5FF"/>
+  <text x="114" y="123" font-family="system-ui" font-size="8" fill="#6B21A8" text-anchor="middle">Projects (8)</text>
+  <text x="164" y="123" font-family="system-ui" font-size="8" fill="#71717A">Partners (12)</text>
+  
+  <!-- Project Card 1 -->
+  <rect x="88" y="136" width="704" height="72" rx="4" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="776" cy="152" r="8" fill="#22C55E"/>
+  <text x="776" y="155" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✓</text>
+  
+  <rect x="96" y="144" width="32" height="14" rx="2" fill="#E9D5FF"/>
+  <text x="112" y="153" font-family="system-ui" font-size="7" fill="#6B21A8" text-anchor="middle">Youth</text>
+  
+  <text x="96" y="170" font-family="system-ui" font-size="9" font-weight="bold" fill="#18181B">Birmingham Youth Voice Initiative</text>
+  <text x="96" y="182" font-family="system-ui" font-size="7" fill="#71717A">Led by Sarah Johnson • Active until Dec 2025</text>
+  
+  <rect x="96" y="190" width="80" height="14" rx="2" fill="#D1FAE5"/>
+  <text x="136" y="199" font-family="system-ui" font-size="7" fill="#065F46" text-anchor="middle">Strong Contact</text>
+  <text x="744" y="199" font-family="system-ui" font-size="7" fill="#7C3AED">View</text>
+  
+  <!-- Project Card 2 -->
+  <rect x="88" y="216" width="704" height="72" rx="4" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="776" cy="232" r="8" fill="#22C55E"/>
+  <text x="776" y="235" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✓</text>
+  
+  <rect x="96" y="224" width="32" height="14" rx="2" fill="#D1FAE5"/>
+  <text x="112" y="233" font-family="system-ui" font-size="7" fill="#065F46" text-anchor="middle">Health</text>
+  
+  <text x="96" y="250" font-family="system-ui" font-size="9" font-weight="bold" fill="#18181B">Community Mental Health Network</text>
+  <text x="96" y="262" font-family="system-ui" font-size="7" fill="#71717A">Led by Dr. Aisha Patel • Planning Phase</text>
+  
+  <rect x="96" y="270" width="64" height="14" rx="2" fill="#FEF3C7"/>
+  <text x="128" y="279" font-family="system-ui" font-size="7" fill="#92400E" text-anchor="middle">Warm Intro</text>
+  <text x="744" y="279" font-family="system-ui" font-size="7" fill="#7C3AED">View</text>
+  
+  <!-- Project Card 3 -->
+  <rect x="88" y="296" width="704" height="72" rx="4" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="776" cy="312" r="8" fill="#EAB308"/>
+  <text x="776" y="315" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">!</text>
+  
+  <rect x="96" y="304" width="32" height="14" rx="2" fill="#FEF3C7"/>
+  <text x="112" y="313" font-family="system-ui" font-size="7" fill="#92400E" text-anchor="middle">Digital</text>
+  
+  <text x="96" y="330" font-family="system-ui" font-size="9" font-weight="bold" fill="#18181B">Digital Skills Programme</text>
+  <text x="96" y="342" font-family="system-ui" font-size="7" fill="#71717A">Led by Marcus Williams • Active until Mar 2025</text>
+  
+  <rect x="96" y="350" width="80" height="14" rx="2" fill="#D1FAE5"/>
+  <text x="136" y="359" font-family="system-ui" font-size="7" fill="#065F46" text-anchor="middle">Strong Contact</text>
+  <text x="744" y="359" font-family="system-ui" font-size="7" fill="#7C3AED">View</text>
+  
+  <!-- Footer -->
+  <rect y="552" width="800" height="48" fill="#FFFFFF"/>
+  <line x1="0" y1="552" x2="800" y2="552" stroke="#E4E4E7" stroke-width="1"/>
+  <text x="792" y="576" font-family="system-ui" font-size="8" fill="#71717A" text-anchor="end">Powered by deployAI Knowledge Platform</text>
+</svg>

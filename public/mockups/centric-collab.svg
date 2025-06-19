@@ -1,0 +1,169 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Browser Window -->
+  <rect width="800" height="600" rx="8" fill="#FFFFFF"/>
+  
+  <!-- Browser Top Bar -->
+  <rect width="800" height="48" fill="#F4F4F5"/>
+  <line x1="0" y1="48" x2="800" y2="48" stroke="#E4E4E7" stroke-width="1"/>
+  
+  <!-- Window Controls -->
+  <circle cx="24" cy="24" r="6" fill="#EF4444"/>
+  <circle cx="44" cy="24" r="6" fill="#EAB308"/>
+  <circle cx="64" cy="24" r="6" fill="#22C55E"/>
+  
+  <!-- URL Bar -->
+  <rect x="240" y="14" width="320" height="20" rx="4" fill="#FFFFFF" stroke="#D4D4D8"/>
+  <text x="400" y="27" font-family="system-ui" font-size="11" fill="#71717A" text-anchor="middle">review.centric.org.uk/workspace</text>
+  
+  <!-- App Header -->
+  <defs>
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6B21A8"/>
+      <stop offset="100%" style="stop-color:#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <rect y="48" width="800" height="24" fill="url(#purpleGradient)"/>
+  
+  <!-- Logo -->
+  <rect x="8" y="54" width="12" height="12" rx="1" fill="#FFFFFF"/>
+  <text x="14" y="62" font-family="system-ui" font-size="6" font-weight="bold" fill="#6B21A8" text-anchor="middle">C</text>
+  
+  <!-- Title -->
+  <text x="24" y="62" font-family="system-ui" font-size="10" font-weight="500" fill="#FFFFFF">Collaborative Review Workspace</text>
+  
+  <!-- Status Badge -->
+  <rect x="720" y="56" width="44" height="10" rx="2" fill="#22C55E"/>
+  <text x="742" y="63" font-family="system-ui" font-size="8" fill="#FFFFFF" text-anchor="middle">Live Session</text>
+  <text x="692" y="63" font-family="system-ui" font-size="8" fill="#FFFFFF">4 active</text>
+  
+  <!-- Collaboration Status Bar -->
+  <rect y="72" width="800" height="24" fill="#E9D5FF"/>
+  <line x1="0" y1="96" x2="800" y2="96" stroke="#C084FC" stroke-width="1"/>
+  
+  <text x="8" y="86" font-family="system-ui" font-size="8" font-weight="500" fill="#6B21A8">Active Collaborators</text>
+  
+  <!-- Avatars -->
+  <circle cx="104" cy="84" r="8" fill="#3B82F6" stroke="#FFFFFF" stroke-width="1"/>
+  <text x="104" y="87" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">AM</text>
+  <circle cx="108" cy="88" r="3" fill="#2563EB"/>
+  
+  <circle cx="120" cy="84" r="8" fill="#7C3AED" stroke="#FFFFFF" stroke-width="1"/>
+  <text x="120" y="87" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">SH</text>
+  <circle cx="124" cy="88" r="3" fill="#6B21A8"/>
+  
+  <circle cx="136" cy="84" r="8" fill="#22C55E" stroke="#FFFFFF" stroke-width="1"/>
+  <text x="136" y="87" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">MJ</text>
+  <circle cx="140" cy="88" r="3" fill="#2563EB"/>
+  
+  <circle cx="152" cy="84" r="8" fill="#EAB308" stroke="#FFFFFF" stroke-width="1"/>
+  <text x="152" y="87" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">DR</text>
+  <circle cx="156" cy="88" r="3" fill="#A16207"/>
+  
+  <rect x="744" y="78" width="44" height="12" rx="6" fill="#D1FAE5"/>
+  <text x="766" y="86" font-family="system-ui" font-size="8" fill="#065F46" text-anchor="middle">4 active</text>
+  
+  <!-- Main Content Area -->
+  <!-- Document Editor -->
+  <rect x="0" y="96" width="608" height="456" fill="#FFFFFF"/>
+  <rect x="0" y="96" width="608" height="32" fill="#FFFFFF"/>
+  <line x1="0" y1="128" x2="608" y2="128" stroke="#E4E4E7" stroke-width="1"/>
+  
+  <text x="8" y="108" font-family="system-ui" font-size="10" font-weight="500" fill="#6B21A8">Community Youth Digital Skills Initiative - Draft v2.3</text>
+  <text x="8" y="120" font-family="system-ui" font-size="8" fill="#52525B">Last saved: 2 min ago • v2.3 • </text>
+  <circle cx="140" cy="118" r="2" fill="#22C55E"/>
+  <text x="146" y="120" font-family="system-ui" font-size="8" fill="#52525B">Auto-sync</text>
+  
+  <!-- Document Content -->
+  <g transform="translate(8, 136)">
+    <!-- Executive Summary Section -->
+    <rect x="0" y="0" width="2" height="40" fill="#7C3AED"/>
+    <text x="8" y="10" font-family="system-ui" font-size="9" font-weight="500" fill="#6B21A8">Executive Summary</text>
+    <text x="8" y="24" font-family="system-ui" font-size="8" fill="#18181B">Digital skills initiative for 500+ young people in Birmingham communities.</text>
+    
+    <!-- Highlighted Comment -->
+    <rect x="8" y="32" width="580" height="24" rx="2" fill="#FEF3C7" stroke="#F59E0B"/>
+    <rect x="8" y="40" width="280" height="8" rx="1" fill="#FED7AA"/>
+    <text x="12" y="46" font-family="system-ui" font-size="8" fill="#18181B">Our research methodology emphasizes participatory action research</text>
+    <text x="296" y="46" font-family="system-ui" font-size="8" fill="#18181B">, ensuring young people are</text>
+    <circle cx="580" cy="36" r="4" fill="#3B82F6"/>
+    
+    <!-- Community Impact Section -->
+    <rect x="0" y="64" width="2" height="40" fill="#22C55E"/>
+    <text x="8" y="74" font-family="system-ui" font-size="9" font-weight="500" fill="#059669">Community Impact Framework</text>
+    <text x="8" y="88" font-family="system-ui" font-size="8" fill="#18181B">This initiative prioritizes community ownership ensuring:</text>
+    <text x="16" y="100" font-family="system-ui" font-size="8" fill="#18181B">• Young people co-design activities</text>
+    
+    <!-- Budget Section -->
+    <rect x="0" y="112" width="2" height="60" fill="#3B82F6"/>
+    <text x="8" y="122" font-family="system-ui" font-size="9" font-weight="500" fill="#1D4ED8">Budget Allocation (£150,000)</text>
+    <rect x="8" y="128" width="580" height="36" rx="2" fill="#DBEAFE" stroke="#60A5FA"/>
+    
+    <text x="16" y="142" font-family="system-ui" font-size="7" font-weight="500" fill="#18181B">Staff &amp; Coordinators</text>
+    <text x="16" y="152" font-family="system-ui" font-size="7" fill="#1D4ED8">£60,000 (40%)</text>
+    
+    <text x="300" y="142" font-family="system-ui" font-size="7" font-weight="500" fill="#18181B">Equipment &amp; Tech</text>
+    <text x="300" y="152" font-family="system-ui" font-size="7" fill="#1D4ED8">£45,000 (30%)</text>
+  </g>
+  
+  <!-- Comments Panel -->
+  <rect x="608" y="96" width="192" height="456" fill="#FAFAFA"/>
+  <line x1="608" y1="96" x2="608" y2="552" stroke="#E4E4E7" stroke-width="1"/>
+  
+  <!-- Comments Header -->
+  <rect x="608" y="96" width="192" height="28" fill="#FFFFFF"/>
+  <line x1="608" y1="124" x2="800" y2="124" stroke="#E4E4E7" stroke-width="1"/>
+  <text x="616" y="110" font-family="system-ui" font-size="9" font-weight="500" fill="#6B21A8">Comments</text>
+  <text x="616" y="118" font-family="system-ui" font-size="8" fill="#52525B">8 threads</text>
+  
+  <!-- Comment 1 -->
+  <rect x="612" y="128" width="184" height="32" rx="2" fill="#FFFFFF" stroke="#60A5FA"/>
+  <circle cx="620" cy="138" r="5" fill="#3B82F6"/>
+  <text x="620" y="141" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">A</text>
+  <text x="630" y="138" font-family="system-ui" font-size="7" font-weight="500" fill="#18181B">Aisha</text>
+  <text x="616" y="150" font-family="system-ui" font-size="7" fill="#52525B">Love storytelling workshops!</text>
+  <text x="616" y="156" font-family="system-ui" font-size="7" fill="#3B82F6">Reply</text>
+  
+  <!-- Comment 2 -->
+  <rect x="612" y="164" width="184" height="32" rx="2" fill="#FFFFFF" stroke="#C084FC"/>
+  <circle cx="620" cy="174" r="5" fill="#7C3AED"/>
+  <text x="620" y="177" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">S</text>
+  <text x="630" y="174" font-family="system-ui" font-size="7" font-weight="500" fill="#18181B">Sarah</text>
+  <text x="616" y="186" font-family="system-ui" font-size="7" fill="#52525B">Increase community budget</text>
+  <text x="616" y="192" font-family="system-ui" font-size="7" fill="#7C3AED">Reply</text>
+  
+  <!-- Comment 3 -->
+  <rect x="612" y="200" width="184" height="32" rx="2" fill="#FFFFFF" stroke="#FCD34D"/>
+  <circle cx="620" cy="210" r="5" fill="#EAB308"/>
+  <text x="620" y="213" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">R</text>
+  <text x="630" y="210" font-family="system-ui" font-size="7" font-weight="500" fill="#18181B">Rachel</text>
+  <text x="616" y="222" font-family="system-ui" font-size="7" fill="#52525B">Ready for final review</text>
+  <text x="616" y="228" font-family="system-ui" font-size="7" fill="#71717A">✅ Approve</text>
+  
+  <!-- Typing Indicator -->
+  <rect x="612" y="236" width="184" height="24" rx="2" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="620" cy="248" r="5" fill="#22C55E"/>
+  <text x="620" y="251" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">M</text>
+  <text x="630" y="250" font-family="system-ui" font-size="7" fill="#52525B">typing...</text>
+  
+  <!-- Ethics Checklist -->
+  <rect x="608" y="480" width="192" height="72" fill="#FFFFFF"/>
+  <line x1="608" y1="480" x2="800" y2="480" stroke="#E4E4E7" stroke-width="1"/>
+  <text x="616" y="492" font-family="system-ui" font-size="9" font-weight="500" fill="#6B21A8">Ethics</text>
+  
+  <rect x="616" y="500" width="8" height="8" rx="1" fill="#22C55E"/>
+  <text x="616" y="506" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✓</text>
+  <text x="628" y="506" font-family="system-ui" font-size="8" fill="#18181B">Consent</text>
+  
+  <rect x="616" y="512" width="8" height="8" rx="1" fill="#22C55E"/>
+  <text x="616" y="518" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">✓</text>
+  <text x="628" y="518" font-family="system-ui" font-size="8" fill="#18181B">Data</text>
+  
+  <rect x="616" y="524" width="8" height="8" rx="1" fill="#EAB308"/>
+  <text x="616" y="530" font-family="system-ui" font-size="6" font-weight="bold" fill="#FFFFFF" text-anchor="middle">!</text>
+  <text x="628" y="530" font-family="system-ui" font-size="8" fill="#18181B">Pending</text>
+  
+  <!-- Footer -->
+  <rect y="552" width="800" height="48" fill="#FFFFFF"/>
+  <line x1="0" y1="552" x2="800" y2="552" stroke="#E4E4E7" stroke-width="1"/>
+  <text x="792" y="576" font-family="system-ui" font-size="8" fill="#71717A" text-anchor="end">Powered by deployAI Collaboration Platform</text>
+</svg>
