@@ -51,13 +51,15 @@ const globalShipScreens = [
 
 export const GlobalShipExample = () => {
   return (
-    <div className="p-6 bg-zinc-100 rounded-lg">
-      <h3 className="font-bold text-lg mb-4">GlobalShip Implementation Example</h3>
+    <div className="rounded-lg bg-zinc-100 p-6">
+      <h3 className="mb-4 text-lg font-bold">
+        GlobalShip Implementation Example
+      </h3>
       <div className="space-y-4 text-sm">
         <div>
-          <h4 className="font-semibold mb-2">Step 1: Customize Templates</h4>
-          <pre className="bg-zinc-800 text-green-400 p-3 rounded text-xs overflow-x-auto">
-{`// GlobalShipDashboard.tsx (copied from GenericDashboard.tsx)
+          <h4 className="mb-2 font-semibold">Step 1: Customize Templates</h4>
+          <pre className="overflow-x-auto rounded bg-zinc-800 p-3 text-xs text-green-400">
+            {`// GlobalShipDashboard.tsx (copied from GenericDashboard.tsx)
 const COMPANY_NAME = "GlobalShip Logistics";
 const BRAND_COLOR = "blue-600";
 const DOMAIN_URL = "dashboard.globalship.com";
@@ -67,11 +69,11 @@ const STATS_ACTIVE = "2,400+";
 const STATS_REVENUE = "$347K";`}
           </pre>
         </div>
-        
+
         <div>
-          <h4 className="font-semibold mb-2">Step 2: Add to Modal</h4>
-          <pre className="bg-zinc-800 text-green-400 p-3 rounded text-xs overflow-x-auto">
-{`// CaseStudyModal.tsx additions
+          <h4 className="mb-2 font-semibold">Step 2: Add to Modal</h4>
+          <pre className="overflow-x-auto rounded bg-zinc-800 p-3 text-xs text-green-400">
+            {`// CaseStudyModal.tsx additions
 const isGlobalShipCaseStudy = caseStudy.id === "automated-logistics";
 
 const globalShipScreens = [
@@ -80,22 +82,23 @@ const globalShipScreens = [
 ];`}
           </pre>
         </div>
-        
+
         <div>
-          <h4 className="font-semibold mb-2">Step 3: Update Navigation</h4>
-          <pre className="bg-zinc-800 text-green-400 p-3 rounded text-xs overflow-x-auto">
-{`// Add GlobalShip to the screen mapping
+          <h4 className="mb-2 font-semibold">Step 3: Update Navigation</h4>
+          <pre className="overflow-x-auto rounded bg-zinc-800 p-3 text-xs text-green-400">
+            {`// Add GlobalShip to the screen mapping
 {(isJBCaseStudy ? jbScreens : 
   isGlobalShipCaseStudy ? globalShipScreens : 
   techStartScreens).map((screen, index) => ...`}
           </pre>
         </div>
-        
-        <div className="bg-green-50 border border-green-200 p-3 rounded">
-          <h4 className="font-semibold text-green-800 mb-1">Result:</h4>
-          <p className="text-green-700 text-xs">
-            GlobalShip case study now has 2 custom screens with proper branding, 
-            logistics-specific content, and blue navigation buttons that match their brand.
+
+        <div className="rounded border border-green-200 bg-green-50 p-3">
+          <h4 className="mb-1 font-semibold text-green-800">Result:</h4>
+          <p className="text-xs text-green-700">
+            GlobalShip case study now has 2 custom screens with proper branding,
+            logistics-specific content, and blue navigation buttons that match
+            their brand.
           </p>
         </div>
       </div>

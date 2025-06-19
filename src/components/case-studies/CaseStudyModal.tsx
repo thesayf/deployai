@@ -217,7 +217,7 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
                       ))}
                     </div>
                     {/* Screen Display */}
-                    <div className="h-[600px] w-full rounded-2xl border-2 border-zinc-900 shadow-[4px_4px_0px_#18181b] overflow-hidden bg-gradient-to-br from-zinc-900 via-zinc-800 to-black">
+                    <div className="h-[450px] w-full rounded-2xl border-2 border-zinc-900 shadow-[4px_4px_0px_#18181b] bg-gradient-to-br from-zinc-900 via-zinc-800 to-black overflow-hidden">
                       {isJBCaseStudy && (
                         <>
                           {currentScreen === 0 && (
@@ -778,7 +778,11 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
                       )}
                       {isGlobalShipCaseStudy && globalShipScreens[currentScreen]?.component}
                       {isTechStartCaseStudy && techStartScreens[currentScreen]?.component}
-                      {isCentricCaseStudy && centricScreens[currentScreen]?.component}
+                      {isCentricCaseStudy && (
+                        <div className="w-full h-full">
+                          {centricScreens[currentScreen]?.component}
+                        </div>
+                      )}
                     </div>
                   </div>
                 ) : (
