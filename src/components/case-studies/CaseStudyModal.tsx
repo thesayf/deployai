@@ -8,6 +8,9 @@ import { CaseStudyScreenShell } from "./CaseStudyScreenShell";
 import { JBChatContent } from "./JBChatContent";
 import { JBDashboardContent } from "./JBDashboardContent";
 import { JBBookingContent } from "./JBBookingContent";
+import { CentricDashboardMockup } from "./CentricDashboardMockup";
+import { CentricProposalMockup } from "./CentricProposalMockup";
+import { CentricCollabMockup } from "./CentricCollabMockup";
 
 interface CaseStudyModalProps {
   isOpen: boolean;
@@ -40,6 +43,7 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
   const isJBCaseStudy = caseStudy.id === "jb-luxury-detailing";
   const isGlobalShipCaseStudy = caseStudy.id === "automated-logistics";
   const isTechStartCaseStudy = caseStudy.id === "ai-customer-service";
+  const isCentricCaseStudy = caseStudy.id === "centric-research-platform";
   
   const jbScreens = [
     { name: "AI Chatbot", component: <ChatbotMockup /> },
@@ -145,6 +149,12 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
     }
   ];
 
+  const centricScreens = [
+    { name: "Partnership Dashboard", component: <CentricDashboardMockup /> },
+    { name: "Proposal Generator", component: <CentricProposalMockup /> },
+    { name: "Collaborative Review", component: <CentricCollabMockup /> }
+  ];
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -185,11 +195,11 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
             <div className="grid grid-cols-1 lg:grid-cols-2 max-h-[calc(90vh-100px)] overflow-y-auto">
               {/* Left Column - Image & Metrics */}
               <div className="p-6">
-                {(isJBCaseStudy || isGlobalShipCaseStudy || isTechStartCaseStudy) ? (
+                {(isJBCaseStudy || isGlobalShipCaseStudy || isTechStartCaseStudy || isCentricCaseStudy) ? (
                   <div className="mb-6">
                     {/* Screen Navigation */}
                     <div className="mb-4 flex gap-2 justify-center">
-                      {(isJBCaseStudy ? jbScreens : isGlobalShipCaseStudy ? globalShipScreens : techStartScreens).map((screen, index) => (
+                      {(isJBCaseStudy ? jbScreens : isGlobalShipCaseStudy ? globalShipScreens : isTechStartCaseStudy ? techStartScreens : centricScreens).map((screen, index) => (
                         <button
                           key={index}
                           onClick={() => setCurrentScreen(index)}
@@ -197,7 +207,8 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
                             currentScreen === index
                               ? (isJBCaseStudy ? "border-yellow-600 bg-yellow-600 text-white" : 
                                  isGlobalShipCaseStudy ? "border-blue-600 bg-blue-600 text-white" :
-                                 "border-indigo-600 bg-indigo-600 text-white")
+                                 isTechStartCaseStudy ? "border-indigo-600 bg-indigo-600 text-white" :
+                                 "border-purple-600 bg-purple-600 text-white")
                               : "border-zinc-300 bg-white text-zinc-600 hover:border-zinc-500"
                           }`}
                         >
@@ -767,6 +778,7 @@ export const CaseStudyModal = ({ isOpen, onClose, caseStudy }: CaseStudyModalPro
                       )}
                       {isGlobalShipCaseStudy && globalShipScreens[currentScreen]?.component}
                       {isTechStartCaseStudy && techStartScreens[currentScreen]?.component}
+                      {isCentricCaseStudy && centricScreens[currentScreen]?.component}
                     </div>
                   </div>
                 ) : (

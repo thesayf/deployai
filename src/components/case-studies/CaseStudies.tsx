@@ -89,7 +89,7 @@ const CaseStudyCard = ({
   bgUrl,
   onClick
 }: CaseStudyCardProps) => {
-  const isCustomMockup = bgUrl === "chatbot-mockup";
+  const isCustomMockup = bgUrl === "chatbot-mockup" || bgUrl === "centric-mockup";
   
   return (
     <motion.div
@@ -107,6 +107,8 @@ const CaseStudyCard = ({
           <div className="transform translate-y-[-100px] scale-75 w-full">
             {/* Screen Content - Use exact same component structure as modal */}
             <div className="bg-white overflow-hidden h-[800px] w-full max-w-[500px] mx-auto shadow-2xl">
+              {bgUrl === "chatbot-mockup" ? (
+                <>
                     {/* Browser URL Bar */}
                     <div className="bg-zinc-100 px-3 py-3 flex items-center gap-2 border-b border-zinc-200">
                       <div className="flex gap-1">
@@ -210,6 +212,93 @@ const CaseStudyCard = ({
                         Powered by deployAI
                       </div>
                     </div>
+                </>
+              ) : (
+                <>
+                  {/* Centric Research Platform Preview */}
+                  {/* Browser URL Bar */}
+                  <div className="bg-zinc-100 px-3 py-3 flex items-center gap-2 border-b border-zinc-200">
+                    <div className="flex gap-1">
+                      <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                      <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                    </div>
+                    <div className="flex-1 flex justify-center">
+                      <div className="bg-white rounded px-3 py-1 text-xs text-zinc-600 border border-zinc-300">
+                        insights.centric.org.uk
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* App Header */}
+                  <div className="bg-gradient-to-r from-purple-700 to-purple-600 text-white p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <img src="/logos/CentricLogo.png" alt="Centric Logo" className="h-8 w-auto bg-white rounded p-1" />
+                      <div>
+                        <div className="font-semibold text-lg">Partnership Dashboard</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs bg-yellow-500 text-black px-2 py-1 rounded-full">Live</span>
+                    </div>
+                  </div>
+                  
+                  {/* Dashboard Content Preview */}
+                  <div className="h-[400px] overflow-hidden p-4 space-y-3 bg-zinc-50 pointer-events-none">
+                    {/* Search Bar */}
+                    <div className="bg-white rounded-lg border border-zinc-200 p-3">
+                      <div className="bg-zinc-100 rounded px-3 py-2 text-xs text-zinc-500">
+                        Search 50+ community projects...
+                      </div>
+                    </div>
+                    
+                    {/* Project Cards Preview */}
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="bg-white rounded border border-purple-200 p-2">
+                        <div className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs mb-1">Youth Engagement</div>
+                        <div className="font-semibold text-xs">Birmingham Initiative</div>
+                        <div className="text-xs text-zinc-600">200+ participants</div>
+                      </div>
+                      <div className="bg-white rounded border border-green-200 p-2">
+                        <div className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs mb-1">Health & Wellbeing</div>
+                        <div className="font-semibold text-xs">Mental Health Network</div>
+                        <div className="text-xs text-zinc-600">Community-led support</div>
+                      </div>
+                      <div className="bg-white rounded border border-blue-200 p-2">
+                        <div className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs mb-1">Digital Inclusion</div>
+                        <div className="font-semibold text-xs">Skills Programme</div>
+                        <div className="text-xs text-zinc-600">Elderly tech training</div>
+                      </div>
+                      <div className="bg-white rounded border border-yellow-200 p-2">
+                        <div className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs mb-1">Environment</div>
+                        <div className="font-semibold text-xs">Sustainable Communities</div>
+                        <div className="text-xs text-zinc-600">Green spaces focus</div>
+                      </div>
+                    </div>
+                    
+                    {/* Stats Preview */}
+                    <div className="bg-white rounded-lg border border-zinc-200 p-3">
+                      <div className="grid grid-cols-2 gap-2 text-center">
+                        <div>
+                          <div className="font-bold text-purple-600">52</div>
+                          <div className="text-xs text-zinc-600">Projects</div>
+                        </div>
+                        <div>
+                          <div className="font-bold text-green-600">94%</div>
+                          <div className="text-xs text-zinc-600">Success Rate</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* App Footer */}
+                  <div className="border-t border-zinc-200 p-4 bg-white">
+                    <div className="text-xs text-zinc-500 text-center">
+                      Powered by deployAI
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -351,5 +440,29 @@ const CASE_STUDIES_DATA: CaseStudyData[] = [
     techStack: ["Python", "Django", "PostgreSQL", "Redis", "Docker", "Kubernetes", "Tableau"],
     testimonial: "This system found efficiencies we never knew existed. The data insights alone have transformed how we make operational decisions. The ROI exceeded our wildest expectations.",
     testimonialAuthor: "David Rodriguez, COO at IndustrialTech"
+  },
+  {
+    id: "centric-research-platform",
+    service: "AI Research Platform",
+    metric: "15 min",
+    subMetric: "proposal generation",
+    orderCount: "£150K+",
+    description: "Community research platform accelerates proposal creation and knowledge sharing",
+    bgUrl: "centric-mockup", // Special identifier for our custom component
+    company: "Centric",
+    industry: "Community Research & Development", 
+    timeline: "5 weeks implementation",
+    challenge: "Manual proposal creation process taking 3-4 weeks per submission, difficulty accessing and aggregating insights from 50+ past community engagement projects, and challenges ensuring authentic community voice integration in research proposals.",
+    solution: "Built AI-powered research platform with intelligent knowledge base, automated proposal generation using proven templates, and collaborative review workspace ensuring community member participation in all research activities.",
+    results: [
+      "Proposal generation time reduced from 4 weeks to 15 minutes",
+      "Instant access to 50+ past community project insights",
+      "100% community voice integration through collaborative review",
+      "£150K+ proposals generated with automated budget allocation",
+      "Real-time collaboration between community and institutional partners"
+    ],
+    techStack: ["React", "Node.js", "OpenAI GPT-4", "PostgreSQL", "WebSockets", "Stripe API"],
+    testimonial: "The platform has transformed how we approach community research. What used to take weeks of manual work now happens in minutes, while ensuring authentic community participation throughout the entire process.",
+    testimonialAuthor: "Dr. Sarah Williams, Research Director at Centric"
   }
 ];
