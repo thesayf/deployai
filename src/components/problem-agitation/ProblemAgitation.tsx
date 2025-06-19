@@ -10,7 +10,7 @@ export const ProblemAgitation = () => {
   const solutionWords = ["custom", "automate", "30 days", "transparent"];
 
   return (
-    <section id="problem" className="-mt-12 bg-white pb-32">
+    <section id="problem" className="-mt-12 bg-white">
       <div className="mx-auto max-w-4xl px-4">
         {/* Prominent intro */}
         <motion.div
@@ -113,7 +113,7 @@ export const ProblemAgitation = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center"
         >
-          <div className="inline-block rounded-2xl border-2 border-zinc-900 bg-zinc-100 p-6 shadow-[4px_4px_0px_#18181b]">
+          <div className="inline-block rounded-2xl border-2 border-zinc-900 bg-zinc-100 p-6 mt-12 shadow-[4px_4px_0px_#18181b]">
             <p className="mb-4 text-lg text-zinc-700">
               The only thing left? Booking your demo before someone else takes
               your spot this month.
@@ -141,7 +141,7 @@ export const ProblemAgitation = () => {
         </motion.div>
 
         {/* Interactive stats */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -184,7 +184,7 @@ export const ProblemAgitation = () => {
               Ownership
             </div>
           </motion.div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
