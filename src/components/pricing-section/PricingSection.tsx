@@ -15,45 +15,43 @@ interface PricingPlan {
 
 const pricingPlans: PricingPlan[] = [
   {
-    name: "AI Starter",
-    subtitle: "Perfect for small businesses",
-    price: "$8,500",
-    originalPrice: "$15,000",
-    description: "One AI system to replace your most expensive SaaS tool",
+    name: "MVP Sprint",
+    subtitle: "",
+    price: "$10,000",
+    description: "Launch your first AI-powered product in 4 weeks",
     features: [
-      { text: "1 Custom AI System", included: true },
-      { text: "30-Day Development", included: true },
-      { text: "Basic Integration", included: true },
-      { text: "Email Support", included: true },
+      { text: "Complete MVP in 4 weeks", included: true },
+      { text: "4 Strategic Planning Sessions", included: true },
+      { text: "2-3 Core Features Implementation", included: true },
+      { text: "AI Integration Setup", included: true },
+      { text: "Stripe Payment Integration", included: true },
+      { text: "Email Integration", included: true },
       { text: "Source Code Ownership", included: true },
       { text: "Advanced Analytics", included: false },
-      { text: "Priority Support", included: false },
-      { text: "Multiple Integrations", included: false },
     ],
     buttonText: "Start Your AI Journey",
   },
   {
-    name: "AI Transform",
-    subtitle: "Most popular choice",
-    price: "$18,500",
-    originalPrice: "$35,000",
+    name: "Enterprise",
+    subtitle: "",
+    price: "$20,000",
     description: "Complete AI automation for your core business processes",
     features: [
-      { text: "3 Custom AI Systems", included: true },
-      { text: "45-Day Development", included: true },
-      { text: "Advanced Integrations", included: true },
-      { text: "Priority Support", included: true },
+      { text: "Custom Internal Tool Development", included: true },
+      { text: "Process Automation Systems", included: true },
+      { text: "Data Pipeline Integration", included: true },
+      { text: "Admin Dashboard Creation", included: true },
+      { text: "Role-Based Access Control", included: true },
+      { text: "API Integration Framework", included: true },
       { text: "Source Code Ownership", included: true },
-      { text: "Advanced Analytics", included: true },
-      { text: "Team Training Session", included: true },
       { text: "3 Months Free Updates", included: true },
     ],
     buttonText: "Transform Your Business",
     popular: true,
   },
   {
-    name: "AI Enterprise",
-    subtitle: "For scaling companies",
+    name: "Custom",
+    subtitle: "",
     price: "Custom",
     description: "Full AI ecosystem with unlimited systems and integrations",
     features: [
@@ -182,7 +180,7 @@ const PricingCard = ({ plan, index }: PricingCardProps) => {
       {/* Header */}
       <div className="mb-8 text-center">
         <h3 className="mb-2 text-2xl font-bold">{plan.name}</h3>
-        <p className="mb-4 text-zinc-600">{plan.subtitle}</p>
+        {plan.subtitle && <p className="mb-4 text-zinc-600">{plan.subtitle}</p>}
 
         <div className="mb-4">
           {plan.originalPrice && (
@@ -194,7 +192,7 @@ const PricingCard = ({ plan, index }: PricingCardProps) => {
             {plan.price}
           </span>
           {plan.price !== "Custom" && (
-            <span className="ml-1 text-zinc-600">one-time</span>
+            <span className="ml-1 text-zinc-600">/mo</span>
           )}
         </div>
 
