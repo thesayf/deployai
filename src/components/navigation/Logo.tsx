@@ -42,9 +42,9 @@ export const Logo = () => {
       <img
         src="/logo.png"
         alt="deployAI studio"
-        width="150"
+        width="120"
         height="auto"
-        className="h-auto cursor-pointer"
+        className="h-8 w-auto cursor-pointer"
       />
     </Link>
   );

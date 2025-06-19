@@ -15,24 +15,26 @@ export const Announcement = () => {
               height: "-0px",
             }}
           >
-            <Link
-              href="https://calendly.com/hello-deployai/30min"
-              target="_blank"
-              className="mx-auto mb-3 flex w-fit flex-col items-center justify-center gap-1 text-sm text-white hover:underline sm:flex-row"
-            >
-              <span className="font-semibold">🎉 Announcement 🎉</span>
-              <span className="hidden sm:block">–</span>
-              <span>
-                {" "}
-                Limited Time: Save 40% on AI Strategy Calls - Ends This Friday!"
-              </span>
-            </Link>
-            <button
-              onClick={() => setDismissed(true)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white"
-            >
-              <FiX />
-            </button>
+            <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
+              <Link
+                href="https://calendly.com/hello-deployai/30min"
+                target="_blank"
+                className="flex items-center justify-center gap-2 text-sm text-white hover:underline"
+              >
+                <span className="font-semibold">🎉 Limited Time</span>
+                <span className="hidden sm:inline">•</span>
+                <span className="hidden sm:inline">
+                  Save 40% on AI Strategy Calls - Ends This Friday!
+                </span>
+                <span className="sm:hidden">40% OFF - Ends Friday!</span>
+              </Link>
+              <button
+                onClick={() => setDismissed(true)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-200"
+              >
+                <FiX className="h-4 w-4" />
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

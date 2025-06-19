@@ -1,5 +1,7 @@
 import { Hero } from "@/components/hero/Hero";
 import { ExpandableNavBar } from "@/components/navigation/ExpandableNavBar";
+import { ModernNavBar } from "@/components/navigation/ModernNavBar";
+import { AnimatedNavBar } from "@/components/navigation/AnimatedNavBar";
 import { NAV_LINKS } from "@/components/navigation/constants";
 import { font } from "@/fonts";
 import { FinalCTA } from "@/components/final-cta/FinalCTA";
@@ -81,9 +83,8 @@ export default function Home() {
       className={`${font.className}`}
       style={{ scrollSnapType: "y proximity" }}
     >
-      <ExpandableNavBar links={NAV_LINKS}>
-        <Hero />
-      </ExpandableNavBar>
+      <AnimatedNavBar />
+      <Hero />
       <ProblemAgitation />
       <CaseStudies />
       <FeatureToggles />

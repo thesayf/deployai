@@ -19,30 +19,34 @@ export const ExpandableNavBar = ({
 
   return (
     <>
-      <div className="bg-indigo-600 pt-2">
-        <Announcement />
-        <nav className="rounded-t-2xl bg-white p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <Logo />
-              <DesktopLinks links={links} />
+      <div className="sticky top-0 z-50">
+        <div className="bg-indigo-600">
+          <Announcement />
+        </div>
+        <nav className="bg-white shadow-sm">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex h-16 items-center justify-between">
+              <div className="flex items-center">
+                <Logo />
+                <DesktopLinks links={links} />
+              </div>
+              <a
+                href="https://calendly.com/hello-deployai/30min"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden rounded-full border-2 border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 px-6 py-2 text-sm font-bold text-white shadow-[3px_3px_0px_#18181b] transition-all hover:scale-105 hover:shadow-[4px_4px_0px_#18181b] md:inline-flex"
+              >
+                Book Free AI Strategy Call
+              </a>
+              <button
+                onClick={() => setMobileNavOpen((pv) => !pv)}
+                className="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-zinc-900 bg-white text-zinc-900 shadow-[2px_2px_0px_#18181b] transition-all hover:shadow-[3px_3px_0px_#18181b] md:hidden"
+              >
+                <FiMenu className="h-5 w-5" />
+              </button>
             </div>
-            <a
-              href="https://calendly.com/hello-deployai/30min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden rounded-full border-2 border-zinc-900 bg-zinc-900 px-6 py-2 text-sm font-bold text-white shadow transition-transform hover:scale-105 md:block"
-            >
-              Book Free AI Strategy Call
-            </a>
-            <button
-              onClick={() => setMobileNavOpen((pv) => !pv)}
-              className="block text-2xl md:hidden"
-            >
-              <FiMenu />
-            </button>
+            <MobileLinks links={links} open={mobileNavOpen} />
           </div>
-          <MobileLinks links={links} open={mobileNavOpen} />
         </nav>
       </div>
       <motion.main layout>
