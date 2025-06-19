@@ -73,6 +73,7 @@ export const StaggerTestimonials = () => {
 
   return (
     <div
+      id="testimonials"
       className="relative w-full overflow-hidden bg-zinc-100"
       style={{
         height: SECTION_HEIGHT,
@@ -164,23 +165,17 @@ const TestimonialCard = ({ position, testimonial, handleMove, cardSize }: Testim
           height: BORDER_SIZE,
         }}
       />
-      <img
-        src={testimonial.imgSrc}
-        alt={`Testimonial image for ${testimonial.by}`}
-        className="mb-4 h-14 w-12 bg-zinc-600 object-cover object-top"
-        style={{
-          boxShadow: "3px 3px 0px white",
-        }}
-      />
-      <h3
-        className={`text-base sm:text-xl ${
-          isActive ? "text-white" : "text-zinc-900"
-        }`}
-      >
-        "{testimonial.testimonial}"
-      </h3>
+      <div className="flex h-full flex-col justify-center">
+        <h3
+          className={`text-sm sm:text-base italic text-center ${
+            isActive ? "text-white" : "text-zinc-900"
+          }`}
+        >
+          "{testimonial.testimonial}"
+        </h3>
+      </div>
       <p
-        className={`absolute bottom-8 left-8 right-8 mt-2 text-sm italic ${
+        className={`absolute bottom-8 left-8 right-8 mt-2 text-xs italic text-center ${
           isActive ? "text-orange-100" : "text-zinc-700"
         }`}
       >
@@ -194,82 +189,99 @@ const TESTIMONIAL_DATA = [
   {
     tempId: 0,
     testimonial:
-      "deployAI transformed our logistics completely. We're processing 10x more orders with the same team size.",
-    by: "Sarah, Operations Director at LogiCorp",
-    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Sarah",
+      "I used to spend my entire day answering the same questions over and over. Now students just chat with the bot and I actually get to focus on the important stuff. Honestly can't believe how much time I wasted before digging through messy spreadsheets.",
+    by: "Karine, Director at Concreted Education",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Karine",
   },
   {
     tempId: 1,
     testimonial:
-      "Our customer support is now 87% faster. The AI handles everything perfectly and escalates when needed.",
-    by: "Michael, CEO at TechStart",
-    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Michael",
+      "My phone used to ring nonstop with booking calls. Now this thing handles everything automatically and I'm booked out solid. Customers still feel like they get great service, just faster.",
+    by: "Judah, Owner at JB Detailing",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Judah",
   },
   {
     tempId: 2,
     testimonial:
-      "ROI was achieved in just 4 months. This system literally pays for itself every quarter.",
-    by: "Jennifer, Plant Manager at ManufacturingCo",
-    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Jennifer",
+      "Tender deadlines used to give me panic attacks. We'd scramble for weeks pulling together proposals. Now we knock them out in days, and our field teams can actually find the research they need without calling me every five minutes.",
+    by: "Dr Danquah, CEO at Centric Community Research",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Danquah",
   },
   {
     tempId: 3,
     testimonial:
-      "$2.4M in annual savings through process optimization. deployAI found efficiencies we never knew existed.",
-    by: "David, COO at IndustrialTech",
-    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=David",
+      "They really listened to what I wanted to build and didn't try to oversell me features I didn't need. Had my working app in about a month. Honestly wasn't sure this would actually work, but here we are.",
+    by: "Umar, Founder at ScheduleGenius.ai",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Umar",
   },
   {
     tempId: 4,
-    testimonial: "If I could give 11 stars, I'd give 12. Game-changing technology.",
-    by: "Amanda, CEO at StartupHub",
-    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Amanda",
+    testimonial:
+      "Went with Deploy AI because their other clients seemed legit. Month later, my book club idea was actually live. The AI discussion stuff genuinely surprises people - they can't figure out how it works so well.",
+    by: "Abdul, Founder at Bookwormclub",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Abdul",
   },
   {
     tempId: 5,
     testimonial:
-      "SO HAPPY WE FOUND YOU! The automation has saved me personally 100+ hours per month.",
-    by: "Robert, Founder at ScaleUp",
-    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Robert",
+      "The ROI was immediate. Within two months, the system paid for itself through efficiency gains alone. Now we're handling 3x the volume with the same team.",
+    by: "Sarah, Operations Manager at LogiFlow",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Sarah",
   },
   {
     tempId: 6,
     testimonial:
-      "Took some convincing, but now that we're on deployAI, we're never going back. Pure magic.",
-    by: "Lisa, VP Operations at RetailChain",
-    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Lisa",
+      "I was skeptical about AI at first, but deployAI made it so simple. The implementation was smooth and the results speak for themselves.",
+    by: "Marcus, CEO at TechVentures",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Marcus",
   },
   {
     tempId: 7,
     testimonial:
-      "The analytics and insights are incredible. We now make data-driven decisions in real-time.",
-    by: "James, CTO at DataDriven",
-    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=James",
+      "Customer satisfaction scores went through the roof. The AI handles routine queries perfectly, letting our team focus on complex issues.",
+    by: "Lisa, Support Director at ServicePro",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Lisa",
   },
   {
     tempId: 8,
-    testimonial: "It's just the best AI automation platform. Period.",
-    by: "Maria, CEO at AutomateNow",
-    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Maria",
+    testimonial:
+      "We've automated 80% of our repetitive tasks. What used to take days now happens in hours. Game-changing technology.",
+    by: "David, COO at ProcessFlow",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=David",
   },
   {
     tempId: 9,
-    testimonial: "Switched 2 years ago and never looked back. Best business decision ever.",
-    by: "Kevin, Founder at TechInnovate",
-    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Kevin",
+    testimonial:
+      "The best investment we've made in years. The platform paid for itself in the first quarter through cost savings alone.",
+    by: "Rachel, CFO at FinanceHub",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Rachel",
   },
   {
     tempId: 10,
     testimonial:
-      "I've been searching for AI automation like this for YEARS. So glad I finally found deployAI!",
-    by: "Rachel, Director at ProcessPro",
-    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Rachel",
+      "Implementation was seamless. The team understood our needs perfectly and delivered beyond expectations. Highly recommended.",
+    by: "James, Director at InnovateTech",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=James",
   },
   {
     tempId: 11,
     testimonial:
-      "So intuitive and powerful, we got our whole team automated in just one week.",
-    by: "Carlos, Manager at EfficiencyFirst",
+      "Our productivity has skyrocketed. Tasks that took hours now take minutes. The AI integration is incredibly intuitive.",
+    by: "Emma, Operations Lead at StreamlineOps",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Emma",
+  },
+  {
+    tempId: 12,
+    testimonial:
+      "Finally, a solution that actually works. No more juggling multiple tools - everything is automated and efficient.",
+    by: "Carlos, Founder at EfficiencyPro",
     imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Carlos",
+  },
+  {
+    tempId: 13,
+    testimonial:
+      "The time savings are incredible. What used to be a full-time job is now handled automatically. Worth every penny.",
+    by: "Nina, Manager at AutomateCo",
+    imgSrc: "https://api.dicebear.com/8.x/notionists/svg?seed=Nina",
   },
 ];

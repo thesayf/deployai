@@ -41,12 +41,14 @@ export const ProblemAgitation = () => {
               className="mx-auto mb-8 max-w-4xl text-center text-2xl leading-relaxed text-zinc-800 md:text-3xl"
               style={{ wordBreak: "break-word" }}
             >
-              Every month you delay AI deployment, your competitors gain ground. They're automating processes, eliminating SaaS subscriptions, and scaling without adding headcount. Meanwhile, you're still paying{" "}
+              Every month you delay AI deployment, your competitors gain ground.
+              They're automating processes, eliminating SaaS subscriptions, and
+              scaling without adding headcount. Meanwhile, you're still paying{" "}
               <InteractiveWord
                 words={["premium", "massive", "endless"]}
                 isAnimating={isAnimating}
               />{" "}
-              prices for tools that AI could replace entirely.
+              prices for tools that AI could replace entirely
               <motion.span
                 className="mx-2 inline-flex items-center"
                 whileHover={{ scale: 1.2, rotate: 10 }}
@@ -55,8 +57,9 @@ export const ProblemAgitation = () => {
                 <span className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-orange-500 text-sm font-bold text-white">
                   😤
                 </span>
+                .
               </motion.span>
-              But what if catching up didn't have to take years?
+              <div>But what if catching up didn't have to take years?</div>
             </p>
 
             {/* Interactive control */}

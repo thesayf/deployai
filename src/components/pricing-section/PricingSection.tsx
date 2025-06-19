@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { FiCheck, FiX, FiZap, FiStar } from "react-icons/fi";
 import { Button } from "../shared/Button";
 
 interface PricingPlan {
   name: string;
   subtitle: string;
-  price: string;
+  monthlyPrice: string;
+  annualPrice: string;
   originalPrice?: string;
   features: { text: string; included: boolean }[];
   buttonText: string;
@@ -17,7 +18,8 @@ const pricingPlans: PricingPlan[] = [
   {
     name: "MVP Sprint",
     subtitle: "",
-    price: "$10,000",
+    monthlyPrice: "$10,000",
+    annualPrice: "$8,000",
     description: "Launch your first AI-powered product in 4 weeks",
     features: [
       { text: "Complete MVP in 4 weeks", included: true },
@@ -29,12 +31,13 @@ const pricingPlans: PricingPlan[] = [
       { text: "Source Code Ownership", included: true },
       { text: "Advanced Analytics", included: false },
     ],
-    buttonText: "Start Your AI Journey",
+    buttonText: "Join Today",
   },
   {
     name: "Enterprise",
     subtitle: "",
-    price: "$20,000",
+    monthlyPrice: "$20,000",
+    annualPrice: "$16,000",
     description: "Complete AI automation for your core business processes",
     features: [
       { text: "Custom Internal Tool Development", included: true },
@@ -46,43 +49,57 @@ const pricingPlans: PricingPlan[] = [
       { text: "Source Code Ownership", included: true },
       { text: "3 Months Free Updates", included: true },
     ],
-    buttonText: "Transform Your Business",
+    buttonText: "Join Today",
     popular: true,
   },
   {
-    name: "Custom",
+    name: "Expert Training",
     subtitle: "",
-    price: "Custom",
-    description: "Full AI ecosystem with unlimited systems and integrations",
+    monthlyPrice: "$200",
+    annualPrice: "$200",
+    description: "one time",
     features: [
-      { text: "Unlimited AI Systems", included: true },
-      { text: "60-Day Development", included: true },
-      { text: "Enterprise Integrations", included: true },
-      { text: "Dedicated Support Team", included: true },
-      { text: "Source Code Ownership", included: true },
-      { text: "Advanced Analytics", included: true },
-      { text: "Ongoing Team Training", included: true },
-      { text: "12 Months Free Updates", included: true },
+      { text: "Initial project setup with your tech stack (15 mins)", included: true },
+      { text: "Core feature implementation - auth & basic CRUD (25 mins)", included: true },
+      { text: "UI implementation with ready-made components (15 mins)", included: true },
+      { text: "Deployment walkthrough (5 mins)", included: true },
+      { text: "You'll own 100% of the code", included: true },
     ],
-    buttonText: "Schedule Enterprise Call",
+    buttonText: "Join Today",
   },
 ];
 
 export const PricingSection = () => {
+  const [isAnnual, setIsAnnual] = useState(false);
+
   return (
+    <>
+      <style>{`
+        @keyframes gradientShift {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+      `}</style>
     <section id="pricing" className="bg-zinc-50 py-24">
       <div className="mx-auto max-w-7xl px-4">
         {/* Header */}
         <div className="mb-16 text-center">
           <h2 className="mb-6 text-5xl font-black md:text-6xl">
-            Stop Paying Monthly.
+            Stop Paying Monthly Subscriptions.
             <br />
             <span className="text-orange-600">Own Your AI.</span>
           </h2>
-          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-zinc-600 md:text-2xl">
+          {/* <p className="mx-auto max-w-3xl text-xl leading-relaxed text-zinc-600 md:text-2xl">
             One-time investment. Lifetime ownership. No subscriptions, no vendor
             lock-in. Calculate your savings below.
-          </p>
+          </p> */}
           
           {/* Key Benefits from copy.md */}
           <div className="mx-auto mt-8 grid max-w-4xl grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -117,10 +134,31 @@ export const PricingSection = () => {
           </div>
         </div>
 
+        {/* Billing Toggle */}
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <span className={`text-lg font-medium ${!isAnnual ? 'text-zinc-900' : 'text-zinc-500'}`}>
+            Monthly
+          </span>
+          <button
+            onClick={() => setIsAnnual(!isAnnual)}
+            className="relative inline-flex h-8 w-14 items-center rounded-full transition-colors ring-2 ring-orange-400"
+            style={{ backgroundColor: isAnnual ? '#ea580c' : '#ea580c' }}
+          >
+            <span
+              className={`${
+                isAnnual ? 'translate-x-7' : 'translate-x-1'
+              } inline-block h-6 w-6 transform rounded-full bg-white transition-transform`}
+            />
+          </button>
+          <span className={`text-lg font-medium ${isAnnual ? 'text-zinc-900' : 'text-zinc-500'}`}>
+            Annual
+          </span>
+        </div>
+
         {/* Pricing Cards */}
         <div className="mb-16 grid gap-8 md:grid-cols-3">
           {pricingPlans.map((plan, index) => (
-            <PricingCard key={plan.name} plan={plan} index={index} />
+            <PricingCard key={plan.name} plan={plan} index={index} isAnnual={isAnnual} />
           ))}
         </div>
 
@@ -148,20 +186,23 @@ export const PricingSection = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 
 interface PricingCardProps {
   plan: PricingPlan;
   index: number;
+  isAnnual: boolean;
 }
 
-const PricingCard = ({ plan, index }: PricingCardProps) => {
+const PricingCard = ({ plan, index, isAnnual }: PricingCardProps) => {
   const isPopular = plan.popular;
+  const displayPrice = isAnnual ? plan.annualPrice : plan.monthlyPrice;
 
   return (
     <div
-      className={`relative rounded-3xl border-4 border-zinc-900 bg-white p-8 transition-all hover:scale-105 ${
+      className={`relative flex flex-col rounded-3xl border-4 border-zinc-900 bg-white p-8 transition-all hover:scale-[1.02] ${
         isPopular
           ? "shadow-[12px_12px_0px_0px_rgb(234,88,12)] ring-4 ring-orange-200"
           : "shadow-[8px_8px_0px_0px_rgb(39,39,42)] hover:shadow-[12px_12px_0px_0px_rgb(39,39,42)]"
@@ -170,8 +211,8 @@ const PricingCard = ({ plan, index }: PricingCardProps) => {
       {/* Popular Badge */}
       {isPopular && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform">
-          <div className="flex items-center gap-2 rounded-full border-2 border-orange-400 bg-gradient-to-r from-orange-500 to-red-500 px-6 py-2 text-sm font-bold text-white">
-            <FiStar className="text-yellow-300" />
+          <div className="flex items-center gap-2 rounded-full border-2 border-green-600 bg-[#10B981] px-6 py-2 text-sm font-bold text-white">
+            <FiStar className="text-white" />
             MOST POPULAR
           </div>
         </div>
@@ -182,27 +223,33 @@ const PricingCard = ({ plan, index }: PricingCardProps) => {
         <h3 className="mb-2 text-2xl font-bold">{plan.name}</h3>
         {plan.subtitle && <p className="mb-4 text-zinc-600">{plan.subtitle}</p>}
 
-        <div className="mb-4">
+        <div className="mb-4 relative">
           {plan.originalPrice && (
             <span className="mr-2 text-lg text-zinc-400 line-through">
               {plan.originalPrice}
             </span>
           )}
-          <span className="text-4xl font-black text-zinc-900">
-            {plan.price}
-          </span>
-          {plan.price !== "Custom" && (
-            <span className="ml-1 text-zinc-600">/mo</span>
-          )}
+          <div className="flex justify-center">
+            <div className="relative inline-flex items-end">
+              <span className="text-4xl font-black text-zinc-900">
+                {displayPrice}
+              </span>
+              {displayPrice !== "Custom" && plan.name !== "Expert Training" && (
+                <span className="text-zinc-600 text-lg pb-1">/mo</span>
+              )}
+              {isAnnual && displayPrice !== "Custom" && plan.name !== "Expert Training" && (
+                <span className="absolute -top-1 -right-16 inline-flex items-center rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800 whitespace-nowrap">
+                  Save 20%
+                </span>
+              )}
+            </div>
+          </div>
         </div>
 
-        <p className="text-sm leading-relaxed text-zinc-600">
-          {plan.description}
-        </p>
       </div>
 
       {/* Features */}
-      <div className="mb-8 space-y-3">
+      <div className="mb-8 flex-grow space-y-3">
         {plan.features.map((feature, idx) => (
           <div key={idx} className="flex items-start gap-3">
             <div
@@ -236,13 +283,22 @@ const PricingCard = ({ plan, index }: PricingCardProps) => {
         rel="noopener noreferrer"
         style={{ display: "block" }}
       >
-        <Button
-          intent={isPopular ? "cta" : "primary"}
-          size="medium"
-          className="w-full"
-        >
-          {plan.buttonText}
-        </Button>
+        {isPopular ? (
+          <button 
+            className="group relative w-full overflow-hidden rounded-lg border-2 border-zinc-900 px-6 py-3 text-base font-bold text-white shadow-[4px_4px_0px_0px_rgb(39,39,42)] transition-transform hover:scale-[1.02]"
+            style={{
+              background: 'linear-gradient(135deg, #FF6B35 0%, #FF8E53 25%, #F7931E 50%, #FF5722 75%, #FF6B35 100%)',
+              backgroundSize: '400% 400%',
+              animation: 'gradientShift 12s ease-in-out infinite',
+            }}
+          >
+            <span className="relative z-10">{plan.buttonText}</span>
+          </button>
+        ) : (
+          <button className="w-full rounded-lg border-2 border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 text-base font-bold text-white shadow-[4px_4px_0px_0px_rgb(39,39,42)] transition-transform hover:scale-[1.02]">
+            {plan.buttonText}
+          </button>
+        )}
       </a>
     </div>
   );

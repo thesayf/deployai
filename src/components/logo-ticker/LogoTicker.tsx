@@ -53,6 +53,11 @@ const LOGOS = [
     src: "/logos/jblogo.png",
     alt: "JB Logo",
   },
+  {
+    name: "Showcase Cinemas",
+    src: "/logos/Showcase Cinemas_idUwGomoN4_0.png",
+    alt: "Showcase Cinemas logo",
+  },
 ];
 
 export const LogoTicker = () => {
