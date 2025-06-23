@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { CaseStudyModal } from "./CaseStudyModal";
 
 export const CaseStudies = () => {
-  const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudyData | null>(null);
+  const [selectedCaseStudy, setSelectedCaseStudy] =
+    useState<CaseStudyData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCaseStudyClick = (caseStudy: CaseStudyData) => {
@@ -21,33 +22,34 @@ export const CaseStudies = () => {
     <section id="case-studies" className="bg-white py-32">
       <div className="mx-4 sm:mx-6 md:mx-36">
         <div className="rounded-2xl border-4 border-zinc-900 bg-zinc-100 px-8 py-12 shadow-[0px_8px_0px_#18181b] shadow-[inset_0px_0px_20px_rgba(0,0,0,0.3),inset_0px_2px_8px_rgba(0,0,0,0.4)] md:px-12 md:py-16 lg:px-16 lg:py-40">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-8 text-center"
-        > 
-          <h2 className="mb-4 text-7xl font-black text-zinc-900">
-            Real Results. Real Impact
-          </h2>
-          <p className="mx-auto max-w-4xl text-2xl text-zinc-600">
-            See how we've transformed operations for companies just like yours.
-          </p>
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="mb-8 text-center"
+          >
+            <h2 className="mb-4 text-7xl font-black text-zinc-900">
+              Real Results. Real Impact
+            </h2>
+            <p className="mx-auto max-w-4xl text-2xl text-zinc-600">
+              See how we've transformed operations for companies just like
+              yours.
+            </p>
+          </motion.div>
 
-        <div className="mx-auto max-w-5xl grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3 lg:gap-9">
-          {CASE_STUDIES_DATA.map((caseStudy) => (
-            <CaseStudyCard
-              key={caseStudy.id}
-              {...caseStudy}
-              onClick={() => handleCaseStudyClick(caseStudy)}
-            />
-          ))}
-        </div>
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3 lg:gap-9">
+            {CASE_STUDIES_DATA.map((caseStudy) => (
+              <CaseStudyCard
+                key={caseStudy.id}
+                {...caseStudy}
+                onClick={() => handleCaseStudyClick(caseStudy)}
+              />
+            ))}
+          </div>
         </div>
       </div>
-      
+
       <CaseStudyModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
@@ -80,17 +82,18 @@ interface CaseStudyCardProps extends CaseStudyData {
   onClick: () => void;
 }
 
-const CaseStudyCard = ({ 
-  service, 
-  metric, 
-  subMetric, 
-  orderCount, 
-  description, 
+const CaseStudyCard = ({
+  service,
+  metric,
+  subMetric,
+  orderCount,
+  description,
   bgUrl,
-  onClick
+  onClick,
 }: CaseStudyCardProps) => {
-  const isCustomMockup = bgUrl === "chatbot-mockup" || bgUrl === "centric-mockup";
-  
+  const isCustomMockup =
+    bgUrl === "chatbot-mockup" || bgUrl === "centric-mockup";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -98,140 +101,170 @@ const CaseStudyCard = ({
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       onClick={onClick}
-      className="group relative aspect-square w-full cursor-pointer overflow-hidden rounded-2xl border-4 border-zinc-900 bg-zinc-100 shadow-[0px_6px_0px_#18181b] shadow-[inset_0px_3px_6px_rgba(0,0,0,0.15)] transition-all duration-300 hover:shadow-[0px_8px_0px_#18181b] hover:scale-105"
+      className="group relative aspect-square w-full cursor-pointer overflow-hidden rounded-2xl border-4 border-zinc-900 bg-zinc-100 shadow-[0px_6px_0px_#18181b] shadow-[inset_0px_3px_6px_rgba(0,0,0,0.15)] transition-all duration-300 hover:scale-105 hover:shadow-[0px_8px_0px_#18181b]"
     >
       {/* Custom Mockup or Background Image */}
       {isCustomMockup ? (
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:blur-sm overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden bg-gradient-to-br from-zinc-900 via-zinc-800 to-black transition-all duration-500 group-hover:scale-110 group-hover:blur-sm">
           {/* Content zoomed in - no phone frame */}
           <div className="w-full">
             {bgUrl === "chatbot-mockup" ? (
               /* Screen Content - Use exact same component structure as modal */
-              <div className="bg-white overflow-hidden h-[800px] w-full max-w-[500px] mx-auto shadow-2xl">
+              <div className="mx-auto h-[800px] w-full max-w-[500px] overflow-hidden bg-white shadow-2xl">
                 {/* Browser URL Bar */}
-                <div className="bg-zinc-100 px-3 py-3 flex items-center gap-2 border-b border-zinc-200">
+                <div className="flex items-center gap-2 border-b border-zinc-200 bg-zinc-100 px-3 py-3">
                   <div className="flex gap-1">
-                    <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                    <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
-                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                    <div className="h-2 w-2 rounded-full bg-red-500"></div>
+                    <div className="h-2 w-2 rounded-full bg-yellow-500"></div>
+                    <div className="h-2 w-2 rounded-full bg-green-500"></div>
                   </div>
-                  <div className="flex-1 flex justify-center">
-                    <div className="bg-white rounded px-3 py-1 text-xs text-zinc-600 border border-zinc-300">
+                  <div className="flex flex-1 justify-center">
+                    <div className="rounded border border-zinc-300 bg-white px-3 py-1 text-xs text-zinc-600">
                       chat.jbluxedetailing.co.uk
                     </div>
                   </div>
                 </div>
-                    
-                    {/* App Header */}
-                    <div className="bg-black text-white p-4 flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <img src="/logos/jblogo.png" alt="JB Logo" className="h-8 w-auto" />
-                        <div>
-                          <div className="font-semibold text-lg">JB Luxe Chat</div>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs bg-green-600 px-2 py-1 rounded-full">Online</span>
-                      </div>
+
+                {/* App Header */}
+                <div className="flex items-center justify-between bg-black p-4 text-white">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="/logos/jblogo.png"
+                      alt="JB Logo"
+                      className="h-8 w-auto"
+                    />
+                    <div>
+                      <div className="text-lg font-semibold">JB Luxe Chat</div>
                     </div>
-                    
-                    {/* Chat Messages */}
-                    <div className="h-[440px] overflow-hidden p-4 space-y-3 bg-zinc-50 pointer-events-none">
-                      {/* Welcome Message */}
-                      <div className="flex gap-3">
-                        <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-yellow-600 text-xs font-bold">JB</span>
-                        </div>
-                        <div className="bg-white rounded-2xl rounded-tl-sm p-3 shadow-sm max-w-[80%]">
-                          <p className="text-sm text-zinc-800 mb-2">
-                            Welcome to JB Luxe Detailing! 🚗✨ We bring top-tier mobile detailing to your location.
-                          </p>
-                          <p className="text-sm text-zinc-800">
-                            To get started, could you tell me what type of vehicle you'd like detailed?
-                          </p>
-                          <div className="text-xs text-zinc-500 mt-2">2:14 PM</div>
-                        </div>
-                      </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full bg-green-600 px-2 py-1 text-xs">
+                      Online
+                    </span>
+                  </div>
+                </div>
 
-                      {/* Customer Response */}
-                      <div className="flex gap-3 justify-end">
-                        <div className="bg-blue-600 text-white rounded-2xl rounded-tr-sm p-3 max-w-[80%]">
-                          <p className="text-sm">I have a 2023 Mercedes S-Class that needs detailing</p>
-                          <div className="text-xs text-blue-100 mt-2">2:15 PM</div>
-                        </div>
-                      </div>
+                {/* Chat Messages */}
+                <div className="pointer-events-none h-[440px] space-y-3 overflow-hidden bg-zinc-50 p-4">
+                  {/* Welcome Message */}
+                  <div className="flex gap-3">
+                    <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-black">
+                      <span className="text-xs font-bold text-yellow-600">
+                        JB
+                      </span>
+                    </div>
+                    <div className="max-w-[80%] rounded-2xl rounded-tl-sm bg-white p-3 shadow-sm">
+                      <p className="mb-2 text-sm text-zinc-800">
+                        Welcome to JB Luxe Detailing! 🚗✨ We bring top-tier
+                        mobile detailing to your location.
+                      </p>
+                      <p className="text-sm text-zinc-800">
+                        To get started, could you tell me what type of vehicle
+                        you'd like detailed?
+                      </p>
+                      <div className="mt-2 text-xs text-zinc-500">2:14 PM</div>
+                    </div>
+                  </div>
 
-                      {/* Bot Response with Services */}
-                      <div className="flex gap-3">
-                        <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-yellow-600 text-xs font-bold">JB</span>
-                        </div>
-                        <div className="space-y-2 max-w-[80%]">
-                          <div className="bg-white rounded-2xl rounded-tl-sm p-3 shadow-sm">
-                            <p className="text-sm text-zinc-800 mb-3">
-                              Excellent choice! For your Mercedes S-Class, I recommend our premium packages. 
-                              Here are your options:
-                            </p>
-                            <div className="space-y-2">
-                              <div className="border border-zinc-200 rounded-lg p-3 bg-zinc-50">
-                                <div className="flex justify-between items-start">
-                                  <div>
-                                    <div className="font-semibold text-sm">🌟 Gold Package</div>
-                                    <div className="text-xs text-zinc-600 mt-1">
-                                      Exterior wash, wax, tyre shine, interior vacuum
-                                    </div>
-                                    <div className="text-xs text-green-600 mt-1">⏱️ 2-3 hours • Most Popular</div>
-                                  </div>
-                                  <div className="font-bold text-yellow-600">£85</div>
+                  {/* Customer Response */}
+                  <div className="flex justify-end gap-3">
+                    <div className="max-w-[80%] rounded-2xl rounded-tr-sm bg-blue-600 p-3 text-white">
+                      <p className="text-sm">
+                        I have a 2023 Mercedes S-Class that needs detailing
+                      </p>
+                      <div className="mt-2 text-xs text-blue-100">2:15 PM</div>
+                    </div>
+                  </div>
+
+                  {/* Bot Response with Services */}
+                  <div className="flex gap-3">
+                    <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-black">
+                      <span className="text-xs font-bold text-yellow-600">
+                        JB
+                      </span>
+                    </div>
+                    <div className="max-w-[80%] space-y-2">
+                      <div className="rounded-2xl rounded-tl-sm bg-white p-3 shadow-sm">
+                        <p className="mb-3 text-sm text-zinc-800">
+                          Excellent choice! For your Mercedes S-Class, I
+                          recommend our premium packages. Here are your options:
+                        </p>
+                        <div className="space-y-2">
+                          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-3">
+                            <div className="flex items-start justify-between">
+                              <div>
+                                <div className="text-sm font-semibold">
+                                  🌟 Gold Package
+                                </div>
+                                <div className="mt-1 text-xs text-zinc-600">
+                                  Exterior wash, wax, tyre shine, interior
+                                  vacuum
+                                </div>
+                                <div className="mt-1 text-xs text-green-600">
+                                  ⏱️ 2-3 hours • Most Popular
                                 </div>
                               </div>
-                              
-                              <div className="border border-zinc-200 rounded-lg p-3 bg-zinc-50">
-                                <div className="flex justify-between items-start">
-                                  <div>
-                                    <div className="font-semibold text-sm">💎 Luxe Package</div>
-                                    <div className="text-xs text-zinc-600 mt-1">
-                                      Complete detail, paint enhancement, interior deep clean
-                                    </div>
-                                    <div className="text-xs text-blue-600 mt-1">⏱️ 4-5 hours • Premium Service</div>
-                                  </div>
-                                  <div className="font-bold text-yellow-600">£150</div>
-                                </div>
+                              <div className="font-bold text-yellow-600">
+                                £85
                               </div>
                             </div>
-                            <div className="text-xs text-zinc-500 mt-2">2:15 PM</div>
                           </div>
+
+                          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-3">
+                            <div className="flex items-start justify-between">
+                              <div>
+                                <div className="text-sm font-semibold">
+                                  💎 Luxe Package
+                                </div>
+                                <div className="mt-1 text-xs text-zinc-600">
+                                  Complete detail, paint enhancement, interior
+                                  deep clean
+                                </div>
+                                <div className="mt-1 text-xs text-blue-600">
+                                  ⏱️ 4-5 hours • Premium Service
+                                </div>
+                              </div>
+                              <div className="font-bold text-yellow-600">
+                                £150
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="mt-2 text-xs text-zinc-500">
+                          2:15 PM
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
 
-                    {/* App Footer */}
-                    <div className="border-t border-zinc-200 p-4 bg-white">
-                      <div className="text-xs text-zinc-500 text-center">
-                        Powered by deployAI
-                      </div>
-                    </div>
+                {/* App Footer */}
+                <div className="border-t border-zinc-200 bg-white p-4">
+                  <div className="text-center text-xs text-zinc-500">
+                    Powered by deployAI
+                  </div>
+                </div>
               </div>
             ) : (
               /* Centric Research Platform Preview */
-              <img 
-                src="/images/centric2.png" 
+              <img
+                src="/images/centric2.png"
                 alt="Centric Proposal Generator"
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
               />
             )}
           </div>
         </div>
       ) : (
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center transition-all duration-500 group-hover:scale-110 group-hover:blur-sm"
           style={{ backgroundImage: `url(${bgUrl})` }}
         />
       )}
-      
+
       {/* Overlay that becomes visible on hover */}
       <div className="absolute inset-0 bg-white/95 opacity-0 transition-all duration-300 group-hover:opacity-100" />
-      
+
       {/* Content - hidden by default, shown on hover */}
       <div className="relative flex h-full flex-col justify-between p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         {/* Top content */}
@@ -239,20 +272,20 @@ const CaseStudyCard = ({
           <div className="mb-3 inline-block rounded border border-zinc-300 bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-700">
             {service}
           </div>
-          
-          <h3 className="mb-3 text-3xl font-black text-transparent bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text leading-tight">
+
+          <h3 className="mb-3 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-3xl font-black leading-tight text-transparent">
             {metric} {subMetric}
           </h3>
-          
-          <p className="text-sm text-zinc-600 mb-4">{description}</p>
+
+          <p className="mb-4 text-sm text-zinc-600">{description}</p>
         </div>
-        
+
         {/* Bottom content */}
-        <div className="flex items-center justify-between mt-2">
+        <div className="mt-2 flex items-center justify-between">
           <span className="text-xs font-medium text-zinc-500">
             30-day delivery
           </span>
-          
+
           {/* CTA Button with brand styling */}
           <button className="inline-flex items-center gap-1 rounded-lg border-2 border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2 text-sm font-bold text-white shadow-[2px_2px_0px_#18181b] transition-all hover:scale-105 hover:shadow-[3px_3px_0px_#18181b]">
             See Case Study
@@ -274,20 +307,66 @@ const CASE_STUDIES_DATA: CaseStudyData[] = [
     description: "AI chatbot handles inquiries and books appointments 24/7",
     bgUrl: "chatbot-mockup", // Special identifier for our custom component
     company: "JB Luxury Mobile Detailing",
-    industry: "Automotive Services", 
+    industry: "Automotive Services",
     timeline: "3 weeks implementation",
-    challenge: "Manual phone booking system was missing 60% of potential customers who called outside business hours. No customer relationship management led to missed follow-ups and repeat business opportunities.",
-    solution: "Built intelligent chatbot integrated with custom CRM to handle bookings 24/7, qualify leads, provide instant quotes, and automatically schedule services based on availability and location.",
+    challenge:
+      "Manual phone booking system was missing 60% of potential customers who called outside business hours. No customer relationship management led to missed follow-ups and repeat business opportunities.",
+    solution:
+      "Built intelligent chatbot integrated with custom CRM to handle bookings 24/7, qualify leads, provide instant quotes, and automatically schedule services based on availability and location.",
     results: [
       "300% increase in successful bookings",
       "24/7 availability captures after-hours customers",
       "85% of customer inquiries handled automatically",
       "Average response time reduced from 4 hours to 30 seconds",
-      "40% increase in repeat customer bookings through automated follow-ups"
+      "40% increase in repeat customer bookings through automated follow-ups",
     ],
-    techStack: ["React", "Node.js", "OpenAI GPT-4", "Stripe API", "Google Calendar API", "Twilio"],
-    testimonial: "This chatbot works better than having a full-time receptionist. It books appointments while I sleep and my customers love the instant responses. Revenue has tripled since deployment.",
-    testimonialAuthor: "James Butler, Owner of JB Luxury Detailing"
+    techStack: [
+      "React",
+      "Node.js",
+      "OpenAI GPT-4",
+      "Stripe API",
+      "Google Calendar API",
+      "Twilio",
+    ],
+    testimonial:
+      "This chatbot works better than having a full-time receptionist. It books appointments while I sleep and my customers love the instant responses. Revenue has tripled since deployment.",
+    testimonialAuthor: "James Butler, Owner of JB Luxury Detailing",
+  },
+  {
+    id: "showcase-cinema-scheduling",
+    service: "AI Cinema Scheduling",
+    metric: "95%",
+    subMetric: "time reduction",
+    orderCount: "40+",
+    description: "AI-powered scheduling platform automates cinema operations",
+    bgUrl: "/schomee.png",
+    company: "Showcase Cinemas",
+    industry: "Entertainment & Media",
+    timeline: "4 weeks implementation",
+    challenge:
+      "Manual scheduling process consumed 40+ hours weekly, frequently invalidated by real-time performance data. Critical Monday morning reschedules across multiple locations were impossible to execute effectively at scale.",
+    solution:
+      "Built intelligent scheduling platform powered by Anthropic AI that processes historical data, release projections, and real-time performance metrics to generate optimized schedules for all cinema locations in seconds.",
+    results: [
+      "95% reduction in scheduling time - from 40+ hours to under 2 hours",
+      "18% increase in average revenue per screen through optimization",
+      "Real-time adaptability - instant schedule regeneration",
+      "100% data-driven decisions eliminate guesswork",
+      "Multi-site scalability across all cinema locations",
+      "Enhanced customer satisfaction through better film placement",
+    ],
+    techStack: [
+      "React",
+      "Tailwind CSS",
+      "Node.js",
+      "Express",
+      "Anthropic Claude API",
+      "PostgreSQL",
+      "AWS",
+    ],
+    testimonial:
+      "The platform transformed our entire operation. What used to take our team a full week now happens automatically in minutes. The revenue optimization features alone paid for the system within the first month.",
+    testimonialAuthor: "Sarah Johnson, Operations Director at Showcase Cinemas",
   },
   {
     id: "automated-logistics",
@@ -295,23 +374,35 @@ const CASE_STUDIES_DATA: CaseStudyData[] = [
     metric: "$347,000",
     subMetric: "saved in 6 months",
     orderCount: "2,400+",
-    description: "Global shipping company eliminated manual dispatch processes entirely",
-    bgUrl: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2940&auto=format&fit=crop",
+    description:
+      "Global shipping company eliminated manual dispatch processes entirely",
+    bgUrl:
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2940&auto=format&fit=crop",
     company: "GlobalShip Logistics",
     industry: "Logistics & Supply Chain",
     timeline: "4 months implementation",
-    challenge: "Manual dispatch processes were causing 3-hour delays per shipment, leading to customer complaints and lost revenue. The team was processing 50+ orders daily through spreadsheets and phone calls.",
-    solution: "Implemented AI-powered dispatch automation with real-time route optimization, automated customer notifications, and seamless integration with existing tracking systems.",
+    challenge:
+      "Manual dispatch processes were causing 3-hour delays per shipment, leading to customer complaints and lost revenue. The team was processing 50+ orders daily through spreadsheets and phone calls.",
+    solution:
+      "Implemented AI-powered dispatch automation with real-time route optimization, automated customer notifications, and seamless integration with existing tracking systems.",
     results: [
       "87% reduction in dispatch processing time",
       "$347,000 annual cost savings through efficiency gains",
       "99.2% on-time delivery rate achieved",
       "2,400+ orders now processed automatically monthly",
-      "Zero customer complaints about dispatch delays"
+      "Zero customer complaints about dispatch delays",
     ],
-    techStack: ["Python", "FastAPI", "PostgreSQL", "React", "AWS Lambda", "Twilio API"],
-    testimonial: "deployAI transformed our entire logistics operation. What used to take our team hours now happens automatically in minutes. The ROI was evident within the first month.",
-    testimonialAuthor: "Sarah Mitchell, Operations Director at GlobalShip"
+    techStack: [
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "React",
+      "AWS Lambda",
+      "Twilio API",
+    ],
+    testimonial:
+      "deployAI transformed our entire logistics operation. What used to take our team hours now happens automatically in minutes. The ROI was evident within the first month.",
+    testimonialAuthor: "Sarah Mitchell, Operations Director at GlobalShip",
   },
   {
     id: "ai-customer-service",
@@ -320,22 +411,33 @@ const CASE_STUDIES_DATA: CaseStudyData[] = [
     subMetric: "faster response time",
     orderCount: "3,200+",
     description: "SaaS startup eliminated support backlog completely",
-    bgUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2940&auto=format&fit=crop",
+    bgUrl:
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2940&auto=format&fit=crop",
     company: "TechStart Solutions",
     industry: "SaaS Technology",
     timeline: "6 weeks implementation",
-    challenge: "Growing customer base led to 24-48 hour response times, 40% of tickets required escalation, and support team burnout. Customer satisfaction scores were declining rapidly.",
-    solution: "Deployed intelligent AI assistant with natural language processing, automated ticket routing, sentiment analysis, and seamless handoff to human agents for complex issues.",
+    challenge:
+      "Growing customer base led to 24-48 hour response times, 40% of tickets required escalation, and support team burnout. Customer satisfaction scores were declining rapidly.",
+    solution:
+      "Deployed intelligent AI assistant with natural language processing, automated ticket routing, sentiment analysis, and seamless handoff to human agents for complex issues.",
     results: [
       "Response time reduced from 24 hours to 3 hours",
       "3,200+ customer queries handled automatically monthly",
-      "75% of tickets resolved without human intervention", 
+      "75% of tickets resolved without human intervention",
       "Customer satisfaction score increased from 3.2 to 4.7/5",
-      "Support team can focus on complex, high-value interactions"
+      "Support team can focus on complex, high-value interactions",
     ],
-    techStack: ["OpenAI GPT-4", "Node.js", "MongoDB", "React", "Slack API", "Zendesk API"],
-    testimonial: "Our support team went from overwhelmed to empowered. The AI handles routine questions perfectly, and our team can focus on helping customers with complex needs.",
-    testimonialAuthor: "Michael Chen, CEO at TechStart Solutions"
+    techStack: [
+      "OpenAI GPT-4",
+      "Node.js",
+      "MongoDB",
+      "React",
+      "Slack API",
+      "Zendesk API",
+    ],
+    testimonial:
+      "Our support team went from overwhelmed to empowered. The AI handles routine questions perfectly, and our team can focus on helping customers with complex needs.",
+    testimonialAuthor: "Michael Chen, CEO at TechStart Solutions",
   },
   {
     id: "process-optimization",
@@ -344,22 +446,34 @@ const CASE_STUDIES_DATA: CaseStudyData[] = [
     subMetric: "annual savings",
     orderCount: "95%",
     description: "Manufacturing firm automated order-to-delivery pipeline",
-    bgUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2940&auto=format&fit=crop",
+    bgUrl:
+      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2940&auto=format&fit=crop",
     company: "IndustrialTech Manufacturing",
     industry: "Manufacturing",
     timeline: "8 months implementation",
-    challenge: "Complex order-to-delivery process involved 12 manual handoffs, paper-based tracking, and frequent communication gaps leading to 30% of orders experiencing delays.",
-    solution: "Built end-to-end automation system connecting order management, inventory, production scheduling, quality control, and shipping with real-time visibility and predictive analytics.",
+    challenge:
+      "Complex order-to-delivery process involved 12 manual handoffs, paper-based tracking, and frequent communication gaps leading to 30% of orders experiencing delays.",
+    solution:
+      "Built end-to-end automation system connecting order management, inventory, production scheduling, quality control, and shipping with real-time visibility and predictive analytics.",
     results: [
       "$2.4M in annual operational cost savings",
       "95% of orders now flow through automated pipeline",
       "60% reduction in order-to-delivery time",
       "99.1% order accuracy rate achieved",
-      "Real-time visibility across entire production chain"
+      "Real-time visibility across entire production chain",
     ],
-    techStack: ["Python", "Django", "PostgreSQL", "Redis", "Docker", "Kubernetes", "Tableau"],
-    testimonial: "This system found efficiencies we never knew existed. The data insights alone have transformed how we make operational decisions. The ROI exceeded our wildest expectations.",
-    testimonialAuthor: "David Rodriguez, COO at IndustrialTech"
+    techStack: [
+      "Python",
+      "Django",
+      "PostgreSQL",
+      "Redis",
+      "Docker",
+      "Kubernetes",
+      "Tableau",
+    ],
+    testimonial:
+      "This system found efficiencies we never knew existed. The data insights alone have transformed how we make operational decisions. The ROI exceeded our wildest expectations.",
+    testimonialAuthor: "David Rodriguez, COO at IndustrialTech",
   },
   {
     id: "centric-research-platform",
@@ -367,22 +481,33 @@ const CASE_STUDIES_DATA: CaseStudyData[] = [
     metric: "15 min",
     subMetric: "proposal generation",
     orderCount: "£150K+",
-    description: "Community research platform accelerates proposal creation and knowledge sharing",
+    description:
+      "Community research platform accelerates proposal creation and knowledge sharing",
     bgUrl: "centric-mockup", // Special identifier for our custom component
     company: "Centric",
-    industry: "Community Research & Development", 
+    industry: "Community Research & Development",
     timeline: "5 weeks implementation",
-    challenge: "Manual proposal creation process taking 3-4 weeks per submission, difficulty accessing and aggregating insights from 50+ past community engagement projects, and challenges ensuring authentic community voice integration in research proposals.",
-    solution: "Built AI-powered research platform with intelligent knowledge base, automated proposal generation using proven templates, and collaborative review workspace ensuring community member participation in all research activities.",
+    challenge:
+      "Manual proposal creation process taking 3-4 weeks per submission, difficulty accessing and aggregating insights from 50+ past community engagement projects, and challenges ensuring authentic community voice integration in research proposals.",
+    solution:
+      "Built AI-powered research platform with intelligent knowledge base, automated proposal generation using proven templates, and collaborative review workspace ensuring community member participation in all research activities.",
     results: [
       "Proposal generation time reduced from 4 weeks to 15 minutes",
       "Instant access to 50+ past community project insights",
       "100% community voice integration through collaborative review",
       "£150K+ proposals generated with automated budget allocation",
-      "Real-time collaboration between community and institutional partners"
+      "Real-time collaboration between community and institutional partners",
     ],
-    techStack: ["React", "Node.js", "OpenAI GPT-4", "PostgreSQL", "WebSockets", "Stripe API"],
-    testimonial: "The platform has transformed how we approach community research. What used to take weeks of manual work now happens in minutes, while ensuring authentic community participation throughout the entire process.",
-    testimonialAuthor: "Dr. Sarah Williams, Research Director at Centric"
-  }
+    techStack: [
+      "React",
+      "Node.js",
+      "OpenAI GPT-4",
+      "PostgreSQL",
+      "WebSockets",
+      "Stripe API",
+    ],
+    testimonial:
+      "The platform has transformed how we approach community research. What used to take weeks of manual work now happens in minutes, while ensuring authentic community participation throughout the entire process.",
+    testimonialAuthor: "Dr. Sarah Williams, Research Director at Centric",
+  },
 ];

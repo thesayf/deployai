@@ -59,7 +59,9 @@ export const ProblemAgitation = () => {
                 </span>
                 .
               </motion.span>
-              <div>But what if catching up didn't have to take years?</div>
+              <span className="mt-4 block">
+                But what if catching up didn't have to take years?
+              </span>
             </p>
 
             {/* Interactive control */}
@@ -113,7 +115,7 @@ export const ProblemAgitation = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center"
         >
-          <div className="inline-block rounded-2xl border-2 border-zinc-900 bg-zinc-100 p-6 mt-12 shadow-[4px_4px_0px_#18181b]">
+          <div className="mt-12 inline-block rounded-2xl border-2 border-zinc-900 bg-zinc-100 p-6 shadow-[4px_4px_0px_#18181b]">
             <p className="mb-4 text-lg text-zinc-700">
               The only thing left? Booking your demo before someone else takes
               your spot this month.
