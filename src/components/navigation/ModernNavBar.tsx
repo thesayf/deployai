@@ -21,7 +21,8 @@ export const ModernNavBar = () => {
           <div className="flex items-center justify-center">
             <p className="text-center text-sm font-medium text-white">
               <span className="inline-flex items-center gap-2">
-                🎉 Limited Time: Save 40% on AI Strategy Calls - Ends This Friday!
+                🎉 Limited Time: Save 40% on AI Strategy Calls - Ends This
+                Friday!
                 <Link
                   href="https://calendly.com/hello-deployai/30min"
                   target="_blank"
@@ -36,17 +37,13 @@ export const ModernNavBar = () => {
       </div>
 
       {/* Main Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-zinc-200">
+      <nav className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur-md">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center">
-                <img
-                  src="/logo.png"
-                  alt="deployAI"
-                  className="h-8 w-auto"
-                />
+                <img src="/logo.png" alt="deployAI" className="h-12 w-auto" />
               </Link>
 
               {/* Desktop Navigation */}
@@ -55,7 +52,7 @@ export const ModernNavBar = () => {
                   <a
                     key={link.title}
                     href={link.href}
-                    className="text-sm font-medium text-zinc-700 hover:text-orange-600 transition-colors"
+                    className="text-base font-medium text-zinc-700 transition-colors hover:text-orange-600"
                   >
                     {link.title}
                   </a>
@@ -69,7 +66,7 @@ export const ModernNavBar = () => {
                 href="https://calendly.com/hello-deployai/30min"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:shadow-md transition-all hover:scale-105"
+                className="inline-flex items-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:scale-105 hover:shadow-md"
               >
                 Book Free Strategy Call
               </a>

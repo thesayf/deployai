@@ -9,7 +9,7 @@ export const DesktopLinks = ({ links }: { links: LinkType[] }) => {
           <a
             key={l.title}
             href={l.href}
-            className="cursor-pointer text-sm font-medium text-zinc-700 transition-colors hover:text-orange-600"
+            className="cursor-pointer text-base font-medium text-zinc-700 transition-colors hover:text-orange-600"
           >
             {l.title}
           </a>
