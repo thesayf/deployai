@@ -11,13 +11,20 @@
   "dependencies": {
     "class-variance-authority": "^0.7.0",
     "framer-motion": "^11.0.28",
+    "gray-matter": "^4.0.3",
     "next": "14.2.1",
+    "next-mdx-remote": "^5.0.0",
     "prettier": "^3.2.5",
     "react": "^18",
     "react-dom": "^18",
     "react-fast-marquee": "^1.6.5",
     "react-icons": "^5.0.1",
     "react-use-measure": "^2.1.1",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-slug": "^6.0.0",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-html": "^16.0.1",
     "tailwind-merge": "^2.2.2"
   },
   "devDependencies": {
