@@ -35,6 +35,7 @@ export async function getPostBySlug(slug: string) {
   try {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
+    console.log(`Processing ${realSlug}:`, data.title);
     
     const mdxSource = await serialize(content, {
       mdxOptions: {
@@ -53,6 +54,7 @@ export async function getPostBySlug(slug: string) {
       content,
     };
   } catch (error) {
+    console.error(`Error processing ${realSlug}:`, error);
     return null;
   }
 }
