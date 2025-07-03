@@ -11,6 +11,7 @@ import { StickyScrollCards } from "@/components/sticky-scroll-cards/StickyScroll
 import { StaggerTestimonials } from "@/components/stagger-testimonials/StaggerTestimonials";
 import { FAQ } from "@/components/faq/FAQ";
 import { CalendlyInline } from "@/components/calendly/CalendlyInline";
+import { RiskReversal } from "@/components/risk-reversal/RiskReversal";
 import { useEffect } from "react";
 
 // Preload Calendly function
@@ -84,12 +85,11 @@ export default function CustomSoftwareDevelopmentDubai() {
       <div className="py-16">
         <CaseStudies filter="all" />
       </div>
-      <div className="py-16">
-        <StaggerTestimonials />
-      </div>
+      <StaggerTestimonials />
       <div className="py-16">
         <PricingSection variant="customSoftware" />
       </div>
+      <RiskReversal />
       <div className="py-16">
         <FAQ variant="customSoftware" />
       </div>

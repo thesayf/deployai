@@ -110,8 +110,9 @@ export const CalendlyInline = () => {
           className="mb-12 text-center"
         >
           <h2 className="mb-12 text-4xl font-black text-zinc-900 md:text-5xl">
-            Get Your Solution Built in 30 Days
+            Get Your Solution <br/> Built in 30 Days
           </h2>
+          
         </motion.div>
 
         <motion.div
@@ -121,9 +122,9 @@ export const CalendlyInline = () => {
           className="mx-auto max-w-3xl"
         >
           {isLoading && (
-            <div className="flex items-center justify-center h-96 rounded-xl border-4 border-zinc-900 bg-white shadow-[0px_8px_0px_#18181b]">
+            <div className="flex h-96 items-center justify-center rounded-xl border-4 border-zinc-900 bg-white shadow-[0px_8px_0px_#18181b]">
               <div className="text-center">
-                <div className="animate-spin h-12 w-12 border-4 border-orange-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-orange-500 border-t-transparent"></div>
                 <p className="text-zinc-600">Loading calendar...</p>
               </div>
             </div>
@@ -131,11 +132,11 @@ export const CalendlyInline = () => {
           <div
             ref={calendlyRef}
             className="mx-auto flex justify-center"
-            style={{ 
+            style={{
               minWidth: "320px",
               maxWidth: "100%",
               opacity: isLoading ? 0 : 1,
-              transition: "opacity 0.3s ease"
+              transition: "opacity 0.3s ease",
             }}
           />
         </motion.div>
@@ -148,7 +149,8 @@ export const CalendlyInline = () => {
           className="mt-8 text-center"
         >
           <p className="text-sm text-zinc-500">
-            ⏱️ 30-minute discovery call • 💰 Completely free • 🎯 Custom AI strategy
+            ⏱️ 30-minute discovery call • 💰 Completely free • 🎯 Custom AI
+            strategy
           </p>
         </motion.div>
       </div>

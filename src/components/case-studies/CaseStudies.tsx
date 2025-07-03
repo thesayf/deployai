@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FiArrowRight } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { CaseStudyModal } from "./CaseStudyModal";
+import { ChatbotMockup } from "./ChatbotMockup";
 
 interface CaseStudiesProps {
   filter?: "all" | "software" | "automation" | "ai" | "webapp";
@@ -27,31 +28,47 @@ export const CaseStudies = ({ filter = "all" }: CaseStudiesProps) => {
   return (
     <section id="case-studies" className="bg-white py-32">
       <div className="mx-4 sm:mx-6 md:mx-36">
-        <div className="rounded-2xl border-4 border-zinc-900 bg-zinc-100 px-8 py-12 shadow-[0px_8px_0px_#18181b] shadow-[inset_0px_0px_20px_rgba(0,0,0,0.3),inset_0px_2px_8px_rgba(0,0,0,0.4)] md:px-12 md:py-16 lg:px-16 lg:py-40">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="mb-8 text-center"
-          >
-            <h2 className="mb-4 text-7xl font-black text-zinc-900">
-              Real Results. Real Impact
-            </h2>
-            <p className="mx-auto max-w-4xl text-2xl text-zinc-600">
-              See how we've transformed operations for companies just like
-              yours.
-            </p>
-          </motion.div>
+        <div className="relative overflow-hidden border-4 border-zinc-900 bg-gradient-to-br from-zinc-50 via-blue-50 to-purple-50 px-8 py-12 shadow-[0px_12px_0px_#18181b] transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0px_16px_0px_#18181b] md:px-12 md:py-16 lg:px-16 lg:py-40">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-[0.02]">
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `radial-gradient(circle at 30% 20%, #3b82f6 2px, transparent 2px),
+                               radial-gradient(circle at 70% 80%, #8b5cf6 2px, transparent 2px),
+                               radial-gradient(circle at 20% 70%, #06b6d4 2px, transparent 2px)`,
+                backgroundSize: "120px 120px, 80px 80px, 100px 100px",
+              }}
+            />
+          </div>
 
-          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3 lg:gap-9">
-            {filteredCaseStudies.map((caseStudy) => (
-              <CaseStudyCard
-                key={caseStudy.id}
-                {...caseStudy}
-                onClick={() => handleCaseStudyClick(caseStudy)}
-              />
-            ))}
+          {/* Content */}
+          <div className="relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="mb-8 text-center"
+            >
+              <h2 className="mb-4 text-7xl font-black text-zinc-900">
+                Real Results. Real Impact
+              </h2>
+              <p className="mx-auto max-w-4xl text-2xl text-zinc-600">
+                See how we've transformed operations for companies just like
+                yours.
+              </p>
+            </motion.div>
+
+            <div className="mx-auto grid max-w-5xl grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3 lg:gap-9">
+              {filteredCaseStudies.map((caseStudy) => (
+                <CaseStudyCard
+                  key={caseStudy.id}
+                  {...caseStudy}
+                  onClick={() => handleCaseStudyClick(caseStudy)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -113,147 +130,10 @@ const CaseStudyCard = ({
       {/* Custom Mockup or Background Image */}
       {isCustomMockup ? (
         <div className="absolute inset-0 flex items-center justify-center overflow-hidden bg-gradient-to-br from-zinc-900 via-zinc-800 to-black transition-all duration-500 group-hover:scale-110 group-hover:blur-sm">
-          {/* Content zoomed in - no phone frame */}
           <div className="w-full">
             {bgUrl === "chatbot-mockup" ? (
-              /* Screen Content - Use exact same component structure as modal */
-              <div className="mx-auto h-[800px] w-full max-w-[500px] overflow-hidden bg-white shadow-2xl">
-                {/* Browser URL Bar */}
-                <div className="flex items-center gap-2 border-b border-zinc-200 bg-zinc-100 px-3 py-3">
-                  <div className="flex gap-1">
-                    <div className="h-2 w-2 rounded-full bg-red-500"></div>
-                    <div className="h-2 w-2 rounded-full bg-yellow-500"></div>
-                    <div className="h-2 w-2 rounded-full bg-green-500"></div>
-                  </div>
-                  <div className="flex flex-1 justify-center">
-                    <div className="rounded border border-zinc-300 bg-white px-3 py-1 text-xs text-zinc-600">
-                      chat.jbluxedetailing.co.uk
-                    </div>
-                  </div>
-                </div>
-
-                {/* App Header */}
-                <div className="flex items-center justify-between bg-black p-4 text-white">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src="/logos/jblogo.png"
-                      alt="JB Logo"
-                      className="h-8 w-auto"
-                    />
-                    <div>
-                      <div className="text-lg font-semibold">JB Luxe Chat</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="rounded-full bg-green-600 px-2 py-1 text-xs">
-                      Online
-                    </span>
-                  </div>
-                </div>
-
-                {/* Chat Messages */}
-                <div className="pointer-events-none h-[440px] space-y-3 overflow-hidden bg-zinc-50 p-4">
-                  {/* Welcome Message */}
-                  <div className="flex gap-3">
-                    <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-black">
-                      <span className="text-xs font-bold text-yellow-600">
-                        JB
-                      </span>
-                    </div>
-                    <div className="max-w-[80%] rounded-2xl rounded-tl-sm bg-white p-3 shadow-sm">
-                      <p className="mb-2 text-sm text-zinc-800">
-                        Welcome to JB Luxe Detailing! 🚗✨ We bring top-tier
-                        mobile detailing to your location.
-                      </p>
-                      <p className="text-sm text-zinc-800">
-                        To get started, could you tell me what type of vehicle
-                        you'd like detailed?
-                      </p>
-                      <div className="mt-2 text-xs text-zinc-500">2:14 PM</div>
-                    </div>
-                  </div>
-
-                  {/* Customer Response */}
-                  <div className="flex justify-end gap-3">
-                    <div className="max-w-[80%] rounded-2xl rounded-tr-sm bg-blue-600 p-3 text-white">
-                      <p className="text-sm">
-                        I have a 2023 Mercedes S-Class that needs detailing
-                      </p>
-                      <div className="mt-2 text-xs text-blue-100">2:15 PM</div>
-                    </div>
-                  </div>
-
-                  {/* Bot Response with Services */}
-                  <div className="flex gap-3">
-                    <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-black">
-                      <span className="text-xs font-bold text-yellow-600">
-                        JB
-                      </span>
-                    </div>
-                    <div className="max-w-[80%] space-y-2">
-                      <div className="rounded-2xl rounded-tl-sm bg-white p-3 shadow-sm">
-                        <p className="mb-3 text-sm text-zinc-800">
-                          Excellent choice! For your Mercedes S-Class, I
-                          recommend our premium packages. Here are your options:
-                        </p>
-                        <div className="space-y-2">
-                          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-3">
-                            <div className="flex items-start justify-between">
-                              <div>
-                                <div className="text-sm font-semibold">
-                                  🌟 Gold Package
-                                </div>
-                                <div className="mt-1 text-xs text-zinc-600">
-                                  Exterior wash, wax, tyre shine, interior
-                                  vacuum
-                                </div>
-                                <div className="mt-1 text-xs text-green-600">
-                                  ⏱️ 2-3 hours • Most Popular
-                                </div>
-                              </div>
-                              <div className="font-bold text-yellow-600">
-                                £85
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-3">
-                            <div className="flex items-start justify-between">
-                              <div>
-                                <div className="text-sm font-semibold">
-                                  💎 Luxe Package
-                                </div>
-                                <div className="mt-1 text-xs text-zinc-600">
-                                  Complete detail, paint enhancement, interior
-                                  deep clean
-                                </div>
-                                <div className="mt-1 text-xs text-blue-600">
-                                  ⏱️ 4-5 hours • Premium Service
-                                </div>
-                              </div>
-                              <div className="font-bold text-yellow-600">
-                                £150
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="mt-2 text-xs text-zinc-500">
-                          2:15 PM
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* App Footer */}
-                <div className="border-t border-zinc-200 bg-white p-4">
-                  <div className="text-center text-xs text-zinc-500">
-                    Powered by deployAI
-                  </div>
-                </div>
-              </div>
+              <ChatbotMockup />
             ) : (
-              /* Centric Research Platform Preview */
               <img
                 src="/images/centric2.png"
                 alt="Centric Proposal Generator"

@@ -72,47 +72,78 @@ export const StaggerTestimonials = () => {
   }, []);
 
   return (
-    <div
+    <section
       id="testimonials"
-      className="relative w-full overflow-hidden bg-zinc-100"
-      style={{
-        height: SECTION_HEIGHT,
-      }}
+      className="relative overflow-hidden bg-gradient-to-br from-zinc-50 via-orange-50 to-red-50 py-24"
     >
-      {testimonials.map((t, idx) => {
-        let position = 0;
-
-        if (testimonials.length % 2) {
-          position = idx - (testimonials.length + 1) / 2;
-        } else {
-          position = idx - testimonials.length / 2;
-        }
-
-        return (
-          <TestimonialCard
-            key={t.tempId}
-            testimonial={t}
-            handleMove={handleMove}
-            position={position}
-            cardSize={cardSize}
-          />
-        );
-      })}
-      <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-8">
-        <button
-          onClick={() => handleMove(-1)}
-          className="grid h-14 w-14 place-content-center text-3xl transition-colors hover:bg-zinc-900 hover:text-white rounded-lg border-2 border-zinc-900 shadow-[3px_3px_0px_#18181b]"
-        >
-          <GoArrowLeft />
-        </button>
-        <button
-          onClick={() => handleMove(1)}
-          className="grid h-14 w-14 place-content-center text-3xl transition-colors hover:bg-zinc-900 hover:text-white rounded-lg border-2 border-zinc-900 shadow-[3px_3px_0px_#18181b]"
-        >
-          <GoArrowRight />
-        </button>
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, #ea580c 2px, transparent 2px),
+                           radial-gradient(circle at 75% 75%, #dc2626 2px, transparent 2px)`,
+            backgroundSize: "100px 100px",
+          }}
+        />
       </div>
-    </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <h2 className="mb-6 text-5xl font-black md:text-6xl">
+            Real Stories from
+            <br />
+            <span className="text-orange-600">Happy Clients</span>
+          </h2>
+          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-zinc-700 md:text-2xl">
+            Don't just take our word for it. Here's what our clients say about
+            their custom software experience.
+          </p>
+        </div>
+      </div>
+
+      <div
+        className="relative w-full overflow-hidden"
+        style={{
+          height: SECTION_HEIGHT,
+        }}
+      >
+        {testimonials.map((t, idx) => {
+          let position = 0;
+
+          if (testimonials.length % 2) {
+            position = idx - (testimonials.length + 1) / 2;
+          } else {
+            position = idx - testimonials.length / 2;
+          }
+
+          return (
+            <TestimonialCard
+              key={t.tempId}
+              testimonial={t}
+              handleMove={handleMove}
+              position={position}
+              cardSize={cardSize}
+            />
+          );
+        })}
+        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-8">
+          <button
+            onClick={() => handleMove(-1)}
+            className="grid h-14 w-14 place-content-center rounded-lg border-2 border-zinc-900 text-3xl shadow-[3px_3px_0px_#18181b] transition-colors hover:bg-zinc-900 hover:text-white"
+          >
+            <GoArrowLeft />
+          </button>
+          <button
+            onClick={() => handleMove(1)}
+            className="grid h-14 w-14 place-content-center rounded-lg border-2 border-zinc-900 text-3xl shadow-[3px_3px_0px_#18181b] transition-colors hover:bg-zinc-900 hover:text-white"
+          >
+            <GoArrowRight />
+          </button>
+        </div>
+      </div>
+    </section>
   );
 };
 
@@ -123,7 +154,12 @@ interface TestimonialCardProps {
   cardSize: number;
 }
 
-const TestimonialCard = ({ position, testimonial, handleMove, cardSize }: TestimonialCardProps) => {
+const TestimonialCard = ({
+  position,
+  testimonial,
+  handleMove,
+  cardSize,
+}: TestimonialCardProps) => {
   const isActive = position === 0;
 
   return (
@@ -132,7 +168,9 @@ const TestimonialCard = ({ position, testimonial, handleMove, cardSize }: Testim
       onClick={() => handleMove(position)}
       className={`
       absolute left-1/2 top-1/2 cursor-pointer border-zinc-900 p-8 text-zinc-900 ${
-        isActive ? "z-10 bg-gradient-to-r from-orange-500 to-red-500 text-white" : "z-0 bg-white"
+        isActive
+          ? "z-10 bg-gradient-to-r from-orange-500 to-red-500 text-white"
+          : "z-0 bg-white"
       }
       `}
       style={{
@@ -147,7 +185,9 @@ const TestimonialCard = ({ position, testimonial, handleMove, cardSize }: Testim
           isActive ? CENTER_STAGGER : position % 2 ? STAGGER : -STAGGER
         }px)`,
         rotate: isActive ? 0 : position % 2 ? ROTATE_DEG : -ROTATE_DEG,
-        boxShadow: isActive ? "0px 8px 0px 4px #18181b" : "0px 0px 0px 0px #18181b",
+        boxShadow: isActive
+          ? "0px 8px 0px 4px #18181b"
+          : "0px 0px 0px 0px #18181b",
       }}
       transition={{
         type: "spring",
@@ -167,7 +207,7 @@ const TestimonialCard = ({ position, testimonial, handleMove, cardSize }: Testim
       />
       <div className="flex h-full flex-col justify-center">
         <h3
-          className={`text-sm sm:text-base italic text-center ${
+          className={`text-center text-sm italic sm:text-base ${
             isActive ? "text-white" : "text-zinc-900"
           }`}
         >
@@ -175,7 +215,7 @@ const TestimonialCard = ({ position, testimonial, handleMove, cardSize }: Testim
         </h3>
       </div>
       <p
-        className={`absolute bottom-8 left-8 right-8 mt-2 text-xs italic text-center ${
+        className={`absolute bottom-8 left-8 right-8 mt-2 text-center text-xs italic ${
           isActive ? "text-orange-100" : "text-zinc-700"
         }`}
       >
