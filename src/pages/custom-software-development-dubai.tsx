@@ -90,10 +90,10 @@ export default function CustomSoftwareDevelopmentDubai() {
         <PricingSection variant="customSoftware" />
       </div>
       <RiskReversal />
+      <CalendlyInline />
       <div className="py-16">
         <FAQ variant="customSoftware" />
       </div>
-      <CalendlyInline />
       <Footer />
     </main>
   );
