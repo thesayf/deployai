@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiArrowRight, FiPlay, FiPause } from "react-icons/fi";
 
-export const ProblemAgitation = () => {
+interface ProblemAgitationProps {
+  variant?: "default" | "customSoftware" | "inventory" | "webapp" | "ai";
+}
+
+export const ProblemAgitation = ({
+  variant = "default",
+}: ProblemAgitationProps) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [highlightedWord, setHighlightedWord] = useState(0);
 
   const painWords = ["exhausting", "expensive", "endless", "skyrocketing"];
   const solutionWords = ["custom", "automate", "30 days", "transparent"];
+  const content = getProblemContent(variant);
 
   return (
     <section id="problem" className="-mt-12 bg-white">
@@ -21,10 +28,10 @@ export const ProblemAgitation = () => {
           className="mb-16 text-center"
         >
           <p className="mb-3 text-xl text-zinc-600 md:text-2xl">
-            While your competitors deploy AI,
+            {content.intro}
           </p>
           <p className="text-2xl font-bold text-zinc-900 md:text-3xl">
-            are you still paying for yesterday's tools?
+            {content.question}
           </p>
         </motion.div>
 
@@ -42,14 +49,12 @@ export const ProblemAgitation = () => {
               style={{ wordBreak: "break-word" }}
             >
               <p className="mb-4">
-                Every month you delay AI deployment, your competitors gain ground.
-                They're automating processes, eliminating SaaS subscriptions, and
-                scaling without adding headcount. Meanwhile, you're still paying{" "}
+                {content.problem}
                 <InteractiveWord
-                  words={["premium", "massive", "endless"]}
+                  words={content.painWords}
                   isAnimating={isAnimating}
                 />{" "}
-                prices for tools that AI could replace entirely
+                {content.continuation}
                 <motion.span
                   className="mx-2 inline-flex items-center"
                   whileHover={{ scale: 1.2, rotate: 10 }}
@@ -61,7 +66,7 @@ export const ProblemAgitation = () => {
                   .
                 </motion.span>
               </p>
-              <p>But what if catching up didn't have to take years?</p>
+              <p>{content.question2}</p>
             </div>
 
             {/* Interactive control */}
@@ -229,3 +234,62 @@ const InteractiveWord = ({
     </AnimatePresence>
   );
 };
+
+function getProblemContent(variant: ProblemAgitationProps["variant"]) {
+  switch (variant) {
+    case "customSoftware":
+      return {
+        intro: "While your competitors build custom solutions,",
+        question: "are you still buying generic software that doesn't fit?",
+        problem:
+          "Every month you delay custom software development, you fall further behind. Your business is unique, but you're stuck with generic tools that force you to adapt YOUR processes instead of the software adapting to you. You're paying ",
+        painWords: ["premium", "outrageous", "recurring"],
+        continuation:
+          "prices for software that only solves 60% of your problems",
+        question2:
+          "What if you could build exactly what you need in just 30 days?",
+      };
+    case "inventory":
+      return {
+        intro: "While your competitors track inventory in real-time,",
+        question: "are you still using spreadsheets and guessing stock levels?",
+        problem:
+          "Every stockout costs you sales. Every overstock ties up your cash. Manual inventory tracking means you're always behind, always stressed, always losing money. You're experiencing ",
+        painWords: ["endless", "costly", "frustrating"],
+        continuation:
+          "inventory mistakes that automation could eliminate completely",
+        question2: "What if you never had to worry about stock levels again?",
+      };
+    case "webapp":
+      return {
+        intro: "While your competitors launch modern web platforms,",
+        question:
+          "are you still stuck with outdated systems that hold you back?",
+        problem:
+          "Every day your web application falls behind modern standards, you lose customers to competitors with better user experiences. Legacy systems are expensive to maintain and impossible to scale. You're facing ",
+        painWords: ["mounting", "expensive", "endless"],
+        continuation: "technical debt that gets worse every month",
+        question2: "What if you could launch a modern web platform in 30 days?",
+      };
+    case "ai":
+      return {
+        intro: "While your competitors deploy AI automation,",
+        question: "are you still doing everything manually?",
+        problem:
+          "Every task AI could automate is money left on the table. While competitors scale with artificial intelligence, you're burning time and money on repetitive work. You're trapped in ",
+        painWords: ["endless", "expensive", "manual"],
+        continuation: "processes that AI could handle automatically",
+        question2: "What if AI could handle your most time-consuming tasks?",
+      };
+    default:
+      return {
+        intro: "While your competitors deploy AI,",
+        question: "are you still paying for yesterday's tools?",
+        problem:
+          "Every month you delay AI deployment, your competitors gain ground. They're automating processes, eliminating SaaS subscriptions, and scaling without adding headcount. Meanwhile, you're still paying ",
+        painWords: ["premium", "massive", "endless"],
+        continuation: "prices for tools that AI could replace entirely",
+        question2: "But what if catching up didn't have to take years?",
+      };
+  }
+}

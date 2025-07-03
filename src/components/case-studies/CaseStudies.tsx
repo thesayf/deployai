@@ -3,10 +3,16 @@ import { FiArrowRight } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { CaseStudyModal } from "./CaseStudyModal";
 
-export const CaseStudies = () => {
+interface CaseStudiesProps {
+  filter?: "all" | "software" | "automation" | "ai" | "webapp";
+}
+
+export const CaseStudies = ({ filter = "all" }: CaseStudiesProps) => {
   const [selectedCaseStudy, setSelectedCaseStudy] =
     useState<CaseStudyData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const filteredCaseStudies = getFilteredCaseStudies(filter);
 
   const handleCaseStudyClick = (caseStudy: CaseStudyData) => {
     setSelectedCaseStudy(caseStudy);
@@ -39,7 +45,7 @@ export const CaseStudies = () => {
           </motion.div>
 
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3 lg:gap-9">
-            {CASE_STUDIES_DATA.map((caseStudy) => (
+            {filteredCaseStudies.map((caseStudy) => (
               <CaseStudyCard
                 key={caseStudy.id}
                 {...caseStudy}
@@ -76,6 +82,7 @@ interface CaseStudyData {
   techStack: string[];
   testimonial: string;
   testimonialAuthor: string;
+  category: "software" | "automation" | "ai" | "webapp";
 }
 
 interface CaseStudyCardProps extends CaseStudyData {
@@ -331,6 +338,7 @@ const CASE_STUDIES_DATA: CaseStudyData[] = [
     testimonial:
       "This chatbot works better than having a full-time receptionist. It books appointments while I sleep and my customers love the instant responses. Revenue has tripled since deployment.",
     testimonialAuthor: "James Butler, Owner of JB Luxury Detailing",
+    category: "software", // Add category for filtering
   },
   {
     id: "showcase-cinema-scheduling",
@@ -367,6 +375,7 @@ const CASE_STUDIES_DATA: CaseStudyData[] = [
     testimonial:
       "The platform transformed our entire operation. What used to take our team a full week now happens automatically in minutes. The revenue optimization features alone paid for the system within the first month.",
     testimonialAuthor: "Sarah Johnson, Operations Director at Showcase Cinemas",
+    category: "ai", // Add category for filtering
   },
   {
     id: "centric-research-platform",
@@ -402,5 +411,16 @@ const CASE_STUDIES_DATA: CaseStudyData[] = [
     testimonial:
       "The platform has transformed how we approach community research. What used to take weeks of manual work now happens in minutes, while ensuring authentic community participation throughout the entire process.",
     testimonialAuthor: "Dr. Sarah Williams, Research Director at Centric",
+    category: "software", // Add category for filtering
   },
 ];
+
+function getFilteredCaseStudies(
+  filter: CaseStudiesProps["filter"]
+): CaseStudyData[] {
+  if (filter === "all") {
+    return CASE_STUDIES_DATA;
+  }
+
+  return CASE_STUDIES_DATA.filter((caseStudy) => caseStudy.category === filter);
+}
