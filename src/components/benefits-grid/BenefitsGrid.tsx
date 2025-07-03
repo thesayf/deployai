@@ -19,21 +19,21 @@ export const BenefitsGrid = ({
       title: "Maximise Profits While Reducing Costs",
       subtitle:
         "Transform your operations with AI-driven solutions that drive revenue growth",
-      inventory: {
-        title: "Why Smart Inventory Management Changes Everything",
-        subtitle:
-          "Stop losing revenue to stockouts and overstocking. See how intelligent inventory systems transform Dubai businesses.",
-      },
-      webapp: {
-        title: "Why Custom Web Applications Drive Growth",
-        subtitle:
-          "Generic platforms limit your potential. Custom web applications give you the competitive edge Dubai businesses need.",
-      },
-      ai: {
-        title: "Why AI-Powered Solutions Transform Operations",
-        subtitle:
-          "Manual processes are expensive. AI automation delivers immediate ROI and positions your business for the future.",
-      },
+    },
+    inventory: {
+      title: "Why Smart Inventory Management Changes Everything",
+      subtitle:
+        "Stop losing revenue to stockouts and overstocking. See how intelligent inventory systems transform Dubai businesses.",
+    },
+    webapp: {
+      title: "Why Custom Web Applications Drive Growth",
+      subtitle:
+        "Generic platforms limit your potential. Custom web applications give you the competitive edge Dubai businesses need.",
+    },
+    ai: {
+      title: "Why AI-Powered Solutions Transform Operations",
+      subtitle:
+        "Manual processes are expensive. AI automation delivers immediate ROI and positions your business for the future.",
     },
   };
 

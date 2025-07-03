@@ -43,7 +43,13 @@ const BasicFAQ = () => {
   );
 };
 
-const Question = ({ title, children, defaultOpen = false }) => {
+interface QuestionProps {
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+}
+
+const Question = ({ title, children, defaultOpen = false }: QuestionProps) => {
   const [ref, { height }] = useMeasure();
   const [open, setOpen] = useState(defaultOpen);
 
