@@ -1,0 +1,240 @@
+{
+  "custom-software-development": {
+    "id": "custom-software-development",
+    "name": "Custom Software Development",
+    "slug": "custom-software-development",
+    "category": "Software",
+    "description": "Build powerful custom software solutions tailored to your business needs. Stop paying monthly fees for software that doesn't fit - get a solution that grows with your business.",
+    "features": [
+      "Custom business logic and workflows",
+      "Scalable architecture and database design",
+      "User-friendly interfaces and dashboards",
+      "Integration with existing systems",
+      "24/7 monitoring and support",
+      "Mobile-responsive design",
+      "API development and documentation",
+      "Security and compliance features"
+    ],
+    "techStack": [
+      "React",
+      "Node.js",
+      "PostgreSQL",
+      "TypeScript",
+      "Next.js",
+      "Tailwind CSS",
+      "AWS",
+      "Docker"
+    ],
+    "pricing": {
+      "starting": 15000,
+      "currency": "AED",
+      "model": "fixed"
+    },
+    "deliveryTime": "3-6 weeks",
+    "caseStudies": ["jb-luxury-detailing", "centric-research-platform"]
+  },
+  "web-development": {
+    "id": "web-development",
+    "name": "Web Development",
+    "slug": "web-development",
+    "category": "Web",
+    "description": "Create fast, secure, and scalable websites and web applications that drive business growth and user engagement.",
+    "features": [
+      "Responsive web design",
+      "E-commerce functionality",
+      "Content management systems",
+      "SEO optimization",
+      "Performance optimization",
+      "Cross-browser compatibility",
+      "Progressive web app features",
+      "Third-party integrations"
+    ],
+    "techStack": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Node.js",
+      "MongoDB",
+      "Vercel",
+      "Stripe"
+    ],
+    "pricing": {
+      "starting": 8000,
+      "currency": "AED",
+      "model": "fixed"
+    },
+    "deliveryTime": "2-4 weeks",
+    "caseStudies": ["showcase-cinema-scheduling"]
+  },
+  "ai-solutions": {
+    "id": "ai-solutions",
+    "name": "AI Solutions",
+    "slug": "ai-solutions",
+    "category": "AI",
+    "description": "Harness the power of artificial intelligence to automate processes, gain insights, and deliver personalized experiences to your customers.",
+    "features": [
+      "Custom AI model development",
+      "Natural language processing",
+      "Computer vision solutions",
+      "Predictive analytics",
+      "Automated decision making",
+      "Chatbots and virtual assistants",
+      "Data analysis and insights",
+      "AI-powered automation"
+    ],
+    "techStack": [
+      "Python",
+      "TensorFlow",
+      "OpenAI GPT",
+      "Anthropic Claude",
+      "PyTorch",
+      "Scikit-learn",
+      "AWS SageMaker",
+      "Docker"
+    ],
+    "pricing": {
+      "starting": 20000,
+      "currency": "AED",
+      "model": "fixed"
+    },
+    "deliveryTime": "4-8 weeks",
+    "caseStudies": ["showcase-cinema-scheduling", "jb-luxury-detailing"]
+  },
+  "automation": {
+    "id": "automation",
+    "name": "Business Process Automation",
+    "slug": "automation",
+    "category": "Automation",
+    "description": "Streamline your business operations with intelligent automation solutions that reduce manual work and increase efficiency.",
+    "features": [
+      "Workflow automation",
+      "Document processing",
+      "Email automation",
+      "Inventory management",
+      "Customer onboarding",
+      "Reporting automation",
+      "Integration with existing tools",
+      "Custom business logic"
+    ],
+    "techStack": [
+      "Python",
+      "Node.js",
+      "Zapier",
+      "Make.com",
+      "Airtable",
+      "Google Workspace",
+      "Microsoft 365",
+      "Webhooks"
+    ],
+    "pricing": {
+      "starting": 12000,
+      "currency": "AED",
+      "model": "fixed"
+    },
+    "deliveryTime": "2-5 weeks",
+    "caseStudies": ["jb-luxury-detailing"]
+  },
+  "saas-development": {
+    "id": "saas-development",
+    "name": "SaaS Development",
+    "slug": "saas-development",
+    "category": "SaaS",
+    "description": "Build scalable Software as a Service platforms with subscription management, user authentication, and multi-tenant architecture.",
+    "features": [
+      "Multi-tenant architecture",
+      "Subscription management",
+      "User authentication and authorization",
+      "Payment processing",
+      "Analytics and reporting",
+      "API development",
+      "Scalable infrastructure",
+      "Admin dashboards"
+    ],
+    "techStack": [
+      "React",
+      "Node.js",
+      "PostgreSQL",
+      "Stripe",
+      "Auth0",
+      "AWS",
+      "Docker",
+      "Kubernetes"
+    ],
+    "pricing": {
+      "starting": 25000,
+      "currency": "AED",
+      "model": "fixed"
+    },
+    "deliveryTime": "6-12 weeks",
+    "caseStudies": ["centric-research-platform"]
+  },
+  "mobile-development": {
+    "id": "mobile-development",
+    "name": "Mobile App Development",
+    "slug": "mobile-development",
+    "category": "Mobile",
+    "description": "Create native and cross-platform mobile applications that provide seamless user experiences on iOS and Android devices.",
+    "features": [
+      "Native iOS and Android development",
+      "Cross-platform solutions",
+      "Push notifications",
+      "Offline functionality",
+      "App store optimization",
+      "User analytics",
+      "In-app purchases",
+      "Social media integration"
+    ],
+    "techStack": [
+      "React Native",
+      "Swift",
+      "Kotlin",
+      "Flutter",
+      "Firebase",
+      "Expo",
+      "Redux",
+      "SQLite"
+    ],
+    "pricing": {
+      "starting": 18000,
+      "currency": "AED",
+      "model": "fixed"
+    },
+    "deliveryTime": "4-8 weeks",
+    "caseStudies": ["jb-luxury-detailing"]
+  },
+  "ecommerce-development": {
+    "id": "ecommerce-development",
+    "name": "E-commerce Development",
+    "slug": "ecommerce-development",
+    "category": "E-commerce",
+    "description": "Build powerful online stores and e-commerce platforms that drive sales and provide excellent customer experiences.",
+    "features": [
+      "Custom e-commerce platforms",
+      "Payment gateway integration",
+      "Inventory management",
+      "Order processing",
+      "Customer management",
+      "Analytics and reporting",
+      "Multi-language support",
+      "Mobile optimization"
+    ],
+    "techStack": [
+      "React",
+      "Next.js",
+      "Shopify",
+      "WooCommerce",
+      "Stripe",
+      "PayPal",
+      "PostgreSQL",
+      "AWS"
+    ],
+    "pricing": {
+      "starting": 15000,
+      "currency": "AED",
+      "model": "fixed"
+    },
+    "deliveryTime": "3-6 weeks",
+    "caseStudies": []
+  }
+}

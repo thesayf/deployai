@@ -1,0 +1,248 @@
+{
+  "real-estate": {
+    "id": "real-estate",
+    "name": "Real Estate",
+    "slug": "real-estate",
+    "description": "Transform your real estate business with custom software solutions that streamline operations, enhance customer experiences, and drive sales.",
+    "challenges": [
+      "Manual property management processes",
+      "Lead tracking and nurturing inefficiencies",
+      "Complex commission calculations",
+      "Document management and compliance",
+      "Client communication and follow-ups",
+      "Property listing and marketing challenges",
+      "Integration with MLS systems",
+      "Mobile access for agents in the field"
+    ],
+    "solutions": [
+      "Property management systems",
+      "CRM and lead management platforms",
+      "Commission calculation automation",
+      "Document management and e-signature integration",
+      "Automated client communication workflows",
+      "Property listing and marketing automation",
+      "MLS integration and data synchronization",
+      "Mobile apps for agents and clients"
+    ],
+    "compliance": [
+      "RERA (Real Estate Regulatory Authority) compliance",
+      "Data protection and privacy regulations",
+      "Financial transaction compliance",
+      "Property disclosure requirements"
+    ],
+    "caseStudies": [],
+    "terminology": {
+      "RERA": "Real Estate Regulatory Authority",
+      "MLS": "Multiple Listing Service",
+      "CRM": "Customer Relationship Management",
+      "Lead": "Potential property buyer or seller",
+      "Commission": "Fee paid to real estate agent",
+      "Property Management": "Oversight of real estate properties"
+    }
+  },
+  "healthcare": {
+    "id": "healthcare",
+    "name": "Healthcare",
+    "slug": "healthcare",
+    "description": "Revolutionize healthcare delivery with secure, compliant software solutions that improve patient care and operational efficiency.",
+    "challenges": [
+      "Patient data management and security",
+      "Appointment scheduling and coordination",
+      "Medical records and documentation",
+      "Billing and insurance processing",
+      "Regulatory compliance requirements",
+      "Telemedicine and remote consultations",
+      "Inventory management for medical supplies",
+      "Staff scheduling and resource allocation"
+    ],
+    "solutions": [
+      "Electronic Health Records (EHR) systems",
+      "Patient management platforms",
+      "Appointment scheduling automation",
+      "Medical billing and insurance processing",
+      "Telemedicine platforms",
+      "Medical inventory management",
+      "Staff scheduling systems",
+      "Compliance monitoring tools"
+    ],
+    "compliance": [
+      "HIPAA (Health Insurance Portability and Accountability Act)",
+      "UAE Ministry of Health regulations",
+      "Medical device regulations",
+      "Patient data protection laws"
+    ],
+    "caseStudies": [],
+    "terminology": {
+      "EHR": "Electronic Health Records",
+      "HIPAA": "Health Insurance Portability and Accountability Act",
+      "Telemedicine": "Remote healthcare delivery",
+      "EMR": "Electronic Medical Records",
+      "CPT": "Current Procedural Terminology",
+      "ICD": "International Classification of Diseases"
+    }
+  },
+  "fintech": {
+    "id": "fintech",
+    "name": "Financial Technology",
+    "slug": "fintech",
+    "description": "Build secure, scalable financial technology solutions that comply with regulations and provide exceptional user experiences.",
+    "challenges": [
+      "Regulatory compliance and reporting",
+      "Transaction security and fraud prevention",
+      "Payment processing and integration",
+      "Customer onboarding and KYC processes",
+      "Risk management and assessment",
+      "API security and authentication",
+      "Data encryption and protection",
+      "Scalability for high transaction volumes"
+    ],
+    "solutions": [
+      "Payment processing platforms",
+      "Digital banking solutions",
+      "KYC and compliance automation",
+      "Fraud detection systems",
+      "API security infrastructure",
+      "Risk management tools",
+      "Customer onboarding platforms",
+      "Regulatory reporting automation"
+    ],
+    "compliance": [
+      "UAE Central Bank regulations",
+      "PCI DSS (Payment Card Industry Data Security Standard)",
+      "Anti-Money Laundering (AML) requirements",
+      "Know Your Customer (KYC) regulations"
+    ],
+    "caseStudies": [],
+    "terminology": {
+      "KYC": "Know Your Customer",
+      "AML": "Anti-Money Laundering",
+      "PCI DSS": "Payment Card Industry Data Security Standard",
+      "API": "Application Programming Interface",
+      "Fintech": "Financial Technology",
+      "Digital Banking": "Online banking services"
+    }
+  },
+  "logistics": {
+    "id": "logistics",
+    "name": "Logistics & Supply Chain",
+    "slug": "logistics",
+    "description": "Optimize your logistics operations with intelligent software solutions that improve efficiency, reduce costs, and enhance visibility.",
+    "challenges": [
+      "Inventory tracking and management",
+      "Route optimization and planning",
+      "Warehouse management inefficiencies",
+      "Supplier relationship management",
+      "Real-time shipment tracking",
+      "Cost optimization and reporting",
+      "Integration with multiple systems",
+      "Compliance with shipping regulations"
+    ],
+    "solutions": [
+      "Warehouse management systems",
+      "Route optimization platforms",
+      "Inventory tracking solutions",
+      "Supplier management portals",
+      "Real-time tracking systems",
+      "Cost analysis and reporting tools",
+      "System integration platforms",
+      "Compliance monitoring systems"
+    ],
+    "compliance": [
+      "UAE customs regulations",
+      "International shipping requirements",
+      "Dangerous goods handling regulations",
+      "Food safety and pharmaceutical compliance"
+    ],
+    "caseStudies": [],
+    "terminology": {
+      "WMS": "Warehouse Management System",
+      "SCM": "Supply Chain Management",
+      "EDI": "Electronic Data Interchange",
+      "3PL": "Third-Party Logistics",
+      "FTL": "Full Truckload",
+      "LTL": "Less Than Truckload"
+    }
+  },
+  "education": {
+    "id": "education",
+    "name": "Education",
+    "slug": "education",
+    "description": "Enhance educational experiences with innovative software solutions that support learning, administration, and student engagement.",
+    "challenges": [
+      "Student information management",
+      "Online learning platform development",
+      "Assessment and grading automation",
+      "Parent-teacher communication",
+      "Resource and facility management",
+      "Attendance tracking and reporting",
+      "Fee collection and financial management",
+      "Curriculum management and planning"
+    ],
+    "solutions": [
+      "Student information systems",
+      "Learning management platforms",
+      "Assessment and grading tools",
+      "Communication portals",
+      "Resource management systems",
+      "Attendance tracking solutions",
+      "Fee management platforms",
+      "Curriculum planning tools"
+    ],
+    "compliance": [
+      "UAE Ministry of Education regulations",
+      "Student data protection laws",
+      "Academic accreditation requirements",
+      "Online learning standards"
+    ],
+    "caseStudies": [],
+    "terminology": {
+      "LMS": "Learning Management System",
+      "SIS": "Student Information System",
+      "MOOC": "Massive Open Online Course",
+      "VLE": "Virtual Learning Environment",
+      "CBT": "Computer-Based Training",
+      "Assessment": "Evaluation of student learning"
+    }
+  },
+  "hospitality": {
+    "id": "hospitality",
+    "name": "Hospitality",
+    "slug": "hospitality",
+    "description": "Transform guest experiences and streamline operations with custom hospitality software solutions.",
+    "challenges": [
+      "Guest booking and reservation management",
+      "Customer experience personalization",
+      "Staff scheduling and management",
+      "Inventory and supply management",
+      "Revenue management and optimization",
+      "Guest feedback and review management",
+      "Integration with booking platforms",
+      "Compliance with tourism regulations"
+    ],
+    "solutions": [
+      "Property management systems",
+      "Booking and reservation platforms",
+      "Guest experience applications",
+      "Staff management systems",
+      "Inventory management tools",
+      "Revenue optimization platforms",
+      "Review management systems",
+      "Channel management solutions"
+    ],
+    "compliance": [
+      "UAE tourism authority regulations",
+      "Guest data protection requirements",
+      "Food safety and hygiene standards",
+      "Hospitality industry standards"
+    ],
+    "caseStudies": [],
+    "terminology": {
+      "PMS": "Property Management System",
+      "ADR": "Average Daily Rate",
+      "RevPAR": "Revenue Per Available Room",
+      "OTA": "Online Travel Agency",
+      "GDS": "Global Distribution System",
+      "CRS": "Central Reservation System"
+    }
+  }
+}

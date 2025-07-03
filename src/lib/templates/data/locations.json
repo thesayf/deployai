@@ -1,0 +1,106 @@
+{
+  "dubai": {
+    "id": "dubai",
+    "name": "Dubai",
+    "slug": "dubai",
+    "country": "UAE",
+    "timezone": "Asia/Dubai",
+    "currency": "AED",
+    "businessContext": "Dubai's thriving business ecosystem demands innovative technology solutions. As the region's tech hub, companies need cutting-edge software to stay competitive in the global market.",
+    "marketInsights": [
+      "Dubai's digital transformation initiative drives 40% of businesses to adopt custom software",
+      "UAE's Vision 2071 positions Dubai as a global tech innovation center",
+      "73% of Dubai businesses plan to increase tech spending in 2024",
+      "Dubai's free zones offer 100% foreign ownership attracting tech investments",
+      "Growing demand for AI and automation solutions in Dubai's smart city initiatives"
+    ],
+    "testimonials": [
+      "Working with a Dubai-based team meant faster communication and better understanding of local business needs",
+      "The team's knowledge of Dubai's regulatory requirements saved us months of compliance work",
+      "Having developers in our timezone made project collaboration seamless and efficient"
+    ],
+    "contactInfo": {
+      "phone": "+971 4 XXX XXXX",
+      "email": "dubai@deployai.co",
+      "address": "Dubai Internet City, Dubai, UAE"
+    }
+  },
+  "abu-dhabi": {
+    "id": "abu-dhabi",
+    "name": "Abu Dhabi",
+    "slug": "abu-dhabi",
+    "country": "UAE",
+    "timezone": "Asia/Dubai",
+    "currency": "AED",
+    "businessContext": "Abu Dhabi's strategic position as the UAE's capital creates unique opportunities for government and enterprise software solutions. The city's focus on economic diversification drives demand for innovative technology.",
+    "marketInsights": [
+      "Abu Dhabi's economic diversification strategy increases demand for custom software by 35%",
+      "Government digitization initiatives create opportunities for enterprise solutions",
+      "Abu Dhabi's sovereign wealth fund invests heavily in technology infrastructure",
+      "Growing fintech sector requires compliance-focused software solutions",
+      "ADGM (Abu Dhabi Global Market) drives demand for financial technology solutions"
+    ],
+    "testimonials": [
+      "The Abu Dhabi team understood our regulatory requirements and built compliant solutions",
+      "Local expertise in government processes made our project approval process smooth",
+      "Having developers familiar with Abu Dhabi's business culture was invaluable"
+    ],
+    "contactInfo": {
+      "phone": "+971 2 XXX XXXX",
+      "email": "abudhabi@deployai.co",
+      "address": "Al Reem Island, Abu Dhabi, UAE"
+    }
+  },
+  "sharjah": {
+    "id": "sharjah",
+    "name": "Sharjah",
+    "slug": "sharjah",
+    "country": "UAE",
+    "timezone": "Asia/Dubai",
+    "currency": "AED",
+    "businessContext": "Sharjah's position as the UAE's cultural and educational hub creates unique opportunities for educational technology and cultural preservation software solutions.",
+    "marketInsights": [
+      "Sharjah's education sector drives 45% of technology adoption in the emirate",
+      "Cultural preservation initiatives require specialized software solutions",
+      "Growing manufacturing sector needs process automation and inventory management",
+      "Sharjah's strategic location attracts logistics and supply chain businesses",
+      "University partnerships create opportunities for educational technology solutions"
+    ],
+    "testimonials": [
+      "The Sharjah team's understanding of educational technology helped us build the perfect solution",
+      "Local knowledge of manufacturing processes made our automation project successful",
+      "Working with a Sharjah-based team provided excellent value for money"
+    ],
+    "contactInfo": {
+      "phone": "+971 6 XXX XXXX",
+      "email": "sharjah@deployai.co",
+      "address": "Sharjah, UAE"
+    }
+  },
+  "uae": {
+    "id": "uae",
+    "name": "UAE",
+    "slug": "uae",
+    "country": "UAE",
+    "timezone": "Asia/Dubai",
+    "currency": "AED",
+    "businessContext": "The UAE's strategic position as the Middle East's business hub creates exceptional opportunities for technology solutions across all emirates. Our nationwide presence ensures comprehensive coverage.",
+    "marketInsights": [
+      "UAE's National Strategy for Advanced Innovation drives 60% increase in tech adoption",
+      "Cross-emirate businesses need integrated software solutions for multi-location operations",
+      "UAE's position as regional hub attracts international companies needing local expertise",
+      "Government's paperless initiative creates demand for digital transformation solutions",
+      "UAE's diversified economy requires specialized software for various industries"
+    ],
+    "testimonials": [
+      "Having UAE-wide coverage meant we could expand our solution across all our locations",
+      "The team's understanding of UAE business culture made integration seamless",
+      "Local expertise across all emirates provided comprehensive support for our expansion"
+    ],
+    "contactInfo": {
+      "phone": "+971 4 XXX XXXX",
+      "email": "uae@deployai.co",
+      "address": "Multiple locations across UAE"
+    }
+  }
+}
