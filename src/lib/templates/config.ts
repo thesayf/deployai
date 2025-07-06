@@ -8,6 +8,12 @@ import { LandingPageTemplate, SectionConfig, ComponentVariant } from "./types";
 // Default section configurations for all templates
 export const DEFAULT_SECTIONS: SectionConfig[] = [
   {
+    component: "AnimatedNavBar",
+    enabled: true,
+    order: 0,
+    props: {},
+  },
+  {
     component: "Hero",
     enabled: true,
     order: 1,

@@ -8,14 +8,15 @@ import Head from "next/head";
 import { LandingPageTemplate } from "@/lib/templates/types";
 
 // Import all components that can be used in templates
+import { AnimatedNavBar } from "@/components/navigation/AnimatedNavBar";
 import { Hero } from "@/components/hero/Hero";
 import { ProblemAgitation } from "@/components/problem-agitation/ProblemAgitation";
 import { BenefitsGrid } from "@/components/benefits-grid/BenefitsGrid";
 import { ServiceFeatures } from "@/components/service-features/ServiceFeatures";
 import { StickyScrollCards } from "@/components/sticky-scroll-cards/StickyScrollCards";
 import { CaseStudies } from "@/components/case-studies/CaseStudies";
-import { StaggerTestimonials } from "@/components/testimonials/StaggerTestimonials";
-import { PricingSection } from "@/components/pricing/PricingSection";
+import { StaggerTestimonials } from "@/components/stagger-testimonials/StaggerTestimonials";
+import { PricingSection } from "@/components/pricing-section/PricingSection";
 import { RiskReversal } from "@/components/risk-reversal/RiskReversal";
 import { CalendlyInline } from "@/components/calendly/CalendlyInline";
 import { FAQ } from "@/components/faq/FAQ";
@@ -28,6 +29,7 @@ interface DynamicTemplateProps {
 
 // Component mapping
 const COMPONENT_MAP = {
+  AnimatedNavBar,
   Hero,
   ProblemAgitation,
   BenefitsGrid,
@@ -167,11 +169,15 @@ export const withTemplate = <T extends object>(
   Component: React.ComponentType<T>,
   template: LandingPageTemplate
 ) => {
-  return (props: T) => (
+  const WrappedComponent = (props: T) => (
     <DynamicTemplate template={template}>
       <Component {...props} />
     </DynamicTemplate>
   );
+  
+  WrappedComponent.displayName = `withTemplate(${Component.displayName || Component.name || 'Component'})`;
+  
+  return WrappedComponent;
 };
 
 // Hook for accessing template content within components

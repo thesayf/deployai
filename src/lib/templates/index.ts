@@ -3,6 +3,9 @@
  * Central export point for the landing page template system
  */
 
+import type { LandingPageTemplate } from "./types";
+import { templateResolver } from "./resolver";
+
 // Types
 export type {
   LandingPageTemplate,
@@ -12,8 +15,7 @@ export type {
   LocationData,
   ServiceData,
   IndustryData,
-  MetaData,
-  AnalyticsConfig,
+  TemplateMeta,
 } from "./types";
 
 // Configuration
@@ -47,7 +49,7 @@ export function generateSlugs(options: {
   patterns?: ("locationService" | "industryLocation" | "serviceIndustry")[];
 }): string[] {
   const templates = templateResolver.generateMultipleTemplates(options);
-  return templates.map((template) => template.slug);
+  return templates.map((template: any) => template.slug);
 }
 
 export function getTemplateBySlug(slug: string): LandingPageTemplate | null {
@@ -69,7 +71,7 @@ export function getTemplateSuggestions(partial: {
 // Helper functions for Next.js
 export function generateStaticPaths(): {
   paths: { params: { slug: string } }[];
-  fallback: boolean;
+  fallback: boolean | "blocking";
 } {
   const templates = getAllTemplates();
   const paths = templates.map((template) => ({

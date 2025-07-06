@@ -19,22 +19,22 @@ export type ComponentVariant =
 export interface TemplateContent {
   location: string; // "Dubai", "Abu Dhabi", "UAE", "Sharjah"
   service: string; // "Custom Software", "Web Development", "AI Solutions"
-  industry?: string; // "Real Estate", "Healthcare", "Finance"
+  industry?: string | null; // "Real Estate", "Healthcare", "Finance"
   targetAudience: string; // "Businesses", "Startups", "Enterprises"
   valueProposition: string; // Main value proposition
   painPoints: string[]; // Industry/location specific pain points
   benefits: string[]; // Key benefits to highlight
   ctaText: string; // Call-to-action text
-  urgency?: string; // Urgency factor like "Limited Time", "High Demand"
+  urgency?: string | null; // Urgency factor like "Limited Time", "High Demand"
 }
 
 export interface TemplateMeta {
   title: string;
   description: string;
   keywords: string[];
-  canonicalUrl?: string;
-  ogImage?: string;
-  structuredData?: Record<string, any>;
+  canonicalUrl?: string | null;
+  ogImage?: string | null;
+  structuredData?: Record<string, any> | null;
 }
 
 export interface SectionConfig {
@@ -56,9 +56,9 @@ export interface LandingPageTemplate {
   updatedAt: string;
   isActive: boolean;
   analytics?: {
-    googleAnalytics?: string;
-    facebookPixel?: string;
-    hotjar?: string;
+    googleAnalytics?: string | null;
+    facebookPixel?: string | null;
+    hotjar?: string | null;
   };
 }
 

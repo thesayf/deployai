@@ -41,14 +41,25 @@ export default function TemplatesDashboard({
     setIsGenerating(true);
     try {
       const result = await templateGenerator.generate({
-        generateFiles: true,
+        generateFiles: false, // Client-side can't write files
         fileFormat: "tsx",
-        outputDir: "./generated-templates",
       });
 
-      alert(`Generated ${result.summary.total} templates successfully!`);
-    } catch (error) {
-      alert("Error generating templates: " + error.message);
+      // Download the templates as a zip file or show success message
+      const dataStr = JSON.stringify(result.templates, null, 2);
+      const dataUri =
+        "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
+      const exportFileDefaultName = "templates.json";
+      const linkElement = document.createElement("a");
+      linkElement.setAttribute("href", dataUri);
+      linkElement.setAttribute("download", exportFileDefaultName);
+      linkElement.click();
+
+      alert(
+        `Generated ${result.summary.total} templates successfully! Downloaded as templates.json`
+      );
+    } catch (error: any) {
+      alert("Error generating templates: " + (error?.message || error));
     } finally {
       setIsGenerating(false);
     }
@@ -182,7 +193,7 @@ export default function TemplatesDashboard({
                 disabled={isGenerating}
                 className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
               >
-                {isGenerating ? "Generating..." : "Generate Files"}
+                {isGenerating ? "Generating..." : "Download Templates"}
               </button>
             </div>
           </div>

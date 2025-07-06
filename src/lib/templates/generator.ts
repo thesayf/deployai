@@ -5,8 +5,6 @@
 
 import { templateResolver } from "./resolver";
 import { LandingPageTemplate } from "./types";
-import fs from "fs";
-import path from "path";
 
 interface GeneratorOptions {
   locations?: string[];
@@ -43,7 +41,6 @@ export class TemplateGenerator {
       ],
       industries = ["real-estate", "healthcare", "fintech"],
       patterns = ["locationService", "industryLocation", "serviceIndustry"],
-      outputDir = "./generated-templates",
       generateFiles = false,
       fileFormat = "tsx",
     } = options;
@@ -56,10 +53,11 @@ export class TemplateGenerator {
       patterns,
     });
 
-    // Generate files if requested
+    // Generate files if requested and in server environment
     let files: { path: string; content: string }[] = [];
-    if (generateFiles) {
-      files = await this.generateFiles(templates, outputDir, fileFormat);
+    if (generateFiles && typeof window === "undefined") {
+      // Only generate files on server-side
+      files = await this.generateFileContents(templates, fileFormat);
     }
 
     // Generate summary
@@ -73,19 +71,13 @@ export class TemplateGenerator {
   }
 
   /**
-   * Generate individual template files
+   * Generate file contents (without writing to disk)
    */
-  private async generateFiles(
+  private async generateFileContents(
     templates: LandingPageTemplate[],
-    outputDir: string,
     format: "tsx" | "json" | "md"
   ): Promise<{ path: string; content: string }[]> {
     const files: { path: string; content: string }[] = [];
-
-    // Ensure output directory exists
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
-    }
 
     for (const template of templates) {
       let content: string;
@@ -108,12 +100,7 @@ export class TemplateGenerator {
           break;
       }
 
-      const filePath = path.join(outputDir, fileName);
-
-      // Write file
-      fs.writeFileSync(filePath, content, "utf8");
-
-      files.push({ path: filePath, content });
+      files.push({ path: fileName, content });
     }
 
     return files;
@@ -183,7 +170,7 @@ ${template.content.painPoints.map((point) => `- ${point}`).join("\n")}
 ${template.content.benefits.map((benefit) => `- ${benefit}`).join("\n")}
 
 ### Urgency Factor
-${template.content.urgencyFactor}
+${template.content.urgency || "Limited time offer"}
 
 ### Call-to-Action
 ${template.content.ctaText}
@@ -201,12 +188,8 @@ ${template.sections
 
 ## Analytics
 
-- **Google Analytics:** ${template.analytics?.googleAnalytics || "Not configured"}
-- **Facebook Pixel:** ${template.analytics?.facebookPixel || "Not configured"}
-
----
-
-*This template was auto-generated using the DeployAI template system.*`;
+${template.analytics ? JSON.stringify(template.analytics, null, 2) : "No analytics configured"}
+`;
   }
 
   /**
@@ -215,44 +198,45 @@ ${template.sections
   private generateSummary(
     templates: LandingPageTemplate[]
   ): GenerationResult["summary"] {
-    const byPattern: Record<string, number> = {};
-    const byVariant: Record<string, number> = {};
-    const byLocation: Record<string, number> = {};
+    const summary = {
+      total: templates.length,
+      byPattern: {} as Record<string, number>,
+      byVariant: {} as Record<string, number>,
+      byLocation: {} as Record<string, number>,
+    };
 
     templates.forEach((template) => {
-      // Count by pattern (inferred from slug structure)
+      // Count by pattern
       const pattern = this.inferPattern(template.slug);
-      byPattern[pattern] = (byPattern[pattern] || 0) + 1;
+      summary.byPattern[pattern] = (summary.byPattern[pattern] || 0) + 1;
 
       // Count by variant
-      byVariant[template.variant] = (byVariant[template.variant] || 0) + 1;
+      summary.byVariant[template.variant] =
+        (summary.byVariant[template.variant] || 0) + 1;
 
       // Count by location
-      const location = template.content.location;
-      byLocation[location] = (byLocation[location] || 0) + 1;
+      summary.byLocation[template.content.location] =
+        (summary.byLocation[template.content.location] || 0) + 1;
     });
 
-    return {
-      total: templates.length,
-      byPattern,
-      byVariant,
-      byLocation,
-    };
+    return summary;
   }
 
   /**
-   * Infer pattern from slug structure
+   * Infer pattern from slug
    */
   private inferPattern(slug: string): string {
-    const parts = slug.split("-");
-
-    if (parts.length >= 4) return "industryLocation";
-    if (parts.length >= 3) return "locationService";
-    return "serviceIndustry";
+    if (slug.includes("-")) {
+      const parts = slug.split("-");
+      if (parts.length >= 2) {
+        return "locationService";
+      }
+    }
+    return "unknown";
   }
 
   /**
-   * Convert kebab-case to PascalCase
+   * Convert string to PascalCase
    */
   private toPascalCase(str: string): string {
     return str
@@ -262,49 +246,41 @@ ${template.sections
   }
 
   /**
-   * Generate sitemap.xml content
+   * Generate sitemap XML
    */
   generateSitemap(templates: LandingPageTemplate[], baseUrl: string): string {
-    const urls = templates
-      .map(
-        (template) => `
-  <url>
-    <loc>${baseUrl}/${template.slug}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
+    const urls = templates.map((template) => {
+      return `  <url>
+    <loc>${baseUrl}/templates/${template.slug}</loc>
+    <lastmod>${new Date().toISOString().split("T")[0]}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>`
-      )
-      .join("");
+  </url>`;
+    });
 
     return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Auto-generated sitemap for landing page templates -->
-  <!-- Generated on: ${new Date().toISOString()} -->
-  ${urls}
+${urls.join("\n")}
 </urlset>`;
   }
 
   /**
-   * Generate robots.txt content
+   * Generate robots.txt
    */
   generateRobotsTxt(baseUrl: string): string {
     return `User-agent: *
 Allow: /
 
-# Landing page templates
-Allow: /custom-software-development-*
-Allow: /web-development-*
-Allow: /mobile-development-*
-Allow: /real-estate-*
-Allow: /healthcare-*
-Allow: /fintech-*
-
 # Sitemap
 Sitemap: ${baseUrl}/sitemap.xml
 
-# Crawl delay
-Crawl-delay: 1`;
+# Specific template pages
+Allow: /templates/
+Allow: /admin/
+
+# Optimize crawling
+Crawl-delay: 1
+`;
   }
 
   /**
@@ -318,18 +294,17 @@ Crawl-delay: 1`;
   }
 
   /**
-   * Generate bulk analytics events
+   * Generate analytics events configuration
    */
   generateAnalyticsEvents(templates: LandingPageTemplate[]): any[] {
     return templates.map((template) => ({
-      name: "template_page_view",
-      parameters: {
-        template_id: template.id,
-        template_variant: template.variant,
-        template_location: template.content.location,
-        template_service: template.content.service,
-        template_industry: template.content.industry || null,
-      },
+      event: "page_view",
+      template_id: template.id,
+      template_slug: template.slug,
+      template_variant: template.variant,
+      location: template.content.location,
+      service: template.content.service,
+      industry: template.content.industry,
     }));
   }
 }
@@ -337,45 +312,25 @@ Crawl-delay: 1`;
 // Export singleton instance
 export const templateGenerator = new TemplateGenerator();
 
-// CLI utility functions
-export function generateAllTemplates(
-  outputDir: string = "./generated-templates"
-): void {
-  console.log("🚀 Starting template generation...");
-
-  templateGenerator
-    .generate({
-      outputDir,
-      generateFiles: true,
-      fileFormat: "tsx",
-    })
-    .then((result) => {
-      console.log(`✅ Generated ${result.summary.total} templates`);
-      console.log("📊 Summary:", result.summary);
-      console.log(`📁 Files written to: ${outputDir}`);
-    })
-    .catch((error) => {
-      console.error("❌ Error generating templates:", error);
-    });
+// Utility functions for CLI and server-side use
+export async function generateAllTemplates(): Promise<LandingPageTemplate[]> {
+  const generator = new TemplateGenerator();
+  const result = await generator.generate();
+  return result.templates;
 }
 
-export function generateSitemap(
+export async function generateSitemap(
   baseUrl: string,
-  outputPath: string = "./public/sitemap.xml"
-): void {
-  console.log("🗺️  Generating sitemap...");
-
-  templateGenerator
-    .generate()
-    .then((result) => {
-      const sitemap = templateGenerator.generateSitemap(
-        result.templates,
-        baseUrl
-      );
-      fs.writeFileSync(outputPath, sitemap, "utf8");
-      console.log(`✅ Sitemap generated: ${outputPath}`);
-    })
-    .catch((error) => {
-      console.error("❌ Error generating sitemap:", error);
-    });
+  templates?: LandingPageTemplate[]
+): Promise<string> {
+  const generator = new TemplateGenerator();
+  const templatesToUse = templates || await generateAllTemplates();
+  return generator.generateSitemap(templatesToUse, baseUrl);
 }
+
+export function generateRobotsTxt(baseUrl: string): string {
+  const generator = new TemplateGenerator();
+  return generator.generateRobotsTxt(baseUrl);
+}
+
+export default templateGenerator;

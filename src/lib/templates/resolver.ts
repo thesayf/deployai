@@ -34,19 +34,40 @@ export class TemplateResolver {
   private industries: Record<string, IndustryData>;
 
   constructor() {
-    this.locations = locationsData;
-    this.services = servicesData;
-    this.industries = industriesData;
+    this.locations = locationsData as Record<string, LocationData>;
+    this.services = servicesData as Record<string, ServiceData>;
+    this.industries = industriesData as Record<string, IndustryData>;
   }
 
   /**
    * Resolve a template by slug
    */
   resolveBySlug(slug: string): LandingPageTemplate | null {
-    const template = this.parseSlugToTemplate(slug);
-    if (!template) return null;
+    const parsed = this.parseSlugToTemplate(slug);
+    if (!parsed) return null;
 
-    return this.generateTemplate(template);
+    const { type, components } = parsed;
+
+    switch (type) {
+      case "locationService":
+        return this.generateLocationServiceTemplate(
+          components.location!,
+          components.service!
+        );
+      case "industryLocation":
+        return this.generateIndustryLocationTemplate(
+          components.industry!,
+          components.location!,
+          components.service!
+        );
+      case "serviceIndustry":
+        return this.generateServiceIndustryTemplate(
+          components.service!,
+          components.industry!
+        );
+      default:
+        return null;
+    }
   }
 
   /**
@@ -132,9 +153,13 @@ export class TemplateResolver {
     const parts = slug.split("-");
 
     // Try to match location + service pattern (e.g., "custom-software-development-dubai")
-    for (const locationId of Object.keys(this.locations)) {
-      if (slug.endsWith(`-${locationId}`)) {
-        const serviceSlug = slug.replace(`-${locationId}`, "");
+    // Sort locations by length (descending) to match longer location IDs first (e.g., "abu-dhabi" before "dubai")
+    const sortedLocationIds = Object.keys(this.locations).sort((a, b) => b.length - a.length);
+    
+    for (const locationId of sortedLocationIds) {
+      const locationSlug = this.locations[locationId].slug;
+      if (slug.endsWith(`-${locationSlug}`)) {
+        const serviceSlug = slug.substring(0, slug.length - locationSlug.length - 1);
         if (this.services[serviceSlug]) {
           return {
             type: "locationService",
@@ -279,7 +304,7 @@ export class TemplateResolver {
     const content: TemplateContent = {
       location: location?.name || "UAE",
       service: service.name,
-      industry: industry?.name,
+      industry: industry?.name || null,
       targetAudience: this.generateTargetAudience(industry, location),
       valueProposition: this.generateValueProposition(
         service,
@@ -288,7 +313,7 @@ export class TemplateResolver {
       ),
       painPoints: this.generatePainPoints(service, industry),
       benefits: this.generateBenefits(service, industry),
-      urgencyFactor: this.generateUrgencyFactor(location),
+      urgency: this.generateUrgencyFactor(location) || null,
       ctaText: DEFAULT_CONTENT_TEMPLATES.ctaTexts.primary,
     };
 
@@ -311,22 +336,22 @@ export class TemplateResolver {
       keywords: pattern.keywords.map((keyword: string) =>
         this.interpolateString(keyword, content, service, industry, location)
       ),
-      canonicalUrl: undefined,
+      canonicalUrl: null,
     };
 
-    // Generate slug
-    const slug = this.interpolateString(
-      pattern.slug,
-      content,
-      service,
-      industry,
-      location
-    );
+    // Generate slug - use slug fields instead of names for URL-friendly slugs
+    const slug = pattern.slug
+      .replace(/\{service\}/g, service.slug || service.id)
+      .replace(/\{location\}/g, location?.slug || location?.id || "")
+      .replace(/\{industry\}/g, industry?.slug || industry?.id || "")
+      .trim();
 
     // Generate sections
     const variantOverrides = VARIANT_SECTION_CONFIGS[variant] || [];
     const sections = mergeSections(DEFAULT_SECTIONS, variantOverrides);
 
+    const now = new Date().toISOString();
+    
     return {
       id: this.generateId(slug),
       slug,
@@ -334,9 +359,12 @@ export class TemplateResolver {
       meta,
       content,
       sections,
+      createdAt: now,
+      updatedAt: now,
+      isActive: true,
       analytics: {
-        googleAnalytics: process.env.NEXT_PUBLIC_GA_ID,
-        facebookPixel: process.env.NEXT_PUBLIC_FB_PIXEL_ID,
+        googleAnalytics: process.env.NEXT_PUBLIC_GA_ID || null,
+        facebookPixel: process.env.NEXT_PUBLIC_FB_PIXEL_ID || null,
       },
     };
   }
@@ -403,7 +431,7 @@ export class TemplateResolver {
    * Generate pain points
    */
   private generatePainPoints(
-    service: ServiceData,
+    _service: ServiceData,
     industry?: IndustryData
   ): string[] {
     const servicePainPoints = [
