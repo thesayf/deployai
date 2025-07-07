@@ -39,15 +39,16 @@ export default async function handler(
       throw new Error('RESEND_API_KEY is not configured');
     }
 
-    // In development/test mode, Resend only allows sending to verified emails
-    const toEmail = process.env.NODE_ENV === 'production' 
-      ? 'hello@deployai.studio'
-      : 'rudihinds@gmail.com'; // Use your verified email for testing
+    // Configuration for sending emails
+    const toEmail = 'hello@deployai.studio';
+    const fromEmail = process.env.NODE_ENV === 'production' 
+      ? 'hello@deployai.studio' // Once domain is verified
+      : 'onboarding@resend.dev'; // Resend's default for development
 
     const { data, error } = await resend.emails.send({
-      from: 'onboarding@resend.dev', // Using Resend's default from address
+      from: fromEmail,
       to: toEmail,
-      reply_to: email, // Set reply-to as the user's email
+      replyTo: email, // Set reply-to as the user's email
       subject: `New ${type === 'company' ? 'Company' : 'Individual'} Inquiry from ${name}`,
       html: `
         <h2>New Contact Form Submission</h2>
