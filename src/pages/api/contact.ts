@@ -12,6 +12,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  // Log incoming request
+  console.log('Contact API called:', {
+    method: req.method,
+    body: req.body,
+    hasApiKey: !!process.env.RESEND_API_KEY
+  });
+
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
@@ -27,9 +34,20 @@ export default async function handler(
   }
 
   try {
+    // Check if API key exists
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not configured');
+    }
+
+    // In development/test mode, Resend only allows sending to verified emails
+    const toEmail = process.env.NODE_ENV === 'production' 
+      ? 'hello@deployai.studio'
+      : 'rudihinds@gmail.com'; // Use your verified email for testing
+
     const { data, error } = await resend.emails.send({
-      from: 'DeployAI Contact Form <onboarding@resend.dev>',
-      to: ['hello@deployai.studio'],
+      from: 'onboarding@resend.dev', // Using Resend's default from address
+      to: toEmail,
+      reply_to: email, // Set reply-to as the user's email
       subject: `New ${type === 'company' ? 'Company' : 'Individual'} Inquiry from ${name}`,
       html: `
         <h2>New Contact Form Submission</h2>

@@ -68,9 +68,12 @@ const Form = ({ selected, setSelected }: { selected: string; setSelected: (value
         setSubmitStatus('success');
         setFormData({ name: "", company: "", email: "", phone: "", message: "" });
       } else {
+        const errorData = await response.json();
+        console.error('Form submission error:', errorData);
         setSubmitStatus('error');
       }
     } catch (error) {
+      console.error('Form submission failed:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
