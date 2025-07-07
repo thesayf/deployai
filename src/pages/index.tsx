@@ -60,7 +60,7 @@ const preloadCalendly = () => {
     }
   }
 };
-console.log("preloadCalendly", preloadCalendly);
+// console.log("preloadCalendly", preloadCalendly);
 
 export default function Home() {
   // Preload Calendly on page load
