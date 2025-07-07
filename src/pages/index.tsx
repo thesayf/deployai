@@ -14,6 +14,7 @@ import { CaseStudies } from "@/components/case-studies/CaseStudies";
 import { FeatureToggles } from "@/components/feature-toggles/FeatureToggles";
 import { StaggerTestimonials } from "@/components/stagger-testimonials/StaggerTestimonials";
 import { CalendlyInline } from "@/components/calendly/CalendlyInline";
+import ShiftingContactForm from "@/raw-components/contact";
 import {
   FiMail,
   FiSettings,
@@ -97,6 +98,7 @@ export default function Home() {
       {/* <TestimonialsPortfolio /> */}
       <PricingSection />
       <CalendlyInline />
+      <ShiftingContactForm />
       <Footer />
     </main>
   );

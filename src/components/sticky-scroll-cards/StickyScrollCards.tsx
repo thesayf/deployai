@@ -147,7 +147,7 @@ export const StickyScrollCards = ({
   const cards = getCardsData(variant);
 
   return (
-    <div id="how-it-works" ref={containerRef} className="relative pt-24">
+    <div id="how-it-works" ref={containerRef} className="relative mb-36">
       {cards.map((card, index) => (
         <StickyCard
           key={card.id}
@@ -195,7 +195,7 @@ const StickyCard = ({
   );
 
   return (
-    <div className="sticky top-20 flex h-screen items-center justify-center">
+    <div className="sticky top-20 flex h-min justify-center">
       <motion.div
         style={{
           y: isLast ? 0 : y,

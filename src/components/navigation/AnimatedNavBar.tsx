@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
 
 const NAV_LINKS = [
@@ -65,60 +66,107 @@ export const AnimatedNavBar = () => {
           }`}
         >
           <div className="mx-auto flex max-w-7xl items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center">
-              <img
-                src="/logo.png"
-                alt="deployAI"
-                className={`h-12 w-auto transition-all duration-300 ${
-                  scrolled ? "brightness-0 invert" : ""
-                }`}
-              />
-            </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden items-center gap-8 lg:flex">
-              <div className="flex gap-6">
-                {NAV_LINKS.map((link) => (
-                  <a
-                    key={link.title}
-                    href={link.href}
-                    onClick={(e) => handleLinkClick(e, link.href)}
-                    className={`text-base font-medium transition-colors ${
-                      scrolled
-                        ? "text-white hover:text-orange-400"
-                        : "text-zinc-900 hover:text-orange-600"
-                    }`}
-                  >
-                    {link.title}
-                  </a>
-                ))}
-              </div>
-
-              {/* CTA Button */}
-              <a
-                href="https://calendly.com/hello-deployai/30min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`rounded-full border-2 px-6 py-2 text-sm font-semibold transition-all hover:scale-105 ${
-                  scrolled
-                    ? "border-white bg-white text-zinc-900 hover:bg-zinc-100"
-                    : "border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-[3px_3px_0px_#18181b]"
+            {/* Mobile Layout: Hamburger (left) - Logo (center) - Phone (right) */}
+            <div className="flex lg:hidden flex-1 items-center justify-between">
+              {/* Mobile menu button */}
+              <button
+                onClick={() => setMobileNavOpen(!mobileNavOpen)}
+                className={`text-2xl ${
+                  scrolled ? "text-white" : "text-zinc-900"
                 }`}
               >
-                Book Free Strategy Call
+                {mobileNavOpen ? <FiX /> : <FiMenu />}
+              </button>
+
+              {/* Logo centered on mobile */}
+              <Link href="/" className="absolute left-1/2 -translate-x-1/2">
+                <img
+                  src="/logo.png"
+                  alt="deployAI"
+                  className={`h-10 w-auto transition-all duration-300 ${
+                    scrolled ? "brightness-0 invert" : ""
+                  }`}
+                />
+              </Link>
+
+              {/* WhatsApp on mobile */}
+              <a
+                href="https://wa.me/447852806618"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1"
+              >
+                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
+                  <FaWhatsapp className="h-4 w-4 text-white" />
+                </div>
+                <span className={`text-sm font-medium ${
+                  scrolled ? "text-white" : "text-zinc-900"
+                }`}>+44 7852 806618</span>
               </a>
             </div>
 
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setMobileNavOpen(!mobileNavOpen)}
-              className={`block text-2xl lg:hidden ${
-                scrolled ? "text-white" : "text-zinc-900"
-              }`}
-            >
-              {mobileNavOpen ? <FiX /> : <FiMenu />}
-            </button>
+            {/* Desktop Layout */}
+            <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-between">
+              {/* Logo */}
+              <Link href="/" className="flex items-center">
+                <img
+                  src="/logo.png"
+                  alt="deployAI"
+                  className={`h-12 w-auto transition-all duration-300 ${
+                    scrolled ? "brightness-0 invert" : ""
+                  }`}
+                />
+              </Link>
+
+              {/* Desktop Navigation */}
+              <div className="flex items-center gap-8">
+                <div className="flex gap-6">
+                  {NAV_LINKS.map((link) => (
+                    <a
+                      key={link.title}
+                      href={link.href}
+                      onClick={(e) => handleLinkClick(e, link.href)}
+                      className={`text-base font-medium transition-colors ${
+                        scrolled
+                          ? "text-white hover:text-orange-400"
+                          : "text-zinc-900 hover:text-orange-600"
+                      }`}
+                    >
+                      {link.title}
+                    </a>
+                  ))}
+                </div>
+
+                {/* WhatsApp and CTA Button */}
+                <div className="flex items-center gap-4">
+                  <a
+                    href="https://wa.me/447852806618"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-green-600 transition-all hover:bg-green-700">
+                      <FaWhatsapp className="h-4 w-4 text-white" />
+                    </div>
+                    <span className={`text-sm font-medium ${
+                      scrolled ? "text-white" : "text-zinc-900"
+                    }`}>+44 7852 806618</span>
+                  </a>
+                  <a
+                    href="https://calendly.com/hello-deployai/30min"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`rounded-full border-2 px-6 py-2 text-sm font-semibold transition-all hover:scale-105 ${
+                      scrolled
+                        ? "border-white bg-white text-zinc-900 hover:bg-zinc-100"
+                        : "border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-[3px_3px_0px_#18181b]"
+                    }`}
+                  >
+                    Book Free Strategy Call
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Mobile menu */}
@@ -149,7 +197,22 @@ export const AnimatedNavBar = () => {
                   {link.title}
                 </a>
               ))}
-              <div className="mt-4 px-3">
+              <div className="mt-4 space-y-3 px-3">
+                <a
+                  href="https://wa.me/447852806618"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-medium ${
+                    scrolled
+                      ? "border border-white bg-zinc-900 text-white hover:bg-zinc-800"
+                      : "border border-zinc-300 bg-white text-zinc-700 hover:bg-zinc-50"
+                  }`}
+                >
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
+                    <FaWhatsapp className="h-4 w-4 text-white" />
+                  </div>
+                  <span>+44 7852 806618</span>
+                </a>
                 <a
                   href="https://calendly.com/hello-deployai/30min"
                   target="_blank"

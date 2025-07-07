@@ -44,7 +44,7 @@ export const BenefitsGrid = ({
       }}
       initial="initial"
       whileInView="whileInView"
-      className="relative mx-auto grid max-w-6xl grid-cols-3 gap-4 px-2 md:px-4"
+      className="relative mx-auto grid max-w-6xl grid-cols-3 gap-4 px-2 md:px-4 md:mb-20"
     >
       <div className="col-span-3">
         <SectionHeading>{content[variant].title}</SectionHeading>
@@ -53,7 +53,7 @@ export const BenefitsGrid = ({
       <IntegrationsBlock variant={variant} />
       <CollaborateBlock variant={variant} />
       <HighlighBlocks variant={variant} />
-      <div className="col-span-3 mt-6 flex justify-center">
+      <div className="col-span-3 mt-16 flex justify-center">
         <Button intent="cta">
           <span className="font-bold">Start Your Project - </span> Free
           consultation

@@ -4,7 +4,7 @@ import { CardSpotlight } from "../ui/card-spotlight";
 
 export const RiskReversal = () => {
   return (
-    <section className="bg-zinc-900 px-4 py-16 text-zinc-50">
+    <section className="bg-zinc-900 px-4 py-24 text-zinc-50">
       <div className="mx-auto max-w-4xl">
         <motion.div
           initial={{

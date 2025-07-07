@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiArrowRight, FiPlay, FiPause } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 
 interface ProblemAgitationProps {
   variant?: "default" | "customSoftware" | "inventory" | "webapp" | "ai";
@@ -9,7 +9,7 @@ interface ProblemAgitationProps {
 export const ProblemAgitation = ({
   variant = "default",
 }: ProblemAgitationProps) => {
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(true);
   const [highlightedWord, setHighlightedWord] = useState(0);
 
   const painWords = ["exhausting", "expensive", "endless", "skyrocketing"];
@@ -17,7 +17,7 @@ export const ProblemAgitation = ({
   const content = getProblemContent(variant);
 
   return (
-    <section id="problem" className="-mt-12 bg-white">
+    <section id="problem" className="-mt-12 bg-white pb-24">
       <div className="mx-auto max-w-4xl px-4">
         {/* Prominent intro */}
         <motion.div
@@ -27,10 +27,10 @@ export const ProblemAgitation = ({
           transition={{ duration: 0.8 }}
           className="mb-16 text-center"
         >
-          <p className="mb-3 text-xl text-zinc-600 md:text-2xl">
+          <p className="mb-3 text-center text-xl text-zinc-600 md:text-2xl">
             {content.intro}
           </p>
-          <p className="text-2xl font-bold text-zinc-900 md:text-3xl">
+          <p className="text-center text-2xl font-bold text-zinc-900 md:text-3xl">
             {content.question}
           </p>
         </motion.div>
@@ -45,7 +45,7 @@ export const ProblemAgitation = ({
         >
           <div className="relative">
             <div
-              className="mx-auto mb-8 max-w-4xl text-center text-2xl leading-relaxed text-zinc-800 md:text-3xl"
+              className="mx-auto mb-8 max-w-4xl text-justify text-2xl leading-relaxed text-zinc-800 md:text-3xl"
               style={{ wordBreak: "break-word" }}
             >
               <p className="mb-4">
@@ -54,34 +54,11 @@ export const ProblemAgitation = ({
                   words={content.painWords}
                   isAnimating={isAnimating}
                 />{" "}
-                {content.continuation}
-                <motion.span
-                  className="mx-2 inline-flex items-center"
-                  whileHover={{ scale: 1.2, rotate: 10 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <span className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-orange-500 text-sm font-bold text-white">
-                    😤
-                  </span>
-                  .
-                </motion.span>
+                {content.continuation}.
               </p>
-              <p>{content.question2}</p>
+              <p className="text-center">{content.question2}</p>
             </div>
 
-            {/* Interactive control */}
-            <motion.button
-              onClick={() => setIsAnimating(!isAnimating)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="absolute right-0 top-0 rounded-lg border border-zinc-300 bg-zinc-100 p-2 transition-colors hover:bg-zinc-200"
-            >
-              {isAnimating ? (
-                <FiPause className="h-4 w-4" />
-              ) : (
-                <FiPlay className="h-4 w-4" />
-              )}
-            </motion.button>
           </div>
         </motion.div>
 
@@ -93,7 +70,7 @@ export const ProblemAgitation = ({
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mb-12"
         >
-          <p className="text-2xl leading-relaxed text-zinc-800 md:text-3xl">
+          <p className="text-justify text-2xl leading-relaxed text-zinc-800 md:text-3xl">
             With
             <span className="mx-2 inline-flex items-center">
               <span className="rounded-lg border-2 border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 font-bold text-white shadow-[2px_2px_0px_#18181b]">
@@ -287,7 +264,7 @@ function getProblemContent(variant: ProblemAgitationProps["variant"]) {
         question: "are you still paying for yesterday's tools?",
         problem:
           "Every month you delay AI deployment, your competitors gain ground. They're automating processes, eliminating SaaS subscriptions, and scaling without adding headcount. Meanwhile, you're still paying ",
-        painWords: ["premium", "massive", "endless"],
+        painWords: ["premium"],
         continuation: "prices for tools that AI could replace entirely",
         question2: "But what if catching up didn't have to take years?",
       };

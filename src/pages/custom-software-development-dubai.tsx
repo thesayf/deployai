@@ -72,7 +72,7 @@ export default function CustomSoftwareDevelopmentDubai() {
     >
       <AnimatedNavBar />
       <Hero variant="customSoftware" />
-      <div className="py-12">
+      <div className="py-24">
         <ProblemAgitation variant="customSoftware" />
       </div>
       <div className="py-16">

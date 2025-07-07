@@ -19,7 +19,7 @@ export const FAQ = ({ variant = "default" }: FAQProps) => {
   const { heading, subheading, questions } = getFAQContent(variant);
 
   return (
-    <section className="relative mx-auto max-w-4xl px-4 py-16">
+    <section className="relative mx-auto max-w-4xl px-4 py-24">
       <SectionHeading>{heading}</SectionHeading>
       <SectionSubheading>{subheading}</SectionSubheading>
 

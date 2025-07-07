@@ -106,15 +106,7 @@ const FeatureCard = ({
         )}
       </div>
 
-      {/* Hover arrow */}
-      <motion.div
-        className="absolute bottom-4 right-4 z-20 opacity-0 group-hover:opacity-100"
-        initial={{ x: -10 }}
-        animate={{ x: isHovered ? 0 : -10 }}
-        transition={{ duration: 0.3 }}
-      >
-        <ArrowRight className="h-4 w-4 text-orange-500" />
-      </motion.div>
+
     </motion.div>
   );
 };
@@ -125,7 +117,7 @@ export const ServiceFeatures = ({ variant }: ServiceFeaturesProps) => {
   const { heading, subheading } = getServiceFeaturesContent(variant);
 
   return (
-    <section className="relative mx-auto max-w-7xl px-4 py-16">
+    <section className="relative mx-auto max-w-7xl px-4 ">
       <div className="mb-12 text-center">
         <SectionHeading>{heading}</SectionHeading>
         <SectionSubheading>{subheading}</SectionSubheading>
@@ -146,7 +138,7 @@ export const ServiceFeatures = ({ variant }: ServiceFeaturesProps) => {
       </div>
 
       {/* Feature Cards Display */}
-      <div className="relative min-h-[400px]">
+      <div className="relative min-h-[350px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={selected}
@@ -174,16 +166,16 @@ export const ServiceFeatures = ({ variant }: ServiceFeaturesProps) => {
 
       {/* CTA Section */}
       <motion.div
-        className="mt-8 text-center"
+        className="relative z-10  text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
       >
-        <Button intent="cta" size="large" className="inline-flex items-center">
+        <Button intent="cta" size="large" className=" inline-flex items-center">
           Start Your Project
           <ArrowRight className="ml-2 h-5 w-5" />
         </Button>
-        <p className="mt-4 text-sm text-zinc-500">
+        <p className=" mt-4 mb-16 text-sm text-zinc-500">
           Free consultation • No commitment required
         </p>
       </motion.div>

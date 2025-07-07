@@ -124,6 +124,32 @@ Examples:
 `);
 };
 
+// Write files to disk
+function writeFiles(files, outputDir) {
+  // Ensure output directory exists
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+  }
+
+  const writtenFiles = [];
+
+  for (const file of files) {
+    const filePath = path.join(outputDir, file.path);
+
+    // Ensure the directory exists for the file
+    const fileDir = path.dirname(filePath);
+    if (!fs.existsSync(fileDir)) {
+      fs.mkdirSync(fileDir, { recursive: true });
+    }
+
+    // Write the file
+    fs.writeFileSync(filePath, file.content, "utf8");
+    writtenFiles.push(filePath);
+  }
+
+  return writtenFiles;
+}
+
 // Main execution
 async function main() {
   if (config.help) {
@@ -144,7 +170,6 @@ async function main() {
   try {
     // Generate templates
     const result = await templateGenerator.generate({
-      outputDir: config.outputDir,
       generateFiles: true,
       fileFormat: config.format,
       locations: config.locations,
@@ -160,9 +185,22 @@ async function main() {
     console.log("  - By Variant:", result.summary.byVariant);
     console.log("  - By Location:", result.summary.byLocation);
 
-    if (result.files) {
-      console.log(`📁 Files written to: ${config.outputDir}`);
-      console.log(`📄 Total files: ${result.files.length}`);
+    // Write files to disk
+    if (result.files && result.files.length > 0) {
+      console.log(`📁 Writing files to: ${config.outputDir}`);
+      const writtenFiles = writeFiles(result.files, config.outputDir);
+      console.log(`📄 Total files written: ${writtenFiles.length}`);
+
+      // Show first few files as examples
+      if (writtenFiles.length > 0) {
+        console.log("📝 Sample files:");
+        writtenFiles.slice(0, 5).forEach((file) => {
+          console.log(`  - ${file}`);
+        });
+        if (writtenFiles.length > 5) {
+          console.log(`  ... and ${writtenFiles.length - 5} more`);
+        }
+      }
     }
 
     // Generate sitemap if requested
@@ -198,31 +236,15 @@ async function main() {
       console.log(`✅ Robots.txt generated: ${robotsPath}`);
     }
 
-    // Generate analytics events file
-    const analyticsPath = path.join(config.outputDir, "analytics-events.json");
-    const analyticsEvents = templateGenerator.generateAnalyticsEvents(
-      result.templates
-    );
-    fs.writeFileSync(
-      analyticsPath,
-      JSON.stringify(analyticsEvents, null, 2),
-      "utf8"
-    );
-    console.log(`📊 Analytics events generated: ${analyticsPath}`);
-
-    console.log("🎉 All tasks completed successfully!");
+    console.log("\n🎉 All done! Happy templating!");
   } catch (error) {
-    console.error("❌ Error during template generation:", error);
+    console.error("❌ Error during generation:", error);
     process.exit(1);
   }
 }
 
-// Run the script
-if (require.main === module) {
-  main().catch((error) => {
-    console.error("❌ Fatal error:", error);
-    process.exit(1);
-  });
-}
-
-module.exports = { main, config };
+// Run the CLI
+main().catch((error) => {
+  console.error("❌ Unexpected error:", error);
+  process.exit(1);
+});

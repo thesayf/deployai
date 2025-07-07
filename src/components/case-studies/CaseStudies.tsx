@@ -26,7 +26,7 @@ export const CaseStudies = ({ filter = "all" }: CaseStudiesProps) => {
   };
 
   return (
-    <section id="case-studies" className="bg-white py-32">
+    <section id="case-studies" className="bg-white mb-36">
       <div className="mx-4 sm:mx-6 md:mx-36">
         <div className="relative overflow-hidden border-4 border-zinc-900 bg-gradient-to-br from-zinc-50 via-blue-50 to-purple-50 px-8 py-12 shadow-[0px_12px_0px_#18181b] transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0px_16px_0px_#18181b] md:px-12 md:py-16 lg:px-16 lg:py-40">
           {/* Background Pattern */}
