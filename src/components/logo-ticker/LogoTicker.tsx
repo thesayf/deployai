@@ -83,7 +83,7 @@ export const LogoTicker = () => {
           <div className="absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-white to-transparent"></div>
 
           <motion.div
-            className="flex gap-8"
+            className="flex gap-4 md:gap-8"
             animate={{
               x: [0, -totalWidth],
             }}
@@ -122,7 +122,7 @@ const LogoCard = ({ logo }: LogoCardProps) => {
   const needsDarkBackground = name === "JB";
 
   return (
-    <div className="group flex flex-shrink-0 items-center justify-center px-12">
+    <div className="group flex flex-shrink-0 items-center justify-center px-6 md:px-12">
       <div
         className={`relative transition-all duration-500 hover:scale-105 ${
           needsDarkBackground

@@ -98,7 +98,7 @@ export const AnimatedNavBar = () => {
                 <span className={`text-xs font-medium ${
                   scrolled ? "text-white" : "text-zinc-900"
                 }`}>Message Us</span>
-                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
+                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-600 ml-0.5">
                   <FaWhatsapp className="h-4 w-4 text-white" />
                 </div>
               </a>
