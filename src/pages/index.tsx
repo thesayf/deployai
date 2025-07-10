@@ -89,7 +89,9 @@ export default function Home() {
       <ProblemAgitation />
       <CaseStudies />
       <FeatureToggles />
-      <StickyScrollCards />
+      <div className="pt-16">
+        <StickyScrollCards />
+      </div>
       <StaggerTestimonials />
       {/*
       - add team component here

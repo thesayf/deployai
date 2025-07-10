@@ -28,7 +28,9 @@ const ShiftingContactForm = () => {
           className="mx-auto flex w-full max-w-6xl flex-col-reverse overflow-hidden rounded-3xl border-4 border-zinc-900 shadow-[12px_12px_0px_#18181b] lg:flex-row"
         >
           <Form selected={selected} setSelected={setSelected} />
-          <Images selected={selected} />
+          <div className="hidden lg:block">
+            <Images selected={selected} />
+          </div>
         </motion.div>
       </div>
     </section>

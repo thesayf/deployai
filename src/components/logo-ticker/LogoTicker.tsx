@@ -71,7 +71,7 @@ export const LogoTicker = () => {
   const totalWidth = LOGOS.length * totalItemWidth;
 
   return (
-    <div className="mt-12 w-full py-8">
+    <div className="mt-6 w-full py-4">
       <div className="mx-auto max-w-4xl px-4">
         <p className="mb-6 text-center text-xs font-bold uppercase tracking-wider text-zinc-500">
           • Trusted by industry leaders •

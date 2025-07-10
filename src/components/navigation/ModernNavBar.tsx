@@ -22,8 +22,7 @@ export const ModernNavBar = () => {
           <div className="flex items-center justify-center">
             <p className="text-center text-sm font-medium text-white">
               <span className="inline-flex items-center gap-2">
-                🎉 Limited Time: Save 40% on AI Strategy Calls - Ends This
-                Friday!
+                FREE AI Readiness Audit - Only 5 Spots Left This Month
                 <Link
                   href="https://calendly.com/hello-deployai/30min"
                   target="_blank"
@@ -66,12 +65,12 @@ export const ModernNavBar = () => {
                 href="https://wa.me/447852806618"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1"
+                className="flex flex-col items-center gap-0.5"
               >
+                <span className="text-xs font-medium text-zinc-900">Message Us</span>
                 <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
                   <FaWhatsapp className="h-4 w-4 text-white" />
                 </div>
-                <span className="text-sm font-medium text-zinc-900">+44 7852 806618</span>
               </a>
             </div>
 

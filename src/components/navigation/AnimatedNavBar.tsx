@@ -46,8 +46,7 @@ export const AnimatedNavBar = () => {
               className="flex items-center gap-2 text-sm font-medium text-white hover:underline"
             >
               <span>
-                🎉 Limited Time: Save 40% on AI Strategy Calls - Ends This
-                Friday!
+                FREE AI Readiness Audit - Only 5 Spots Left This Month
               </span>
               <span>→</span>
             </Link>
@@ -94,14 +93,14 @@ export const AnimatedNavBar = () => {
                 href="https://wa.me/447852806618"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1"
+                className="flex items-center gap-0.5"
               >
+                <span className={`text-xs font-medium ${
+                  scrolled ? "text-white" : "text-zinc-900"
+                }`}>Message Us</span>
                 <div className="flex h-6 w-6 items-center justify-center rounded-full bg-green-600">
                   <FaWhatsapp className="h-4 w-4 text-white" />
                 </div>
-                <span className={`text-sm font-medium ${
-                  scrolled ? "text-white" : "text-zinc-900"
-                }`}>+44 7852 806618</span>
               </a>
             </div>
 

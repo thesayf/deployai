@@ -13,7 +13,7 @@ export const Copy = ({ variant = "default" }: CopyProps) => {
 
   return (
     <>
-      <div className="mb-1.5 rounded-full bg-zinc-600">
+      <div className="mb-6 rounded-full bg-zinc-600">
         <Link
           href="https://calendly.com/hello-deployai/30min"
           target="_blank"
@@ -42,8 +42,11 @@ export const Copy = ({ variant = "default" }: CopyProps) => {
           rel="noopener noreferrer"
           className="inline-block rounded-full border-2 border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 px-8 py-4 text-lg font-bold text-white shadow-[4px_4px_0px_0px_rgb(234,88,12)] transition-transform hover:scale-105"
         >
-          <span className="flex items-center gap-2">
-            {content.ctaText}
+          <span className="flex items-center justify-center gap-2">
+            <span className="hidden md:inline">{content.ctaText}</span>
+            <span className="md:hidden text-center">
+              Book Free<br />AI Strategy Call
+            </span>
             <FiArrowUpRight className="text-xl" />
           </span>
         </a>
@@ -108,10 +111,10 @@ function getHeroContent(variant: CopyProps["variant"]) {
       return {
         badge: "HEY!",
         announcement: "🔥 3 SPOTS LEFT THIS WEEK",
-        headline: "Deploy AI Into Your Business in 30 Days",
+        headline: "Deploy AI Software Into Your Business In 30 Days",
         subheading:
-          "Stop paying $5K-$20K monthly for tools you don't own. Deploy custom AI solutions that eliminate recurring fees and automate your biggest challenges.",
-        ctaText: "🚀 Book Free AI Strategy Call - Limited Spots",
+          "Get Your Custom AI Implementation Roadmap—Tailored to Your Industry's Biggest Profit Opportunities",
+        ctaText: "🚀 Book Free AI Strategy Call",
         ctaSubtext:
           "⏱️ Only 3 spots left this week • 💰 $0 cost • 🎯 30-min discovery call",
       };

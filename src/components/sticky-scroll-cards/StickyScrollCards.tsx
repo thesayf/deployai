@@ -147,7 +147,7 @@ export const StickyScrollCards = ({
   const cards = getCardsData(variant);
 
   return (
-    <div id="how-it-works" ref={containerRef} className="relative mb-36">
+    <div id="how-it-works" ref={containerRef} className="relative mb-16">
       {cards.map((card, index) => (
         <StickyCard
           key={card.id}
@@ -202,7 +202,7 @@ const StickyCard = ({
           scale: isLast ? 1 : scale,
           zIndex: totalCards - index,
         }}
-        className={`mx-auto h-[80vh] w-full max-w-4xl rounded-3xl ${card.background} ${card.textColor} flex flex-col justify-between p-8 shadow-2xl md:p-12`}
+        className={`mx-auto h-[70vh] w-full max-w-4xl rounded-3xl ${card.background} ${card.textColor} flex flex-col justify-between p-8 shadow-2xl md:p-12`}
       >
         <div className="flex items-start justify-between">
           <div className="flex-1">
