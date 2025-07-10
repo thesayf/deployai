@@ -85,25 +85,8 @@ export const Footer = () => {
               </div>
             </div>
 
-            {/* Services */}
-            <div>
-              <h3 className="mb-6 text-lg font-bold text-orange-400">
-                Services
-              </h3>
-              <div className="space-y-3">
-                <FooterLink href="/automation">AI Automation</FooterLink>
-                <FooterLink href="/custom-development">
-                  Custom Development
-                </FooterLink>
-                <FooterLink href="/saas-replacement">
-                  SaaS Replacement
-                </FooterLink>
-                <FooterLink href="/saas-mvp">SaaS MVP Development</FooterLink>
-              </div>
-            </div>
-
             {/* Contact Info */}
-            <div>
+            <div className="lg:col-span-2">
               <h3 className="mb-6 text-lg font-bold text-orange-400">
                 Get In Touch
               </h3>
@@ -112,6 +95,11 @@ export const Footer = () => {
                   icon={FiMail}
                   text="hello@deployai.studio"
                   href="mailto:hello@deployai.studio"
+                />
+                <ContactItem
+                  icon={FiMapPin}
+                  text="Deploy AI Studio, Dairy Farm Pl, London, United Kingdom"
+                  href="#"
                 />
               </div>
 

@@ -110,7 +110,7 @@ function getHeroContent(variant: CopyProps["variant"]) {
     default:
       return {
         badge: "HEY!",
-        announcement: "🔥 3 SPOTS LEFT THIS WEEK",
+        announcement: "🔥 100+ SUCCESSFUL AI IMPLEMENTATIONS COMPLETED",
         headline: "Deploy AI Software Into Your Business In 30 Days",
         subheading:
           "Get Your Custom AI Implementation Roadmap—Tailored to Your Industry's Biggest Profit Opportunities",

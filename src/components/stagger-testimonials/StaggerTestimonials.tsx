@@ -74,7 +74,7 @@ export const StaggerTestimonials = () => {
   return (
     <section
       id="testimonials"
-      className="relative overflow-hidden bg-gradient-to-br from-zinc-50 via-orange-50 to-red-50 py-24"
+      className="relative overflow-hidden bg-gradient-to-br from-zinc-50 via-orange-50 to-red-50 py-12 md:py-16"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-[0.03]">

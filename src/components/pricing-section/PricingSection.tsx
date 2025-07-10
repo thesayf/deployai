@@ -251,9 +251,9 @@ const PricingCard = ({ plan, index, isAnnual }: PricingCardProps) => {
     >
       {/* Popular Badge */}
       {isPopular && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 transform">
-          <div className="flex items-center gap-2 rounded-full border-2 border-green-600 bg-[#10B981] px-6 py-2 text-sm font-bold text-white">
-            <FiStar className="text-white" />
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 transform md:-top-4">
+          <div className="flex items-center gap-1 rounded-full border-2 border-green-600 bg-[#10B981] px-3 py-1 text-xs font-bold text-white md:gap-2 md:px-6 md:py-2 md:text-sm">
+            <FiStar className="text-white h-3 w-3 md:h-4 md:w-4" />
             MOST POPULAR
           </div>
         </div>
@@ -261,7 +261,7 @@ const PricingCard = ({ plan, index, isAnnual }: PricingCardProps) => {
 
       {/* Header */}
       <div className="mb-8 text-center">
-        <h3 className="mb-2 text-2xl font-bold">{plan.name}</h3>
+        <h3 className="mb-2 text-2xl font-bold mt-6 md:mt-0">{plan.name}</h3>
         {plan.subtitle && <p className="mb-4 text-zinc-600">{plan.subtitle}</p>}
 
         <div className="relative mb-4">
