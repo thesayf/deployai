@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import Image from "next/image";
 
 const ShiftingContactForm = () => {
   const [selected, setSelected] = useState("individual");
@@ -25,10 +26,12 @@ const ShiftingContactForm = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mx-auto flex w-full max-w-6xl flex-col-reverse overflow-hidden rounded-3xl border-4 border-zinc-900 shadow-[12px_12px_0px_#18181b] lg:flex-row"
+          className="mx-auto flex w-full max-w-6xl flex-col overflow-hidden rounded-3xl border-4 border-zinc-900 shadow-[12px_12px_0px_#18181b] lg:flex-row lg:min-h-[600px]"
         >
-          <Form selected={selected} setSelected={setSelected} />
-          <div className="hidden lg:block">
+          <div className="flex w-full lg:w-1/2">
+            <Form selected={selected} setSelected={setSelected} />
+          </div>
+          <div className="hidden lg:block lg:w-1/2 lg:min-h-[600px]">
             <Images selected={selected} />
           </div>
         </motion.div>
@@ -85,7 +88,7 @@ const Form = ({ selected, setSelected }: { selected: string; setSelected: (value
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full p-8 lg:p-12 bg-white"
+      className="h-full w-full p-8 lg:p-12 bg-white"
     >
       <h3 className="mb-8 text-5xl font-black text-zinc-900">Contact us</h3>
 
@@ -206,6 +209,7 @@ const FormSelect = ({ selected, setSelected }: { selected: string; setSelected: 
   return (
     <div className="w-fit overflow-hidden rounded-xl border-4 border-zinc-900 bg-white font-medium shadow-[5px_5px_0px_#18181b]">
       <button
+        type="button"
         className={`${
           selected === "individual" ? "bg-zinc-900 text-white" : "bg-white text-zinc-900"
         } relative px-4 py-2 text-base font-semibold transition-colors duration-[750ms]`}
@@ -214,6 +218,7 @@ const FormSelect = ({ selected, setSelected }: { selected: string; setSelected: 
         <span className="relative z-10">An individual</span>
       </button>
       <button
+        type="button"
         className={`${
           selected === "company" ? "bg-zinc-900 text-white" : "bg-white text-zinc-900"
         } relative px-4 py-2 text-base font-semibold transition-colors duration-[750ms]`}
@@ -227,35 +232,22 @@ const FormSelect = ({ selected, setSelected }: { selected: string; setSelected: 
 
 const Images = ({ selected }: { selected: string }) => {
   return (
-    <div className="relative min-h-[100px] w-full overflow-hidden bg-white">
-      <motion.div
-        initial={false}
-        animate={{
-          x: selected === "individual" ? "0%" : "100%",
-        }}
-        transition={BASE_TRANSITION}
-        className="absolute inset-0 bg-slate-200"
-        style={{
-          backgroundImage:
-            "url(https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-      <motion.div
-        initial={false}
-        animate={{
-          x: selected === "company" ? "0%" : "-100%",
-        }}
-        transition={BASE_TRANSITION}
-        className="absolute inset-0 bg-slate-200"
-        style={{
-          backgroundImage:
-            "url(https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
+    <div className="relative h-full w-full bg-gradient-to-br from-indigo-500 to-purple-600">
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="text-center text-white p-8">
+          <h3 className="text-3xl font-bold mb-4">
+            {selected === "individual" ? "Perfect for Freelancers" : "Built for Teams"}
+          </h3>
+          <p className="text-lg opacity-90">
+            {selected === "individual" 
+              ? "Get personal support for your projects" 
+              : "Scale your business with enterprise solutions"}
+          </p>
+        </div>
+      </div>
+      {/* Decorative elements */}
+      <div className="absolute top-10 right-10 w-20 h-20 bg-white/10 rounded-full blur-xl" />
+      <div className="absolute bottom-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
     </div>
   );
 };

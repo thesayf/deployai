@@ -6,7 +6,6 @@ import {
   FiSettings,
   FiSend,
   FiArrowDown,
-  FiArrowRight,
 } from "react-icons/fi";
 
 interface Card {
@@ -93,9 +92,9 @@ const getCardsData = (variant: string): Card[] => {
         },
         {
           id: 2,
-          title: "Step 1 - AI Strategy Session",
+          title: "Step 1 - Find Your Specific Problems",
           description:
-            "We analyze your current processes and identify where AI can eliminate costs and automate workflows. No technical jargon - just clear ROI projections. (30 minutes)",
+            "We don't use generic AI solutions. Every business wastes money in different ways. Our detailed analysis finds your exact problems, hidden costs, and opportunities that other consultants miss.",
           icon: FiMessageCircle,
           background: "bg-blue-600",
           textColor: "text-white",
@@ -103,9 +102,9 @@ const getCardsData = (variant: string): Card[] => {
         },
         {
           id: 3,
-          title: "Step 2 - Rapid MVP Development",
+          title: "Step 2 - Map Your Best Opportunities",
           description:
-            "We build a working prototype of your AI system so you can see exactly how it will transform your operations before full deployment. (Week 1-2)",
+            "Using our custom analysis method, we figure out exactly where AI will help YOUR business most. No generic advice—every recommendation fits your industry, company size, and how you actually work.",
           icon: FiCode,
           background: "bg-green-600",
           textColor: "text-white",
@@ -113,9 +112,9 @@ const getCardsData = (variant: string): Card[] => {
         },
         {
           id: 4,
-          title: "Step 3 - Refine & Perfect",
+          title: "Step 3 - Build Solutions That Fit",
           description:
-            "Based on your feedback, we optimize the system for your specific business needs and integrate it with your existing tools. (Week 3)",
+            "Based on what we found, we create AI solutions for your real problems, not imaginary ones. This focused approach means every dollar you spend gives you measurable results for your specific business.",
           icon: FiSettings,
           background: "bg-orange-600",
           textColor: "text-white",
@@ -123,9 +122,9 @@ const getCardsData = (variant: string): Card[] => {
         },
         {
           id: 5,
-          title: "Step 4 - Launch & Ownership",
+          title: "Step 4 - Get Maximum Results",
           description:
-            "Go live with your AI system. You own 100% of the code, data, and system. No ongoing subscriptions, no vendor lock-in. (Week 4)",
+            "Because we identified your exact problem areas, we fix the biggest issues first. This means you see returns faster, your team adopts the changes easier, and you get real results that generic AI solutions can't deliver.",
           icon: FiSend,
           background: "bg-purple-600",
           textColor: "text-white",
@@ -204,41 +203,32 @@ const StickyCard = ({
         }}
         className={`mx-auto h-[70vh] w-full max-w-4xl rounded-3xl ${card.background} ${card.textColor} flex flex-col justify-between p-8 shadow-2xl md:p-12`}
       >
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <div className="mb-8">
-              <card.icon className="mb-6 text-6xl opacity-80" />
+        <div className="flex h-full flex-col">
+          {/* Large circled number for steps */}
+          {index > 0 && (
+            <div className="mb-8 flex items-center">
+              <div className="flex h-24 w-24 items-center justify-center rounded-full border-4 border-white/30 bg-white/10">
+                <span className="text-5xl font-bold">{index}</span>
+              </div>
             </div>
+          )}
 
-            <h2 className="mb-6 text-4xl font-bold leading-tight md:text-6xl">
+          <div className="flex-1">
+            <h2 className="mb-6 text-4xl font-bold leading-tight md:text-5xl">
               {card.title}
             </h2>
 
-            <p className="max-w-2xl text-lg leading-relaxed opacity-90 md:text-xl">
+            <p className="max-w-3xl text-lg leading-relaxed opacity-90 md:text-xl">
               {card.description}
             </p>
           </div>
-        </div>
 
-        <div className="flex items-end justify-between">
-          <div className="text-sm opacity-60">
-            {index === 0 ? null : (
-              <>
-                {String(index).padStart(2, "0")} /{" "}
-                {String(totalCards - 1).padStart(2, "0")}
-              </>
-            )}
-          </div>
-
-          <a
-            href="https://calendly.com/hello-deployai/30min"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${card.buttonColor} flex items-center gap-2 rounded-full px-8 py-4 font-bold uppercase transition-transform hover:scale-105`}
-          >
-            Book Free Strategy Call
-            <FiArrowRight />
-          </a>
+          {/* Down arrow for all cards except the last */}
+          {index < totalCards - 1 && (
+            <div className="mt-8 flex justify-center">
+              <FiArrowDown className="animate-bounce text-4xl opacity-60" />
+            </div>
+          )}
         </div>
       </motion.div>
     </div>
