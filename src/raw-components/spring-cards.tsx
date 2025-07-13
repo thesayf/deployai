@@ -10,6 +10,7 @@ export const SpringCards = () => {
         <Card
           title="Dynamic"
           subtitle="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Exercitationem doloremque vitae minima."
+          className=""
         />
         <Card
           title="Data Driven"
@@ -31,7 +32,7 @@ export const SpringCards = () => {
   );
 };
 
-const Card = ({ title, subtitle, className }) => {
+const Card = ({ title, subtitle, className }: { title: string; subtitle: string; className?: string }) => {
   return (
     <MotionConfig
       transition={{
