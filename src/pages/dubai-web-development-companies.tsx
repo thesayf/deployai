@@ -345,7 +345,7 @@ function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex flex-col items-center justify-center px-4 pb-24 pt-24 md:px-12 md:pt-32"
+      className="relative flex flex-col items-center justify-center px-4 pb-24 pt-12 md:px-12 md:pt-16"
     >
       <div className="mb-6 rounded-full bg-gradient-to-r from-blue-50 to-orange-50 p-1">
         <div className="rounded-full bg-white px-4 py-2">
