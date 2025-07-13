@@ -1,8 +1,14 @@
-# Hey! Welcome to the template!
+# DeployAI - AI-Powered Business Solutions
 
 All of Hover's templates are built with React, NextJS and TailwindCSS. If you're already comfortable with NextJS, feel free to dig in and get started. If not, we'll provide some details below to get you up and running.
 
 Demos for all of our templates can be found [here](https://www.hover.dev/templates).
+
+## 📚 Documentation
+
+- **[Landing Page Template System](./TEMPLATE_SYSTEM.md)** - Generate hundreds of SEO-optimized landing pages automatically
+- **[Component Guide](./docs/components.md)** - Reusable component documentation
+- **[Deployment Guide](./docs/deployment.md)** - How to deploy to production
 
 ## Let's get things running
 

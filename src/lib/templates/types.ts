@@ -43,6 +43,10 @@ export interface SectionConfig {
   variant?: ComponentVariant; // Override variant for this section
   order: number; // Render order
   props?: Record<string, any>; // Additional props for the component
+  wrapper?: { // Optional wrapper configuration for spacing
+    className?: string; // Wrapper div className (e.g., "pt-24", "py-16")
+    style?: React.CSSProperties; // Inline styles if needed
+  };
 }
 
 export interface LandingPageTemplate {

@@ -39,7 +39,7 @@ interface TextParallaxContentProps {
   children: React.ReactNode;
 }
 
-export const TextParallaxContent = ({
+const TextParallaxContent = ({
   imgUrl,
   subheading,
   heading,
@@ -61,11 +61,7 @@ export const TextParallaxContent = ({
   );
 };
 
-interface StickyImageProps {
-  imgUrl: string;
-}
-
-const StickyImage = ({ imgUrl }: StickyImageProps) => {
+const StickyImage = ({ imgUrl }: { imgUrl: string }) => {
   const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -98,12 +94,13 @@ const StickyImage = ({ imgUrl }: StickyImageProps) => {
   );
 };
 
-interface OverlayCopyProps {
+const OverlayCopy = ({
+  subheading,
+  heading,
+}: {
   subheading: string;
   heading: string;
-}
-
-const OverlayCopy = ({ subheading, heading }: OverlayCopyProps) => {
+}) => {
   const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,

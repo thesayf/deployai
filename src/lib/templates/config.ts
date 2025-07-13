@@ -24,18 +24,27 @@ export const DEFAULT_SECTIONS: SectionConfig[] = [
     enabled: true,
     order: 2,
     props: {},
+    wrapper: {
+      className: "pt-24",
+    },
   },
   {
     component: "BenefitsGrid",
     enabled: true,
     order: 3,
     props: {},
+    wrapper: {
+      className: "py-16",
+    },
   },
   {
     component: "ServiceFeatures",
     enabled: true,
     order: 4,
     props: {},
+    wrapper: {
+      className: "py-8",
+    },
   },
   {
     component: "StickyScrollCards",
@@ -48,6 +57,9 @@ export const DEFAULT_SECTIONS: SectionConfig[] = [
     enabled: true,
     order: 6,
     props: {},
+    wrapper: {
+      className: "py-16",
+    },
   },
   {
     component: "StaggerTestimonials",
@@ -60,6 +72,9 @@ export const DEFAULT_SECTIONS: SectionConfig[] = [
     enabled: true,
     order: 8,
     props: {},
+    wrapper: {
+      className: "py-16",
+    },
   },
   {
     component: "RiskReversal",
@@ -78,6 +93,9 @@ export const DEFAULT_SECTIONS: SectionConfig[] = [
     enabled: true,
     order: 11,
     props: {},
+    wrapper: {
+      className: "py-16",
+    },
   },
 ];
 
@@ -96,7 +114,23 @@ export const VARIANT_SECTION_CONFIGS: Record<
       props: { variant: "customSoftware" },
     },
     {
+      component: "BenefitsGrid",
+      props: { variant: "customSoftware" },
+    },
+    {
       component: "ServiceFeatures",
+      props: { variant: "customSoftware" },
+    },
+    {
+      component: "StickyScrollCards",
+      props: { variant: "customSoftware" },
+    },
+    {
+      component: "CaseStudies",
+      props: { filter: "all" },
+    },
+    {
+      component: "PricingSection",
       props: { variant: "customSoftware" },
     },
     {

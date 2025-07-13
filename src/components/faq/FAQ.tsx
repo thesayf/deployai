@@ -6,7 +6,13 @@ import { SectionHeading } from "../shared/SectionHeading";
 import { SectionSubheading } from "../shared/SectionSubheading";
 
 interface FAQProps {
-  variant?: "default" | "customSoftware" | "inventory" | "webapp" | "ai";
+  variant?:
+    | "default"
+    | "customSoftware"
+    | "inventory"
+    | "webapp"
+    | "ai"
+    | "dubaiWebDev";
 }
 
 interface QuestionProps {
@@ -418,6 +424,226 @@ function getFAQContent(variant: FAQProps["variant"]) {
                     <span>
                       <strong>Continuous Support:</strong> Emergency support
                       available throughout religious holidays
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            ),
+          },
+        ],
+      };
+
+    case "dubaiWebDev":
+      return {
+        heading: "How to Choose the Right Web Development Company",
+        subheading:
+          "Key factors to consider when selecting your development partner in Dubai.",
+        questions: [
+          {
+            question:
+              "What should I look for in a Dubai web development company?",
+            answer: (
+              <div>
+                <p className="mb-3">
+                  When evaluating Dubai web development companies, focus on
+                  these key factors:
+                </p>
+                <ul className="ml-4 space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Transparent Pricing:</strong> Look for companies
+                      that provide upfront costs instead of "contact us" pricing
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Modern Technology:</strong> Ensure they use
+                      current frameworks like React, Node.js, not just WordPress
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Local Experience:</strong> Understanding of UAE
+                      business requirements and regulations
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Portfolio Quality:</strong> Recent projects that
+                      demonstrate technical capability
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            ),
+          },
+          {
+            question: "Why is pricing transparency important?",
+            answer: (
+              <div>
+                <p className="mb-3">
+                  Transparent pricing saves time and builds trust from the
+                  start:
+                </p>
+                <ul className="ml-4 space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Budget Planning:</strong> You can plan your budget
+                      without surprises
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Easy Comparison:</strong> Compare options quickly
+                      without lengthy sales calls
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Trust Building:</strong> Companies confident in
+                      their pricing are usually confident in their service
+                    </span>
+                  </li>
+                </ul>
+                <p className="mt-3">
+                  DeployAI Studio is the only Dubai company providing
+                  transparent MVP pricing: $10,000-$25,000.
+                </p>
+              </div>
+            ),
+          },
+          {
+            question:
+              "What's the difference between MVP and traditional development?",
+            answer: (
+              <div>
+                <p className="mb-3">
+                  MVP (Minimum Viable Product) development focuses on launching
+                  quickly with core features:
+                </p>
+                <ul className="ml-4 space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Speed:</strong> 4-8 weeks vs 12-20 weeks for
+                      traditional development
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Cost:</strong> Lower initial investment, iterate
+                      based on user feedback
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Risk:</strong> Test market demand before building
+                      everything
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Learning:</strong> Real user data guides future
+                      development
+                    </span>
+                  </li>
+                </ul>
+                <p className="mt-3">
+                  Traditional companies focus on full builds. DeployAI
+                  specializes in MVP-first approach.
+                </p>
+              </div>
+            ),
+          },
+          {
+            question: "How important is AI capability for future growth?",
+            answer: (
+              <div>
+                <p className="mb-3">
+                  AI integration is becoming essential for competitive
+                  advantage:
+                </p>
+                <ul className="ml-4 space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Automation:</strong> Reduce manual work and
+                      operational costs
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Personalization:</strong> Better customer
+                      experiences through data analysis
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Insights:</strong> Make data-driven decisions with
+                      AI analytics
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      <strong>Future-Proofing:</strong> Stay competitive as AI
+                      becomes standard
+                    </span>
+                  </li>
+                </ul>
+                <p className="mt-3">
+                  Only DeployAI Studio among Dubai companies offers specialized
+                  AI integration services.
+                </p>
+              </div>
+            ),
+          },
+          {
+            question:
+              "What questions should I ask potential development partners?",
+            answer: (
+              <div>
+                <p className="mb-3">
+                  Essential questions to evaluate any Dubai web development
+                  company:
+                </p>
+                <ul className="ml-4 space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      "Can you provide exact pricing before we start?"
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>"What technology stack do you use and why?"</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>"Can you show recent projects similar to mine?"</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      "How do you handle project changes and timeline delays?"
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="font-bold text-orange-500">•</span>
+                    <span>
+                      "What ongoing support do you provide after launch?"
                     </span>
                   </li>
                 </ul>

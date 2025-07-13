@@ -3,9 +3,23 @@
  * Renders landing page templates based on configuration
  */
 
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import { LandingPageTemplate } from "@/lib/templates/types";
+import { font } from "@/fonts";
+
+// Extend window interface for Calendly
+declare global {
+  interface Window {
+    Calendly: {
+      initInlineWidget: (options: {
+        url: string;
+        parentElement: HTMLElement;
+        resize?: boolean;
+      }) => void;
+    };
+  }
+}
 
 // Import all components that can be used in templates
 import { AnimatedNavBar } from "@/components/navigation/AnimatedNavBar";
@@ -44,11 +58,59 @@ const COMPONENT_MAP = {
   Footer,
 } as const;
 
+// Preload Calendly function
+const preloadCalendly = () => {
+  if (
+    typeof window !== "undefined" &&
+    window.Calendly &&
+    !(window as any).calendlyPreloaded
+  ) {
+    // Create a hidden container to preload the widget
+    const hiddenContainer = document.createElement("div");
+    hiddenContainer.style.position = "absolute";
+    hiddenContainer.style.left = "-9999px";
+    hiddenContainer.style.top = "-9999px";
+    hiddenContainer.style.width = "1px";
+    hiddenContainer.style.height = "1px";
+    hiddenContainer.style.overflow = "hidden";
+    document.body.appendChild(hiddenContainer);
+
+    try {
+      (window as any).Calendly.initInlineWidget({
+        url:
+          "https://calendly.com/hello-deployai/30min?hide_event_type_details=1&hide_gdpr_banner=1&embed_domain=" +
+          window.location.hostname +
+          "&embed_type=Inline",
+        parentElement: hiddenContainer,
+        resize: false,
+      });
+      (window as any).calendlyPreloaded = true;
+    } catch (error) {
+      console.log("Calendly preload failed:", error);
+    }
+  }
+};
+
 export const DynamicTemplate: React.FC<DynamicTemplateProps> = ({
   template,
   children,
 }) => {
   const { meta, content, sections, analytics } = template;
+
+  // Preload Calendly when component mounts
+  useEffect(() => {
+    // Wait for Calendly script to load
+    const checkAndPreload = () => {
+      if (window.Calendly) {
+        preloadCalendly();
+      } else {
+        // Check again in 100ms
+        setTimeout(checkAndPreload, 100);
+      }
+    };
+
+    checkAndPreload();
+  }, []);
 
   // Generate analytics scripts
   const renderAnalytics = () => {
@@ -110,13 +172,28 @@ export const DynamicTemplate: React.FC<DynamicTemplateProps> = ({
       return null;
     }
 
-    return (
+    const componentElement = (
       <Component
         key={section.component}
         {...section.props}
         templateContent={content}
       />
     );
+
+    // If wrapper configuration exists, wrap the component
+    if (section.wrapper) {
+      return (
+        <div
+          key={section.component}
+          className={section.wrapper.className}
+          style={section.wrapper.style}
+        >
+          {componentElement}
+        </div>
+      );
+    }
+
+    return componentElement;
   };
 
   return (
@@ -147,7 +224,10 @@ export const DynamicTemplate: React.FC<DynamicTemplateProps> = ({
         {renderAnalytics()}
       </Head>
 
-      <main className="min-h-screen bg-white">
+      <main
+        className={`min-h-screen bg-white ${font.className}`}
+        style={{ scrollSnapType: "y proximity" }}
+      >
         {/* Render enabled sections in order */}
         {sections
           .filter((section) => section.enabled)
@@ -174,9 +254,9 @@ export const withTemplate = <T extends object>(
       <Component {...props} />
     </DynamicTemplate>
   );
-  
-  WrappedComponent.displayName = `withTemplate(${Component.displayName || Component.name || 'Component'})`;
-  
+
+  WrappedComponent.displayName = `withTemplate(${Component.displayName || Component.name || "Component"})`;
+
   return WrappedComponent;
 };
 
