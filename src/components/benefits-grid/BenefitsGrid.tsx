@@ -16,9 +16,9 @@ export const BenefitsGrid = ({
 }: BenefitsGridProps) => {
   const content = {
     customSoftware: {
-      title: "Maximise Profits While Reducing Costs",
+      title: "Every Day Without AI Is Revenue Left Behind",
       subtitle:
-        "Transform your operations with AI-driven solutions that drive revenue growth",
+        "We analyze your specific processes, identify your biggest AI opportunities, then build custom systems that work for you",
     },
     inventory: {
       title: "Why Smart Inventory Management Changes Everything",
@@ -44,7 +44,7 @@ export const BenefitsGrid = ({
       }}
       initial="initial"
       whileInView="whileInView"
-      className="relative mx-auto grid max-w-6xl grid-cols-3 gap-4 px-2 md:px-4 md:mb-20"
+      className="relative mx-auto grid max-w-6xl grid-cols-3 gap-4 px-2 md:px-4 mb-4 md:mb-6"
     >
       <div className="col-span-3">
         <SectionHeading>{content[variant].title}</SectionHeading>

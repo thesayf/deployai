@@ -17,7 +17,7 @@ export const ProblemAgitation = ({
   const content = getProblemContent(variant);
 
   return (
-    <section id="problem" className="-mt-12 bg-white pb-24">
+    <section id="problem" className="-mt-12 bg-white pb-4 md:pb-6">
       <div className="mx-auto max-w-4xl px-4">
         {/* Prominent intro */}
         <motion.div

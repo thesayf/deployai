@@ -21,9 +21,9 @@ export const IntegrationsBlock = ({
 }: IntegrationsBlockProps) => {
   const content = {
     customSoftware: {
-      title: "Modern Technology Stack",
+      title: "Beyond Consultants—We're Builders",
       subtitle:
-        "Built with cutting-edge technologies for performance, scalability, and future-proofing your Dubai business operations.",
+        "Modern development stack means you get precise, working AI systems, not marketing fluff",
     },
     inventory: {
       title: "Enterprise Integrations",

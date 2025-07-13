@@ -15,9 +15,9 @@ export const CollaborateBlock = ({
 }: CollaborateBlockProps) => {
   const content = {
     customSoftware: {
-      title: "30-Day Delivery",
+      title: "Your World Class AI Partner",
       subtitle:
-        "Rapid development cycles with continuous collaboration. See progress daily, not quarterly.",
+        "We identify your biggest AI opportunities that will put you in the top 1% of businesses in your industry.",
     },
     inventory: {
       title: "Real-Time Updates",

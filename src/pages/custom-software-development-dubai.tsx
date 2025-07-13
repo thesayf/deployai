@@ -72,13 +72,13 @@ export default function CustomSoftwareDevelopmentDubai() {
     >
       <AnimatedNavBar />
       <Hero variant="customSoftware" />
-      <div className="py-24">
+      <div className="pt-24">
         <ProblemAgitation variant="customSoftware" />
       </div>
       <div className="py-16">
         <BenefitsGrid variant="customSoftware" />
       </div>
-      <div className="py-16">
+      <div className="py-8">
         <ServiceFeatures variant="customSoftware" />
       </div>
       <StickyScrollCards variant="customSoftware" />

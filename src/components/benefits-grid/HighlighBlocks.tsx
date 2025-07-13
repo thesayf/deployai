@@ -2,20 +2,11 @@ import React from "react";
 import { Block } from "./Block";
 import {
   FiArrowUpRight,
-  FiClipboard,
-  FiCoffee,
   FiDollarSign,
-  FiFeather,
-  FiInbox,
-  FiMove,
-  FiRepeat,
-  FiSmile,
   FiZap,
   FiTrendingUp,
   FiShield,
   FiClock,
-  FiTarget,
-  FiSettings,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { twMerge } from "tailwind-merge";
@@ -34,61 +25,41 @@ export const HighlighBlocks = ({
       {
         Icon: FiDollarSign,
         iconClassName: "text-green-500",
-        title: "40-60% Cost Reduction",
-        subtitle:
-          "Eliminate expensive SaaS subscriptions and reduce operational overhead",
-      },
-      {
-        Icon: FiClock,
-        iconClassName: "text-blue-500",
-        title: "Simple 30 day cycles",
-        subtitle:
-          "After launching your MVP, you can choose to continue with our simple monthly subscription, or take the code in-house",
+        title: "Stop Missing Hot Prospects",
+        subtitle: "AI captures leads around the clock and even while you sleep",
       },
       {
         Icon: FiZap,
         iconClassName: "text-orange-500",
-        title: "80% Speed Increase",
+        title: "Reclaim 20+ Hours Weekly",
         subtitle:
-          "Most of our AI automations deliver process improvements of 80% over the older, manual methods",
-      },
-      {
-        Icon: FiArrowUpRight,
-        iconClassName: "text-purple-500",
-        title: "Boost Productivity",
-        subtitle:
-          "By automating manual tasks like data entry, emails, and compliance reports",
+          "Automate data entry, reporting, and admin tasks your team does manually",
       },
       {
         Icon: FiShield,
         iconClassName: "text-red-500",
-        title: "Enterprise Security",
-        subtitle: "Bank-level security with UAE compliance standards",
+        title: "Clone Your Expertise",
+        subtitle:
+          "Give every team member instant access to your best performer's knowledge",
       },
       {
         Icon: FiTrendingUp,
         iconClassName: "text-teal-500",
-        title: "Grow Revenues",
+        title: "Scale Without Hiring",
+        subtitle: "Handle 3x the workload with your current team size",
+      },
+      {
+        Icon: FiArrowUpRight,
+        iconClassName: "text-purple-500",
+        title: "Drive More Sales",
         subtitle:
-          "We automate the repetitive tasks that are stopping you from scaling",
+          "AI becomes your sales rep, content creator, and lead qualifier working around the clock",
       },
       {
-        Icon: FiTarget,
-        iconClassName: "text-pink-500",
-        title: "Perfect Fit Solution",
-        subtitle: "Built specifically for your business processes and goals",
-      },
-      {
-        Icon: FiSettings,
-        iconClassName: "text-indigo-500",
-        title: "Full Control",
-        subtitle: "Own your technology stack without vendor dependencies",
-      },
-      {
-        Icon: FiSmile,
-        iconClassName: "text-yellow-500",
-        title: "24/7 Support",
-        subtitle: "Dedicated support team for your success",
+        Icon: FiClock,
+        iconClassName: "text-blue-500",
+        title: "Predictable Budgets",
+        subtitle: "One payment replaces $15K+ annual SaaS spending",
       },
     ],
     inventory: [
@@ -116,18 +87,6 @@ export const HighlighBlocks = ({
         title: "Instant Alerts",
         subtitle: "Automated notifications for low stock and reorder points",
       },
-      {
-        Icon: FiTarget,
-        iconClassName: "text-pink-500",
-        title: "Smart Forecasting",
-        subtitle: "AI-powered demand prediction and optimal stock levels",
-      },
-      {
-        Icon: FiArrowUpRight,
-        iconClassName: "text-teal-500",
-        title: "Multi-Location Sync",
-        subtitle: "Unified view across warehouses, stores, and online channels",
-      },
     ],
     webapp: [
       {
@@ -154,18 +113,6 @@ export const HighlighBlocks = ({
         title: "Unlimited Scale",
         subtitle: "Built to grow with your business without limitations",
       },
-      {
-        Icon: FiTarget,
-        iconClassName: "text-purple-500",
-        title: "Perfect UX",
-        subtitle: "User experience designed specifically for your workflows",
-      },
-      {
-        Icon: FiSettings,
-        iconClassName: "text-teal-500",
-        title: "Full Integration",
-        subtitle: "Seamlessly connects with all your existing systems",
-      },
     ],
     ai: [
       {
@@ -191,18 +138,6 @@ export const HighlighBlocks = ({
         iconClassName: "text-purple-500",
         title: "24/7 Automation",
         subtitle: "AI works around the clock without breaks or errors",
-      },
-      {
-        Icon: FiTarget,
-        iconClassName: "text-pink-500",
-        title: "Smart Learning",
-        subtitle: "AI improves over time, becoming more efficient daily",
-      },
-      {
-        Icon: FiShield,
-        iconClassName: "text-red-500",
-        title: "Secure AI",
-        subtitle: "Enterprise-grade AI with privacy and security built-in",
       },
     ],
   };
