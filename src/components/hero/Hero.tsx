@@ -3,7 +3,7 @@ import { MockupScreen } from "./MockupScreen";
 import { Copy } from "./Copy";
 
 interface HeroProps {
-  variant?: "default" | "customSoftware" | "inventory" | "webapp" | "ai";
+  variant?: "default" | "customSoftware" | "inventory" | "webapp" | "ai" | "build";
 }
 
 export const Hero = ({ variant = "default" }: HeroProps) => {

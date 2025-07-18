@@ -5,7 +5,7 @@ import { Button } from "../shared/Button";
 import { LogoTicker } from "../logo-ticker/LogoTicker";
 
 interface CopyProps {
-  variant?: "default" | "customSoftware" | "inventory" | "webapp" | "ai";
+  variant?: "default" | "customSoftware" | "inventory" | "webapp" | "ai" | "build";
 }
 
 export const Copy = ({ variant = "default" }: CopyProps) => {
@@ -106,6 +106,22 @@ function getHeroContent(variant: CopyProps["variant"]) {
         ctaText: "🚀 Book Free AI Strategy Call",
         ctaSubtext:
           "⏱️ 30-minute strategy call • 💰 $0 cost • 🎯 Explore AI opportunities",
+      };
+    case "build":
+      return {
+        badge: "MVP",
+        announcement: "🚀 LIMITED TO 3 MVPS PER MONTH",
+        headline: "We Turn Your Idea Into An App in 30 Days",
+        subheading: (
+          <>
+            We build you a real MVP, not a demo, and for 80% cheaper than
+            traditional web development agencies. Web app, mobile app, or AI
+            app.
+          </>
+        ),
+        ctaText: "Discuss Your Idea",
+        ctaSubtext:
+          "⏱️ 30-minute consultation • 💰 No obligation • 🎯 Discuss your MVP",
       };
     default:
       return {

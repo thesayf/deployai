@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiArrowRight } from "react-icons/fi";
 
 interface ProblemAgitationProps {
-  variant?: "default" | "customSoftware" | "inventory" | "webapp" | "ai";
+  variant?: "default" | "customSoftware" | "inventory" | "webapp" | "ai" | "mvp";
 }
 
 export const ProblemAgitation = ({
@@ -15,6 +15,84 @@ export const ProblemAgitation = ({
   const painWords = ["exhausting", "expensive", "endless", "skyrocketing"];
   const solutionWords = ["custom", "automate", "30 days", "transparent"];
   const content = getProblemContent(variant);
+
+  // Special handling for MVP variant
+  if (variant === "mvp") {
+    return (
+      <section id="problem" className="-mt-12 bg-white pb-4 md:pb-6">
+        <div className="mx-auto max-w-4xl px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="mb-16"
+          >
+            <div className="space-y-6 text-xl md:text-2xl leading-relaxed text-zinc-800">
+              <p className="font-bold text-2xl md:text-3xl text-zinc-900">
+                You're burning money on development that doesn't deliver.
+              </p>
+              
+              <p>
+                Traditional web development agencies are broken. First, they charge you $50k+ to build an app. 6 months later, you've paid $80k and still going back and forth 
+                When its delivered, all you have is a polished demo that doesn't connect with real users. Every "small change" costs you thousands. 
+              </p>
+              
+              <p className="flex justify-center font-semibold">
+                Al you want is to get your product in your customers' hands.
+              </p>
+                <p className="font-bold text-emerald-600 justify-center flex text-4xl items-center gap-2">
+                  <span className="rounded-lg border-2 border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 font-bold text-white shadow-[2px_2px_0px_#18181b]">
+                    deployAI
+                  </span>
+                  fixes that.
+                </p>
+              
+              <div>
+                <p>
+                  We build you a real, working MVP in 30 days—complete with payments, user accounts, and everything you need to start selling from day one. Not a throwaway prototype. A revenue-ready product for 80% less than traditional dev agencies.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* CTA section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-center"
+          >
+            <div className=" inline-block rounded-2xl border-2 border-zinc-900 bg-zinc-100 p-6 shadow-[4px_4px_0px_#18181b]">
+              <p className="mb-4 text-lg text-zinc-700">
+                Ready to build something real? Let's discuss your MVP.
+              </p>
+
+              <motion.button
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <a
+                  href="https://calendly.com/hello-deployai/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border-2 border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 font-bold text-white shadow-[3px_3px_0px_#18181b] transition-all hover:shadow-[5px_5px_0px_#18181b]"
+                >
+                  Book Your Free Strategy Call
+                  <FiArrowRight className="h-4 w-4" />
+                </a>
+              </motion.button>
+
+              <p className="mt-3 text-sm text-zinc-500">
+                30-min discovery call • Custom MVP roadmap • No cost to you
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="problem" className="-mt-12 bg-white pb-4 md:pb-6">
