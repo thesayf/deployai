@@ -1,0 +1,20 @@
+{
+  "allow": [
+    "Bash(npm run dev:*)",
+    "mcp__firecrawl__firecrawl_scrape",
+    "mcp__firecrawl__firecrawl_search",
+    "mcp__firecrawl__firecrawl_crawl",
+    "mcp__firecrawl__firecrawl_map",
+    "mcp__firecrawl__firecrawl_extract"
+  ],
+  "deny": [],
+  "mcpServers": {
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "fc-96de4b5002904910aed49307b71a99d8"
+      }
+    }
+  }
+}

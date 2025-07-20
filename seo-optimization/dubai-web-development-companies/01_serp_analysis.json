@@ -1,0 +1,138 @@
+{
+  "search_query": "dubai web development companies",
+  "location": "Dubai, United Arab Emirates",
+  "search_engine": "google",
+  "date_analyzed": "2025-01-27",
+  "total_results": 23,
+  "serp_features": {
+    "local_pack": {
+      "present": true,
+      "position": 1,
+      "results_count": 3,
+      "top_companies": [
+        {
+          "name": "RedSpider Web & Art Design",
+          "domain": "www.redspider.ae",
+          "rating": 4.8,
+          "reviews": 84
+        },
+        {
+          "name": "WebCastle Technologies LLC",
+          "domain": "www.webcastle.ae",
+          "rating": 4.8,
+          "reviews": 228
+        },
+        {
+          "name": "CodeGuru Web Design Dubai",
+          "domain": "codeguru.ae",
+          "rating": 5.0,
+          "reviews": 165
+        }
+      ]
+    },
+    "people_also_ask": {
+      "present": true,
+      "position": 6,
+      "questions": [
+        "How much does a website development cost in Dubai?",
+        "Is Dubai good for web developers?",
+        "Which company is best for web development?",
+        "How to choose the right web design company in Dubai?"
+      ]
+    },
+    "related_searches": {
+      "present": true,
+      "position": 24,
+      "terms": [
+        "top 10 web development companies in dubai!",
+        "Top dubai web development companies",
+        "Best website development company in Dubai",
+        "Dubai web development companies hiring",
+        "Dubai web development companies careers",
+        "Best dubai web development companies",
+        "Web development company in UAE",
+        "Website development cost in Dubai"
+      ]
+    }
+  },
+  "organic_results": [
+    {
+      "rank": 4,
+      "domain": "www.digitalgravity.ae",
+      "url": "https://www.digitalgravity.ae/",
+      "title": "Dubai Web Design and Website Development Company ...",
+      "description": "Digital Gravity is the choice of the UAE's leading brands for website design and web development services in Dubai. Whether it's custom web development or ...",
+      "sitelinks": 4
+    },
+    {
+      "rank": 5,
+      "domain": "techreviewer.co",
+      "url": "https://techreviewer.co/top-web-development-companies/uae/dubai",
+      "title": "Top 100+ Web Development Companies in Dubai",
+      "description": "Si3 Digital creates exceptional website design, eCommerce web development, mobile apps, SEO Services, Social Media Marketing campaigns many more",
+      "sitelinks": 2
+    },
+    {
+      "rank": 7,
+      "domain": "www.integrateitsolutions.com",
+      "url": "https://www.integrateitsolutions.com/website-development-company-dubai.php",
+      "title": "Website Development Company in Dubai",
+      "description": "Integrate Solutions is a Leading Web Development Company in Dubai, Offers Expert Website Development Services using the Latest Technologies for Innovative ..."
+    },
+    {
+      "rank": 8,
+      "domain": "www.designrush.com",
+      "url": "https://www.designrush.com/agency/web-development-companies/ae",
+      "title": "Top Web Development Companies in United Arab Emirates",
+      "description": "Best UAE Website Development Agency Rankings · Emirates Graphic · Trango Tech · Suffescom Solutions Inc · Viacon · Quixta · Elogic Commerce · SDLC Corp · CodeCobble.",
+      "rating": 4.6,
+      "reviews": 1234,
+      "sitelinks": 3
+    },
+    {
+      "rank": 9,
+      "domain": "www.zazz.io",
+      "url": "https://www.zazz.io/web-development-company-dubai",
+      "title": "Website Design And Development Company in Dubai",
+      "description": "Zazz is the top website development company in Dubai and also the highest-rated app development company. We offer a wide selection of services to organizations."
+    },
+    {
+      "rank": 10,
+      "domain": "agencies.semrush.com",
+      "url": "https://agencies.semrush.com/list/web-development/dubai/",
+      "title": "Best Web Development Companies in Dubai 2025",
+      "description": "500 Designs is an award-winning full-service design agency. We've worked with Google, 3M, Cisco, TikTok, HubSpot, Fresh Del Monte, KBS, Betterhelp, and over 700 ..."
+    },
+    {
+      "rank": 11,
+      "domain": "www.penieltech.com",
+      "url": "https://www.penieltech.com/web-design-and-development-company-dubai-uae.php",
+      "title": "Web Design Dubai | Web Development Company",
+      "description": "Penieltech is a leading web design and development agency in Dubai, offering cutting-edge, responsive websites tailored to your business needs.",
+      "rating": 4.9,
+      "reviews": 1114
+    },
+    {
+      "rank": 12,
+      "domain": "www.pgsuae.com",
+      "url": "https://www.pgsuae.com/",
+      "title": "Web Design Dubai | Best Web Design Company in Dubai ...",
+      "description": "We are a leading web design company in Dubai with over 13 years of experience in creating exceptional online experiences for leading global organizations."
+    },
+    {
+      "rank": 13,
+      "domain": "www.gcc-marketing.com",
+      "url": "https://www.gcc-marketing.com/web-development-services-dubai/",
+      "title": "Web Development Services in Dubai | Website Development",
+      "description": "At our web development company in the UAE, we specialize in delivering top-notch web development services in Dubai that cater to your unique business needs."
+    },
+    {
+      "rank": 14,
+      "domain": "webcastle.ae",
+      "url": "https://webcastle.ae/",
+      "title": "Dubai Web Design | Web Design Company in Dubai, UAE",
+      "description": "Webcastle is a leading web design company in Dubai, UAE, that offers web design, development, and marketing. We create user-friendly web designs that grow ...",
+      "sitelinks": 4
+    }
+  ]
+}

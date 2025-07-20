@@ -1,0 +1,1 @@
+export { PeopleAlsoAsk } from './PeopleAlsoAsk';

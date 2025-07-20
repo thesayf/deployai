@@ -1,0 +1,108 @@
+{
+  "audit_date": "2025-01-27",
+  "url": "https://deployai.studio/dubai-web-development-companies",
+  "overall_performance": {
+    "onpage_score": 97.44,
+    "status_code": 200,
+    "page_accessible": true,
+    "https_enabled": true,
+    "has_html_doctype": true
+  },
+  "content_analysis": {
+    "word_count": 2799,
+    "plain_text_size": 19164,
+    "plain_text_rate": 0.21,
+    "readability_scores": {
+      "automated_readability_index": 12.607,
+      "coleman_liau_readability_index": 15.445,
+      "dale_chall_readability_index": 10.593,
+      "flesch_kincaid_readability_index": 32.16,
+      "smog_readability_index": 14.213
+    },
+    "title_to_content_consistency": 0.75,
+    "description_to_content_consistency": 0.722
+  },
+  "meta_tags": {
+    "title": {
+      "content": "Dubai Web Development Companies: Top 10 Reviewed 2025",
+      "length": 53,
+      "keyword_present": true
+    },
+    "description": {
+      "content": "Compare Dubai web development companies with transparent pricing, client reviews, and expert analysis. Find your perfect development partner today.",
+      "length": 147,
+      "keyword_present": true
+    },
+    "canonical": "https://deployai.studio/dubai-web-development-companies",
+    "duplicate_meta_tags": ["description"]
+  },
+  "header_structure": {
+    "h1": {
+      "count": 1,
+      "content": [
+        "Dubai Web Development Companies: Which Approach Fits Your Business?"
+      ]
+    },
+    "h2": {
+      "count": 13,
+      "sample_content": [
+        "Why are businesses choosing different approaches?",
+        "Dubai Web Development Companies Comparison",
+        "Which approach should you choose?",
+        "Complete Guide to Web Development Costs in Dubai",
+        "How to Choose the Right Web Development Company in Dubai"
+      ]
+    },
+    "h3": {
+      "count": 46,
+      "sample_content": [
+        "Battle Tested",
+        "Data Driven",
+        "Rapid Deploy",
+        "AI First",
+        "Choose Traditional Agencies When:"
+      ]
+    },
+    "h4": {
+      "count": 17,
+      "sample_content": [
+        "Small Business Websites",
+        "E-commerce & Enterprise",
+        "Traditional WordPress Development",
+        "Data-Driven Performance Agencies"
+      ]
+    }
+  },
+  "social_media_tags": {
+    "og_title": "Dubai Web Development Companies: Top 10 Reviewed 2025",
+    "og_description": "Compare Dubai web development companies with transparent pricing, client reviews, and expert analysis. Find your perfect development partner today.",
+    "og_url": "https://deployai.studio/dubai-web-development-companies",
+    "og_type": "article"
+  },
+  "technical_elements": {
+    "internal_links_count": 2,
+    "external_links_count": 3,
+    "images_count": 2,
+    "scripts_count": 24,
+    "render_blocking_stylesheets_count": 2,
+    "cumulative_layout_shift": 0,
+    "time_to_interactive": 676,
+    "dom_complete": 1088
+  },
+  "issues_found": {
+    "html_validation_errors": 4,
+    "error_details": [
+      "Line 24: The closing tag and the currently open tag do not match (4 instances)"
+    ],
+    "duplicate_meta_tags": ["description"],
+    "warnings": []
+  },
+  "performance_metrics": {
+    "page_size": 91542,
+    "encoded_size": 18032,
+    "transfer_size": 18032,
+    "server": "Vercel",
+    "content_encoding": "br",
+    "cache_control_cachable": true
+  }
+}

@@ -38,3 +38,6 @@ next-env.d.ts
 # Environment variables
 .env.local
 .env
+
+*storybook.log
+storybook-static
