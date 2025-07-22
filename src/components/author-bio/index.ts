@@ -1,0 +1,1 @@
+export { AuthorBio } from './AuthorBio';
