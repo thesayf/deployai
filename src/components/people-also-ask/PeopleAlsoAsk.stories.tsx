@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import { PeopleAlsoAsk } from './PeopleAlsoAsk';
 
 const meta: Meta<typeof PeopleAlsoAsk> = {
@@ -95,14 +95,14 @@ Simplified version with plus/minus icons instead of chevrons, no question number
       control: 'boolean',
       description: 'Allow multiple questions to be open simultaneously',
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     defaultOpenIndex: {
       control: 'number',
       description: 'Index of initially open question (0-based)',
       table: {
-        defaultValue: { summary: 0 },
+        defaultValue: { summary: '0' },
       },
     },
     title: {

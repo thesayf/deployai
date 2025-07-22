@@ -212,7 +212,6 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
               <span className="flex-1">{article.title}</span>
               <ArrowIcon 
                 className="w-5 h-5 flex-shrink-0 mt-0.5 transition-transform group-hover:translate-x-1" 
-                style={{ color: colors.black }} 
               />
             </h3>
 
@@ -287,11 +286,10 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
                 >
                   {article.date}
                 </span>
-                <div className="flex items-center gap-1 ml-auto">
-                  <ClockIcon className="w-3 h-3" style={{ color: colors.graphite }} />
+                <div className="flex items-center gap-1 ml-auto" style={{ color: colors.graphite }}>
+                  <ClockIcon className="w-3 h-3" />
                   <span 
                     className={typography.caption}
-                    style={{ color: colors.graphite }}
                   >
                     {article.readTime}
                   </span>
@@ -404,11 +402,10 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
               >
                 {article.date}
               </span>
-              <div className="flex items-center gap-1">
-                <ClockIcon className="w-3 h-3" style={{ color: colors.graphite }} />
+              <div className="flex items-center gap-1" style={{ color: colors.graphite }}>
+                <ClockIcon className="w-3 h-3" />
                 <span 
                   className={typography.caption}
-                  style={{ color: colors.graphite }}
                 >
                   {article.readTime}
                 </span>
@@ -417,10 +414,9 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
           </div>
 
           {/* Arrow */}
-          <div className="flex items-center">
+          <div className="flex items-center" style={{ color: colors.black }}>
             <ArrowIcon 
               className="w-6 h-6 transition-transform group-hover:translate-x-2" 
-              style={{ color: colors.black }} 
             />
           </div>
         </div>
@@ -483,10 +479,11 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
               </span>
             </div>
           </div>
-          <ArrowIcon 
-            className="w-5 h-5 transition-transform group-hover:translate-x-2" 
-            style={{ color: colors.black }} 
-          />
+          <div style={{ color: colors.black }}>
+            <ArrowIcon 
+              className="w-5 h-5 transition-transform group-hover:translate-x-2" 
+            />
+          </div>
         </div>
       </motion.div>
     );
@@ -613,11 +610,10 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
                   >
                     {featured.date}
                   </span>
-                  <div className="flex items-center gap-1">
-                    <ClockIcon className="w-4 h-4" style={{ color: colors.graphite }} />
+                  <div className="flex items-center gap-1" style={{ color: colors.graphite }}>
+                    <ClockIcon className="w-4 h-4" />
                     <span 
                       className={typography.bodyS}
-                      style={{ color: colors.graphite }}
                     >
                       {featured.readTime}
                     </span>

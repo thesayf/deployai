@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import { PricingComparison } from './PricingComparison';
 
 const meta = {
@@ -107,7 +107,7 @@ Clean comparison view without action buttons for informational contexts.
       control: 'boolean',
       description: 'Show/hide call-to-action buttons',
       table: {
-        defaultValue: { summary: true },
+        defaultValue: { summary: 'true' },
       },
     },
     tiers: {

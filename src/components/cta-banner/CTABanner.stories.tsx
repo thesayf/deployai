@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import { CTABanner } from './CTABanner';
 
 const meta: Meta<typeof CTABanner> = {
@@ -119,7 +119,7 @@ Clean, simple banner without gradient background for subtle CTAs.
       control: 'boolean',
       description: 'Show/hide icon',
       table: {
-        defaultValue: { summary: true },
+        defaultValue: { summary: 'true' },
       },
     },
   },

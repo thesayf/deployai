@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import { AuthorBio } from './AuthorBio';
 
 const meta: Meta<typeof AuthorBio> = {
@@ -124,7 +124,7 @@ Vertical layout optimized for blog sidebars with centered content.
       control: 'boolean',
       description: 'Show/hide statistics',
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     articlesCount: {

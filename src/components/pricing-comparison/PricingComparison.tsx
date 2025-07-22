@@ -194,10 +194,11 @@ export const PricingComparison: React.FC<PricingComparisonProps> = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: `2px 2px 0px ${colors.black}`
+              boxShadow: `2px 2px 0px ${colors.black}`,
+              color: colors.white
             }}
           >
-            <CheckIcon className="w-5 h-5" style={{ color: colors.white }} />
+            <CheckIcon className="w-5 h-5" />
           </div>
         </div>
       ) : (
@@ -211,10 +212,11 @@ export const PricingComparison: React.FC<PricingComparisonProps> = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              opacity: 0.5
+              opacity: 0.5,
+              color: colors.charcoal
             }}
           >
-            <XIcon className="w-4 h-4" style={{ color: colors.charcoal }} />
+            <XIcon className="w-4 h-4" />
           </div>
         </div>
       );
@@ -577,10 +579,11 @@ export const PricingComparison: React.FC<PricingComparisonProps> = ({
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
-                                  boxShadow: `2px 2px 0px ${colors.black}`
+                                  boxShadow: `2px 2px 0px ${colors.black}`,
+                                  color: colors.white
                                 }}
                               >
-                                <CheckIcon className="w-4 h-4" style={{ color: colors.white }} />
+                                <CheckIcon className="w-4 h-4" />
                               </div>
                             ) : (
                               <div 
@@ -592,10 +595,11 @@ export const PricingComparison: React.FC<PricingComparisonProps> = ({
                                   display: 'flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
-                                  opacity: 0.5
+                                  opacity: 0.5,
+                                  color: colors.charcoal
                                 }}
                               >
-                                <XIcon className="w-3 h-3" style={{ color: colors.charcoal }} />
+                                <XIcon className="w-3 h-3" />
                               </div>
                             )
                           ) : (

@@ -331,13 +331,17 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
             }}
           >
             {variant === 'minimal' ? (
-              isOpen ? (
-                <MinusIcon className="w-5 h-5" style={{ color: isOpen ? colors.white : colors.black }} />
-              ) : (
-                <PlusIcon className="w-5 h-5" style={{ color: isOpen ? colors.white : colors.black }} />
-              )
+              <div style={{ color: isOpen ? colors.white : colors.black }}>
+                {isOpen ? (
+                  <MinusIcon className="w-5 h-5" />
+                ) : (
+                  <PlusIcon className="w-5 h-5" />
+                )}
+              </div>
             ) : (
-              <ChevronIcon className="w-5 h-5" style={{ color: isOpen ? colors.white : colors.black }} />
+              <div style={{ color: isOpen ? colors.white : colors.black }}>
+                <ChevronIcon className="w-5 h-5" />
+              </div>
             )}
           </motion.div>
         </button>

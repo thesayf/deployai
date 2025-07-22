@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import { RelatedArticles } from './RelatedArticles';
 
 const meta: Meta<typeof RelatedArticles> = {
@@ -99,35 +99,35 @@ Hero article with smaller supporting articles. Perfect for homepage sections.
       options: [2, 3, 4],
       description: 'Number of columns (grid variant only)',
       table: {
-        defaultValue: { summary: 3 },
+        defaultValue: { summary: '3' },
       },
     },
     showExcerpt: {
       control: 'boolean',
       description: 'Show article excerpts',
       table: {
-        defaultValue: { summary: true },
+        defaultValue: { summary: 'true' },
       },
     },
     showImage: {
       control: 'boolean',
       description: 'Show article images',
       table: {
-        defaultValue: { summary: true },
+        defaultValue: { summary: 'true' },
       },
     },
     showAuthor: {
       control: 'boolean',
       description: 'Show author information',
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     showTags: {
       control: 'boolean',
       description: 'Show article tags',
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     accentColor: {
