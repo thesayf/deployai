@@ -199,17 +199,21 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
           )}
 
           {/* Content */}
-          <div className="flex-1 p-6 flex flex-col">
+          <div className="flex-1 p-6 sm:p-8 flex flex-col">
             {/* Title */}
             <h3 
-              className={`${typography.headingS} mb-3 group-hover:underline`}
+              className={`${typography.headingS} mb-3 group-hover:underline flex items-start justify-between gap-2`}
               style={{ 
                 color: colors.black,
                 textDecorationThickness: '3px',
                 textUnderlineOffset: '4px'
               }}
             >
-              {article.title}
+              <span className="flex-1">{article.title}</span>
+              <ArrowIcon 
+                className="w-5 h-5 flex-shrink-0 mt-0.5 transition-transform group-hover:translate-x-1" 
+                style={{ color: colors.black }} 
+              />
             </h3>
 
             {/* Excerpt */}
@@ -242,7 +246,7 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
             )}
 
             {/* Meta Info */}
-            <div className="flex items-center justify-between mt-auto">
+            <div className={`mt-auto ${showAuthor && article.author ? 'space-y-3' : ''}`}>
               {/* Author */}
               {showAuthor && article.author && (
                 <div className="flex items-center gap-2">
@@ -276,14 +280,14 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
               )}
 
               {/* Date & Read Time */}
-              <div className="flex items-center gap-3 text-right">
+              <div className="flex flex-wrap items-center gap-3">
                 <span 
                   className={typography.caption}
                   style={{ color: colors.graphite }}
                 >
                   {article.date}
                 </span>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 ml-auto">
                   <ClockIcon className="w-3 h-3" style={{ color: colors.graphite }} />
                   <span 
                     className={typography.caption}
@@ -296,31 +300,6 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
             </div>
           </div>
 
-          {/* Arrow */}
-          <div
-            style={{
-              position: 'absolute',
-              bottom: '16px',
-              right: '16px',
-              width: '32px',
-              height: '32px',
-              background: colors.black,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transform: 'rotate(45deg)',
-              transition: 'transform 0.2s ease'
-            }}
-            className="group-hover:scale-110"
-          >
-            <ArrowIcon 
-              className="w-4 h-4" 
-              style={{ 
-                color: colors.white,
-                transform: 'rotate(-45deg)'
-              }} 
-            />
-          </div>
         </div>
       </motion.div>
     );
@@ -418,7 +397,7 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
               </p>
             )}
 
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <span 
                 className={typography.caption}
                 style={{ color: colors.graphite }}
@@ -530,7 +509,7 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
     const [featured, ...rest] = articles;
 
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Featured Article */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -627,7 +606,7 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
                 >
                   {featured.excerpt}
                 </p>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                   <span 
                     className={typography.bodyS}
                     style={{ color: colors.graphite }}
@@ -650,7 +629,7 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
         </motion.div>
 
         {/* Other Articles */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           {rest.slice(0, 3).map((article, index) => renderMinimalItem(article, index + 1))}
         </div>
       </div>
@@ -688,13 +667,13 @@ export const RelatedArticles: React.FC<RelatedArticlesProps> = ({
 
       {/* Articles */}
       {variant === 'grid' && (
-        <div className={`grid ${getGridCols()} gap-6`}>
+        <div className={`grid ${getGridCols()} gap-8`}>
           {articles.map((article, index) => renderArticleCard(article, index))}
         </div>
       )}
 
       {variant === 'list' && (
-        <div className="space-y-4">
+        <div className="space-y-6">
           {articles.map((article, index) => renderListItem(article, index))}
         </div>
       )}
