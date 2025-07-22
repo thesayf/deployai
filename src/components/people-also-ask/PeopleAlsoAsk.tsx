@@ -273,28 +273,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
         {/* Question Button */}
         <button
           ref={buttonRef}
-          onClick={(e) => {
-            e.preventDefault();
-            
-            // Store current scroll position
-            const scrollY = window.scrollY;
-            const buttonTop = buttonRef.current?.getBoundingClientRect().top || 0;
-            
-            onToggle();
-            
-            // Prevent scroll jump on mobile
-            if (window.innerWidth < 768) {
-              requestAnimationFrame(() => {
-                // If opening and button was near bottom of viewport
-                if (!isOpen && buttonTop > window.innerHeight * 0.6) {
-                  window.scrollTo({
-                    top: scrollY,
-                    behavior: 'instant'
-                  });
-                }
-              });
-            }
-          }}
+          onClick={() => onToggle()}
           className="w-full flex items-center justify-between text-left"
           style={{
             padding: variant === 'compact' ? '12px 16px' : '16px 20px',
