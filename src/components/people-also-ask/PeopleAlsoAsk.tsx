@@ -1,7 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FiChevronDown } from 'react-icons/fi';
 import useMeasure from 'react-use-measure';
+
+// Simple chevron icon as SVG
+const ChevronDownIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polyline points="6 9 12 15 18 9" />
+  </svg>
+);
 
 interface FAQItem {
   question: string;
@@ -137,7 +143,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
           transition={{ duration: 0.2 }}
           className="ml-4 flex-shrink-0"
         >
-          <FiChevronDown className={`
+          <ChevronDownIcon className={`
             h-5 w-5
             ${isOpen ? 'text-emerald-600' : 'text-zinc-400'}
           `} />
