@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { FiStar, FiMapPin, FiDollarSign } from 'react-icons/fi';
 
+// Fallback if icons don't load
+const StarIcon = FiStar || (() => <span>★</span>);
+const MapPinIcon = FiMapPin || (() => <span>📍</span>);
+const DollarSignIcon = FiDollarSign || (() => <span>$</span>);
+
 // Company type definitions
 export type CompanyType = 'agency' | 'freelancer' | 'ai-first';
 export type BudgetRange = 'under-5k' | '5k-15k' | '15k-50k' | '50k-plus';
@@ -67,14 +72,14 @@ export const CompanyDirectory: React.FC<CompanyDirectoryProps> = ({
     <section className="w-full">
       {/* Header */}
       {(title || subtitle) && (
-        <div className="mb-8 text-center">
+        <div className="mb-12 text-center">
           {title && (
-            <h2 className="text-3xl font-bold text-zinc-900 md:text-4xl">
+            <h2 className="mb-4 text-5xl font-black uppercase text-zinc-900 md:text-6xl">
               {title}
             </h2>
           )}
           {subtitle && (
-            <p className="mt-2 text-lg text-zinc-600">
+            <p className="mx-auto max-w-3xl text-xl text-zinc-600">
               {subtitle}
             </p>
           )}
@@ -197,7 +202,7 @@ export const CompanyDirectory: React.FC<CompanyDirectoryProps> = ({
             </span>
             <button
               onClick={clearFilters}
-              className="text-sm font-medium text-emerald-600 hover:text-emerald-700"
+              className="text-sm font-bold uppercase text-orange-600 hover:text-orange-700"
             >
               Clear all
             </button>
@@ -213,13 +218,13 @@ export const CompanyDirectory: React.FC<CompanyDirectoryProps> = ({
           ))}
         </div>
       ) : (
-        <div className="rounded-lg bg-zinc-50 p-12 text-center">
-          <p className="text-lg text-zinc-600">
+        <div className="rounded-lg border-4 border-zinc-900 bg-gradient-to-br from-zinc-50 to-orange-50 p-12 text-center shadow-[6px_6px_0px_#18181b]">
+          <p className="text-xl font-bold text-zinc-900">
             No companies match your current filters.
           </p>
           <button
             onClick={clearFilters}
-            className="mt-4 text-emerald-600 underline hover:text-emerald-700"
+            className="mt-4 rounded-lg border-2 border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 px-6 py-2 font-bold uppercase text-white shadow-[4px_4px_0px_#18181b] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#18181b]"
           >
             Clear all filters
           </button>
@@ -240,10 +245,10 @@ const FilterButton: React.FC<FilterButtonProps> = ({ active, onClick, children }
   <button
     onClick={onClick}
     className={`
-      rounded-lg px-4 py-2 text-sm font-medium transition-colors
+      rounded-lg border-2 px-4 py-2 text-sm font-bold uppercase transition-all
       ${active
-        ? 'bg-emerald-500 text-white hover:bg-emerald-600'
-        : 'bg-white text-zinc-700 hover:bg-zinc-100 border border-zinc-300'
+        ? 'border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-[4px_4px_0px_#18181b] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#18181b]'
+        : 'border-zinc-900 bg-white text-zinc-900 shadow-[2px_2px_0px_#18181b] hover:bg-zinc-100 hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_#18181b]'
       }
     `}
   >
@@ -264,27 +269,27 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
   };
 
   const typeColors = {
-    'agency': 'bg-blue-100 text-blue-700',
-    'freelancer': 'bg-purple-100 text-purple-700',
-    'ai-first': 'bg-emerald-100 text-emerald-700'
+    'agency': 'bg-blue-500 text-white',
+    'freelancer': 'bg-purple-500 text-white',
+    'ai-first': 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white'
   };
 
   return (
-    <div className="group relative flex h-full flex-col rounded-lg border border-zinc-200 bg-white p-6 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md">
+    <div className="group relative flex h-full flex-col rounded-lg border-4 border-zinc-900 bg-white p-6 shadow-[6px_6px_0px_#18181b] transition-all hover:translate-x-[-3px] hover:translate-y-[-3px] hover:shadow-[9px_9px_0px_#18181b]">
       {/* Type Badge */}
       <div className="mb-4 flex items-start justify-between">
-        <span className={`rounded-full px-3 py-1 text-xs font-medium ${typeColors[company.type]}`}>
+        <span className={`rounded-md border-2 border-zinc-900 px-3 py-1 text-xs font-bold uppercase shadow-[2px_2px_0px_#18181b] ${typeColors[company.type]}`}>
           {typeLabels[company.type]}
         </span>
         {company.featured && (
-          <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-700">
+          <span className="rounded-md border-2 border-zinc-900 bg-gradient-to-r from-yellow-400 to-orange-400 px-3 py-1 text-xs font-bold uppercase text-zinc-900 shadow-[2px_2px_0px_#18181b]">
             Featured
           </span>
         )}
       </div>
 
       {/* Company Info */}
-      <h3 className="mb-2 text-xl font-semibold text-zinc-900">
+      <h3 className="mb-2 text-xl font-black uppercase text-zinc-900">
         {company.name}
       </h3>
 
@@ -292,7 +297,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
       <div className="mb-3 flex items-center gap-2">
         <div className="flex items-center">
           {[...Array(5)].map((_, i) => (
-            <FiStar
+            <StarIcon
               key={i}
               className={`h-4 w-4 ${
                 i < Math.floor(company.rating)
@@ -310,15 +315,15 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
       {/* Location & Price */}
       <div className="mb-4 flex items-center gap-4 text-sm text-zinc-600">
         <div className="flex items-center gap-1">
-          <FiMapPin className="h-4 w-4" />
+          <MapPinIcon className="h-4 w-4" />
           <span>{company.location}</span>
         </div>
         <div className="flex items-center">
-          {[...Array(company.priceRange)].map((_, i) => (
-            <FiDollarSign key={i} className="h-4 w-4 text-zinc-600" />
+          {company.priceRange && [...Array(company.priceRange)].map((_, i) => (
+            <DollarSignIcon key={`filled-${i}`} className="h-4 w-4 text-zinc-600" />
           ))}
-          {[...Array(4 - company.priceRange)].map((_, i) => (
-            <FiDollarSign key={i + company.priceRange} className="h-4 w-4 text-zinc-300" />
+          {company.priceRange && [...Array(4 - company.priceRange)].map((_, i) => (
+            <DollarSignIcon key={`empty-${i}`} className="h-4 w-4 text-zinc-300" />
           ))}
         </div>
       </div>
@@ -349,7 +354,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
       <div className="flex-grow"></div>
 
       {/* CTA Button */}
-      <button className="w-full rounded-lg bg-emerald-500 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-600">
+      <button className="w-full rounded-lg border-2 border-zinc-900 bg-gradient-to-r from-orange-500 to-red-500 py-3 text-sm font-bold uppercase text-white shadow-[4px_4px_0px_#18181b] transition-all hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#18181b]">
         View Details
       </button>
     </div>

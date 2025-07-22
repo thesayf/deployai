@@ -30,6 +30,14 @@ export const Default: Story = {
   },
 };
 
+export const WithoutCTA: Story = {
+  args: {
+    title: 'Service Comparison Overview',
+    subtitle: 'Compare features across different tiers',
+    showCTA: false,
+  },
+};
+
 export const CustomPricing: Story = {
   args: {
     title: 'AI-Powered Development Packages',

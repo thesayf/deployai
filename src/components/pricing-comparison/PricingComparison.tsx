@@ -21,6 +21,7 @@ interface PricingComparisonProps {
   features?: PricingFeature[];
   title?: string;
   subtitle?: string;
+  showCTA?: boolean;
 }
 
 const defaultTiers: PricingTier[] = [
@@ -125,13 +126,18 @@ export const PricingComparison: React.FC<PricingComparisonProps> = ({
   features = defaultFeatures,
   title = 'Dubai Web Development Pricing Guide',
   subtitle = 'Compare service tiers and find the perfect fit for your project',
+  showCTA = true,
 }) => {
   const renderFeatureValue = (value: boolean | string) => {
     if (typeof value === 'boolean') {
       return value ? (
-        <FiCheck className="h-5 w-5 text-emerald-500" />
+        <div className="flex justify-center">
+          <FiCheck className="h-5 w-5 text-emerald-500" />
+        </div>
       ) : (
-        <FiX className="h-5 w-5 text-zinc-300" />
+        <div className="flex justify-center">
+          <FiX className="h-5 w-5 text-zinc-300" />
+        </div>
       );
     }
     return <span className="text-sm text-zinc-600">{value}</span>;
@@ -154,16 +160,19 @@ export const PricingComparison: React.FC<PricingComparisonProps> = ({
             <thead>
               <tr className="border-b border-zinc-200">
                 <th className="px-6 py-4 text-left">
+                  <div className="h-5"></div>
                   <span className="text-sm font-medium text-zinc-500">Features</span>
                 </th>
                 {tiers.map((tier, index) => (
                   <th key={index} className="px-6 py-4 text-center">
                     <div className="space-y-1">
-                      {tier.recommended && (
-                        <span className="inline-block rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700">
-                          Recommended
-                        </span>
-                      )}
+                      <div className="h-5">
+                        {tier.recommended && (
+                          <span className="inline-block rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700">
+                            Recommended
+                          </span>
+                        )}
+                      </div>
                       <h3 className="text-lg font-semibold text-zinc-900">{tier.name}</h3>
                       <p className="text-2xl font-bold text-emerald-600">{tier.price}</p>
                       <p className="text-sm text-zinc-500">{tier.timeline}</p>
@@ -196,91 +205,82 @@ export const PricingComparison: React.FC<PricingComparisonProps> = ({
                 </tr>
               ))}
             </tbody>
-            <tfoot>
-              <tr className="bg-zinc-50">
-                <td className="px-6 py-4" />
-                {tiers.map((tier, index) => (
-                  <td key={index} className="px-6 py-4 text-center">
-                    <button className="rounded-lg bg-emerald-500 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-600">
-                      Get Started
-                    </button>
-                  </td>
-                ))}
-              </tr>
-            </tfoot>
+            {showCTA && (
+              <tfoot>
+                <tr className="bg-zinc-50">
+                  <td className="px-6 py-4" />
+                  {tiers.map((tier, index) => (
+                    <td key={index} className="px-6 py-4 text-center">
+                      <button className="rounded-lg bg-emerald-500 px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-600">
+                        Get Started
+                      </button>
+                    </td>
+                  ))}
+                </tr>
+              </tfoot>
+            )}
           </table>
         </div>
       </div>
 
-      {/* Mobile View - Horizontal Scroll */}
+      {/* Mobile View - Vertical Cards */}
       <div className="lg:hidden">
-        <div className="overflow-x-auto">
-          <div className="inline-block min-w-full">
-            <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
-              <table className="min-w-[768px]">
-                <thead>
-                  <tr className="border-b border-zinc-200">
-                    <th className="sticky left-0 z-10 bg-white px-4 py-3 text-left shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
-                      <span className="text-sm font-medium text-zinc-500">Features</span>
-                    </th>
-                    {tiers.map((tier, index) => (
-                      <th key={index} className="px-4 py-3 text-center">
-                        <div className="space-y-1">
-                          {tier.recommended && (
-                            <span className="inline-block rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">
-                              Recommended
-                            </span>
-                          )}
-                          <h3 className="text-base font-semibold text-zinc-900">{tier.name}</h3>
-                          <p className="text-lg font-bold text-emerald-600">{tier.price}</p>
-                          <p className="text-xs text-zinc-500">{tier.timeline}</p>
-                        </div>
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {features.map((feature, index) => (
-                    <tr
-                      key={index}
-                      className={`border-b border-zinc-100 ${
-                        index % 2 === 0 ? 'bg-zinc-50' : 'bg-white'
-                      }`}
+        <div className="space-y-6">
+          {tiers.map((tier, tierIndex) => (
+            <div
+              key={tierIndex}
+              className={`rounded-lg border bg-white p-6 shadow-sm ${
+                tier.recommended ? 'border-emerald-500 ring-2 ring-emerald-100' : 'border-zinc-200'
+              }`}
+            >
+              {/* Tier Header */}
+              <div className="mb-6 text-center">
+                {tier.recommended && (
+                  <span className="mb-2 inline-block rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700">
+                    Recommended
+                  </span>
+                )}
+                <h3 className="text-xl font-semibold text-zinc-900">{tier.name}</h3>
+                <p className="mt-2 text-2xl font-bold text-emerald-600">{tier.price}</p>
+                <p className="text-sm text-zinc-500">{tier.timeline}</p>
+                <p className="mt-1 text-sm text-zinc-600">{tier.description}</p>
+              </div>
+
+              {/* Features List */}
+              <div className="space-y-3">
+                {features.map((feature, featureIndex) => {
+                  const value = tierIndex === 0 ? feature.basic : tierIndex === 1 ? feature.ecommerce : feature.enterprise;
+                  return (
+                    <div
+                      key={featureIndex}
+                      className="flex items-center justify-between border-b border-zinc-100 pb-3 last:border-0"
                     >
-                      <td className="sticky left-0 z-10 bg-inherit px-4 py-3 text-sm font-medium text-zinc-900 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]">
-                        {feature.name}
-                      </td>
-                      <td className="px-4 py-3 text-center">
-                        {renderFeatureValue(feature.basic)}
-                      </td>
-                      <td className="px-4 py-3 text-center">
-                        {renderFeatureValue(feature.ecommerce)}
-                      </td>
-                      <td className="px-4 py-3 text-center">
-                        {renderFeatureValue(feature.enterprise)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-                <tfoot>
-                  <tr className="bg-zinc-50">
-                    <td className="sticky left-0 z-10 bg-zinc-50 px-4 py-3 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.1)]" />
-                    {tiers.map((tier, index) => (
-                      <td key={index} className="px-4 py-3 text-center">
-                        <button className="rounded-lg bg-emerald-500 px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-emerald-600">
-                          Get Started
-                        </button>
-                      </td>
-                    ))}
-                  </tr>
-                </tfoot>
-              </table>
+                      <span className="text-sm font-medium text-zinc-700">{feature.name}</span>
+                      <span className="text-sm">
+                        {typeof value === 'boolean' ? (
+                          value ? (
+                            <FiCheck className="h-5 w-5 text-emerald-500" />
+                          ) : (
+                            <FiX className="h-5 w-5 text-zinc-300" />
+                          )
+                        ) : (
+                          <span className="text-zinc-600">{value}</span>
+                        )}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* CTA Button */}
+              {showCTA && (
+                <button className="mt-6 w-full rounded-lg bg-emerald-500 py-3 text-sm font-medium text-white transition-colors hover:bg-emerald-600">
+                  Get Started
+                </button>
+              )}
             </div>
-          </div>
+          ))}
         </div>
-        <p className="mt-2 text-center text-xs text-zinc-500">
-          ← Scroll horizontally to compare →
-        </p>
       </div>
     </section>
   );
