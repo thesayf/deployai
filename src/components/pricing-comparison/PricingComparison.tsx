@@ -181,7 +181,7 @@ export const PricingComparison: React.FC<PricingComparisonProps> = ({
   subtitle = 'Compare service tiers and find the perfect fit for your project',
   showCTA = true,
 }) => {
-  const renderFeatureValue = (value: boolean | string, tierRecommended?: boolean) => {
+  const renderFeatureValue = (value: boolean | string) => {
     if (typeof value === 'boolean') {
       return value ? (
         <div className="flex justify-center">
@@ -189,7 +189,7 @@ export const PricingComparison: React.FC<PricingComparisonProps> = ({
             style={{
               width: '32px',
               height: '32px',
-              background: tierRecommended ? colors.electricOrange : colors.emerald,
+              background: colors.emerald,
               border: `2px solid ${colors.black}`,
               display: 'flex',
               alignItems: 'center',
@@ -394,13 +394,13 @@ export const PricingComparison: React.FC<PricingComparisonProps> = ({
                     </span>
                   </td>
                   <td className="px-6 py-5 text-center">
-                    {renderFeatureValue(feature.basic, tiers[0].recommended)}
+                    {renderFeatureValue(feature.basic)}
                   </td>
                   <td className="px-6 py-5 text-center">
-                    {renderFeatureValue(feature.ecommerce, tiers[1].recommended)}
+                    {renderFeatureValue(feature.ecommerce)}
                   </td>
                   <td className="px-6 py-5 text-center">
-                    {renderFeatureValue(feature.enterprise, tiers[2].recommended)}
+                    {renderFeatureValue(feature.enterprise)}
                   </td>
                 </tr>
               ))}
@@ -572,7 +572,7 @@ export const PricingComparison: React.FC<PricingComparisonProps> = ({
                                 style={{
                                   width: '28px',
                                   height: '28px',
-                                  background: tier.recommended ? colors.electricOrange : colors.emerald,
+                                  background: colors.emerald,
                                   border: `2px solid ${colors.black}`,
                                   display: 'flex',
                                   alignItems: 'center',
