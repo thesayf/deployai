@@ -6,16 +6,117 @@ const meta = {
   component: PricingComparison,
   parameters: {
     layout: 'padded',
+    docs: {
+      description: {
+        component: `
+# Pricing Comparison - Neubrutalist Table Component
+
+A bold, impactful pricing comparison table implementing the full neubrutalist design system with responsive layouts and interactive states.
+
+## Design System Features
+
+### Neubrutalist Aesthetics
+- **No rounded corners** - Pure geometric shapes
+- **Bold 4px black borders** on desktop, 3px on mobile
+- **Brutal shadow effects** - 8px desktop, 4-6px mobile with hover states
+- **High contrast** between elements for maximum impact
+
+### Typography System
+- **Display typography** for hero titles with text shadows
+- **Uppercase styling** for emphasis and recommended badges
+- **Font weight hierarchy** from black (900) to medium (500)
+- **Consistent letter spacing** for improved readability
+
+### Color Implementation
+- **Electric Orange** (#FF6B35) - Primary accent for recommended tiers
+- **Gradient effects** - Orange to Crimson for premium elements
+- **Semantic colors** - Emerald for positive features, Steel for disabled
+- **Black & White foundation** - Maximum contrast for accessibility
+
+### Interactive Elements
+- **Hover effects** with shadow depth changes (4px → 6px)
+- **Transform animations** on hover (-2px translation)
+- **Touch optimized** for mobile with onTouchStart/End handlers
+- **Gradient buttons** for recommended tiers
+
+## Layout Features
+
+### Desktop View
+- Full table layout with fixed headers
+- 4px brutal borders throughout
+- Alternating row backgrounds for readability
+- Prominent pricing display with gradient backgrounds
+- Dark footer with high-contrast CTAs
+
+### Mobile View
+- Stacked card layout for each tier
+- Gradient accent bars for recommended options
+- Feature list with icon/text values
+- Touch-friendly interaction zones
+- Maintains brutal aesthetics at smaller sizes
+
+## Component Variants
+
+### Default Configuration
+Standard pricing table with three tiers and comprehensive feature comparison.
+
+### Custom Pricing
+Flexible tier configuration for different business models (MVP, Scale, Enterprise).
+
+### Feature Comparison
+Supports boolean values (check/x icons) and text values for nuanced comparisons.
+
+### Without CTA
+Clean comparison view without action buttons for informational contexts.
+
+## Accessibility
+
+- **WCAG AA compliant** color contrasts
+- **Semantic HTML** table structure on desktop
+- **Keyboard navigable** buttons and interactive elements
+- **Screen reader friendly** with proper labeling
+
+## Technical Implementation
+
+- Built with React and TypeScript
+- Self-contained SVG icons (no external dependencies)
+- Inline styles for brutal shadow effects
+- Responsive breakpoint at 1024px (lg)
+- Touch event handlers for mobile interactions
+        `,
+      },
+    },
   },
   tags: ['autodocs'],
   argTypes: {
     title: {
       control: 'text',
       description: 'Main title of the pricing comparison',
+      table: {
+        defaultValue: { summary: 'Dubai Web Development Pricing Guide' },
+      },
     },
     subtitle: {
       control: 'text',
       description: 'Subtitle text',
+      table: {
+        defaultValue: { summary: 'Compare service tiers and find the perfect fit for your project' },
+      },
+    },
+    showCTA: {
+      control: 'boolean',
+      description: 'Show/hide call-to-action buttons',
+      table: {
+        defaultValue: { summary: true },
+      },
+    },
+    tiers: {
+      control: 'object',
+      description: 'Array of pricing tier objects',
+    },
+    features: {
+      control: 'object',
+      description: 'Array of feature comparison objects',
     },
   },
 } satisfies Meta<typeof PricingComparison>;
@@ -264,6 +365,96 @@ export const TechnologyStack: Story = {
         basic: 'Plugin-based',
         ecommerce: 'Built-in',
         enterprise: 'Custom',
+      },
+    ],
+  },
+};
+
+export const AIFirstDevelopment: Story = {
+  args: {
+    title: 'AI-Powered Development Tiers',
+    subtitle: 'Build faster, smarter, and more efficiently with AI assistance',
+    tiers: [
+      {
+        name: 'AI Starter',
+        price: '$2,500',
+        timeline: '2 weeks',
+        description: 'Perfect for MVPs and prototypes',
+      },
+      {
+        name: 'AI Professional',
+        price: '$7,500',
+        timeline: '30 days',
+        description: 'Production-ready AI applications',
+        recommended: true,
+      },
+      {
+        name: 'AI Enterprise',
+        price: '$25,000+',
+        timeline: '6-12 weeks',
+        description: 'Custom AI solutions at scale',
+      },
+    ],
+    features: [
+      {
+        name: 'AI Model Integration',
+        basic: 'GPT-3.5',
+        ecommerce: 'GPT-4 + Claude',
+        enterprise: 'Custom Models',
+      },
+      {
+        name: 'Development Speed',
+        basic: '10x faster',
+        ecommerce: '10x faster',
+        enterprise: '5x faster',
+      },
+      {
+        name: 'Code Generation',
+        basic: true,
+        ecommerce: true,
+        enterprise: true,
+      },
+      {
+        name: 'Custom Workflows',
+        basic: false,
+        ecommerce: true,
+        enterprise: true,
+      },
+      {
+        name: 'Vector Database',
+        basic: false,
+        ecommerce: 'Pinecone',
+        enterprise: 'Custom',
+      },
+      {
+        name: 'AI Agents',
+        basic: '1',
+        ecommerce: '5',
+        enterprise: 'Unlimited',
+      },
+      {
+        name: 'Training Data',
+        basic: false,
+        ecommerce: 'Basic',
+        enterprise: 'Full Custom',
+      },
+      {
+        name: 'API Rate Limits',
+        basic: '1K/day',
+        ecommerce: '10K/day',
+        enterprise: 'Unlimited',
+      },
+      {
+        name: 'Support',
+        basic: 'Community',
+        ecommerce: 'Priority',
+        enterprise: 'Dedicated',
+      },
+      {
+        name: 'Deployment',
+        basic: 'Shared',
+        ecommerce: 'Dedicated',
+        enterprise: 'On-premise',
       },
     ],
   },
