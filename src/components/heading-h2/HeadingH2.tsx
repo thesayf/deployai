@@ -82,7 +82,7 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
 
       case 'side-accent':
         return (
-          <div className="flex items-center gap-4">
+          <div className={`flex items-center gap-4 ${align === 'center' ? 'justify-center' : align === 'right' ? 'justify-end' : ''}`}>
             <div
               style={{
                 width: '8px',
@@ -102,21 +102,23 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
 
       case 'underline-brutal':
         return (
-          <div className="inline-block">
-            <h2 
-              className={`${baseClasses} ${className} mb-3`}
-              style={{ color: colors.charcoal }}
-            >
-              {children}
-            </h2>
-            <div
-              style={{
-                height: '8px',
-                background: currentAccent,
-                border: `3px solid ${colors.black}`,
-                boxShadow: `4px 4px 0px ${colors.black}`,
-              }}
-            />
+          <div className={align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : ''}>
+            <div className="inline-block">
+              <h2 
+                className={`${baseClasses} ${className} mb-3`}
+                style={{ color: colors.charcoal }}
+              >
+                {children}
+              </h2>
+              <div
+                style={{
+                  height: '8px',
+                  background: currentAccent,
+                  border: `3px solid ${colors.black}`,
+                  boxShadow: `4px 4px 0px ${colors.black}`,
+                }}
+              />
+            </div>
           </div>
         );
 
@@ -135,7 +137,7 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
 
       case 'bracket':
         return (
-          <div className="flex items-center gap-4">
+          <div className={`flex items-center gap-4 ${align === 'center' ? 'justify-center' : align === 'right' ? 'justify-end' : ''}`}>
             <span 
               className={sizeClasses[size]}
               style={{ 
@@ -180,78 +182,84 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
 
       case 'split-bg':
         return (
-          <div className="relative inline-block">
-            <div
-              className="absolute inset-0 -z-10"
-              style={{
-                background: currentAccent,
-                clipPath: 'polygon(0 20%, 100% 0, 100% 80%, 0 100%)',
-              }}
-            />
-            <h2 
-              className={`${baseClasses} ${className} px-8 py-4`}
-              style={{ 
-                color: colors.white,
-                mixBlendMode: 'difference',
-              }}
-            >
-              {children}
-            </h2>
+          <div className={align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : ''}>
+            <div className="relative inline-block">
+              <div
+                className="absolute inset-0 -z-10"
+                style={{
+                  background: currentAccent,
+                  clipPath: 'polygon(0 20%, 100% 0, 100% 80%, 0 100%)',
+                }}
+              />
+              <h2 
+                className={`${baseClasses} ${className} px-8 py-4`}
+                style={{ 
+                  color: colors.white,
+                  mixBlendMode: 'difference',
+                }}
+              >
+                {children}
+              </h2>
+            </div>
           </div>
         );
 
       case 'offset-border':
         return (
-          <div className="relative inline-block">
-            <div
-              className="absolute inset-0"
-              style={{
-                border: `3px solid ${currentAccent}`,
-                transform: 'translate(8px, 8px)',
-              }}
-            />
-            <h2 
-              className={`${baseClasses} ${className} relative px-6 py-3`}
-              style={{ 
-                color: colors.charcoal,
-                background: colors.white,
-                border: `3px solid ${colors.black}`,
-              }}
-            >
-              {children}
-            </h2>
+          <div className={align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : ''}>
+            <div className="relative inline-block">
+              <div
+                className="absolute inset-0"
+                style={{
+                  border: `3px solid ${currentAccent}`,
+                  transform: 'translate(8px, 8px)',
+                }}
+              />
+              <h2 
+                className={`${baseClasses} ${className} relative px-6 py-3`}
+                style={{ 
+                  color: colors.charcoal,
+                  background: colors.white,
+                  border: `3px solid ${colors.black}`,
+                }}
+              >
+                {children}
+              </h2>
+            </div>
           </div>
         );
 
       case 'stamp':
         return (
-          <div 
-            className="inline-block"
-            style={{
-              background: currentAccent,
-              border: `3px solid ${colors.black}`,
-              padding: '16px 32px',
-              transform: 'rotate(-2deg)',
-              boxShadow: `6px 6px 0px ${colors.black}`,
-            }}
-          >
-            <h2 
-              className={`${baseClasses} ${className}`}
-              style={{ 
-                color: colors.white,
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                transform: 'rotate(2deg)',
+          <div className={align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : ''}>
+            <div 
+              className="inline-block"
+              style={{
+                background: currentAccent,
+                border: `3px solid ${colors.black}`,
+                padding: '16px 32px',
+                transform: 'rotate(-2deg)',
+                boxShadow: `6px 6px 0px ${colors.black}`,
               }}
             >
-              {children}
-            </h2>
+              <h2 
+                className={`${baseClasses} ${className}`}
+                style={{ 
+                  color: colors.white,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                  transform: 'rotate(2deg)',
+                }}
+              >
+                {children}
+              </h2>
+            </div>
           </div>
         );
 
       case 'slash':
         return (
-          <div className="flex items-center gap-4">
+          <div className={`flex items-center gap-4 ${align === 'center' ? 'justify-center' : align === 'right' ? 'justify-end' : ''}`}>
             <div
               style={{
                 width: '60px',

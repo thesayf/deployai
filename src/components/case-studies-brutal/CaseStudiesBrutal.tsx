@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CaseStudyModal } from '../case-studies/CaseStudyModal';
 import { ChatbotMockup } from '../case-studies/ChatbotMockup';
+import { HeadingH2 } from '@/components/heading-h2';
 
 // Design System Colors
 const colors = {
@@ -819,20 +820,18 @@ export const CaseStudiesBrutal: React.FC<CaseStudiesBrutalProps> = ({
   return (
     <section className={`w-full ${className}`}>
       {/* Header */}
-      <div className="text-center mb-12">
-        <h2
-          className="text-4xl md:text-5xl lg:text-6xl font-black uppercase mb-4"
-          style={{
-            color: colors.black,
-            textShadow: `4px 4px 0px ${currentAccent}`,
-          }}
+      <div className="text-center mb-8">
+        <HeadingH2
+          variant="box-shadow"
+          accentColor={accentColor}
+          size="xl"
+          align="center"
+          animate={true}
+          className="mb-6"
         >
           {title}
-        </h2>
-        <p 
-          className="text-lg md:text-xl max-w-3xl mx-auto"
-          style={{ color: colors.charcoal }}
-        >
+        </HeadingH2>
+        <p className="mx-auto max-w-3xl text-xl leading-relaxed text-zinc-700 md:text-2xl mb-8">
           {subtitle}
         </p>
       </div>

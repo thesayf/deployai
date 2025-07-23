@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { HeadingH2 } from '@/components/heading-h2';
 
 // Design System Colors
 const colors = {
@@ -563,30 +564,21 @@ export const TimelineProcess: React.FC<TimelineProcessProps> = ({
     <section className={`w-full ${className}`}>
       {/* Header */}
       {(title || subtitle) && (
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           {title && (
-            <h2
-              className={`${typography.displayM} uppercase`}
-              style={{
-                color: darkMode ? colors.white : colors.black,
-                textShadow: darkMode 
-                  ? `3px 3px 0px ${colors.black}, 4px 4px 0px ${colors.electricOrange}` 
-                  : `3px 3px 0px ${colors.electricOrange}`,
-                marginBottom: '16px',
-              }}
+            <HeadingH2
+              variant="default"
+              accentColor="blue"
+              size="xl"
+              align="center"
+              animate={true}
+              className="mb-6"
             >
               {title}
-            </h2>
+            </HeadingH2>
           )}
           {subtitle && (
-            <p
-              className={typography.bodyL}
-              style={{
-                color: darkMode ? colors.steel : colors.charcoal,
-                maxWidth: '48rem',
-                margin: '0 auto',
-              }}
-            >
+            <p className="mx-auto max-w-3xl text-xl leading-relaxed text-zinc-700 md:text-2xl mb-8">
               {subtitle}
             </p>
           )}

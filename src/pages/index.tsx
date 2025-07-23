@@ -6,9 +6,8 @@ import { ProblemAgitation } from "@/components/problem-agitation/ProblemAgitatio
 import { TimelineProcess } from "@/components/timeline-process/TimelineProcess";
 import { CaseStudiesBrutal } from "@/components/case-studies-brutal/CaseStudiesBrutal";
 import { MVPPricingBrutal } from "@/components/mvp-pricing-brutal/MVPPricingBrutal";
-import { TechStackShowcase } from "@/components/tech-stack-showcase/TechStackShowcase";
-import { FAQ } from "@/components/faq/FAQ";
-import { FinalCTA } from "@/components/final-cta/FinalCTA";
+import { PeopleAlsoAsk } from "@/components/people-also-ask/PeopleAlsoAsk";
+import { CTABanner } from "@/components/cta-banner/CTABanner";
 import { Footer } from "@/components/footer/Footer";
 import { LogoTicker } from "@/components/logo-ticker/LogoTicker";
 import { StaggerTestimonials } from "@/components/stagger-testimonials/StaggerTestimonials";
@@ -176,19 +175,54 @@ const HomePage: React.FC = () => {
           />
         </SectionWrapper>
 
-        {/* Tech Stack */}
-        <SectionWrapper variant="default" spacing="large">
-          <TechStackShowcase />
-        </SectionWrapper>
-
-        {/* FAQ Section */}
-        <SectionWrapper variant="default" spacing="large">
-          <FAQ variant="mvp" />
+        {/* People Also Ask Section */}
+        <SectionWrapper variant="skyBlue" spacing="large">
+          <PeopleAlsoAsk 
+            title="Frequently Asked Questions"
+            subtitle="Everything you need to know about building your MVP with us"
+            accentColor="blue"
+            variant="default"
+            items={[
+              {
+                question: "What exactly can you build in 4 weeks?",
+                answer: "We can build a full-featured AI app with user authentication, payment processing, admin dashboard, and core functionality. This includes database setup, API development, AI integration (OpenAI/Claude), and deployment. The scope is defined clearly in week 1 to ensure we deliver exactly what you need."
+              },
+              {
+                question: "What if my project needs more than 4 weeks?",
+                answer: "We scope projects specifically for 4-week delivery during our initial consultation. If additional features are needed, we can discuss a follow-up project after the initial MVP is delivered. Our goal is to get you to market quickly with a viable product."
+              },
+              {
+                question: "Do I own the code?",
+                answer: "Yes, you own 100% of the code, documentation, and intellectual property. We provide complete source code access and documentation. There are no licensing fees or vendor lock-in - you can take the code anywhere."
+              },
+              {
+                question: "What happens after the MVP launches?",
+                answer: "We include 30 days of post-launch support for bug fixes and minor adjustments. After that, you can maintain the code in-house, hire other developers, or work with us on ongoing development - you have complete flexibility."
+              },
+              {
+                question: "Can you integrate with my existing systems?",
+                answer: "Yes, we can integrate with existing APIs, databases, and third-party services. We'll assess integration requirements during the planning phase and include them in the 4-week timeline if they're essential for your MVP."
+              },
+              {
+                question: "What if I need changes during development?",
+                answer: "Minor changes are included in our process. For major scope changes, we'll discuss options including extending the timeline or delivering the original scope first, then adding changes in a follow-up project."
+              }
+            ]}
+          />
         </SectionWrapper>
 
         {/* Final CTA */}
         <SectionWrapper variant="default" spacing="large">
-          <FinalCTA />
+          <CTABanner 
+            variant="default"
+            title="Get Your Solution Built in 30 Days"
+            subtitle="Book a free strategy call and see how fast you can go from idea to launch. No obligation, no credit card required."
+            buttonText="Book Your Free Call"
+            buttonLink="https://calendly.com/hello-deployai/30min"
+            accentColor="red"
+            alignment="center"
+            showIcon={true}
+          />
         </SectionWrapper>
 
         {/* Footer */}

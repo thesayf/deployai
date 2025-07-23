@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../shared/Button";
 import Image from "next/image";
+import { HeadingH2 } from "@/components/heading-h2";
 
 export const FinalCTA = () => {
   return (
@@ -23,10 +24,17 @@ export const FinalCTA = () => {
             />
           </a>
         </div>
-        <h2 className="mb-4 text-center text-4xl font-black md:text-5xl">
+        <HeadingH2
+          variant="stamp"
+          accentColor="red"
+          size="xl"
+          align="center"
+          animate={true}
+          className="mb-6"
+        >
           Get Your Solution Built in 30 Days
-        </h2>
-        <p className="mx-auto mb-8 text-center text-lg leading-relaxed text-zinc-700 md:text-xl md:leading-relaxed">
+        </HeadingH2>
+        <p className="mx-auto mb-8 max-w-3xl text-center text-xl leading-relaxed text-zinc-700 md:text-2xl">
           Book a free strategy call and see how fast you can go from idea to
           launch. No obligation, no credit card required.
         </p>
