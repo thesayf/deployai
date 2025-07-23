@@ -1,0 +1,1 @@
+export { TableOfContentsV2 } from './TableOfContentsV2';
