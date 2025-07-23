@@ -35,9 +35,9 @@ export const SectionWrapper: React.FC<SectionWrapperProps> = ({
   // Spacing variants
   const spacingClasses = {
     none: '',
-    small: 'py-8 px-4 sm:px-6 lg:px-8',
-    medium: 'py-16 px-4 sm:px-6 lg:px-8',
-    large: 'py-24 px-4 sm:px-6 lg:px-8',
+    small: 'py-4 px-4 sm:px-6 lg:px-8',
+    medium: 'py-8 px-4 sm:px-6 lg:px-8',
+    large: 'py-12 px-4 sm:px-6 lg:px-8',
   };
 
   // Width variants
