@@ -166,6 +166,10 @@ export const Slash: Story = {
 
 // All Variants Showcase
 export const AllVariants: Story = {
+  args: {
+    children: "All Heading Variants Showcase",
+    variant: "default"
+  },
   render: () => (
     <div style={{ 
       display: 'flex', 
@@ -250,6 +254,10 @@ export const AllVariants: Story = {
 
 // Size Comparison
 export const SizeComparison: Story = {
+  args: {
+    children: "Size Comparison Demo",
+    variant: "default"
+  },
   render: () => (
     <div style={{ 
       display: 'flex', 
@@ -276,6 +284,10 @@ export const SizeComparison: Story = {
 
 // Color Variations
 export const ColorVariations: Story = {
+  args: {
+    children: "Color Variations Demo",
+    variant: "default"
+  },
   render: () => (
     <div style={{ 
       display: 'flex', 
@@ -302,7 +314,10 @@ export const ColorVariations: Story = {
 
 // Context Examples
 export const ContextExamples: Story = {
-  name: 'In Context',
+  args: {
+    children: "Context Examples Demo",
+    variant: "default"
+  },
   render: () => (
     <div style={{ 
       padding: '48px',
@@ -361,7 +376,10 @@ export const ContextExamples: Story = {
 
 // Recommendations Guide
 export const RecommendationsGuide: Story = {
-  name: 'Usage Recommendations',
+  args: {
+    children: "Usage Recommendations",
+    variant: "default"
+  },
   render: () => (
     <div style={{ 
       padding: '48px',

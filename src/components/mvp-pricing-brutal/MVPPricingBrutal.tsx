@@ -177,10 +177,10 @@ export const MVPPricingBrutal: React.FC<MVPPricingBrutalProps> = ({
   };
 
   return (
-    <section className="w-full py-16 px-4 sm:px-6">
+    <section className="w-full py-8 px-4 sm:px-6">
       {/* Header */}
       {(title || subtitle) && (
-        <div className="text-center mb-12">
+        <div className="text-center mb-6">
           {title && (
             <h2
               className={`${typography.displayM} uppercase`}
@@ -210,7 +210,7 @@ export const MVPPricingBrutal: React.FC<MVPPricingBrutalProps> = ({
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto">
-        <div className={`grid gap-8 ${variant === 'minimal' ? 'grid-cols-1' : 'lg:grid-cols-2'}`}>
+        <div className={`grid gap-6 ${variant === 'minimal' ? 'grid-cols-1' : 'lg:grid-cols-2'}`}>
           {/* Main Pricing Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -241,7 +241,7 @@ export const MVPPricingBrutal: React.FC<MVPPricingBrutalProps> = ({
                 background: colors.white,
                 border: `4px solid ${colors.black}`,
                 boxShadow: `8px 8px 0px ${colors.black}`,
-                padding: '48px 32px',
+                padding: '32px 24px',
                 transition: 'all 0.15s ease',
                 transform: 'translate(0, 0)',
               }}
@@ -257,7 +257,7 @@ export const MVPPricingBrutal: React.FC<MVPPricingBrutalProps> = ({
               }}
             >
               {/* Pricing Header */}
-              <div className="text-center mb-8">
+              <div className="text-center mb-6">
                 <h3
                   className={`${typography.headingL} uppercase mb-3`}
                   style={{ color: colors.black }}
@@ -276,7 +276,7 @@ export const MVPPricingBrutal: React.FC<MVPPricingBrutalProps> = ({
                   style={{
                     background: `linear-gradient(135deg, ${currentAccent}, ${colors.crimsonRed})`,
                     color: colors.white,
-                    padding: '24px',
+                    padding: '16px',
                     border: `3px solid ${colors.black}`,
                     boxShadow: `4px 4px 0px ${colors.black}`,
                     marginBottom: '8px',
@@ -293,7 +293,7 @@ export const MVPPricingBrutal: React.FC<MVPPricingBrutalProps> = ({
               </div>
 
               {/* Features List */}
-              <div className="space-y-3 mb-8">
+              <div className="space-y-2 mb-6">
                 {features.map((feature, index) => (
                   <motion.div
                     key={index}
@@ -369,7 +369,7 @@ export const MVPPricingBrutal: React.FC<MVPPricingBrutalProps> = ({
           {variant !== 'minimal' && (
             <div className="space-y-6">
               <h3
-                className={`${typography.headingL} uppercase text-center mb-6`}
+                className={`${typography.headingL} uppercase text-center mb-4`}
                 style={{ color: colors.black }}
               >
                 Simple Payment Terms
@@ -387,7 +387,7 @@ export const MVPPricingBrutal: React.FC<MVPPricingBrutalProps> = ({
                     style={{
                       background: colors.white,
                       border: `3px solid ${colors.black}`,
-                      padding: '20px',
+                      padding: '16px',
                       boxShadow: `4px 4px 0px ${colors.black}`,
                       transition: 'all 0.15s ease',
                       transform: 'translate(0, 0)',

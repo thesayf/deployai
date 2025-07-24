@@ -334,7 +334,9 @@ export const CaseStudiesOptimized: React.FC<CaseStudiesOptimizedProps> = ({
               <div className="space-y-2 mb-6">
                 {caseStudy.results.slice(0, 3).map((result, idx) => (
                   <div key={idx} className="flex items-start gap-2">
-                    <CheckIcon className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: colors.emerald }} />
+                    <span style={{ color: colors.emerald }}>
+                      <CheckIcon className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    </span>
                     <span className="text-sm" style={{ color: colors.charcoal }}>{result}</span>
                   </div>
                 ))}
@@ -1035,15 +1037,21 @@ export const CaseStudiesOptimized: React.FC<CaseStudiesOptimizedProps> = ({
         <div className="mt-16 text-center">
           <div className="inline-flex items-center gap-8">
             <div className="flex items-center gap-2">
-              <ClockIcon className="w-5 h-5" style={{ color: currentAccent }} />
+              <span style={{ color: currentAccent }}>
+                <ClockIcon className="w-5 h-5" />
+              </span>
               <span className="font-bold">Average 4-week delivery</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckIcon className="w-5 h-5" style={{ color: colors.emerald }} />
+              <span style={{ color: colors.emerald }}>
+                <CheckIcon className="w-5 h-5" />
+              </span>
               <span className="font-bold">100% Success Rate</span>
             </div>
             <div className="flex items-center gap-2">
-              <ChartIcon className="w-5 h-5" style={{ color: currentAccent }} />
+              <span style={{ color: currentAccent }}>
+                <ChartIcon className="w-5 h-5" />
+              </span>
               <span className="font-bold">Measurable ROI</span>
             </div>
           </div>

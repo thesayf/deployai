@@ -219,7 +219,7 @@ const HomePage: React.FC = () => {
             subtitle="Book a free strategy call and see how fast you can go from idea to launch. No obligation, no credit card required."
             buttonText="Book Your Free Call"
             buttonLink="https://calendly.com/hello-deployai/30min"
-            accentColor="red"
+            accentColor="orange"
             alignment="center"
             showIcon={true}
           />
