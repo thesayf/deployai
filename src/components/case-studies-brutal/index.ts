@@ -1,0 +1,1 @@
+export { CaseStudiesBrutal } from './CaseStudiesBrutal';

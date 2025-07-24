@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
+import { HeadingH2 } from "@/components/heading-h2";
 
 const CARD_SIZE_LG = 365;
 const CARD_SIZE_SM = 290;
@@ -91,11 +92,16 @@ export const StaggerTestimonials = () => {
       <div className="relative z-10 mx-auto max-w-7xl px-4">
         {/* Header */}
         <div className="mb-8 text-center">
-          <h2 className="mb-6 text-5xl font-black md:text-6xl">
-            Real Stories from
-            <br />
-            <span className="text-orange-600">Happy Clients</span>
-          </h2>
+          <HeadingH2
+            variant="bracket"
+            accentColor="orange"
+            size="xl"
+            align="center"
+            animate={true}
+            className="mb-6"
+          >
+            Real Stories from Happy Clients
+          </HeadingH2>
           <p className="mx-auto max-w-3xl text-xl leading-relaxed text-zinc-700 md:text-2xl">
             Don't just take our word for it. Here's what our clients say about
             their custom software experience.

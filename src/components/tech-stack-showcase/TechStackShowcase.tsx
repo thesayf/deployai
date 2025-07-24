@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Code, Database, Zap, Shield, Globe, Smartphone } from "lucide-react";
+import { HeadingH2 } from "@/components/heading-h2";
 
 interface Tech {
   name: string;
@@ -129,11 +130,18 @@ export const TechStackShowcase: React.FC = () => {
   return (
     <section className="bg-gradient-to-b from-gray-900 to-black py-20">
       <div className="container mx-auto px-6">
-        <div className="mb-16 text-center">
-          <h2 className="mb-4 bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
-            Modern Tech Stack
-          </h2>
-          <p className="mx-auto max-w-3xl text-xl text-gray-300">
+        <div className="mb-8 text-center">
+          <HeadingH2
+            variant="slash"
+            accentColor="orange"
+            size="xl"
+            align="center"
+            animate={true}
+            className="mb-6"
+          >
+            Modern Tech Stack Included
+          </HeadingH2>
+          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-gray-300 md:text-2xl">
             We use cutting-edge technologies to build fast, scalable, and secure
             MVPs that can grow with your business.
           </p>

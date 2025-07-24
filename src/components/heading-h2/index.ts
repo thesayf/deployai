@@ -1,0 +1,1 @@
+export { HeadingH2 } from './HeadingH2';

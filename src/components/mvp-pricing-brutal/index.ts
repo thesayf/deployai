@@ -1,0 +1,1 @@
+export { MVPPricingBrutal } from './MVPPricingBrutal';

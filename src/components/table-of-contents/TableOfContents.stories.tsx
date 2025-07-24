@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import { TableOfContents } from './TableOfContents';
 
 const meta = {
@@ -12,14 +12,29 @@ const meta = {
     title: {
       control: 'text',
       description: 'Title shown above the table of contents',
+      defaultValue: 'TABLE OF CONTENTS',
     },
     showProgress: {
       control: 'boolean',
       description: 'Show reading progress bar',
+      defaultValue: true,
     },
-    mobileStatic: {
+    variant: {
+      control: 'select',
+      options: ['sidebar', 'mobile', 'minimal'],
+      description: 'Display variant of the table of contents',
+      defaultValue: 'sidebar',
+    },
+    accentColor: {
+      control: 'select',
+      options: ['orange', 'blue', 'magenta', 'red'],
+      description: 'Accent color for active states',
+      defaultValue: 'orange',
+    },
+    fullWidthLinks: {
       control: 'boolean',
-      description: 'Show as static content on mobile vs toggle button',
+      description: 'Make section links full width',
+      defaultValue: false,
     },
   },
 } satisfies Meta<typeof TableOfContents>;
@@ -29,163 +44,300 @@ type Story = StoryObj<typeof meta>;
 
 // Sample sections for stories
 const blogSections = [
-  { id: 'introduction', title: "Dubai's 2025 Web Development Landscape" },
-  { id: 'cost-in-dubai', title: 'How Much Does Website Development Cost in Dubai?' },
-  { id: 'dubai-for-developers', title: 'Is Dubai Good for Web Developers?' },
-  { id: 'best-company', title: 'Which Company is Best for Web Development?' },
-  { id: 'how-to-choose', title: 'How to Choose the Right Web Development Company in Dubai?' },
-  { id: 'development-models', title: '4 Web Development Models in Dubai' },
-  { id: 'top-10-companies', title: 'Top 10 Web Development Companies in Dubai' },
-  { id: 'pricing-guide', title: 'Dubai Web Development Pricing Guide' },
-  { id: 'technology-stack', title: 'What Technologies Do Dubai Agencies Use?' },
-  { id: 'trends-2025', title: "What's Changing in 2025?" },
-  { id: 'decision-guide', title: 'Decision Guide – Find Your Best Fit' },
-  { id: 'faqs', title: 'FAQs' },
-  { id: 'conclusion', title: 'Conclusion & Action Plan' }
-];
-
-const nestedSections = [
-  { id: 'intro', title: 'Introduction', level: 0 },
-  { id: 'overview', title: 'Overview', level: 1 },
-  { id: 'background', title: 'Background', level: 1 },
-  { id: 'features', title: 'Key Features', level: 0 },
-  { id: 'feature-1', title: 'Feature One', level: 1 },
-  { id: 'feature-2', title: 'Feature Two', level: 1 },
-  { id: 'pricing', title: 'Pricing', level: 0 },
+  { id: 'introduction', title: 'Introduction to Neubrutalist Design', level: 0 },
+  { id: 'what-is-neubrutalism', title: 'What is Neubrutalism?', level: 0 },
+  { id: 'core-principles', title: 'Core Design Principles', level: 1 },
+  { id: 'color-theory', title: 'Bold Color Theory', level: 1 },
+  { id: 'implementation', title: 'Implementation in Web Design', level: 0 },
+  { id: 'typography', title: 'Typography Guidelines', level: 1 },
+  { id: 'borders-shadows', title: 'Borders and Shadows', level: 1 },
+  { id: 'interactive-elements', title: 'Interactive Elements', level: 1 },
+  { id: 'case-studies', title: 'Case Studies', level: 0 },
+  { id: 'spotify-wrapped', title: 'Spotify Wrapped 2023', level: 1 },
+  { id: 'gumroad-redesign', title: 'Gumroad Redesign', level: 1 },
+  { id: 'best-practices', title: 'Best Practices', level: 0 },
+  { id: 'accessibility', title: 'Accessibility Considerations', level: 1 },
+  { id: 'performance', title: 'Performance Impact', level: 1 },
   { id: 'conclusion', title: 'Conclusion', level: 0 },
 ];
 
-// Create a wrapper with content to demonstrate scroll behavior
-const ScrollableWrapper = ({ children, isMobile = false }: { children: React.ReactNode; isMobile?: boolean }) => (
-  <div className="min-h-screen bg-gray-50">
-    {/* Hero section for mobile */}
-    {isMobile && (
-      <div className="bg-white p-8 shadow-sm">
-        <h1 className="text-3xl font-bold text-zinc-900">Dubai Web Development Companies Guide</h1>
-        <p className="mt-2 text-zinc-600">Everything you need to know about web development in Dubai</p>
+const shortSections = [
+  { id: 'intro', title: 'Getting Started', level: 0 },
+  { id: 'setup', title: 'Installation & Setup', level: 0 },
+  { id: 'usage', title: 'Basic Usage', level: 0 },
+  { id: 'advanced', title: 'Advanced Features', level: 0 },
+];
+
+// Neubrutalist wrapper with content
+const NeubrutalistWrapper = ({ 
+  children, 
+  variant = 'sidebar' 
+}: { 
+  children: React.ReactNode; 
+  variant?: 'sidebar' | 'mobile' | 'minimal';
+}) => (
+  <div style={{ minHeight: '100vh', background: '#F5F5F5' }}>
+    {/* Header */}
+    <div style={{
+      background: '#FFFFFF',
+      borderBottom: '3px solid #000000',
+      padding: '32px',
+      marginBottom: '48px',
+    }}>
+      <h1 style={{
+        fontSize: '48px',
+        fontWeight: '900',
+        textTransform: 'uppercase',
+        color: '#000000',
+        textShadow: '4px 4px 0px #FF6B35',
+        marginBottom: '16px',
+      }}>
+        The Ultimate Guide to Neubrutalist Design
+      </h1>
+      <p style={{
+        fontSize: '20px',
+        color: '#424242',
+        maxWidth: '800px',
+      }}>
+        Discover how bold borders, harsh shadows, and vibrant colors are reshaping modern web design.
+      </p>
+    </div>
+    
+    {/* Layout Container */}
+    <div style={{
+      maxWidth: variant === 'sidebar' ? '1400px' : '800px',
+      margin: '0 auto',
+      padding: '0 32px',
+      display: variant === 'sidebar' ? 'grid' : 'block',
+      gridTemplateColumns: variant === 'sidebar' ? '300px 1fr' : undefined,
+      gap: variant === 'sidebar' ? '48px' : undefined,
+    }}>
+      {/* TOC */}
+      <div style={{ 
+        position: variant === 'sidebar' ? 'relative' : undefined,
+        marginBottom: variant === 'minimal' ? '32px' : undefined,
+      }}>
+        {children}
       </div>
-    )}
-    
-    {children}
-    
-    {/* Dummy content with matching IDs */}
-    <article className={`mx-auto max-w-4xl px-4 py-12 ${!isMobile ? 'lg:ml-72' : ''}`}>
-      {blogSections.map((section) => (
-        <section key={section.id} id={section.id} className="mb-16">
-          <h2 className="mb-4 text-3xl font-bold">{section.title}</h2>
-          <div className="space-y-4">
-            <p className="text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <p className="text-gray-600">
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
-              fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-              culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-            <p className="text-gray-600">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium 
-              doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore 
-              veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-            </p>
-          </div>
-        </section>
-      ))}
-    </article>
+      
+      {/* Article Content */}
+      <article style={{
+        background: '#FFFFFF',
+        border: '3px solid #000000',
+        boxShadow: '6px 6px 0px #000000',
+        padding: '48px',
+        marginTop: variant === 'sidebar' ? '0' : '32px',
+      }}>
+        {blogSections.map((section, index) => (
+          <section key={section.id} id={section.id} style={{ marginBottom: '48px' }}>
+            <h2 style={{
+              fontSize: section.level === 0 ? '32px' : '24px',
+              fontWeight: 'bold',
+              marginBottom: '16px',
+              marginLeft: section.level === 1 ? '24px' : '0',
+              textTransform: 'uppercase',
+            }}>
+              {section.title}
+            </h2>
+            <div style={{ marginLeft: section.level === 1 ? '24px' : '0' }}>
+              <p style={{ color: '#424242', marginBottom: '16px', lineHeight: '1.6' }}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neubrutalism represents a 
+                return to raw, honest design principles that prioritize function and visual impact 
+                over subtlety and refinement.
+              </p>
+              <p style={{ color: '#424242', marginBottom: '16px', lineHeight: '1.6' }}>
+                Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. This design 
+                philosophy embraces bold borders, harsh shadows, and vibrant colors to create 
+                interfaces that demand attention.
+              </p>
+              {index % 3 === 0 && (
+                <div style={{
+                  background: '#FFF5F0',
+                  border: '2px solid #000000',
+                  boxShadow: '4px 4px 0px #000000',
+                  padding: '24px',
+                  marginTop: '24px',
+                  marginBottom: '24px',
+                }}>
+                  <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>
+                    💡 Pro Tip:
+                  </p>
+                  <p style={{ color: '#424242' }}>
+                    When implementing neubrutalist design, always ensure sufficient contrast 
+                    for accessibility while maintaining the bold aesthetic.
+                  </p>
+                </div>
+              )}
+            </div>
+          </section>
+        ))}
+      </article>
+    </div>
   </div>
 );
 
-export const Default: Story = {
+// Stories
+export const Sidebar: Story = {
   args: {
     sections: blogSections,
-    title: 'Table of Contents',
+    title: 'TABLE OF CONTENTS',
     showProgress: true,
-    mobileStatic: true,
+    variant: 'sidebar',
+    accentColor: 'orange',
   },
   render: (args) => (
-    <ScrollableWrapper>
+    <NeubrutalistWrapper variant="sidebar">
       <TableOfContents {...args} />
-    </ScrollableWrapper>
+    </NeubrutalistWrapper>
   ),
 };
 
-export const CustomTitle: Story = {
+export const Mobile: Story = {
   args: {
     sections: blogSections,
-    title: 'In This Guide',
+    title: 'TABLE OF CONTENTS',
     showProgress: true,
-    mobileStatic: true,
+    variant: 'mobile',
+    accentColor: 'orange',
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile1',
+    },
   },
   render: (args) => (
-    <ScrollableWrapper>
+    <NeubrutalistWrapper variant="mobile">
       <TableOfContents {...args} />
-    </ScrollableWrapper>
+    </NeubrutalistWrapper>
   ),
 };
 
-export const NoProgress: Story = {
+export const Minimal: Story = {
   args: {
-    sections: blogSections,
-    title: 'Quick Navigation',
+    sections: shortSections,
+    title: 'QUICK NAVIGATION',
     showProgress: false,
-    mobileStatic: true,
+    variant: 'minimal',
+    accentColor: 'blue',
   },
   render: (args) => (
-    <ScrollableWrapper>
-      <TableOfContents {...args} />
-    </ScrollableWrapper>
+    <NeubrutalistWrapper variant="minimal">
+      <div style={{
+        background: '#FFFFFF',
+        border: '3px solid #000000',
+        boxShadow: '4px 4px 0px #000000',
+        padding: '32px',
+      }}>
+        <TableOfContents {...args} />
+      </div>
+    </NeubrutalistWrapper>
   ),
 };
 
-export const WithNestedLevels: Story = {
-  args: {
-    sections: nestedSections,
-    title: 'Contents',
-    showProgress: true,
-    mobileStatic: true,
-  },
-  render: (args) => (
-    <ScrollableWrapper>
-      <TableOfContents {...args} />
-    </ScrollableWrapper>
-  ),
-};
-
-export const MobileToggle: Story = {
+export const WithoutProgress: Story = {
   args: {
     sections: blogSections,
-    title: 'Table of Contents',
-    showProgress: true,
-    mobileStatic: false, // This enables toggle button behavior
-  },
-  parameters: {
-    viewport: {
-      defaultViewport: 'mobile1',
-    },
+    title: 'NAVIGATION',
+    showProgress: false,
+    variant: 'sidebar',
+    accentColor: 'magenta',
   },
   render: (args) => (
-    <ScrollableWrapper isMobile={true}>
+    <NeubrutalistWrapper variant="sidebar">
       <TableOfContents {...args} />
-    </ScrollableWrapper>
+    </NeubrutalistWrapper>
   ),
 };
 
-export const MobileStatic: Story = {
+export const BlueAccent: Story = {
   args: {
     sections: blogSections,
-    title: 'Table of Contents',
+    title: 'TABLE OF CONTENTS',
     showProgress: true,
-    mobileStatic: true,
-  },
-  parameters: {
-    viewport: {
-      defaultViewport: 'mobile1',
-    },
+    variant: 'sidebar',
+    accentColor: 'blue',
   },
   render: (args) => (
-    <ScrollableWrapper isMobile={true}>
+    <NeubrutalistWrapper variant="sidebar">
       <TableOfContents {...args} />
-    </ScrollableWrapper>
+    </NeubrutalistWrapper>
+  ),
+};
+
+export const RedAccent: Story = {
+  args: {
+    sections: blogSections,
+    title: 'ARTICLE SECTIONS',
+    showProgress: true,
+    variant: 'sidebar',
+    accentColor: 'red',
+  },
+  render: (args) => (
+    <NeubrutalistWrapper variant="sidebar">
+      <TableOfContents {...args} />
+    </NeubrutalistWrapper>
+  ),
+};
+
+export const LongContent: Story = {
+  args: {
+    sections: [
+      ...blogSections,
+      { id: 'resources', title: 'Additional Resources', level: 0 },
+      { id: 'tools', title: 'Design Tools', level: 1 },
+      { id: 'frameworks', title: 'CSS Frameworks', level: 1 },
+      { id: 'inspiration', title: 'Inspiration Sites', level: 1 },
+      { id: 'community', title: 'Community & Support', level: 0 },
+      { id: 'forums', title: 'Discussion Forums', level: 1 },
+      { id: 'social', title: 'Social Media Groups', level: 1 },
+      { id: 'events', title: 'Events & Meetups', level: 1 },
+    ],
+    title: 'COMPLETE GUIDE',
+    showProgress: true,
+    variant: 'sidebar',
+    accentColor: 'orange',
+  },
+  render: (args) => (
+    <NeubrutalistWrapper variant="sidebar">
+      <TableOfContents {...args} />
+    </NeubrutalistWrapper>
+  ),
+};
+
+export const FullWidthLinks: Story = {
+  args: {
+    sections: blogSections,
+    title: 'TABLE OF CONTENTS',
+    showProgress: true,
+    variant: 'sidebar',
+    accentColor: 'orange',
+    fullWidthLinks: true,
+  },
+  render: (args) => (
+    <NeubrutalistWrapper variant="sidebar">
+      <TableOfContents {...args} />
+    </NeubrutalistWrapper>
+  ),
+};
+
+export const LinksComparison: Story = {
+  args: {
+    sections: blogSections,
+    title: 'TABLE OF CONTENTS',
+    showProgress: true,
+    variant: 'sidebar',
+    accentColor: 'orange',
+  },
+  render: (args) => (
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', padding: '48px', background: '#F5F5F5' }}>
+      <div>
+        <h3 style={{ marginBottom: '24px', fontSize: '20px', fontWeight: 'bold' }}>Regular Links (Left-Aligned)</h3>
+        <TableOfContents {...args} fullWidthLinks={false} />
+      </div>
+      <div>
+        <h3 style={{ marginBottom: '24px', fontSize: '20px', fontWeight: 'bold' }}>Full-Width Links</h3>
+        <TableOfContents {...args} fullWidthLinks={true} />
+      </div>
+    </div>
   ),
 };
