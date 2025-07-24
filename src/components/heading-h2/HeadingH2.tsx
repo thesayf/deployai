@@ -1,42 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-// Design System Colors
-const colors = {
-  // Foundation
-  black: '#000000',
-  white: '#FFFFFF',
-  
-  // Primary
-  orange: '#FF6B35',
-  blue: '#457B9D',
-  magenta: '#D62598',
-  red: '#DC2626',
-  
-  // Neutrals
-  charcoal: '#212121',
-  graphite: '#424242',
-  steel: '#757575',
-  concrete: '#F5F5F5',
-  
-  // Supporting
-  amber: '#F59E0B',
-  emerald: '#10B981',
-  
-  // Gradients
-  gradients: {
-    fire: 'linear-gradient(135deg, #FF6B35 0%, #DC2626 100%)',
-    ocean: 'linear-gradient(135deg, #457B9D 0%, #1E3A8A 100%)',
-    sunset: 'linear-gradient(135deg, #F59E0B 0%, #DC2626 100%)',
-    electric: 'linear-gradient(135deg, #D62598 0%, #457B9D 100%)',
-  }
-};
+import { colors } from '@/constants/colors';
+import { typeScale } from '@/constants/typography';
 
 interface HeadingH2Props {
   children: React.ReactNode;
   variant?: 'default' | 'side-accent' | 'underline-brutal' | 'box-shadow' | 'bracket' | 'gradient-text' | 'split-bg' | 'offset-border' | 'stamp' | 'slash';
-  accentColor?: 'orange' | 'blue' | 'magenta' | 'red';
-  size?: 'small' | 'medium' | 'large' | 'xl';
+  accent?: 'orange' | 'blue' | 'red' | 'magenta' | 'yellow' | 'cyan';
   align?: 'left' | 'center' | 'right';
   animate?: boolean;
   className?: string;
@@ -45,28 +15,29 @@ interface HeadingH2Props {
 export const HeadingH2: React.FC<HeadingH2Props> = ({
   children,
   variant = 'default',
-  accentColor = 'orange',
-  size = 'medium',
+  accent = 'orange',
   align = 'left',
   animate = true,
   className = '',
 }) => {
-  const currentAccent = colors[accentColor];
-  
-  const sizeClasses = {
-    small: 'text-2xl md:text-3xl',
-    medium: 'text-3xl md:text-4xl',
-    large: 'text-4xl md:text-5xl',
-    xl: 'text-5xl md:text-6xl',
+  const accentColors = {
+    orange: colors.electricOrange,
+    blue: colors.cyberBlue,
+    red: colors.crimsonRed,
+    magenta: colors.deepMagenta,
+    yellow: colors.neonYellow,
+    cyan: colors.radiantCyan,
   };
 
-  const alignClasses = {
+  const currentAccent = accentColors[accent];
+
+  const alignMap = {
     left: 'text-left',
     center: 'text-center',
     right: 'text-right',
   };
 
-  const baseClasses = `${sizeClasses[size]} ${alignClasses[align]} font-black leading-tight`;
+  const baseClasses = `${typeScale.displayL.className} ${alignMap[align]} ${className}`;
 
   const renderHeading = () => {
     switch (variant) {
@@ -74,7 +45,12 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
         return (
           <h2 
             className={`${baseClasses} ${className}`}
-            style={{ color: colors.charcoal }}
+            style={{ 
+              color: colors.obsidian,
+              fontWeight: typeScale.displayL.fontWeight,
+              lineHeight: typeScale.displayL.lineHeight,
+              letterSpacing: typeScale.displayL.letterSpacing,
+            }}
           >
             {children}
           </h2>
@@ -93,7 +69,12 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
             />
             <h2 
               className={`${baseClasses} ${className}`}
-              style={{ color: colors.charcoal }}
+              style={{ 
+              color: colors.obsidian,
+              fontWeight: typeScale.displayL.fontWeight,
+              lineHeight: typeScale.displayL.lineHeight,
+              letterSpacing: typeScale.displayL.letterSpacing,
+            }}
             >
               {children}
             </h2>
@@ -106,7 +87,12 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
             <div className="inline-block">
               <h2 
                 className={`${baseClasses} ${className} mb-3`}
-                style={{ color: colors.charcoal }}
+                style={{ 
+              color: colors.obsidian,
+              fontWeight: typeScale.displayL.fontWeight,
+              lineHeight: typeScale.displayL.lineHeight,
+              letterSpacing: typeScale.displayL.letterSpacing,
+            }}
               >
                 {children}
               </h2>
@@ -139,7 +125,7 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
         return (
           <div className={`flex items-center gap-4 ${align === 'center' ? 'justify-center' : align === 'right' ? 'justify-end' : ''}`}>
             <span 
-              className={sizeClasses[size]}
+              className={typeScale.displayL.className}
               style={{ 
                 color: currentAccent,
                 fontWeight: 900,
@@ -149,12 +135,17 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
             </span>
             <h2 
               className={`${baseClasses} ${className}`}
-              style={{ color: colors.charcoal }}
+              style={{ 
+              color: colors.obsidian,
+              fontWeight: typeScale.displayL.fontWeight,
+              lineHeight: typeScale.displayL.lineHeight,
+              letterSpacing: typeScale.displayL.letterSpacing,
+            }}
             >
               {children}
             </h2>
             <span 
-              className={sizeClasses[size]}
+              className={typeScale.displayL.className}
               style={{ 
                 color: currentAccent,
                 fontWeight: 900,
@@ -170,7 +161,7 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
           <h2 
             className={`${baseClasses} ${className}`}
             style={{ 
-              background: colors.gradients[accentColor === 'orange' ? 'fire' : accentColor === 'blue' ? 'ocean' : accentColor === 'magenta' ? 'electric' : 'sunset'],
+              background: colors.gradients.fire,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -270,7 +261,12 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
             />
             <h2 
               className={`${baseClasses} ${className}`}
-              style={{ color: colors.charcoal }}
+              style={{ 
+              color: colors.obsidian,
+              fontWeight: typeScale.displayL.fontWeight,
+              lineHeight: typeScale.displayL.lineHeight,
+              letterSpacing: typeScale.displayL.letterSpacing,
+            }}
             >
               {children}
             </h2>

@@ -19,15 +19,10 @@ const meta = {
       options: ['default', 'side-accent', 'underline-brutal', 'box-shadow', 'bracket', 'gradient-text', 'split-bg', 'offset-border', 'stamp', 'slash'],
       description: 'Visual style variant',
     },
-    accentColor: {
+    accent: {
       control: 'select',
-      options: ['orange', 'blue', 'magenta', 'red'],
+      options: ['orange', 'blue', 'red', 'magenta', 'yellow', 'cyan'],
       description: 'Accent color for highlights',
-    },
-    size: {
-      control: 'select',
-      options: ['small', 'medium', 'large', 'xl'],
-      description: 'Text size preset',
     },
     align: {
       control: 'select',
@@ -49,8 +44,7 @@ export const Default: Story = {
   args: {
     children: 'Build Your MVP in 4 Weeks',
     variant: 'default',
-    accentColor: 'orange',
-    size: 'large',
+    accent: 'orange',
     align: 'left',
     animate: true,
   },
@@ -61,8 +55,7 @@ export const SideAccent: Story = {
   args: {
     children: 'Real People, Real Impact',
     variant: 'side-accent',
-    accentColor: 'orange',
-    size: 'large',
+    accent: 'orange',
     align: 'left',
     animate: true,
   },
@@ -73,8 +66,7 @@ export const UnderlineBrutal: Story = {
   args: {
     children: 'Our Process',
     variant: 'underline-brutal',
-    accentColor: 'blue',
-    size: 'large',
+    accent: 'blue',
     align: 'center',
     animate: true,
   },
@@ -85,8 +77,7 @@ export const BoxShadow: Story = {
   args: {
     children: 'Success Stories',
     variant: 'box-shadow',
-    accentColor: 'magenta',
-    size: 'xl',
+    accent: 'magenta',
     align: 'center',
     animate: true,
   },
@@ -97,8 +88,7 @@ export const Bracket: Story = {
   args: {
     children: 'Featured Projects',
     variant: 'bracket',
-    accentColor: 'red',
-    size: 'large',
+    accent: 'red',
     align: 'center',
     animate: true,
   },
@@ -109,8 +99,7 @@ export const GradientText: Story = {
   args: {
     children: 'Transform Your Business',
     variant: 'gradient-text',
-    accentColor: 'orange',
-    size: 'xl',
+    accent: 'orange',
     align: 'center',
     animate: true,
   },
@@ -121,8 +110,7 @@ export const SplitBackground: Story = {
   args: {
     children: 'Innovation Starts Here',
     variant: 'split-bg',
-    accentColor: 'blue',
-    size: 'large',
+    accent: 'blue',
     align: 'center',
     animate: true,
   },
@@ -133,8 +121,7 @@ export const OffsetBorder: Story = {
   args: {
     children: 'Get Started Today',
     variant: 'offset-border',
-    accentColor: 'orange',
-    size: 'large',
+    accent: 'orange',
     align: 'center',
     animate: true,
   },
@@ -145,8 +132,7 @@ export const Stamp: Story = {
   args: {
     children: 'Limited Time',
     variant: 'stamp',
-    accentColor: 'red',
-    size: 'medium',
+    accent: 'red',
     align: 'center',
     animate: true,
   },
@@ -157,8 +143,7 @@ export const Slash: Story = {
   args: {
     children: 'Tech Stack',
     variant: 'slash',
-    accentColor: 'blue',
-    size: 'large',
+    accent: 'blue',
     align: 'center',
     animate: true,
   },
@@ -181,70 +166,70 @@ export const AllVariants: Story = {
     }}>
       <div>
         <p style={{ marginBottom: '16px', color: '#757575', fontSize: '14px' }}>DEFAULT</p>
-        <HeadingH2 variant="default" accentColor="orange" size="large">
+        <HeadingH2 variant="default" accent="orange">
           Build Your MVP in 4 Weeks
         </HeadingH2>
       </div>
 
       <div>
         <p style={{ marginBottom: '16px', color: '#757575', fontSize: '14px' }}>SIDE ACCENT</p>
-        <HeadingH2 variant="side-accent" accentColor="blue" size="large">
+        <HeadingH2 variant="side-accent" accent="blue">
           Real People, Real Impact
         </HeadingH2>
       </div>
 
       <div>
         <p style={{ marginBottom: '16px', color: '#757575', fontSize: '14px' }}>UNDERLINE BRUTAL</p>
-        <HeadingH2 variant="underline-brutal" accentColor="magenta" size="large">
+        <HeadingH2 variant="underline-brutal" accent="magenta">
           Our Process
         </HeadingH2>
       </div>
 
       <div>
         <p style={{ marginBottom: '16px', color: '#757575', fontSize: '14px' }}>BOX SHADOW</p>
-        <HeadingH2 variant="box-shadow" accentColor="red" size="large">
+        <HeadingH2 variant="box-shadow" accent="red">
           Success Stories
         </HeadingH2>
       </div>
 
       <div>
         <p style={{ marginBottom: '16px', color: '#757575', fontSize: '14px' }}>BRACKET</p>
-        <HeadingH2 variant="bracket" accentColor="orange" size="large">
+        <HeadingH2 variant="bracket" accent="orange">
           Featured Projects
         </HeadingH2>
       </div>
 
       <div>
         <p style={{ marginBottom: '16px', color: '#757575', fontSize: '14px' }}>GRADIENT TEXT</p>
-        <HeadingH2 variant="gradient-text" accentColor="blue" size="large">
+        <HeadingH2 variant="gradient-text" accent="blue">
           Transform Your Business
         </HeadingH2>
       </div>
 
       <div>
         <p style={{ marginBottom: '16px', color: '#757575', fontSize: '14px' }}>SPLIT BACKGROUND</p>
-        <HeadingH2 variant="split-bg" accentColor="magenta" size="large">
+        <HeadingH2 variant="split-bg" accent="magenta">
           Innovation Starts Here
         </HeadingH2>
       </div>
 
       <div>
         <p style={{ marginBottom: '16px', color: '#757575', fontSize: '14px' }}>OFFSET BORDER</p>
-        <HeadingH2 variant="offset-border" accentColor="red" size="large">
+        <HeadingH2 variant="offset-border" accent="red">
           Get Started Today
         </HeadingH2>
       </div>
 
       <div>
         <p style={{ marginBottom: '16px', color: '#757575', fontSize: '14px' }}>STAMP</p>
-        <HeadingH2 variant="stamp" accentColor="orange" size="large">
+        <HeadingH2 variant="stamp" accent="orange">
           Limited Time Offer
         </HeadingH2>
       </div>
 
       <div>
         <p style={{ marginBottom: '16px', color: '#757575', fontSize: '14px' }}>SLASH</p>
-        <HeadingH2 variant="slash" accentColor="blue" size="large">
+        <HeadingH2 variant="slash" accent="blue">
           Tech Stack
         </HeadingH2>
       </div>
@@ -252,10 +237,10 @@ export const AllVariants: Story = {
   ),
 };
 
-// Size Comparison
-export const SizeComparison: Story = {
+// Alignment Variations
+export const AlignmentVariations: Story = {
   args: {
-    children: "Size Comparison Demo",
+    children: "Alignment Demo",
     variant: "default"
   },
   render: () => (
@@ -266,17 +251,14 @@ export const SizeComparison: Story = {
       padding: '48px',
       background: '#FFFFFF',
     }}>
-      <HeadingH2 variant="side-accent" accentColor="orange" size="small">
-        Small Heading Size
+      <HeadingH2 variant="side-accent" accent="orange" align="left">
+        Left Aligned Heading
       </HeadingH2>
-      <HeadingH2 variant="side-accent" accentColor="orange" size="medium">
-        Medium Heading Size
+      <HeadingH2 variant="side-accent" accent="orange" align="center">
+        Center Aligned Heading
       </HeadingH2>
-      <HeadingH2 variant="side-accent" accentColor="orange" size="large">
-        Large Heading Size
-      </HeadingH2>
-      <HeadingH2 variant="side-accent" accentColor="orange" size="xl">
-        Extra Large Heading Size
+      <HeadingH2 variant="side-accent" accent="orange" align="right">
+        Right Aligned Heading
       </HeadingH2>
     </div>
   ),
@@ -296,16 +278,16 @@ export const ColorVariations: Story = {
       padding: '48px',
       background: '#FFFFFF',
     }}>
-      <HeadingH2 variant="underline-brutal" accentColor="orange" size="large">
+      <HeadingH2 variant="underline-brutal" accent="orange">
         Orange Accent Color
       </HeadingH2>
-      <HeadingH2 variant="underline-brutal" accentColor="blue" size="large">
+      <HeadingH2 variant="underline-brutal" accent="blue">
         Blue Accent Color
       </HeadingH2>
-      <HeadingH2 variant="underline-brutal" accentColor="magenta" size="large">
+      <HeadingH2 variant="underline-brutal" accent="magenta">
         Magenta Accent Color
       </HeadingH2>
-      <HeadingH2 variant="underline-brutal" accentColor="red" size="large">
+      <HeadingH2 variant="underline-brutal" accent="red">
         Red Accent Color
       </HeadingH2>
     </div>
@@ -326,7 +308,7 @@ export const ContextExamples: Story = {
     }}>
       {/* Hero Section */}
       <section style={{ marginBottom: '80px' }}>
-        <HeadingH2 variant="gradient-text" accentColor="orange" size="xl" align="center">
+        <HeadingH2 variant="gradient-text" accent="orange" align="center">
           Build Your MVP in 4 Weeks
         </HeadingH2>
         <p style={{ textAlign: 'center', marginTop: '24px', color: '#757575', maxWidth: '600px', margin: '24px auto 0' }}>
@@ -336,7 +318,7 @@ export const ContextExamples: Story = {
 
       {/* Features Section */}
       <section style={{ marginBottom: '80px' }}>
-        <HeadingH2 variant="side-accent" accentColor="blue" size="large">
+        <HeadingH2 variant="side-accent" accent="blue">
           Why Choose DeployAI?
         </HeadingH2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px', marginTop: '48px' }}>
@@ -351,7 +333,7 @@ export const ContextExamples: Story = {
 
       {/* Process Section */}
       <section style={{ marginBottom: '80px' }}>
-        <HeadingH2 variant="underline-brutal" accentColor="magenta" size="large" align="center">
+        <HeadingH2 variant="underline-brutal" accent="magenta" align="center">
           Our Process
         </HeadingH2>
         <div style={{ marginTop: '48px', textAlign: 'center' }}>
@@ -363,7 +345,7 @@ export const ContextExamples: Story = {
 
       {/* CTA Section */}
       <section style={{ background: '#212121', padding: '48px', margin: '-48px', color: 'white' }}>
-        <HeadingH2 variant="stamp" accentColor="red" size="large" align="center">
+        <HeadingH2 variant="stamp" accent="red" align="center">
           Limited Spots Available
         </HeadingH2>
         <p style={{ textAlign: 'center', marginTop: '24px', opacity: 0.9 }}>
@@ -392,7 +374,7 @@ export const RecommendationsGuide: Story = {
 
       <div style={{ display: 'grid', gap: '48px' }}>
         <div style={{ padding: '32px', background: '#F5F5F5', border: '3px solid #000' }}>
-          <HeadingH2 variant="default" accentColor="orange" size="medium">
+          <HeadingH2 variant="default" accent="orange">
             Default - Clean & Simple
           </HeadingH2>
           <p style={{ marginTop: '16px', color: '#757575' }}>
@@ -403,7 +385,7 @@ export const RecommendationsGuide: Story = {
         </div>
 
         <div style={{ padding: '32px', background: '#F5F5F5', border: '3px solid #000' }}>
-          <HeadingH2 variant="side-accent" accentColor="blue" size="medium">
+          <HeadingH2 variant="side-accent" accent="blue">
             Side Accent - Professional
           </HeadingH2>
           <p style={{ marginTop: '16px', color: '#757575' }}>
@@ -414,7 +396,7 @@ export const RecommendationsGuide: Story = {
         </div>
 
         <div style={{ padding: '32px', background: '#F5F5F5', border: '3px solid #000' }}>
-          <HeadingH2 variant="underline-brutal" accentColor="magenta" size="medium">
+          <HeadingH2 variant="underline-brutal" accent="magenta">
             Underline Brutal - Bold Statement
           </HeadingH2>
           <p style={{ marginTop: '16px', color: '#757575' }}>
@@ -425,7 +407,7 @@ export const RecommendationsGuide: Story = {
         </div>
 
         <div style={{ padding: '32px', background: '#F5F5F5', border: '3px solid #000' }}>
-          <HeadingH2 variant="gradient-text" accentColor="orange" size="medium">
+          <HeadingH2 variant="gradient-text" accent="orange">
             Gradient Text - High Impact
           </HeadingH2>
           <p style={{ marginTop: '16px', color: '#757575' }}>
@@ -436,7 +418,7 @@ export const RecommendationsGuide: Story = {
         </div>
 
         <div style={{ padding: '32px', background: '#212121', border: '3px solid #000', color: 'white' }}>
-          <HeadingH2 variant="stamp" accentColor="red" size="medium">
+          <HeadingH2 variant="stamp" accent="red">
             Stamp - Urgent/Special
           </HeadingH2>
           <p style={{ marginTop: '16px', opacity: 0.9 }}>

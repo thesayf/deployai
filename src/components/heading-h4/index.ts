@@ -1,0 +1,1 @@
+export { HeadingH4 } from './HeadingH4';
