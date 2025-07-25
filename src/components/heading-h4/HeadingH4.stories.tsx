@@ -20,9 +20,9 @@ const meta = {
       options: ['default', 'caps', 'tag', 'icon-left'],
       description: 'Visual variant of the heading',
     },
-    accent: {
+    accentColor: {
       control: 'select',
-      options: ['orange', 'blue', 'red', 'magenta', 'yellow', 'cyan'],
+      options: ['orange', 'blue', 'red', 'magenta'],
       description: 'Accent color',
     },
     icon: {
@@ -47,14 +47,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     variant: 'default',
-    accent: 'orange',
+    accentColor: 'orange',
   },
 };
 
 export const Caps: Story = {
   args: {
     variant: 'caps',
-    accent: 'blue',
+    accentColor: 'blue',
     children: 'All Caps Style',
   },
 };
@@ -62,7 +62,7 @@ export const Caps: Story = {
 export const Tag: Story = {
   args: {
     variant: 'tag',
-    accent: 'red',
+    accentColor: 'red',
     children: 'Tagged Feature',
   },
 };
@@ -70,7 +70,7 @@ export const Tag: Story = {
 export const IconLeft: Story = {
   args: {
     variant: 'icon-left',
-    accent: 'magenta',
+    accentColor: 'magenta',
     icon: <Star size={20} />,
     children: 'Premium Feature',
   },
@@ -79,10 +79,10 @@ export const IconLeft: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div className="space-y-6">
-      <HeadingH4 variant="default" accent="orange">Default Style</HeadingH4>
-      <HeadingH4 variant="caps" accent="blue">Uppercase Style</HeadingH4>
-      <HeadingH4 variant="tag" accent="red">Tag Style</HeadingH4>
-      <HeadingH4 variant="icon-left" icon={<Zap size={20} />} accent="magenta">
+      <HeadingH4 variant="default" accentColor="orange">Default Style</HeadingH4>
+      <HeadingH4 variant="caps" accentColor="blue">Uppercase Style</HeadingH4>
+      <HeadingH4 variant="tag" accentColor="red">Tag Style</HeadingH4>
+      <HeadingH4 variant="icon-left" icon={<Zap size={20} />} accentColor="magenta">
         Icon Style
       </HeadingH4>
     </div>
@@ -92,16 +92,16 @@ export const AllVariants: Story = {
 export const FeatureList: Story = {
   render: () => (
     <div className="space-y-4">
-      <HeadingH4 variant="icon-left" icon={<Check size={20} />} accent="cyan">
+      <HeadingH4 variant="icon-left" icon={<Check size={20} />} accentColor="blue">
         Easy Integration
       </HeadingH4>
-      <HeadingH4 variant="icon-left" icon={<Zap size={20} />} accent="yellow">
+      <HeadingH4 variant="icon-left" icon={<Zap size={20} />} accentColor="orange">
         Lightning Fast
       </HeadingH4>
-      <HeadingH4 variant="icon-left" icon={<Star size={20} />} accent="orange">
+      <HeadingH4 variant="icon-left" icon={<Star size={20} />} accentColor="orange">
         Premium Support
       </HeadingH4>
-      <HeadingH4 variant="icon-left" icon={<ArrowRight size={20} />} accent="blue">
+      <HeadingH4 variant="icon-left" icon={<ArrowRight size={20} />} accentColor="blue">
         Future Ready
       </HeadingH4>
     </div>
@@ -112,15 +112,15 @@ export const CardHeaders: Story = {
   render: () => (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="bg-white border-3 border-black p-6" style={{ boxShadow: '4px 4px 0px #000' }}>
-        <HeadingH4 variant="tag" accent="orange">Starter Plan</HeadingH4>
+        <HeadingH4 variant="tag" accentColor="orange">Starter Plan</HeadingH4>
         <p className="mt-4 text-charcoal">Perfect for small projects</p>
       </div>
       <div className="bg-white border-3 border-black p-6" style={{ boxShadow: '4px 4px 0px #000' }}>
-        <HeadingH4 variant="tag" accent="blue">Pro Plan</HeadingH4>
+        <HeadingH4 variant="tag" accentColor="blue">Pro Plan</HeadingH4>
         <p className="mt-4 text-charcoal">Best for growing teams</p>
       </div>
       <div className="bg-white border-3 border-black p-6" style={{ boxShadow: '4px 4px 0px #000' }}>
-        <HeadingH4 variant="tag" accent="red">Enterprise</HeadingH4>
+        <HeadingH4 variant="tag" accentColor="red">Enterprise</HeadingH4>
         <p className="mt-4 text-charcoal">Unlimited possibilities</p>
       </div>
     </div>

@@ -69,7 +69,6 @@ export const HeadingH1: React.FC<HeadingH1Props> = ({
             style={{
               WebkitTextStroke: `3px ${colors.black}`,
               WebkitTextFillColor: 'transparent',
-              textStroke: `3px ${colors.black}`,
               position: 'relative',
             }}
           >
@@ -81,7 +80,6 @@ export const HeadingH1: React.FC<HeadingH1Props> = ({
                 left: '4px',
                 WebkitTextStroke: 'none',
                 WebkitTextFillColor: currentAccent,
-                textStroke: 'none',
                 zIndex: -1,
               }}
               aria-hidden="true"

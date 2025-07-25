@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { colors } from '@/constants/colors';
+import { colors, gradients } from '@/constants/colors';
 import { typeScale } from '@/constants/typography';
 
 interface HeadingH2Props {
@@ -25,8 +25,8 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
     blue: colors.cyberBlue,
     red: colors.crimsonRed,
     magenta: colors.deepMagenta,
-    yellow: colors.neonYellow,
-    cyan: colors.radiantCyan,
+    yellow: colors.amber,
+    cyan: colors.sapphire,
   };
 
   const currentAccent = accentColors[accent];
@@ -161,7 +161,7 @@ export const HeadingH2: React.FC<HeadingH2Props> = ({
           <h2 
             className={`${baseClasses} ${className}`}
             style={{ 
-              background: colors.gradients.fire,
+              background: gradients.fire,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',

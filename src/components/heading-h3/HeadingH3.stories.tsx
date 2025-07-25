@@ -19,9 +19,9 @@ const meta = {
       options: ['default', 'pill', 'arrow', 'badge', 'underline', 'numbered'],
       description: 'Visual variant of the heading',
     },
-    accent: {
+    accentColor: {
       control: 'select',
-      options: ['orange', 'blue', 'red', 'magenta', 'yellow', 'cyan'],
+      options: ['orange', 'blue', 'red', 'magenta'],
       description: 'Accent color for decorative elements',
     },
     align: {
@@ -51,14 +51,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     variant: 'default',
-    accent: 'orange',
+    accentColor: 'orange',
   },
 };
 
 export const Pill: Story = {
   args: {
     variant: 'pill',
-    accent: 'blue',
+    accentColor: 'blue',
     children: 'Featured Section',
   },
 };
@@ -66,7 +66,7 @@ export const Pill: Story = {
 export const Arrow: Story = {
   args: {
     variant: 'arrow',
-    accent: 'red',
+    accentColor: 'red',
     children: 'Next Steps',
   },
 };
@@ -74,7 +74,7 @@ export const Arrow: Story = {
 export const Badge: Story = {
   args: {
     variant: 'badge',
-    accent: 'magenta',
+    accentColor: 'magenta',
     children: 'Hot Features',
   },
 };
@@ -82,7 +82,7 @@ export const Badge: Story = {
 export const Underline: Story = {
   args: {
     variant: 'underline',
-    accent: 'yellow',
+    accentColor: 'orange',
     children: 'Key Benefits',
   },
 };
@@ -91,7 +91,7 @@ export const Numbered: Story = {
   args: {
     variant: 'numbered',
     number: '01',
-    accent: 'cyan',
+    accentColor: 'blue',
     children: 'Step One',
   },
 };
@@ -99,12 +99,12 @@ export const Numbered: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div className="space-y-8">
-      <HeadingH3 variant="default" accent="orange">Default Style</HeadingH3>
-      <HeadingH3 variant="pill" accent="blue">Pill Badge Style</HeadingH3>
-      <HeadingH3 variant="arrow" accent="red">Arrow Indicator</HeadingH3>
-      <HeadingH3 variant="badge" accent="magenta">Badge Style</HeadingH3>
-      <HeadingH3 variant="underline" accent="yellow">Underline Style</HeadingH3>
-      <HeadingH3 variant="numbered" number="01" accent="cyan">Numbered Style</HeadingH3>
+      <HeadingH3 variant="default" accentColor="orange">Default Style</HeadingH3>
+      <HeadingH3 variant="pill" accentColor="blue">Pill Badge Style</HeadingH3>
+      <HeadingH3 variant="arrow" accentColor="red">Arrow Indicator</HeadingH3>
+      <HeadingH3 variant="badge" accentColor="magenta">Badge Style</HeadingH3>
+      <HeadingH3 variant="underline" accentColor="orange">Underline Style</HeadingH3>
+      <HeadingH3 variant="numbered" number="01" accentColor="blue">Numbered Style</HeadingH3>
     </div>
   ),
 };
@@ -112,10 +112,10 @@ export const AllVariants: Story = {
 export const ProcessSteps: Story = {
   render: () => (
     <div className="space-y-8">
-      <HeadingH3 variant="numbered" number="01" accent="orange">Discovery Phase</HeadingH3>
-      <HeadingH3 variant="numbered" number="02" accent="blue">Design & Planning</HeadingH3>
-      <HeadingH3 variant="numbered" number="03" accent="red">Development</HeadingH3>
-      <HeadingH3 variant="numbered" number="04" accent="magenta">Testing & Launch</HeadingH3>
+      <HeadingH3 variant="numbered" number="01" accentColor="orange">Discovery Phase</HeadingH3>
+      <HeadingH3 variant="numbered" number="02" accentColor="blue">Design & Planning</HeadingH3>
+      <HeadingH3 variant="numbered" number="03" accentColor="red">Development</HeadingH3>
+      <HeadingH3 variant="numbered" number="04" accentColor="magenta">Testing & Launch</HeadingH3>
     </div>
   ),
 };

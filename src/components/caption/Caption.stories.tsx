@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/nextjs';
+import type { Meta as StoryMeta, StoryObj } from '@storybook/nextjs';
 import { Caption } from './Caption';
 import { Calendar, Clock, User, Tag } from 'lucide-react';
 
-const meta = {
+const meta: StoryMeta<typeof Caption> = {
   title: 'Typography/Caption',
   component: Caption,
   parameters: {
@@ -43,7 +43,7 @@ const meta = {
     children: 'Caption text',
     animate: true,
   },
-} satisfies Meta<typeof Caption>;
+} satisfies StoryMeta<typeof Caption>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -26,14 +26,14 @@ type Story = StoryObj<typeof meta>;
 export const CompleteSystem: Story = {
   render: () => (
     <div className="max-w-4xl mx-auto">
-      <HeadingH1 variant="hero" accent="orange" align="center">
+      <HeadingH1 variant="hero" accentColor="orange" align="center">
         Typography System
       </HeadingH1>
       
       <div className="mt-12 space-y-16">
         {/* Type Scale */}
         <section>
-          <HeadingH3 variant="pill" accent="blue">Type Scale</HeadingH3>
+          <HeadingH3 variant="pill" accentColor="blue">Type Scale</HeadingH3>
           <div className="mt-8 space-y-6">
             <div>
               <Caption variant="label" uppercase>Display XL</Caption>
@@ -72,20 +72,20 @@ export const CompleteSystem: Story = {
 
         {/* Spacing Examples */}
         <section>
-          <HeadingH3 variant="pill" accent="red">Spacing System</HeadingH3>
+          <HeadingH3 variant="pill" accentColor="red">Spacing System</HeadingH3>
           <div className="mt-8">
             <SpacedText>
-              <HeadingH1 variant="brutal-outline" as="h1">Main Heading</HeadingH1>
-              <Paragraph variant="lead" as="p">
+              <HeadingH1 variant="brutal-outline">Main Heading</HeadingH1>
+              <Paragraph variant="lead">
                 This demonstrates proper spacing between H1 and paragraph elements. 
                 The spacing is automatically applied based on our design system rules.
               </Paragraph>
-              <HeadingH3 variant="underline" as="h3">Subheading</HeadingH3>
-              <Paragraph as="p">
+              <HeadingH3 variant="underline">Subheading</HeadingH3>
+              <Paragraph>
                 Content under subheadings has appropriate spacing to create clear 
                 visual hierarchy and improve readability.
               </Paragraph>
-              <Paragraph as="p">
+              <Paragraph>
                 Multiple paragraphs also have consistent spacing between them to 
                 ensure comfortable reading experience.
               </Paragraph>
@@ -95,7 +95,7 @@ export const CompleteSystem: Story = {
 
         {/* Color Variations */}
         <section>
-          <HeadingH3 variant="pill" accent="magenta">Color System</HeadingH3>
+          <HeadingH3 variant="pill" accentColor="magenta">Color System</HeadingH3>
           <div className="mt-8 space-y-4">
             <Paragraph color="default">Default charcoal text color</Paragraph>
             <Paragraph color="muted">Muted graphite for secondary content</Paragraph>
@@ -108,7 +108,7 @@ export const CompleteSystem: Story = {
 
         {/* Link Styles */}
         <section>
-          <HeadingH3 variant="pill" accent="yellow">Link Styles</HeadingH3>
+          <HeadingH3 variant="pill" accentColor="orange">Link Styles</HeadingH3>
           <div className="mt-8 space-y-4">
             <Paragraph>
               Here's a <TextLink href="#">default link</TextLink> within text, 
@@ -124,11 +124,11 @@ export const CompleteSystem: Story = {
 
         {/* Real-world Example */}
         <section>
-          <HeadingH3 variant="pill" accent="cyan">Real-world Example</HeadingH3>
+          <HeadingH3 variant="pill" accentColor="blue">Real-world Example</HeadingH3>
           <article className="mt-8 border-3 border-black bg-white p-8" style={{ boxShadow: '6px 6px 0px #000' }}>
             <div className="space-y-2 mb-6">
               <Caption variant="label" uppercase>Case Study</Caption>
-              <HeadingH1 variant="split-color" accent="orange">
+              <HeadingH1 variant="split-color" accentColor="orange">
                 Revolutionizing E-commerce
               </HeadingH1>
               <Caption variant="meta" color="muted">
@@ -137,24 +137,24 @@ export const CompleteSystem: Story = {
             </div>
             
             <SpacedText>
-              <Paragraph variant="lead" as="p">
+              <Paragraph variant="lead">
                 Discover how we transformed a traditional retail business into a 
                 digital powerhouse, increasing their online revenue by 300% in just six months.
               </Paragraph>
               
-              <HeadingH3 variant="numbered" number="01" as="h3">The Challenge</HeadingH3>
-              <Paragraph as="p">
+              <HeadingH3 variant="numbered" number="01">The Challenge</HeadingH3>
+              <Paragraph>
                 Our client faced declining foot traffic and needed to establish a 
                 strong online presence to remain competitive in the evolving retail landscape.
               </Paragraph>
               
-              <HeadingH3 variant="numbered" number="02" as="h3">Our Approach</HeadingH3>
-              <Paragraph as="p">
+              <HeadingH3 variant="numbered" number="02">Our Approach</HeadingH3>
+              <Paragraph>
                 We implemented a comprehensive digital strategy combining cutting-edge 
                 e-commerce technology with targeted marketing campaigns.
               </Paragraph>
               
-              <Paragraph variant="highlight" as="p">
+              <Paragraph variant="highlight">
                 Key Result: 300% increase in online revenue and 50% reduction in 
                 customer acquisition costs.
               </Paragraph>
@@ -217,7 +217,7 @@ export const ResponsiveTypography: Story = {
   render: () => (
     <div className="space-y-8">
       <div className="border-3 border-black p-6 bg-warmPeach">
-        <HeadingH1 variant="hero" responsive>
+        <HeadingH1 variant="hero">
           Responsive Heading
         </HeadingH1>
         <Paragraph className="mt-4">
@@ -227,13 +227,13 @@ export const ResponsiveTypography: Story = {
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="border-3 border-black p-6 bg-skyBlue">
-          <HeadingH4 variant="tag" accent="blue">Mobile First</HeadingH4>
+          <HeadingH4 variant="tag" accentColor="blue">Mobile First</HeadingH4>
           <Paragraph size="small" className="mt-2">
             Typography that looks great on all devices
           </Paragraph>
         </div>
         <div className="border-3 border-black p-6 bg-lavender">
-          <HeadingH4 variant="tag" accent="magenta">Fluid Scaling</HeadingH4>
+          <HeadingH4 variant="tag" accentColor="magenta">Fluid Scaling</HeadingH4>
           <Paragraph size="small" className="mt-2">
             Smooth transitions between breakpoints
           </Paragraph>

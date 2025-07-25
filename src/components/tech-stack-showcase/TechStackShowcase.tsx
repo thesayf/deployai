@@ -133,8 +133,7 @@ export const TechStackShowcase: React.FC = () => {
         <div className="mb-8 text-center">
           <HeadingH2
             variant="slash"
-            accentColor="orange"
-            size="xl"
+            accent="orange"
             align="center"
             animate={true}
             className="mb-6"

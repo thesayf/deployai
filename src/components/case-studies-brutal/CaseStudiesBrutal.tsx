@@ -823,8 +823,7 @@ export const CaseStudiesBrutal: React.FC<CaseStudiesBrutalProps> = ({
       <div className="text-center mb-8">
         <HeadingH2
           variant="box-shadow"
-          accentColor={accentColor}
-          size="xl"
+          accent={accentColor as 'orange' | 'blue' | 'red' | 'magenta'}
           align="center"
           animate={true}
           className="mb-6"

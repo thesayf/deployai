@@ -26,8 +26,7 @@ export const FinalCTA = () => {
         </div>
         <HeadingH2
           variant="stamp"
-          accentColor="red"
-          size="xl"
+          accent="red"
           align="center"
           animate={true}
           className="mb-6"

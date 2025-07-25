@@ -126,7 +126,7 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">How Your Assessment Works</h2>
           <h3 className="text-xl text-gray-700 mb-8">
-            3 minutes. 14 questions. Your complete AI roadmap.
+            5-6 minutes. 17 questions. Your complete AI roadmap.
           </h3>
           <p className="text-lg text-gray-600 mb-12">
             We'll analyze your business across 4 critical dimensions to identify exactly where AI 

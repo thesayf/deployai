@@ -141,7 +141,7 @@ export const TextLink: React.FC<TextLinkProps> = ({
             <motion.span
               className="absolute inset-0"
               style={{ 
-                background: colors.neonYellow,
+                background: colors.amber,
                 transformOrigin: 'bottom',
                 zIndex: -1,
               }}

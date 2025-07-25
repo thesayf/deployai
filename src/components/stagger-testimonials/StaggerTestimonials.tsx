@@ -94,8 +94,7 @@ export const StaggerTestimonials = () => {
         <div className="mb-8 text-center">
           <HeadingH2
             variant="bracket"
-            accentColor="orange"
-            size="xl"
+            accent="orange"
             align="center"
             animate={true}
             className="mb-6"

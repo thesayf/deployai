@@ -19,9 +19,9 @@ const meta = {
       options: ['hero', 'brutal-outline', 'split-color', 'gradient', 'shadow-stack', 'glitch', 'neon'],
       description: 'Visual variant of the heading',
     },
-    accent: {
+    accentColor: {
       control: 'select',
-      options: ['orange', 'blue', 'red', 'magenta', 'yellow', 'cyan'],
+      options: ['orange', 'blue', 'red', 'magenta'],
       description: 'Accent color for the heading',
     },
     align: {
@@ -33,15 +33,10 @@ const meta = {
       control: 'boolean',
       description: 'Enable/disable animations',
     },
-    responsive: {
-      control: 'boolean',
-      description: 'Enable responsive text sizing',
-    },
   },
   args: {
     children: 'Transform Your Ideas Into Reality',
     animate: true,
-    responsive: true,
   },
 } satisfies Meta<typeof HeadingH1>;
 
@@ -51,7 +46,7 @@ type Story = StoryObj<typeof meta>;
 export const Hero: Story = {
   args: {
     variant: 'hero',
-    accent: 'orange',
+    accentColor: 'orange',
     align: 'center',
   },
 };
@@ -59,7 +54,7 @@ export const Hero: Story = {
 export const BrutalOutline: Story = {
   args: {
     variant: 'brutal-outline',
-    accent: 'blue',
+    accentColor: 'blue',
     children: 'Bold & Impactful',
   },
 };
@@ -67,7 +62,7 @@ export const BrutalOutline: Story = {
 export const SplitColor: Story = {
   args: {
     variant: 'split-color',
-    accent: 'red',
+    accentColor: 'red',
     children: 'Creative Solutions',
   },
 };
@@ -82,7 +77,7 @@ export const Gradient: Story = {
 export const ShadowStack: Story = {
   args: {
     variant: 'shadow-stack',
-    accent: 'magenta',
+    accentColor: 'magenta',
     children: 'Stand Out',
   },
 };
@@ -90,7 +85,7 @@ export const ShadowStack: Story = {
 export const Glitch: Story = {
   args: {
     variant: 'glitch',
-    accent: 'cyan',
+    accentColor: 'blue',
     children: 'Digital Edge',
   },
 };
@@ -98,7 +93,7 @@ export const Glitch: Story = {
 export const Neon: Story = {
   args: {
     variant: 'neon',
-    accent: 'yellow',
+    accentColor: 'orange',
     children: 'Bright Ideas',
   },
 };
@@ -106,13 +101,13 @@ export const Neon: Story = {
 export const AllVariants: Story = {
   render: () => (
     <div className="space-y-16">
-      <HeadingH1 variant="hero" accent="orange">Hero Variant</HeadingH1>
-      <HeadingH1 variant="brutal-outline" accent="blue">Brutal Outline</HeadingH1>
-      <HeadingH1 variant="split-color" accent="red">Split Color</HeadingH1>
+      <HeadingH1 variant="hero" accentColor="orange">Hero Variant</HeadingH1>
+      <HeadingH1 variant="brutal-outline" accentColor="blue">Brutal Outline</HeadingH1>
+      <HeadingH1 variant="split-color" accentColor="red">Split Color</HeadingH1>
       <HeadingH1 variant="gradient">Gradient Style</HeadingH1>
-      <HeadingH1 variant="shadow-stack" accent="magenta">Shadow Stack</HeadingH1>
-      <HeadingH1 variant="glitch" accent="cyan">Glitch Effect</HeadingH1>
-      <HeadingH1 variant="neon" accent="yellow">Neon Glow</HeadingH1>
+      <HeadingH1 variant="shadow-stack" accentColor="magenta">Shadow Stack</HeadingH1>
+      <HeadingH1 variant="glitch" accentColor="blue">Glitch Effect</HeadingH1>
+      <HeadingH1 variant="neon" accentColor="orange">Neon Glow</HeadingH1>
     </div>
   ),
 };
@@ -130,12 +125,12 @@ export const AlignmentVariations: Story = {
 export const ColorVariations: Story = {
   render: () => (
     <div className="space-y-8">
-      <HeadingH1 variant="hero" accent="orange">Orange Accent</HeadingH1>
-      <HeadingH1 variant="hero" accent="blue">Blue Accent</HeadingH1>
-      <HeadingH1 variant="hero" accent="red">Red Accent</HeadingH1>
-      <HeadingH1 variant="hero" accent="magenta">Magenta Accent</HeadingH1>
-      <HeadingH1 variant="hero" accent="yellow">Yellow Accent</HeadingH1>
-      <HeadingH1 variant="hero" accent="cyan">Cyan Accent</HeadingH1>
+      <HeadingH1 variant="hero" accentColor="orange">Orange Accent</HeadingH1>
+      <HeadingH1 variant="hero" accentColor="blue">Blue Accent</HeadingH1>
+      <HeadingH1 variant="hero" accentColor="red">Red Accent</HeadingH1>
+      <HeadingH1 variant="hero" accentColor="magenta">Magenta Accent</HeadingH1>
+      <HeadingH1 variant="hero" accentColor="orange">Yellow Accent</HeadingH1>
+      <HeadingH1 variant="hero" accentColor="blue">Cyan Accent</HeadingH1>
     </div>
   ),
 };

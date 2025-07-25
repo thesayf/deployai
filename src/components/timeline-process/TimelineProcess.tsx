@@ -568,8 +568,7 @@ export const TimelineProcess: React.FC<TimelineProcessProps> = ({
           {title && (
             <HeadingH2
               variant="default"
-              accentColor="blue"
-              size="xl"
+              accent="blue"
               align="center"
               animate={true}
               className="mb-6"

@@ -24,7 +24,7 @@ const QuizStep = () => {
     // Sync URL step with Redux state
     if (step && typeof step === 'string') {
       const stepNumber = parseInt(step, 10);
-      if (!isNaN(stepNumber) && stepNumber >= 1 && stepNumber <= 14) {
+      if (!isNaN(stepNumber) && stepNumber >= 1 && stepNumber <= 17) {
         if (stepNumber !== currentStep) {
           dispatch(setCurrentStep(stepNumber));
         }
@@ -42,7 +42,7 @@ const QuizStep = () => {
   return (
     <>
       <Head>
-        <title>Question {currentStep} of 14 | AI Readiness Assessment</title>
+        <title>Question {currentStep} of 17 | AI Readiness Assessment</title>
       </Head>
 
       <ModernNavBar />
@@ -55,11 +55,11 @@ const QuizStep = () => {
               <div className="bg-gray-200 h-2 rounded-full">
                 <div 
                   className="bg-gradient-to-r from-orange-500 to-red-500 h-2 rounded-full transition-all duration-300"
-                  style={{ width: `${(currentStep / 14) * 100}%` }}
+                  style={{ width: `${(currentStep / 17) * 100}%` }}
                 />
               </div>
               <p className="text-sm text-gray-600 mt-2">
-                Question {currentStep} of 14
+                Question {currentStep} of 17
               </p>
             </div>
 
