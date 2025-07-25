@@ -1,0 +1,1 @@
+export { LogoTrustBanner } from './LogoTrustBanner';

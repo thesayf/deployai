@@ -1,0 +1,1 @@
+export { AssessmentLanding } from './AssessmentLanding';
