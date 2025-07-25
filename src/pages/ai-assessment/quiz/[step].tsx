@@ -1,10 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useAppSelector, useAppDispatch } from '@/store';
-import { selectCurrentStep, selectUserInfo, setCurrentStep } from '@/store/slices/quizSlice';
+import { 
+  selectCurrentStep, 
+  selectUserInfo, 
+  selectQuizId,
+  selectResponses,
+  setCurrentStep,
+  saveResponse,
+  nextStep,
+  previousStep
+} from '@/store/slices/quizSlice';
 import { ModernNavBar } from '@/components/navigation/ModernNavBar';
 import { SectionWrapper } from '@/components/section-wrapper';
+import { QuestionCard } from '@/components/quiz/QuestionCard';
+import { ProgressBar } from '@/components/progress-bar';
+import { getQuestionByStep, validateResponse, calculateProgress, estimateCompletionTime } from '@/utils/scoring';
+import { SaveProgressRequest } from '@/types/quiz';
 
 const QuizStep = () => {
   const router = useRouter();
@@ -13,10 +26,24 @@ const QuizStep = () => {
   
   const currentStep = useAppSelector(selectCurrentStep);
   const userInfo = useAppSelector(selectUserInfo);
+  const quizId = useAppSelector(selectQuizId);
+  const responses = useAppSelector(selectResponses);
+  
+  const [saving, setSaving] = useState(false);
+  const [validationError, setValidationError] = useState<string | undefined>();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Ensure component is hydrated before rendering
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  const currentQuestion = getQuestionByStep(currentStep);
+  const currentAnswer = currentQuestion ? responses[currentQuestion.id] : undefined;
 
   useEffect(() => {
-    // Redirect to landing if no user info
-    if (!userInfo && router.isReady) {
+    // Redirect to landing if no user info or quiz ID
+    if ((!userInfo || !quizId) && router.isReady) {
       router.push('/ai-assessment');
       return;
     }
@@ -33,11 +60,119 @@ const QuizStep = () => {
         router.push(`/ai-assessment/quiz/${currentStep}`);
       }
     }
-  }, [step, currentStep, userInfo, router, dispatch]);
+  }, [step, currentStep, userInfo, quizId, router, dispatch]);
 
-  if (!userInfo) {
+  // Clear validation error when step changes
+  useEffect(() => {
+    setValidationError(undefined);
+  }, [currentStep]);
+
+  const saveProgress = async (questionId: string, answer: any) => {
+    if (!quizId) return;
+    
+    setSaving(true);
+    try {
+      const response = await fetch('/api/quiz/save-progress', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quizId,
+          questionId,
+          answer
+        } as SaveProgressRequest),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to save progress');
+      }
+    } catch (error) {
+      console.error('Failed to save progress:', error);
+      // Continue anyway - we save in localStorage too
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleAnswer = async (answer: any) => {
+    if (!currentQuestion) return;
+    
+    // Update Redux state
+    dispatch(saveResponse({ questionId: currentQuestion.id, answer }));
+    
+    // Save to backend
+    await saveProgress(currentQuestion.id, answer);
+    
+    // Clear validation error when user answers
+    setValidationError(undefined);
+  };
+
+  const handleNext = async () => {
+    if (!currentQuestion) return;
+    
+    // Validate current answer
+    const validation = validateResponse(currentQuestion.id, currentAnswer);
+    if (!validation.valid) {
+      setValidationError(validation.error);
+      return;
+    }
+    
+    // Save current answer if not already saved
+    if (currentAnswer !== undefined && currentAnswer !== null) {
+      await saveProgress(currentQuestion.id, currentAnswer);
+    }
+    
+    if (currentStep === 17) {
+      // Last question - go to complete page
+      router.push('/ai-assessment/quiz/complete');
+    } else {
+      dispatch(nextStep());
+      router.push(`/ai-assessment/quiz/${currentStep + 1}`);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentStep > 1) {
+      dispatch(previousStep());
+      router.push(`/ai-assessment/quiz/${currentStep - 1}`);
+    }
+  };
+
+  // Handle keyboard events
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        // Only trigger if validation passes
+        const isValid = currentQuestion && currentAnswer !== undefined && currentAnswer !== null
+          ? validateResponse(currentQuestion.id, currentAnswer).valid
+          : false;
+        if (isValid) {
+          event.preventDefault();
+          handleNext();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [currentQuestion, currentAnswer, currentStep]);
+
+  // Wait for hydration to avoid mismatch
+  if (!isHydrated) {
+    return null;
+  }
+
+  if (!userInfo || !quizId || !currentQuestion) {
     return null; // Will redirect
   }
+
+  const progress = calculateProgress(currentStep);
+  const timeRemaining = estimateCompletionTime(currentStep);
+
+  // Check if current answer is valid
+  const isCurrentAnswerValid = currentQuestion && currentAnswer !== undefined && currentAnswer !== null
+    ? validateResponse(currentQuestion.id, currentAnswer).valid
+    : false;
 
   return (
     <>
@@ -45,35 +180,59 @@ const QuizStep = () => {
         <title>Question {currentStep} of 17 | AI Readiness Assessment</title>
       </Head>
 
-      <ModernNavBar />
-
-      <main className="min-h-screen bg-gray-50">
-        <SectionWrapper variant="default" spacing="medium">
-          <div className="max-w-3xl mx-auto">
-            {/* Progress bar will go here */}
-            <div className="mb-8">
-              <div className="bg-gray-200 h-2 rounded-full">
-                <div 
-                  className="bg-gradient-to-r from-orange-500 to-red-500 h-2 rounded-full transition-all duration-300"
-                  style={{ width: `${(currentStep / 17) * 100}%` }}
-                />
-              </div>
-              <p className="text-sm text-gray-600 mt-2">
-                Question {currentStep} of 17
-              </p>
+      <main className="h-screen bg-white flex flex-col overflow-hidden">
+        {/* Top section with logo/brand */}
+        <div className="bg-gradient-to-r from-emerald-400 to-teal-400 h-24 flex items-center justify-center flex-shrink-0">
+          <div className="text-2xl font-bold text-black flex items-center gap-2">
+            <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
+              <span className="text-white text-xl">✦</span>
             </div>
+            <span>deployAI</span>
+          </div>
+        </div>
 
-            {/* Question card will go here */}
-            <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-8">
-              <h2 className="text-2xl font-bold mb-4">
-                Question {currentStep} placeholder
-              </h2>
-              <p className="text-gray-600">
-                Question content will be displayed here...
-              </p>
+        {/* Main content area */}
+        <div className="flex-1 flex flex-col px-4 py-4 min-h-0 overflow-hidden">
+          <div className="w-full max-w-2xl mx-auto flex-1 flex flex-col min-h-0 overflow-hidden">
+            {/* Question - standardized height for up to 2 lines */}
+            <div className="min-h-[4.5rem] md:min-h-[6rem] mb-6 flex items-center justify-center flex-shrink-0">
+              <h1 className="text-3xl md:text-4xl text-gray-800 text-center">
+                {currentQuestion.title}
+              </h1>
+            </div>
+            
+            {/* Question card with scrollable content area */}
+            <div className="flex-1 min-h-0 overflow-hidden">
+              <QuestionCard
+                question={currentQuestion}
+                currentAnswer={currentAnswer}
+                onAnswer={handleAnswer}
+                onNext={handleNext}
+                onPrevious={handlePrevious}
+                isFirst={currentStep === 1}
+                isLast={currentStep === 17}
+                isValid={isCurrentAnswerValid}
+                validationError={validationError}
+              />
             </div>
           </div>
-        </SectionWrapper>
+        </div>
+
+        {/* Bottom progress bar */}
+        <div className="bg-gray-100 px-4 py-4 flex-shrink-0">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+              <span>{progress}% Complete</span>
+              <span className="text-xs text-gray-500">Powered by deployAI</span>
+            </div>
+            <div className="w-full bg-gray-300 rounded-full h-2">
+              <div 
+                className="bg-gradient-to-r from-emerald-400 to-teal-400 h-2 rounded-full transition-all duration-300"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
+        </div>
       </main>
     </>
   );

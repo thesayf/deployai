@@ -35,31 +35,39 @@ export const MultiSelectQuestion: React.FC<MultiSelectQuestionProps> = ({
   };
 
   return (
-    <div className="space-y-3">
-      {question.maxSelections && (
-        <p className="text-sm text-gray-600 mb-4">
-          Select up to {question.maxSelections} options ({value.length} selected)
-        </p>
-      )}
+    <div className="h-full flex flex-col overflow-hidden">
+      {/* Always reserve space for subtitle - consistent spacing */}
+      <div className="h-12 mb-3 flex-shrink-0">
+        {question.subtitle ? (
+          <p className="text-sm text-gray-600 leading-relaxed italic">
+            {question.subtitle}
+          </p>
+        ) : question.maxSelections ? (
+          <p className="text-sm text-gray-600 leading-relaxed italic">
+            Select up to {question.maxSelections} options ({value.length} selected)
+          </p>
+        ) : null}
+      </div>
       
-      {question.options?.map((option, index) => (
+      {/* Scrollable container for options */}
+      <div className="flex-1 overflow-y-auto pr-2 space-y-2" style={{ scrollbarWidth: 'thin' }}>
+        {question.options?.map((option, index) => (
         <motion.label
           key={option.value}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.05 }}
           className={`
-            block cursor-pointer p-4 border-3 border-black
+            block cursor-pointer p-4 rounded-lg
             transition-all duration-200
             ${value.includes(option.value) 
-              ? 'bg-gradient-to-r from-orange-100 to-red-100 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]' 
-              : 'bg-white hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+              ? 'bg-emerald-100' 
+              : 'bg-gray-100 hover:bg-gray-200'
             }
             ${isOptionDisabled(option.value) ? 'opacity-50 cursor-not-allowed' : ''}
-            ${error ? 'border-red-500' : ''}
           `}
         >
-          <div className="flex items-center">
+          <div className="flex">
             <input
               type="checkbox"
               value={option.value}
@@ -71,8 +79,8 @@ export const MultiSelectQuestion: React.FC<MultiSelectQuestionProps> = ({
             
             {/* Custom Checkbox */}
             <div className={`
-              w-5 h-5 border-3 border-black mr-4 flex-shrink-0
-              ${value.includes(option.value) ? 'bg-gradient-to-r from-orange-500 to-red-500' : 'bg-white'}
+              w-5 h-5 rounded mr-4 flex-shrink-0 mt-1
+              ${value.includes(option.value) ? 'bg-emerald-400' : 'bg-gray-300'}
             `}>
               {value.includes(option.value) && (
                 <motion.svg
@@ -93,23 +101,22 @@ export const MultiSelectQuestion: React.FC<MultiSelectQuestionProps> = ({
               )}
             </div>
             
-            <span className={`
-              text-lg ${value.includes(option.value) ? 'font-semibold' : ''}
-              ${isOptionDisabled(option.value) ? 'text-gray-400' : ''}
-            `}>
-              {option.label}
-            </span>
+            <div className="flex-1">
+              <div className={`
+                text-base leading-relaxed ${value.includes(option.value) ? 'font-semibold' : ''}
+                ${isOptionDisabled(option.value) ? 'text-gray-400' : 'text-gray-700'}
+              `}>
+                {option.label}
+              </div>
+            </div>
           </div>
         </motion.label>
-      ))}
+        ))}
+      </div>
       
-      {question.minSelections && value.length < question.minSelections && (
-        <p className="text-sm text-gray-600 mt-2">
-          Please select at least {question.minSelections} option{question.minSelections > 1 ? 's' : ''}
-        </p>
-      )}
-      
-      {error && (
+      {/* Reserve space for error message to prevent content shift */}
+      <div className="h-6 mt-2 flex-shrink-0">
+        {error && (
         <motion.p
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -117,7 +124,8 @@ export const MultiSelectQuestion: React.FC<MultiSelectQuestionProps> = ({
         >
           {error}
         </motion.p>
-      )}
+        )}
+      </div>
     </div>
   );
 };

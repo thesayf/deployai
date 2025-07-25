@@ -83,63 +83,34 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="bg-white border-3 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-8 md:p-10"
+      className="flex flex-col h-full"
     >
-      {/* Question Header */}
-      <div className="mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold mb-2">
-          {question.title}
-        </h2>
-        {question.subtitle && (
-          <p className="text-gray-600 text-lg">
-            {question.subtitle}
-          </p>
-        )}
-      </div>
-
-      {/* Question Input */}
-      <div className="mb-8">
-        {renderQuestionInput()}
+      {/* Question Input - Fixed viewport height container */}
+      <div className="h-[50vh] max-h-[500px] flex items-center">
+        <div className="w-full h-full">
+          {renderQuestionInput()}
+        </div>
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex justify-between items-center">
-        <div>
-          {!isFirst && (
-            <Button
-              intent="outline"
-              size="medium"
-              onClick={onPrevious}
-              type="button"
-            >
-              Previous
-            </Button>
-          )}
-        </div>
-        
-        <div>
-          <Button
-            intent="primary"
-            size="medium"
-            onClick={onNext}
-            disabled={!isValid}
-            type="button"
+      <div className="flex justify-center gap-4 pt-4 flex-shrink-0">
+        {!isFirst && (
+          <button
+            onClick={onPrevious}
+            className="px-8 py-3 text-gray-600 hover:text-gray-800 transition-colors"
           >
-            {isLast ? 'Complete Assessment' : 'Next'}
-          </Button>
-        </div>
-      </div>
-
-      {/* Error Message */}
-      {validationError && (
-        <motion.p
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-red-500 text-sm mt-4 text-center"
+            Previous
+          </button>
+        )}
+        
+        <button
+          onClick={onNext}
+          disabled={!isValid}
+          className="px-8 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
         >
-          {validationError}
-        </motion.p>
-      )}
+          {isLast ? 'Complete' : 'Next'}
+        </button>
+      </div>
     </motion.div>
   );
 };

@@ -16,24 +16,25 @@ export const SingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
   error,
 }) => {
   return (
-    <div className="space-y-3">
-      {question.options?.map((option, index) => (
+    <div className="h-full flex flex-col overflow-hidden">
+      {/* Scrollable container for options */}
+      <div className="flex-1 overflow-y-auto pr-2 space-y-2" style={{ scrollbarWidth: 'thin' }}>
+        {question.options?.map((option, index) => (
         <motion.label
           key={option.value}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.05 }}
           className={`
-            block cursor-pointer p-4 border-3 border-black
+            block cursor-pointer p-4 rounded-lg
             transition-all duration-200
             ${value === option.value 
-              ? 'bg-gradient-to-r from-orange-100 to-red-100 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]' 
-              : 'bg-white hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+              ? 'bg-emerald-100' 
+              : 'bg-gray-100 hover:bg-gray-200'
             }
-            ${error ? 'border-red-500' : ''}
           `}
         >
-          <div className="flex items-center">
+          <div className="flex">
             <input
               type="radio"
               name={`question-${question.id}`}
@@ -45,8 +46,8 @@ export const SingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
             
             {/* Custom Radio Button */}
             <div className={`
-              w-5 h-5 rounded-full border-3 border-black mr-4 flex-shrink-0
-              ${value === option.value ? 'bg-gradient-to-r from-orange-500 to-red-500' : 'bg-white'}
+              w-5 h-5 rounded-full mr-4 flex-shrink-0 transition-colors mt-1
+              ${value === option.value ? 'bg-emerald-400' : 'bg-gray-300'}
             `}>
               {value === option.value && (
                 <motion.div
@@ -59,24 +60,30 @@ export const SingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
               )}
             </div>
             
-            <span className={`
-              text-lg ${value === option.value ? 'font-semibold' : ''}
-            `}>
-              {option.label}
-            </span>
+            <div className="flex-1">
+              <div className={`
+                text-base leading-relaxed ${value === option.value ? 'font-semibold text-gray-900' : 'text-gray-700'}
+              `}>
+                {option.label}
+              </div>
+            </div>
           </div>
         </motion.label>
-      ))}
+        ))}
+      </div>
       
-      {error && (
-        <motion.p
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-red-500 text-sm mt-2"
-        >
-          {error}
-        </motion.p>
-      )}
+      {/* Reserve space for error message to prevent content shift */}
+      <div className="h-6 mt-2 flex-shrink-0">
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-red-500 text-sm"
+          >
+            {error}
+          </motion.p>
+        )}
+      </div>
     </div>
   );
 };

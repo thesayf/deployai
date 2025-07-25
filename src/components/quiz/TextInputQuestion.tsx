@@ -16,48 +16,53 @@ export const TextInputQuestion: React.FC<TextInputQuestionProps> = ({
   error,
 }) => {
   return (
-    <div>
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={question.placeholder}
-        maxLength={question.maxLength}
-        className={`
-          w-full px-4 py-3 text-lg
-          border-3 border-black
-          shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
-          focus:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
-          focus:-translate-x-0.5 focus:-translate-y-0.5
-          transition-all duration-200
-          outline-none
-          ${error ? 'border-red-500' : ''}
-        `}
-      />
-      
-      <div className="flex justify-between items-center mt-2">
-        {question.minLength && (
-          <p className="text-sm text-gray-600">
-            Minimum {question.minLength} characters
-          </p>
-        )}
-        
-        {question.maxLength && (
-          <p className={`text-sm ${value.length > question.maxLength * 0.9 ? 'text-orange-600' : 'text-gray-600'}`}>
-            {value.length}/{question.maxLength}
+    <div className="flex flex-col justify-center h-full">
+      {/* Always reserve space for subtitle - consistent spacing */}
+      <div className="h-12 mb-3">
+        {question.subtitle && (
+          <p className="text-sm text-gray-600 leading-relaxed italic">
+            {question.subtitle}
           </p>
         )}
       </div>
       
-      {error && (
-        <motion.p
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-red-500 text-sm mt-2"
-        >
-          {error}
-        </motion.p>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={question.placeholder?.split(',')[0] + '...' || 'Type your answer here...'}
+        maxLength={question.maxLength}
+        className={`
+          w-full px-6 py-4 text-lg
+          bg-gray-100 rounded-lg
+          focus:bg-gray-200
+          transition-all duration-200
+          outline-none
+          placeholder-gray-500
+        `}
+      />
+      
+      {/* Only show character count when approaching limit */}
+      {question.maxLength && value.length > question.maxLength * 0.8 && (
+        <div className="flex justify-end mt-2">
+          <p className={`text-sm ${value.length > question.maxLength * 0.9 ? 'text-orange-600' : 'text-gray-600'}`}>
+            {value.length}/{question.maxLength}
+          </p>
+        </div>
       )}
+      
+      {/* Reserve space for error message to prevent content shift */}
+      <div className="h-6 mt-2">
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-red-500 text-sm"
+          >
+            {error}
+          </motion.p>
+        )}
+      </div>
     </div>
   );
 };

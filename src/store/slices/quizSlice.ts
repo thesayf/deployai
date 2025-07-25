@@ -34,21 +34,31 @@ const saveState = (state: QuizState) => {
   }
 };
 
-// Initial state
-const initialState: QuizState = {
-  userInfo: null,
-  quizId: null,
-  currentStep: 1,
-  responses: {},
-  totalScore: 0,
-  isModalOpen: false,
-  isSubmitting: false,
-  processingStage: null,
-  reportId: null,
-  reportContent: null,
-  error: null,
-  ...loadState(), // Merge with loaded state
+// Initial state - don't load from localStorage during SSR
+const getInitialState = (): QuizState => {
+  const baseState: QuizState = {
+    userInfo: null,
+    quizId: null,
+    currentStep: 1,
+    responses: {},
+    totalScore: 0,
+    isModalOpen: false,
+    isSubmitting: false,
+    processingStage: null,
+    reportId: null,
+    reportContent: null,
+    error: null,
+  };
+  
+  // Only load from localStorage on client side
+  if (typeof window !== 'undefined') {
+    return { ...baseState, ...loadState() };
+  }
+  
+  return baseState;
 };
+
+const initialState = getInitialState();
 
 // Quiz slice
 const quizSlice = createSlice({
@@ -202,9 +212,11 @@ export default quizSlice.reducer;
 // Selectors
 export const selectQuizState = (state: { quiz: QuizState }) => state.quiz;
 export const selectUserInfo = (state: { quiz: QuizState }) => state.quiz.userInfo;
+export const selectQuizId = (state: { quiz: QuizState }) => state.quiz.quizId;
 export const selectCurrentStep = (state: { quiz: QuizState }) => state.quiz.currentStep;
 export const selectResponses = (state: { quiz: QuizState }) => state.quiz.responses;
 export const selectTotalScore = (state: { quiz: QuizState }) => state.quiz.totalScore;
 export const selectIsModalOpen = (state: { quiz: QuizState }) => state.quiz.isModalOpen;
 export const selectProcessingStage = (state: { quiz: QuizState }) => state.quiz.processingStage;
+export const selectReportId = (state: { quiz: QuizState }) => state.quiz.reportId;
 export const selectError = (state: { quiz: QuizState }) => state.quiz.error;
