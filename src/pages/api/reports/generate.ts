@@ -99,6 +99,24 @@ export default async function handler(
       }
 
       console.log(`Report ${reportId} generated successfully`);
+      
+      // Send report ready email
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
+        await fetch(`${baseUrl}/api/reports/send-report-email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key',
+          },
+          body: JSON.stringify({ reportId }),
+        });
+        console.log(`Report email sent for ${reportId}`);
+      } catch (emailError) {
+        console.error('Failed to send report email:', emailError);
+        // Don't fail the whole process if email fails
+      }
+      
       res.status(200).json({ success: true });
 
     } catch (aiError) {
