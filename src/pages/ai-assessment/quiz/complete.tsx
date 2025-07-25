@@ -1,116 +1,208 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Link from 'next/link';
-import { useAppSelector } from '@/store';
-import { selectUserInfo, selectTotalScore } from '@/store/slices/quizSlice';
-import { ModernNavBar } from '@/components/navigation/ModernNavBar';
-import { Footer } from '@/components/footer/Footer';
-import { SectionWrapper } from '@/components/section-wrapper';
-import { Button } from '@/components/shared/Button';
-import { ScoreCategory } from '@/types/quiz';
+import { useAppSelector, useAppDispatch } from '@/store';
+import { 
+  selectQuizId,
+  selectResponses,
+  selectUserInfo,
+  resetQuiz,
+  selectIsSubmitting,
+  setIsSubmitting
+} from '@/store/slices/quizSlice';
+import { CompleteAnimation } from '@/components/quiz/CompleteAnimation';
+import { SubmitQuizRequest } from '@/types/quiz';
 
 const CompletePage = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  
+  const quizId = useAppSelector(selectQuizId);
+  const responses = useAppSelector(selectResponses);
   const userInfo = useAppSelector(selectUserInfo);
-  const totalScore = useAppSelector(selectTotalScore);
+  const isSubmitting = useAppSelector(selectIsSubmitting);
+  
+  const [isHydrated, setIsHydrated] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Redirect if no user info
-    if (!userInfo) {
-      router.push('/ai-assessment');
-    }
-  }, [userInfo, router]);
+    setIsHydrated(true);
+  }, []);
 
-  if (!userInfo) {
+  useEffect(() => {
+    // Redirect if no quiz data
+    if (isHydrated && (!userInfo || !quizId)) {
+      router.push('/ai-assessment');
+      return;
+    }
+
+    // Submit quiz if not already submitted
+    if (isHydrated && userInfo && quizId && !submitted && !isSubmitting) {
+      submitQuiz();
+    }
+  }, [isHydrated, userInfo, quizId, submitted, isSubmitting]);
+
+  const submitQuiz = async () => {
+    if (!quizId || isSubmitting) return;
+
+    dispatch(setIsSubmitting(true));
+    setError(null);
+
+    try {
+      const response = await fetch('/api/quiz/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quizId,
+          finalResponses: responses
+        } as SubmitQuizRequest),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to submit quiz');
+      }
+
+      setSubmitted(true);
+      
+      // Send confirmation email
+      try {
+        await fetch('/api/quiz/send-confirmation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            quizId,
+            reportId: data.reportId,
+            userEmail: userInfo.email,
+            firstName: userInfo.firstName,
+            lastName: userInfo.lastName,
+            company: userInfo.company
+          }),
+        });
+      } catch (emailError) {
+        console.error('Failed to send confirmation email:', emailError);
+        // Don't fail the whole process if email fails
+      }
+
+    } catch (error) {
+      console.error('Failed to submit quiz:', error);
+      setError(error instanceof Error ? error.message : 'Failed to submit quiz');
+    } finally {
+      dispatch(setIsSubmitting(false));
+    }
+  };
+
+  if (!isHydrated) {
     return null;
   }
 
-  // Determine score category
-  const getScoreCategory = (score: number): ScoreCategory => {
-    if (score >= 35) return 'High AI Readiness';
-    if (score >= 25) return 'Medium AI Readiness';
-    return 'Early Stage';
-  };
-
-  const category = getScoreCategory(totalScore);
+  if (!userInfo || !quizId) {
+    return null; // Will redirect
+  }
 
   return (
     <>
       <Head>
-        <title>Assessment Complete | deployAI Studio</title>
+        <title>Assessment Complete | AI Readiness Assessment</title>
       </Head>
 
-      <ModernNavBar />
+      <main className="h-screen bg-white flex flex-col overflow-hidden">
+        {/* Top section with logo/brand */}
+        <div className="bg-[#457B9D] h-24 flex items-center justify-center flex-shrink-0">
+          <img src="/logo.png" alt="deployAI" className="h-10 w-auto filter brightness-0 invert" />
+        </div>
 
-      <main>
-        <SectionWrapper variant="default" spacing="large">
-          <div className="max-w-2xl mx-auto text-center">
-            {/* Success icon */}
-            <div className="mb-8">
-              <div className="w-24 h-24 mx-auto bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
-                <span className="text-4xl text-white">✓</span>
-              </div>
-            </div>
-
-            <h1 className="text-4xl font-bold mb-4">
-              Assessment Complete!
-            </h1>
-
-            <p className="text-xl text-gray-600 mb-8">
-              Thank you, {userInfo.firstName}! Your personalized AI readiness report has been sent to {userInfo.email}.
-            </p>
-
-            {/* Score preview */}
-            <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-8 mb-8">
-              <h2 className="text-2xl font-bold mb-4">Your AI Readiness Score</h2>
-              <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500 mb-2">
-                {totalScore}/50
-              </div>
-              <p className="text-lg font-semibold">{category}</p>
-            </div>
-
-            {/* Next steps */}
-            <div className="space-y-4">
-              <p className="text-lg">
-                Check your email for your complete report including:
-              </p>
-              <ul className="text-left max-w-md mx-auto space-y-2">
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Industry-specific AI opportunities</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Personalized implementation roadmap</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Technology recommendations</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>Next steps and action items</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* CTA */}
-            <div className="mt-12 space-y-4">
-              <Link href="/contact">
-                <Button size="large" intent="cta">
-                  Schedule a Free Consultation
-                </Button>
-              </Link>
-              <p className="text-sm text-gray-600">
-                Ready to implement AI in your business? Let's discuss your results.
-              </p>
+        {/* Main content area */}
+        <div className="flex-1 flex items-center justify-center px-4">
+          <div className="w-full max-w-md">
+            <div className="bg-white border border-gray-300 rounded-lg p-8 text-center">
+              {error ? (
+                <>
+                  <div className="w-16 h-16 mx-auto mb-6 text-red-500">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                      <path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                    Something went wrong
+                  </h2>
+                  <p className="text-gray-600 mb-6">
+                    {error}
+                  </p>
+                  <button
+                    onClick={() => {
+                      setError(null);
+                      setSubmitted(false);
+                      submitQuiz();
+                    }}
+                    className="bg-[#457B9D] text-white px-6 py-3 rounded-lg hover:bg-[#3a6a89] transition-colors"
+                  >
+                    Try Again
+                  </button>
+                </>
+              ) : isSubmitting ? (
+                <>
+                  <div className="w-16 h-16 mx-auto mb-6">
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#457B9D]"></div>
+                  </div>
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                    Processing your assessment...
+                  </h2>
+                  <p className="text-gray-600">
+                    Please wait while we submit your responses.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <CompleteAnimation />
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                    Complete!
+                  </h2>
+                  <p className="text-gray-600 mb-6">
+                    We are generating your report and will send it to your email when it is ready. You may close this page.
+                  </p>
+                  <div className="space-y-3">
+                    <button
+                      onClick={() => {
+                        dispatch(resetQuiz());
+                        router.push('/ai-assessment');
+                      }}
+                      className="w-full bg-[#457B9D] text-white px-6 py-3 rounded-lg hover:bg-[#3a6a89] transition-colors"
+                    >
+                      Take Another Assessment
+                    </button>
+                    <button
+                      onClick={() => router.push('/')}
+                      className="w-full bg-white text-[#457B9D] border border-[#457B9D] px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      Return to Homepage
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
-        </SectionWrapper>
-      </main>
+        </div>
 
-      <Footer />
+        {/* Bottom progress bar - always at 100% */}
+        <div className="bg-gray-100 px-4 py-4 flex-shrink-0">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+              <span>100% Complete</span>
+              <span className="text-xs text-gray-500">Powered by deployAI</span>
+            </div>
+            <div className="w-full bg-gray-300 rounded-full h-2">
+              <div 
+                className="bg-[#457B9D] h-2 rounded-full transition-all duration-300"
+                style={{ width: '100%' }}
+              />
+            </div>
+          </div>
+        </div>
+      </main>
     </>
   );
 };
