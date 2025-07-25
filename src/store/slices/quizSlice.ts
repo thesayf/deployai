@@ -218,5 +218,6 @@ export const selectResponses = (state: { quiz: QuizState }) => state.quiz.respon
 export const selectTotalScore = (state: { quiz: QuizState }) => state.quiz.totalScore;
 export const selectIsModalOpen = (state: { quiz: QuizState }) => state.quiz.isModalOpen;
 export const selectProcessingStage = (state: { quiz: QuizState }) => state.quiz.processingStage;
+export const selectIsSubmitting = (state: { quiz: QuizState }) => state.quiz.isSubmitting;
 export const selectReportId = (state: { quiz: QuizState }) => state.quiz.reportId;
 export const selectError = (state: { quiz: QuizState }) => state.quiz.error;

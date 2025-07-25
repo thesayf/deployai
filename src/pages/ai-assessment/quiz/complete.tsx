@@ -8,7 +8,7 @@ import {
   selectUserInfo,
   resetQuiz,
   selectIsSubmitting,
-  setIsSubmitting
+  setSubmitting
 } from '@/store/slices/quizSlice';
 import { CompleteAnimation } from '@/components/quiz/CompleteAnimation';
 import { SubmitQuizRequest } from '@/types/quiz';
@@ -46,7 +46,7 @@ const CompletePage = () => {
   const submitQuiz = async () => {
     if (!quizId || isSubmitting) return;
 
-    dispatch(setIsSubmitting(true));
+    dispatch(setSubmitting(true));
     setError(null);
 
     try {
@@ -90,7 +90,7 @@ const CompletePage = () => {
       console.error('Failed to submit quiz:', error);
       setError(error instanceof Error ? error.message : 'Failed to submit quiz');
     } finally {
-      dispatch(setIsSubmitting(false));
+      dispatch(setSubmitting(false));
     }
   };
 
