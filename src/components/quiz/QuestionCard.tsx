@@ -86,14 +86,14 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
       className="flex flex-col h-full"
     >
       {/* Question Input - Fixed viewport height container */}
-      <div className="h-[50vh] max-h-[500px] flex items-center">
+      <div className="h-[50vh] max-h-[500px] flex items-center pb-24 md:pb-0">
         <div className="w-full h-full">
           {renderQuestionInput()}
         </div>
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="flex justify-center gap-4 pt-4 flex-shrink-0">
+      {/* Navigation Buttons - Fixed on mobile, static on desktop */}
+      <div className="fixed bottom-20 left-0 right-0 px-4 md:relative md:bottom-auto md:left-auto md:right-auto md:px-0 bg-white py-4 shadow-lg md:bg-transparent md:py-0 md:shadow-none flex justify-center gap-4 flex-shrink-0">
         {!isFirst && (
           <button
             onClick={onPrevious}
