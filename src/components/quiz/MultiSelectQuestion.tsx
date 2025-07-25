@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { QuizQuestion } from '@/types/quiz';
 
@@ -15,6 +15,30 @@ export const MultiSelectQuestion: React.FC<MultiSelectQuestionProps> = ({
   onChange,
   error,
 }) => {
+  const [showGradient, setShowGradient] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const checkScroll = () => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const hasOverflow = container.scrollHeight > container.clientHeight;
+      const isAtBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 5;
+      setShowGradient(hasOverflow && !isAtBottom);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', checkScroll);
+      window.addEventListener('resize', checkScroll);
+      return () => {
+        container.removeEventListener('scroll', checkScroll);
+        window.removeEventListener('resize', checkScroll);
+      };
+    }
+  }, [question.options]);
   const handleOptionToggle = (optionValue: string) => {
     if (value.includes(optionValue)) {
       // Remove the option
@@ -50,7 +74,12 @@ export const MultiSelectQuestion: React.FC<MultiSelectQuestionProps> = ({
       </div>
       
       {/* Scrollable container for options */}
-      <div className="flex-1 overflow-y-auto pr-2 space-y-2" style={{ scrollbarWidth: 'thin' }}>
+      <div className="relative flex-1 min-h-0">
+        <div 
+          ref={scrollContainerRef}
+          className="absolute inset-0 overflow-y-auto pr-2 space-y-2" 
+          style={{ scrollbarWidth: 'thin' }}
+        >
         {question.options?.map((option, index) => (
         <motion.label
           key={option.value}
@@ -112,6 +141,15 @@ export const MultiSelectQuestion: React.FC<MultiSelectQuestionProps> = ({
           </div>
         </motion.label>
         ))}
+        </div>
+        
+        {/* Scroll indicator gradient */}
+        <div 
+          className={`absolute bottom-0 left-0 right-0 h-16 pointer-events-none transition-opacity duration-300 ${showGradient ? 'opacity-100' : 'opacity-0'}`}
+          style={{
+            background: 'linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.9))'
+          }}
+        />
       </div>
       
       {/* Reserve space for error message to prevent content shift */}
