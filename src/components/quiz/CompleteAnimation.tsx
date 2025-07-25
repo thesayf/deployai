@@ -21,9 +21,11 @@ export const CompleteAnimation: React.FC = () => {
           r="10"
           stroke="#457B9D"
           strokeWidth="2"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 0.5 }}
+          fill="none"
+          strokeDasharray="62.83185307179586"
+          initial={{ strokeDashoffset: 62.83185307179586 }}
+          animate={{ strokeDashoffset: 0 }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
         />
         <motion.path
           d="M7 12l3 3 7-7"
@@ -31,9 +33,10 @@ export const CompleteAnimation: React.FC = () => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
+          fill="none"
           initial={{ pathLength: 0 }}
           animate={{ pathLength: 1 }}
-          transition={{ delay: 0.5, duration: 0.3 }}
+          transition={{ delay: 0.8, duration: 0.4, ease: "easeOut" }}
         />
       </svg>
     </motion.div>
