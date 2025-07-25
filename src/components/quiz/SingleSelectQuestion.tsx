@@ -59,7 +59,7 @@ export const SingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
             block cursor-pointer p-4 rounded-lg
             transition-all duration-200
             ${value === option.value 
-              ? 'bg-emerald-100' 
+              ? 'bg-blue-100' 
               : 'bg-gray-100 hover:bg-gray-200'
             }
           `}
@@ -77,7 +77,7 @@ export const SingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
             {/* Custom Radio Button */}
             <div className={`
               w-5 h-5 rounded-full mr-4 flex-shrink-0 transition-colors mt-1
-              ${value === option.value ? 'bg-emerald-400' : 'bg-gray-300'}
+              ${value === option.value ? 'bg-[#457B9D]' : 'bg-gray-300'}
             `}>
               {value === option.value && (
                 <motion.div

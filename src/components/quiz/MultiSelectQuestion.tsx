@@ -90,7 +90,7 @@ export const MultiSelectQuestion: React.FC<MultiSelectQuestionProps> = ({
             block cursor-pointer p-4 rounded-lg
             transition-all duration-200
             ${value.includes(option.value) 
-              ? 'bg-emerald-100' 
+              ? 'bg-blue-100' 
               : 'bg-gray-100 hover:bg-gray-200'
             }
             ${isOptionDisabled(option.value) ? 'opacity-50 cursor-not-allowed' : ''}
@@ -109,7 +109,7 @@ export const MultiSelectQuestion: React.FC<MultiSelectQuestionProps> = ({
             {/* Custom Checkbox */}
             <div className={`
               w-5 h-5 rounded mr-4 flex-shrink-0 mt-1
-              ${value.includes(option.value) ? 'bg-emerald-400' : 'bg-gray-300'}
+              ${value.includes(option.value) ? 'bg-[#457B9D]' : 'bg-gray-300'}
             `}>
               {value.includes(option.value) && (
                 <motion.svg

@@ -182,13 +182,8 @@ const QuizStep = () => {
 
       <main className="h-screen bg-white flex flex-col overflow-hidden">
         {/* Top section with logo/brand */}
-        <div className="bg-gradient-to-r from-emerald-400 to-teal-400 h-24 flex items-center justify-center flex-shrink-0">
-          <div className="text-2xl font-bold text-black flex items-center gap-2">
-            <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
-              <span className="text-white text-xl">✦</span>
-            </div>
-            <span>deployAI</span>
-          </div>
+        <div className="bg-[#457B9D] h-24 flex items-center justify-center flex-shrink-0">
+          <img src="/logo.png" alt="deployAI" className="h-10 w-auto filter brightness-0 invert" />
         </div>
 
         {/* Main content area */}
@@ -227,7 +222,7 @@ const QuizStep = () => {
             </div>
             <div className="w-full bg-gray-300 rounded-full h-2">
               <div 
-                className="bg-gradient-to-r from-emerald-400 to-teal-400 h-2 rounded-full transition-all duration-300"
+                className="bg-[#457B9D] h-2 rounded-full transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>
