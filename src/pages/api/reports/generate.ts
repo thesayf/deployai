@@ -2,19 +2,39 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
 import { generateAIContent } from '@/lib/anthropic';
 import { calculateQuizScore } from '@/utils/scoring';
+import { generateStage1SystemPrompt, generateStage1UserPrompt } from '@/prompts/stage1-intelligence';
+import { generateStage2SystemPrompt, generateStage2UserPrompt } from '@/prompts/stage2-market';
+import { generateStage3SystemPrompt, generateStage3UserPrompt } from '@/prompts/stage3-financial';
+import { generateStage4SystemPrompt, generateStage4UserPrompt } from '@/prompts/stage4-strategic';
 import { 
-  generateStage1SystemPrompt, 
-  generateStage1AnalysisPrompt 
-} from '@/prompts/stage1-assessment';
-import { 
-  generateStage2SystemPrompt, 
-  generateStage2EnhancedPrompt 
-} from '@/prompts/stage2-recommendations';
-import { QuizResponseData } from '@/types/quiz';
+  parseStage1Response, 
+  parseStage2Response, 
+  parseStage3Response, 
+  parseStage4Response,
+  extractErrorFromResponse 
+} from '@/utils/ai-parser';
+import { QuizResponseData, UserInfo } from '@/types/quiz';
 
 interface GenerateReportRequest {
   quizResponseId: string;
   reportId: string;
+}
+
+// Helper function to update report with error info
+async function updateReportError(
+  supabase: any,
+  reportId: string,
+  stage: number,
+  errorMessage: string
+) {
+  await supabase
+    .from('ai_reports')
+    .update({
+      report_status: 'failed',
+      failed_at_stage: stage,
+      error_message: errorMessage,
+    })
+    .eq('id', reportId);
 }
 
 export default async function handler(
@@ -53,50 +73,125 @@ export default async function handler(
     }
 
     const responses = quizData.responses as QuizResponseData;
+    const userInfo: UserInfo = {
+      email: quizData.user_email,
+      firstName: quizData.user_first_name,
+      lastName: quizData.user_last_name,
+      company: quizData.user_company,
+    };
     
     // Calculate score
     const scoreResult = calculateQuizScore(responses);
 
     try {
-      // Generate Stage 1 content
-      console.log('Generating Stage 1 AI assessment...');
-      const stage1Content = await generateAIContent(
+      // Stage 1: Intelligence Analysis
+      console.log('Starting Stage 1: Intelligence Analysis...');
+      const stage1Response = await generateAIContent(
         generateStage1SystemPrompt(),
-        generateStage1AnalysisPrompt(responses, scoreResult),
-        6000 // Higher token limit for comprehensive analysis
+        generateStage1UserPrompt(responses, scoreResult, userInfo),
+        6000
       );
 
-      // Update report with Stage 1 content
+      let stage1Analysis;
+      try {
+        stage1Analysis = parseStage1Response(stage1Response);
+      } catch (parseError) {
+        console.error('Failed to parse Stage 1 response:', parseError);
+        const errorDetails = extractErrorFromResponse(stage1Response, 1);
+        await updateReportError(supabase, reportId, 1, errorDetails.error);
+        throw new Error(`Stage 1 parsing failed: ${errorDetails.error}`);
+      }
+
       await supabase
         .from('ai_reports')
         .update({
-          stage1_content: stage1Content,
+          stage1_analysis: stage1Analysis,
           report_status: 'stage1_complete',
-          updated_at: new Date().toISOString(),
         })
         .eq('id', reportId);
 
-      // Generate Stage 2 content
-      console.log('Generating Stage 2 recommendations...');
-      const stage2Content = await generateAIContent(
+      // Stage 2: Market Intelligence (with web search)
+      console.log('Starting Stage 2: Market Intelligence with web search...');
+      const stage2Response = await generateAIContent(
         generateStage2SystemPrompt(),
-        generateStage2EnhancedPrompt(responses, scoreResult, stage1Content),
-        8000 // Even higher limit for detailed recommendations
+        generateStage2UserPrompt(responses, stage1Analysis, userInfo),
+        8000,
+        [{
+          type: 'web_search_20250305',
+          name: 'web_search',
+          max_uses: 10  // Allow up to 10 searches for comprehensive market research
+        }]
       );
 
-      // Update report with Stage 2 content and mark as complete
-      const { error: finalUpdateError } = await supabase
+      let stage2Market;
+      try {
+        stage2Market = parseStage2Response(stage2Response);
+      } catch (parseError) {
+        console.error('Failed to parse Stage 2 response:', parseError);
+        const errorDetails = extractErrorFromResponse(stage2Response, 2);
+        await updateReportError(supabase, reportId, 2, errorDetails.error);
+        throw new Error(`Stage 2 parsing failed: ${errorDetails.error}`);
+      }
+
+      await supabase
         .from('ai_reports')
         .update({
-          stage2_content: stage2Content,
-          report_status: 'completed',
-          updated_at: new Date().toISOString(),
+          stage2_market: stage2Market,
+          report_status: 'stage2_complete',
         })
         .eq('id', reportId);
 
-      if (finalUpdateError) {
-        throw finalUpdateError;
+      // Stage 3: Financial Analysis
+      console.log('Starting Stage 3: Financial Analysis...');
+      const stage3Response = await generateAIContent(
+        generateStage3SystemPrompt(),
+        generateStage3UserPrompt(responses, stage1Analysis, stage2Market, userInfo),
+        8000
+      );
+
+      let stage3Financial;
+      try {
+        stage3Financial = parseStage3Response(stage3Response);
+      } catch (parseError) {
+        console.error('Failed to parse Stage 3 response:', parseError);
+        const errorDetails = extractErrorFromResponse(stage3Response, 3);
+        await updateReportError(supabase, reportId, 3, errorDetails.error);
+        throw new Error(`Stage 3 parsing failed: ${errorDetails.error}`);
       }
+
+      await supabase
+        .from('ai_reports')
+        .update({
+          stage3_financial: stage3Financial,
+          report_status: 'stage3_complete',
+        })
+        .eq('id', reportId);
+
+      // Stage 4: Strategic Recommendations
+      console.log('Starting Stage 4: Strategic Recommendations...');
+      const stage4Response = await generateAIContent(
+        generateStage4SystemPrompt(),
+        generateStage4UserPrompt(responses, stage1Analysis, stage2Market, stage3Financial, userInfo),
+        10000
+      );
+
+      let stage4Strategic;
+      try {
+        stage4Strategic = parseStage4Response(stage4Response);
+      } catch (parseError) {
+        console.error('Failed to parse Stage 4 response:', parseError);
+        const errorDetails = extractErrorFromResponse(stage4Response, 4);
+        await updateReportError(supabase, reportId, 4, errorDetails.error);
+        throw new Error(`Stage 4 parsing failed: ${errorDetails.error}`);
+      }
+
+      await supabase
+        .from('ai_reports')
+        .update({
+          stage4_strategic: stage4Strategic,
+          report_status: 'completed',
+        })
+        .eq('id', reportId);
 
       console.log(`Report ${reportId} generated successfully`);
       
@@ -114,7 +209,6 @@ export default async function handler(
         console.log(`Report email sent for ${reportId}`);
       } catch (emailError) {
         console.error('Failed to send report email:', emailError);
-        // Don't fail the whole process if email fails
       }
       
       res.status(200).json({ success: true });
@@ -122,12 +216,11 @@ export default async function handler(
     } catch (aiError) {
       console.error('AI generation error:', aiError);
       
-      // Update report status to failed
+      // Update report status to failed if not already updated
       await supabase
         .from('ai_reports')
         .update({
           report_status: 'failed',
-          updated_at: new Date().toISOString(),
         })
         .eq('id', reportId);
 

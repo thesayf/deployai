@@ -95,11 +95,11 @@ export default async function handler(
       });
     }
 
-    // Trigger AI report generation asynchronously
+    // Trigger AI report generation asynchronously (Stage 1 first)
     // We'll return immediately and process in the background
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
     
-    fetch(`${baseUrl}/api/reports/generate`, {
+    fetch(`${baseUrl}/api/reports/generate-stage1`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ export default async function handler(
         reportId: report.id,
       }),
     }).catch(error => {
-      console.error('Failed to trigger report generation:', error);
+      console.error('Failed to trigger stage 1 generation:', error);
     });
 
     res.status(200).json({
