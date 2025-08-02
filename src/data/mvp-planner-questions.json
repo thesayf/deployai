@@ -1,0 +1,52 @@
+{
+  "questions": [
+    {
+      "id": "question1",
+      "questionNumber": 1,
+      "title": "Placeholder Question 1",
+      "subtitle": "This is a placeholder - replace with your actual question",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "option1", "label": "Option 1", "points": 1},
+        {"value": "option2", "label": "Option 2", "points": 2},
+        {"value": "option3", "label": "Option 3", "points": 3}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "question2",
+      "questionNumber": 2,
+      "title": "Placeholder Question 2",
+      "type": "textarea",
+      "required": true,
+      "maxLength": 500,
+      "minLength": 10,
+      "placeholder": "Enter your response here...",
+      "scoring": {
+        "type": "contextual"
+      }
+    },
+    {
+      "id": "question3",
+      "questionNumber": 3,
+      "title": "Placeholder Question 3",
+      "subtitle": "Select multiple options",
+      "type": "multi-select",
+      "required": true,
+      "maxSelections": 3,
+      "minSelections": 1,
+      "options": [
+        {"value": "option1", "label": "Option 1", "points": 1},
+        {"value": "option2", "label": "Option 2", "points": 2},
+        {"value": "option3", "label": "Option 3", "points": 3},
+        {"value": "option4", "label": "Option 4", "points": 4}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    }
+  ]
+}

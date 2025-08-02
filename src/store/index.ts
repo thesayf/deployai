@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import quizReducer from './slices/quizSlice';
+import mvpPlannerReducer from './slices/mvpPlannerSlice';
 
 export const store = configureStore({
   reducer: {
     quiz: quizReducer,
+    mvpPlanner: mvpPlannerReducer,
   },
 });
 

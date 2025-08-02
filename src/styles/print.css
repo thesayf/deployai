@@ -1,0 +1,71 @@
+/* Print styles for MVP Blueprint */
+@media print {
+  /* Hide navigation and footer */
+  nav,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Reset page margins */
+  @page {
+    margin: 1cm;
+    size: A4;
+  }
+
+  /* Remove backgrounds and shadows for better printing */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Ensure text is black for better contrast */
+  body {
+    color: #000 !important;
+    background: #fff !important;
+  }
+
+  /* Adjust borders for printing */
+  .border-3 {
+    border-width: 2px !important;
+  }
+
+  /* Keep backgrounds for important elements */
+  .bg-gradient-to-r {
+    background: #f0f0f0 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Ensure sections don't break across pages */
+  section {
+    page-break-inside: avoid;
+  }
+
+  /* Add spacing between sections */
+  section + section {
+    margin-top: 2rem;
+  }
+
+  /* Adjust button styles for print */
+  button {
+    border: 2px solid #000 !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  /* Timeline items should stay together */
+  .timeline-item {
+    page-break-inside: avoid;
+  }
+
+  /* Tech cards should stay together */
+  .tech-card {
+    page-break-inside: avoid;
+  }
+
+  /* Hide CTAs in print */
+  .print\\:hidden {
+    display: none !important;
+  }
+}
