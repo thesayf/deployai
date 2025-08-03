@@ -3,8 +3,7 @@
 export interface MVPPlannerUserInfo {
   email: string;
   firstName: string;
-  lastName: string;
-  company?: string;
+  projectName: string;
 }
 
 export interface MVPPlannerResponseData {
@@ -54,8 +53,7 @@ export interface MVPPlannerState {
 export interface StartMVPPlannerRequest {
   email: string;
   firstName: string;
-  lastName: string;
-  company?: string;
+  projectName: string;
 }
 
 export interface StartMVPPlannerResponse {
@@ -94,6 +92,7 @@ export type MVPPlannerQuestionType = 'single-select' | 'multi-select' | 'text' |
 export interface MVPPlannerQuestionOption {
   value: string;
   label: string;
+  description?: string;
   points?: number;
 }
 
@@ -119,6 +118,5 @@ export interface MVPPlannerQuestion {
 export interface MVPPlannerEmailCaptureFormData {
   email: string;
   firstName: string;
-  lastName: string;
-  company?: string;
+  projectName: string;
 }

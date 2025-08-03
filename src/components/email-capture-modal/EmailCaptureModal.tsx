@@ -8,16 +8,15 @@ import { EmailCaptureFormData } from '@/types/quiz';
 
 // Validation schema
 const emailCaptureSchema = z.object({
+  firstName: z.string()
+    .min(1, 'Name is required')
+    .min(2, 'Name must be at least 2 characters'),
+  projectName: z.string()
+    .min(1, 'Project name is required')
+    .min(2, 'Project name must be at least 2 characters'),
   email: z.string()
     .min(1, 'Email is required')
     .email('Please enter a valid email address'),
-  firstName: z.string()
-    .min(1, 'First name is required')
-    .min(2, 'First name must be at least 2 characters'),
-  lastName: z.string()
-    .min(1, 'Last name is required')
-    .min(2, 'Last name must be at least 2 characters'),
-  company: z.string().optional(),
 });
 
 interface EmailCaptureModalProps {
@@ -93,56 +92,53 @@ export const EmailCaptureModal: React.FC<EmailCaptureModalProps> = ({
 
               {/* Modal content */}
               <p className="text-center mb-6 text-gray-700">
-                Enter your details below to start the scorecard
+                Enter your details to get your MVP blueprint
               </p>
 
               {/* Form */}
               <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-3">
-                {/* Name fields row */}
-                <div className="grid grid-cols-2 gap-3">
-                  {/* First name field */}
-                  <div>
-                    <label htmlFor="firstName" className="block text-sm font-semibold mb-1">
-                      First Name
-                    </label>
-                    <input
-                      {...register('firstName')}
-                      type="text"
-                      id="firstName"
-                      className={`
-                        w-full px-3 py-3 bg-white rounded-md
-                        transition-all outline-none text-sm
-                        ${errors.firstName ? 'ring-2 ring-red-500' : ''}
-                      `}
-                      placeholder="John"
-                      disabled={isSubmitting}
-                    />
-                    {errors.firstName && (
-                      <p className="text-red-500 text-xs mt-1">{errors.firstName.message}</p>
-                    )}
-                  </div>
+                {/* Name field */}
+                <div>
+                  <label htmlFor="firstName" className="block text-sm font-semibold mb-1">
+                    Your Name
+                  </label>
+                  <input
+                    {...register('firstName')}
+                    type="text"
+                    id="firstName"
+                    className={`
+                      w-full px-3 py-3 bg-white rounded-md
+                      transition-all outline-none text-sm
+                      ${errors.firstName ? 'ring-2 ring-red-500' : ''}
+                    `}
+                    placeholder="John Doe"
+                    disabled={isSubmitting}
+                  />
+                  {errors.firstName && (
+                    <p className="text-red-500 text-xs mt-1">{errors.firstName.message}</p>
+                  )}
+                </div>
 
-                  {/* Last name field */}
-                  <div>
-                    <label htmlFor="lastName" className="block text-sm font-semibold mb-1">
-                      Last Name
-                    </label>
-                    <input
-                      {...register('lastName')}
-                      type="text"
-                      id="lastName"
-                      className={`
-                        w-full px-3 py-3 bg-white rounded-md
-                        transition-all outline-none text-sm
-                        ${errors.lastName ? 'ring-2 ring-red-500' : ''}
-                      `}
-                      placeholder="Doe"
-                      disabled={isSubmitting}
-                    />
-                    {errors.lastName && (
-                      <p className="text-red-500 text-xs mt-1">{errors.lastName.message}</p>
-                    )}
-                  </div>
+                {/* Project name field */}
+                <div>
+                  <label htmlFor="projectName" className="block text-sm font-semibold mb-1">
+                    Project Name
+                  </label>
+                  <input
+                    {...register('projectName')}
+                    type="text"
+                    id="projectName"
+                    className={`
+                      w-full px-3 py-3 bg-white rounded-md
+                      transition-all outline-none text-sm
+                      ${errors.projectName ? 'ring-2 ring-red-500' : ''}
+                    `}
+                    placeholder="e.g., TaskFlow Pro"
+                    disabled={isSubmitting}
+                  />
+                  {errors.projectName && (
+                    <p className="text-red-500 text-xs mt-1">{errors.projectName.message}</p>
+                  )}
                 </div>
 
                 {/* Email field */}

@@ -205,8 +205,7 @@ export const SCORE_RANGES = {
 export interface EmailCaptureFormData {
   email: string;
   firstName: string;
-  lastName: string;
-  company?: string;
+  projectName: string;
 }
 
 // Quiz Navigation

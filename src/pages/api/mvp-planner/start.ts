@@ -22,10 +22,10 @@ export default async function handler(
       });
     }
     
-    const { email, firstName, lastName, company } = req.body as StartMVPPlannerRequest;
+    const { email, firstName, projectName } = req.body as StartMVPPlannerRequest;
 
     // Validate required fields
-    if (!email || !firstName || !lastName) {
+    if (!email || !firstName || !projectName) {
       return res.status(400).json({
         success: false,
         quizId: '',
@@ -51,8 +51,7 @@ export default async function handler(
       .insert({
         user_email: email.toLowerCase(),
         user_first_name: firstName,
-        user_last_name: lastName,
-        user_company: company || null,
+        project_name: projectName,
         responses: {},
         started_at: new Date().toISOString(),
       })

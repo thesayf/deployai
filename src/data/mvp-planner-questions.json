@@ -1,48 +1,158 @@
 {
   "questions": [
     {
-      "id": "question1",
+      "id": "appType",
       "questionNumber": 1,
-      "title": "Placeholder Question 1",
-      "subtitle": "This is a placeholder - replace with your actual question",
+      "title": "Which best describes your app?",
       "type": "single-select",
       "required": true,
       "options": [
-        {"value": "option1", "label": "Option 1", "points": 1},
-        {"value": "option2", "label": "Option 2", "points": 2},
-        {"value": "option3", "label": "Option 3", "points": 3}
+        {
+          "value": "marketplace",
+          "label": "Two-sided marketplace",
+          "description": "Connect two groups like Uber connects drivers & riders",
+          "points": 5
+        },
+        {
+          "value": "b2b-saas",
+          "label": "Business tool B2B SaaS",
+          "description": "Help businesses manage something like Slack or Monday.com",
+          "points": 4
+        },
+        {
+          "value": "b2c-app",
+          "label": "Consumer app B2C",
+          "description": "Direct to consumers for personal use like Spotify or Headspace",
+          "points": 3
+        },
+        {
+          "value": "ecommerce",
+          "label": "E-commerce/Shop",
+          "description": "Sell products or services like Amazon or Shopify stores",
+          "points": 3
+        },
+        {
+          "value": "social-platform",
+          "label": "Social/Community platform",
+          "description": "People connect and share content like Instagram or Reddit",
+          "points": 4
+        },
+        {
+          "value": "ai-tool",
+          "label": "AI/Automation tool",
+          "description": "Use AI to automate or generate something like ChatGPT or Jasper",
+          "points": 5
+        },
+        {
+          "value": "internal-tool",
+          "label": "Internal business tool",
+          "description": "Custom software for one company's operations",
+          "points": 2
+        },
+        {
+          "value": "content-platform",
+          "label": "Content/Media platform",
+          "description": "Deliver articles, videos, courses like Netflix or Coursera",
+          "points": 3
+        },
+        {
+          "value": "other",
+          "label": "Other",
+          "points": 3
+        }
       ],
       "scoring": {
         "type": "points"
       }
     },
     {
-      "id": "question2",
+      "id": "appDescription",
       "questionNumber": 2,
-      "title": "Placeholder Question 2",
+      "title": "Describe your app idea in 2-3 sentences",
+      "subtitle": "Example: An app that connects pet owners with trusted dog walkers in their area. Users can book walks, track their dog via GPS, and pay through the app.",
       "type": "textarea",
       "required": true,
-      "maxLength": 500,
-      "minLength": 10,
-      "placeholder": "Enter your response here...",
+      "maxLength": 1000,
+      "minLength": 20,
+      "placeholder": "Tell us about your app idea...",
       "scoring": {
         "type": "contextual"
       }
     },
     {
-      "id": "question3",
+      "id": "problemSolving",
       "questionNumber": 3,
-      "title": "Placeholder Question 3",
-      "subtitle": "Select multiple options",
-      "type": "multi-select",
+      "title": "What problem are you solving?",
+      "subtitle": "What frustrates your users today that your app will fix?",
+      "type": "textarea",
       "required": true,
-      "maxSelections": 3,
-      "minSelections": 1,
+      "maxLength": 1000,
+      "minLength": 20,
+      "placeholder": "Describe the main problem or pain point...",
+      "scoring": {
+        "type": "contextual"
+      }
+    },
+    {
+      "id": "targetUser",
+      "questionNumber": 4,
+      "title": "Who is your ideal first user?",
+      "subtitle": "Example: Busy professionals in Dubai who work long hours and need reliable pet care",
+      "type": "textarea",
+      "required": true,
+      "maxLength": 1000,
+      "minLength": 20,
+      "placeholder": "Describe your target user...",
+      "scoring": {
+        "type": "contextual"
+      }
+    },
+    {
+      "id": "userLogin",
+      "questionNumber": 5,
+      "title": "Do your users need to log in?",
+      "type": "single-select",
+      "required": true,
       "options": [
-        {"value": "option1", "label": "Option 1", "points": 1},
-        {"value": "option2", "label": "Option 2", "points": 2},
-        {"value": "option3", "label": "Option 3", "points": 3},
-        {"value": "option4", "label": "Option 4", "points": 4}
+        {"value": "yes", "label": "Yes - personal accounts needed", "points": 3},
+        {"value": "no", "label": "No - anonymous usage is fine", "points": 1},
+        {"value": "optional", "label": "Optional - some features only", "points": 2}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "monetization",
+      "questionNumber": 6,
+      "title": "How will you make money?",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "subscription", "label": "Monthly subscriptions", "points": 4},
+        {"value": "one-time", "label": "One-time purchase", "points": 2},
+        {"value": "transaction-fees", "label": "Transaction fees (marketplace)", "points": 4},
+        {"value": "freemium", "label": "Freemium (free + paid tier)", "points": 3},
+        {"value": "ads", "label": "Ads", "points": 2},
+        {"value": "not-sure", "label": "Not sure yet", "points": 1},
+        {"value": "other", "label": "Other", "points": 2}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "timeline",
+      "questionNumber": 7,
+      "title": "When do you need this launched?",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "1-4-weeks", "label": "1-4 weeks", "points": 5},
+        {"value": "5-8-weeks", "label": "5-8 weeks", "points": 4},
+        {"value": "9-12-weeks", "label": "9-12 weeks", "points": 3},
+        {"value": "13-16-weeks", "label": "13-16 weeks", "points": 2},
+        {"value": "planning", "label": "Just planning ahead", "points": 1}
       ],
       "scoring": {
         "type": "points"

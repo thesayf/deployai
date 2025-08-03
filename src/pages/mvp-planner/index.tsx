@@ -36,8 +36,7 @@ const MVPPlannerPage = () => {
         dispatch(setUserInfo({
           email: data.email,
           firstName: data.firstName,
-          lastName: data.lastName,
-          company: data.company,
+          projectName: data.projectName,
         }));
         
         // Save quiz ID

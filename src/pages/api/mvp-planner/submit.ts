@@ -58,6 +58,18 @@ export default async function handler(
       });
     }
 
+    // Trigger AI report generation asynchronously
+    fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/mvp-planner/generate-report`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-internal-api-key': process.env.INTERNAL_API_KEY!,
+      },
+      body: JSON.stringify({ reportId: reportData.id }),
+    }).catch(error => {
+      console.error('Error triggering report generation:', error);
+    });
+
     res.status(200).json({
       success: true,
       reportId: reportData.id,
