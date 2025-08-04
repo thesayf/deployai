@@ -17,6 +17,7 @@ interface MVPBlueprintProps {
       cost: number;
       duration: string;
       sizeRationale?: string;
+      simplificationOptions?: string;
       includes: {
         infrastructure: string[];
         coreFeatures: string[];
@@ -44,6 +45,7 @@ interface MVPBlueprintProps {
     database: string;
     apis: string[];
     infrastructure: string;
+    stackRationale?: string;
   };
   timeline: {
     week: number;
@@ -149,13 +151,6 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
               <div className="p-3 bg-white border-2 border-black">
                 <h4 className="font-bold text-lg mb-2">{investment.mvpPackage.name}</h4>
                 <p className="text-gray-600 mb-2">{investment.mvpPackage.duration} development</p>
-                {investment.mvpPackage.sizeRationale && (
-                  <div className="mt-3 p-2 bg-orange-100 border-2 border-orange-500">
-                    <p className="text-xs text-orange-900">
-                      <span className="font-bold">Why this package:</span> {investment.mvpPackage.sizeRationale}
-                    </p>
-                  </div>
-                )}
               </div>
               <div className="p-3 bg-[#212121] text-white">
                 <p className="font-bold mb-2">✅ What's Included:</p>
@@ -191,6 +186,43 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
           </div>
         </div>
       </motion.section>
+
+      {/* Package Explanation Section */}
+      {(investment.mvpPackage.sizeRationale || investment.mvpPackage.simplificationOptions) && (
+        <motion.section
+          className="bg-white p-8 border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.25 }}
+        >
+          <h2 className="text-2xl font-black mb-6 uppercase tracking-wide">Why This Package?</h2>
+          
+          {investment.mvpPackage.sizeRationale && (
+            <div className="mb-6">
+              <p className="text-lg text-gray-700 leading-relaxed">
+                {investment.mvpPackage.sizeRationale}
+              </p>
+            </div>
+          )}
+          
+          {investment.mvpPackage.simplificationOptions && (
+            <div className="bg-blue-50 p-6 border-2 border-blue-300">
+              <h3 className="font-bold text-lg mb-3 flex items-center">
+                💡 Want to reduce costs?
+              </h3>
+              <p className="text-gray-700 mb-4">
+                {investment.mvpPackage.simplificationOptions}
+              </p>
+              <a 
+                href="/mvp-planner" 
+                className="inline-flex items-center text-blue-600 font-bold hover:underline"
+              >
+                Start over with a simpler scope →
+              </a>
+            </div>
+          )}
+        </motion.section>
+      )}
 
       {/* Complete Feature Overview */}
       <motion.section 
@@ -250,7 +282,7 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
         <div className="mb-8">
           <h3 className="text-lg font-bold mb-4 flex items-center uppercase">
             <div className="w-8 h-8 bg-[#FF6B35] border-2 border-black flex items-center justify-center mr-3">
-              <span className="text-white font-black">MVP</span>
+              <span className="text-white font-black text-xs">MVP</span>
             </div>
             Core Business Features
           </h3>
@@ -333,7 +365,7 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
       >
-        <h2 className="text-2xl font-black mb-6 uppercase tracking-wide">Technical Architecture</h2>
+        <h2 className="text-2xl font-black mb-6 uppercase tracking-wide">Tech Stack</h2>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <TechItem label="Frontend" value={techStack.frontend} />
@@ -342,7 +374,7 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
           <TechItem label="Hosting" value={techStack.infrastructure} />
         </div>
 
-        <div className="bg-gray-50 p-6 border-2 border-black">
+        <div className="bg-gray-50 p-6 border-2 border-black mb-6">
           <h3 className="font-bold mb-3 uppercase">Integrations & APIs</h3>
           <div className="flex flex-wrap gap-2">
             {techStack.apis.map((api, idx) => (
@@ -352,6 +384,15 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
             ))}
           </div>
         </div>
+
+        {techStack.stackRationale && (
+          <div className="bg-blue-50 p-6 border-2 border-blue-300">
+            <h3 className="font-bold mb-3 uppercase">Why This Stack?</h3>
+            <p className="text-gray-700">
+              {techStack.stackRationale}
+            </p>
+          </div>
+        )}
       </motion.section>
 
       {/* Development Timeline */}
@@ -361,7 +402,7 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.5 }}
       >
-        <h2 className="text-2xl font-black mb-6 uppercase tracking-wide">4-Week Development Sprint</h2>
+        <h2 className="text-2xl font-black mb-6 uppercase tracking-wide">{investment.mvpPackage.duration} Development Sprint</h2>
         
         <div className="space-y-4">
           {timeline.map((week, idx) => (

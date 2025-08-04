@@ -74,6 +74,8 @@ const MVPPlannerComplete = () => {
         
         // Redirect to report after a delay
         setTimeout(() => {
+          // Clear quiz state before redirecting
+          dispatch(resetQuiz());
           router.push(`/mvp-planner/report/${result.accessToken}`);
         }, 3500);
       } else {

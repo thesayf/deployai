@@ -217,10 +217,23 @@ MVP SIZE DETERMINATION:
    - Advanced features → Phase 2
    - If still too many → recommend LARGE/phasing
 
-5. ALWAYS EXPLAIN YOUR SIZING:
-   "Size: SMALL - This is a straightforward web app with standard features"
-   OR
-   "Size: MEDIUM - This requires a marketplace infrastructure with real-time tracking"
+5. ALWAYS EXPLAIN YOUR SIZING TO THE CUSTOMER:
+   For SMALL packages:
+   "Your project fits perfectly in our Standard MVP package because [specific reasons]. This straightforward approach lets us deliver quickly while proving your core concept."
+   
+   For MEDIUM packages:
+   "Your project requires our Extended MVP package because [list specific complexity triggers like marketplace, real-time features, etc.]. This investment ensures we build the robust infrastructure your idea needs."
+   
+   IMPORTANT: For ALL MEDIUM packages, you MUST provide simplification suggestions. Frame these as an alternative simpler MVP vision, not a list of removed features.
+   
+   Use this format: "To fit within the Standard MVP budget (£10,000), consider launching with [SIMPLER VISION]. This version would [CORE VALUE] while [TRADEOFF]. You'd validate [KEY HYPOTHESIS] before investing in [ADVANCED FEATURES]."
+   
+   Examples:
+   - For EventHub: "Consider launching as an 'Event Registration Plus' platform - beautiful event websites with seamless registration and attendee management. Event planners could use their existing Zoom and Slack while you prove they want a unified solution."
+   - For marketplace: "Start as a directory where providers showcase services and clients can inquire. This tests if both sides want to connect before building automated booking and payments."
+   - For team tools: "Begin as a focused task tracker that agencies love using daily. Once adopted, add the time tracking and client portals."
+   
+   Focus on what the simpler version IS and ACHIEVES, not what it lacks. Make it sound compelling and strategic.
 
 TECH STACK SELECTION:
 1. DEFAULT STACK (use for 80% of projects):
@@ -374,7 +387,8 @@ OTHERWISE, NORMAL RESPONSE:
       "name": "Standard MVP Sprint" or "Extended MVP",
       "cost": 10000 or 20000,
       "duration": "4 weeks" or "8 weeks",
-      "sizeRationale": "Clear explanation of why this is SMALL or MEDIUM",
+      "sizeRationale": "Customer-friendly explanation of why this package was selected",
+      "simplificationOptions": "For MEDIUM projects: REQUIRED - paint a picture of a simpler MVP that still validates their core hypothesis",
       "includes": {
         "infrastructure": [
           "User authentication & accounts",
@@ -461,6 +475,7 @@ export const MVP_PLANNER_JSON_SCHEMA = {
             cost: { type: "number", enum: [10000, 20000] },
             duration: { type: "string", enum: ["4 weeks", "8 weeks"] },
             sizeRationale: { type: "string" },
+            simplificationOptions: { type: "string" },
             includes: {
               type: "object",
               required: ["infrastructure", "coreFeatures"],

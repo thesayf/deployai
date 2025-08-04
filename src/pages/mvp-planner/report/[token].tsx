@@ -180,6 +180,16 @@ const MVPPlannerReport = () => {
 
       <main className="min-h-screen bg-gray-50">
         <SectionWrapper variant="default" spacing="large">
+          {/* Main Title */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
+              Your Custom MVP Development Blueprint
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Based on your requirements, we've created a detailed development plan and investment breakdown for {reportContent.summary.projectName}.
+            </p>
+          </div>
+
           <MVPBlueprint 
             summary={reportContent.summary}
             userCapabilities={reportContent.userCapabilities}
@@ -188,15 +198,6 @@ const MVPPlannerReport = () => {
             timeline={reportContent.timeline}
             features={reportContent.features}
           />
-          
-          {/* Tech Stack Rationale */}
-          {reportContent.techStack.stackRationale && (
-            <div className="mt-8 p-6 bg-blue-50 border-3 border-black">
-              <h3 className="text-xl font-bold mb-3">Why This Tech Stack?</h3>
-              <p className="text-gray-700">{reportContent.techStack.stackRationale}</p>
-            </div>
-          )}
-          
           
           {/* Next Steps CTA */}
           <div className="mt-12 p-8 bg-[#212121] text-white text-center print:hidden">
