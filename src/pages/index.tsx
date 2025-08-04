@@ -12,6 +12,8 @@ import { Footer } from "@/components/footer/Footer";
 import { LogoTicker } from "@/components/logo-ticker/LogoTicker";
 import { StaggerTestimonials } from "@/components/stagger-testimonials/StaggerTestimonials";
 import { SectionWrapper } from "@/components/section-wrapper/SectionWrapper";
+import { MVPBlueprintCTA } from "@/components/mvp-blueprint-cta/MVPBlueprintCTA";
+import { MVPPricingInteractive } from "@/components/mvp-pricing-interactive/MVPPricingInteractive";
 
 const HomePage: React.FC = () => {
   // MVP-specific hero content
@@ -104,6 +106,11 @@ const HomePage: React.FC = () => {
           <ProblemAgitation {...problemContent} />
         </SectionWrapper>
 
+        {/* MVP Blueprint CTA - Option A */}
+        <SectionWrapper variant="warmPeach" spacing="large">
+          <MVPBlueprintCTA />
+        </SectionWrapper>
+
         {/* Process Timeline */}
         <SectionWrapper variant="default" spacing="large">
           <TimelineProcess />
@@ -123,9 +130,18 @@ const HomePage: React.FC = () => {
         {/* Social Proof */}
         <StaggerTestimonials />
 
-        {/* Pricing Section */}
-        <SectionWrapper variant="default" spacing="large">
-          <MVPPricingBrutal 
+        {/* Interactive Pricing Section - Option B */}
+        <SectionWrapper variant="default" spacing="large" id="pricing">
+          <MVPPricingInteractive 
+            title="Simple, Transparent Pricing"
+            subtitle="Get your personalized MVP quote in just 2 minutes"
+          />
+        </SectionWrapper>
+
+        {/* Original Static Pricing (Hidden but kept for reference) */}
+        {false && (
+          <SectionWrapper variant="default" spacing="large">
+            <MVPPricingBrutal 
             title="Simple, Transparent Pricing"
             subtitle="One price. One deliverable. No hidden costs or scope creep."
             price="$10,000"
@@ -174,6 +190,7 @@ const HomePage: React.FC = () => {
             accentColor="blue"
           />
         </SectionWrapper>
+        )}
 
         {/* People Also Ask Section */}
         <SectionWrapper variant="skyBlue" spacing="large">
