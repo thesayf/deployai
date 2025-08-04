@@ -91,13 +91,36 @@ export default async function handler(
       
       reportContent = JSON.parse(cleanedResponse);
       
+      // Check if it's an error response from validation
+      if (reportContent.error === true) {
+        // Update report with validation error
+        await supabase
+          .from('mvp_planner_reports')
+          .update({
+            report_status: 'failed',
+            report_content: JSON.stringify({
+              error: true,
+              message: reportContent.message,
+              issues: reportContent.issues,
+              validationType: 'input_validation'
+            })
+          })
+          .eq('id', reportId);
+        
+        return res.status(400).json({ 
+          error: 'Validation failed',
+          message: reportContent.message,
+          issues: reportContent.issues 
+        });
+      }
+      
       // Basic validation
       if (!reportContent.summary || !reportContent.investment || !reportContent.techStack) {
         throw new Error('Invalid report structure');
       }
       
       // Ensure development cost is at least $10,000
-      if (reportContent.investment.developmentCost < 10000) {
+      if (reportContent.investment?.developmentCost < 10000) {
         reportContent.investment.developmentCost = 10000;
       }
       

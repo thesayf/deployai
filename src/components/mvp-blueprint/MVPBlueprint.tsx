@@ -12,12 +12,21 @@ interface MVPBlueprintProps {
     keyOutcome: string;
   };
   investment: {
-    developmentCost: number;
-    weeklyBreakdown: {
-      week: number;
-      tasks: string[];
+    mvpPackage: {
+      name: string;
       cost: number;
+      duration: string;
+      sizeRationale?: string;
+      includes: {
+        infrastructure: string[];
+        coreFeatures: string[];
+      };
+    };
+    phase2Features: {
+      name: string;
+      rationale: string;
     }[];
+    totalInvestment: number;
     monthlyRunningCosts: {
       min: number;
       max: number;
@@ -42,6 +51,18 @@ interface MVPBlueprintProps {
     description: string;
     deliverables: string[];
   }[];
+  features: {
+    mvp: {
+      name: string;
+      description: string;
+      complexity: string;
+    }[];
+    phase2: {
+      name: string;
+      description: string;
+      complexity: string;
+    }[];
+  };
 }
 
 export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
@@ -49,7 +70,8 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
   investment,
   userCapabilities,
   techStack,
-  timeline
+  timeline,
+  features
 }) => {
   // Consistent color scheme
   const sectionColors = {
@@ -62,7 +84,7 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
 
   return (
     <div className="max-w-5xl mx-auto">
-      {/* Document Header */}
+      {/* App Concept & Executive Summary Combined */}
       <motion.div 
         className="bg-[#212121] text-white p-12 border-3 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-8"
         initial={{ opacity: 0, y: 20 }}
@@ -71,47 +93,39 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
       >
         <h1 className="text-5xl font-black mb-4">{summary.projectName}</h1>
         <p className="text-xl text-gray-300 mb-8">{summary.description}</p>
-        <div className="flex flex-wrap gap-4">
-          <div className="bg-white text-black px-4 py-2 border-2 border-black">
-            <span className="font-bold">Timeline:</span> {summary.timeline}
+        
+        {/* Key Info Grid */}
+        <div className="grid md:grid-cols-2 gap-4 mt-8">
+          <div className="bg-white/10 p-4 border-2 border-white/20 flex items-start gap-3">
+            <span className="text-2xl">🎯</span>
+            <div>
+              <p className="text-sm text-gray-400 mb-1">Target Market</p>
+              <p className="font-bold">{summary.targetMarket}</p>
+            </div>
           </div>
-          <div className="bg-[#FF6B35] text-white px-4 py-2 border-2 border-black">
-            <span className="font-bold">Investment:</span> £{investment.developmentCost.toLocaleString()}
+          <div className="bg-white/10 p-4 border-2 border-white/20 flex items-start gap-3">
+            <span className="text-2xl">🎪</span>
+            <div>
+              <p className="text-sm text-gray-400 mb-1">Main Goal</p>
+              <p className="font-bold">{summary.mainGoal}</p>
+            </div>
+          </div>
+          <div className="bg-white/10 p-4 border-2 border-white/20 flex items-start gap-3">
+            <span className="text-2xl">📊</span>
+            <div>
+              <p className="text-sm text-gray-400 mb-1">Success Metric</p>
+              <p className="font-bold">{summary.keyOutcome}</p>
+            </div>
+          </div>
+          <div className="bg-[#FF6B35] p-4 border-2 border-black flex items-start gap-3">
+            <span className="text-2xl">💼</span>
+            <div>
+              <p className="text-sm mb-1">Package</p>
+              <p className="font-bold text-2xl">{investment.mvpPackage.name}</p>
+            </div>
           </div>
         </div>
       </motion.div>
-
-      {/* Executive Summary */}
-      <motion.section 
-        className="bg-white p-8 border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] mb-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-      >
-        <h2 className="text-2xl font-black mb-6 uppercase tracking-wide">Executive Summary</h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          <InfoBlock 
-            label="Target Market" 
-            value={summary.targetMarket}
-            icon="🎯"
-          />
-          <InfoBlock 
-            label="Main Goal" 
-            value={summary.mainGoal}
-            icon="🎪"
-          />
-          <InfoBlock 
-            label="Timeline" 
-            value={summary.timeline}
-            icon="⏱️"
-          />
-          <InfoBlock 
-            label="Success Metric" 
-            value={summary.keyOutcome}
-            icon="📊"
-          />
-        </div>
-      </motion.section>
 
       {/* Investment Section */}
       <motion.section 
@@ -129,15 +143,29 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
               💰 Development Investment
             </h3>
             <div className="text-3xl font-black mb-4 text-[#212121]">
-              £{investment.developmentCost.toLocaleString()}
+              £{investment.totalInvestment.toLocaleString()}
             </div>
             <div className="space-y-3">
-              {investment.weeklyBreakdown.map((week) => (
-                <div key={week.week} className="flex justify-between items-center p-2 bg-white border border-gray-300">
-                  <span className="font-semibold">Week {week.week}</span>
-                  <span className="font-mono">£{week.cost.toLocaleString()}</span>
-                </div>
-              ))}
+              <div className="p-3 bg-white border-2 border-black">
+                <h4 className="font-bold text-lg mb-2">{investment.mvpPackage.name}</h4>
+                <p className="text-gray-600 mb-2">{investment.mvpPackage.duration} development</p>
+                {investment.mvpPackage.sizeRationale && (
+                  <div className="mt-3 p-2 bg-orange-100 border-2 border-orange-500">
+                    <p className="text-xs text-orange-900">
+                      <span className="font-bold">Why this package:</span> {investment.mvpPackage.sizeRationale}
+                    </p>
+                  </div>
+                )}
+              </div>
+              <div className="p-3 bg-[#212121] text-white">
+                <p className="font-bold mb-2">✅ What's Included:</p>
+                <ul className="text-sm space-y-1">
+                  <li>• Complete infrastructure setup</li>
+                  <li>• {investment.mvpPackage.includes.coreFeatures.length} core business features</li>
+                  <li>• Ready for real users</li>
+                  <li>• 30-day post-launch support</li>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -164,30 +192,138 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
         </div>
       </motion.section>
 
-      {/* User Capabilities */}
+      {/* Complete Feature Overview */}
       <motion.section 
-        className="bg-white p-8 border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] mb-6"
+        className="bg-gradient-to-br from-gray-50 to-white p-8 border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] mb-6 overflow-hidden relative"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
       >
-        <h2 className="text-2xl font-black mb-6 uppercase tracking-wide">MVP Features</h2>
-        <p className="text-gray-600 mb-6">Your users will be able to:</p>
-        
-        <div className="grid md:grid-cols-2 gap-x-8 gap-y-3">
-          {userCapabilities.map((capability, idx) => (
-            <motion.div 
-              key={idx}
-              className="flex items-start gap-3"
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.3 + idx * 0.03 }}
-            >
-              <span className="text-[#00C851] text-xl mt-0.5">●</span>
-              <span className="text-gray-800">{capability}</span>
-            </motion.div>
-          ))}
+        {/* Background Pattern */}
+        <div className="absolute top-0 right-0 w-64 h-64 opacity-5">
+          <div className="absolute inset-0 rotate-45">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className={`absolute border-2 border-black rounded-none ${i % 2 === 0 ? 'bg-[#FF6B35]' : 'bg-[#457B9D]'}`} 
+                   style={{
+                     width: `${(i + 1) * 30}px`,
+                     height: `${(i + 1) * 30}px`,
+                     top: `${i * 15}px`,
+                     left: `${i * 15}px`,
+                   }} />
+            ))}
+          </div>
         </div>
+
+        <h2 className="text-2xl font-black mb-8 uppercase tracking-wide flex items-center">
+          <svg className="w-8 h-8 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+            <path d="M13 2L3 14l9 0l-1 8l10-12h-9l1-8z" />
+          </svg>
+          Complete Feature Breakdown
+        </h2>
+        
+        {/* Infrastructure - Always Included */}
+        <div className="mb-8 bg-white p-6 border-2 border-gray-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]">
+          <h3 className="text-lg font-bold mb-4 flex items-center uppercase">
+            <div className="w-8 h-8 bg-gray-200 border-2 border-black flex items-center justify-center mr-3">
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              </svg>
+            </div>
+            Foundation Layer
+          </h3>
+          <div className="grid md:grid-cols-3 gap-3">
+            {investment.mvpPackage.includes.infrastructure.map((item, idx) => (
+              <div key={idx} className="bg-gray-50 p-3 border border-gray-200 flex items-center gap-2">
+                <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span className="text-sm font-medium">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Core MVP Features */}
+        <div className="mb-8">
+          <h3 className="text-lg font-bold mb-4 flex items-center uppercase">
+            <div className="w-8 h-8 bg-[#FF6B35] border-2 border-black flex items-center justify-center mr-3">
+              <span className="text-white font-black">MVP</span>
+            </div>
+            Core Business Features
+          </h3>
+          <div className="grid md:grid-cols-1 gap-4">
+            {features.mvp.map((feature, idx) => (
+              <motion.div 
+                key={idx} 
+                className="bg-white border-3 border-black shadow-[4px_4px_0px_0px_rgba(255,107,53,1)] p-5 hover:shadow-[6px_6px_0px_0px_rgba(255,107,53,1)] transition-all"
+                whileHover={{ x: -2, y: -2 }}
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-[#FF6B35] border-2 border-black flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-black text-lg">{idx + 1}</span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between">
+                      <h4 className="font-black text-lg uppercase">{feature.name}</h4>
+                      <span className={`px-3 py-1 text-xs font-black uppercase border-2 border-black ${
+                        feature.complexity === 'simple' ? 'bg-[#00C851] text-white' :
+                        feature.complexity === 'complex' ? 'bg-[#E63946] text-white' : 'bg-[#FFB300] text-black'
+                      }`}>
+                        {feature.complexity}
+                      </span>
+                    </div>
+                    <p className="text-gray-700 mt-2">{feature.description}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* User Capabilities */}
+        <div className="mb-8 bg-[#212121] text-white p-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+          <h3 className="text-lg font-bold mb-4 uppercase">User Capabilities</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            {userCapabilities.map((capability, idx) => (
+              <div key={idx} className="flex items-start gap-3">
+                <div className="w-6 h-6 bg-[#00C851] border-2 border-black flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span className="text-sm">{capability}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Phase 2 Features */}
+        {features.phase2 && features.phase2.length > 0 && (
+          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-6 border-2 border-[#457B9D] border-dashed relative overflow-hidden">
+            <div className="absolute top-2 right-2">
+              <span className="bg-[#457B9D] text-white px-3 py-1 text-xs font-black uppercase border-2 border-black">FUTURE</span>
+            </div>
+            <h3 className="text-lg font-bold mb-4 flex items-center uppercase">
+              <div className="w-8 h-8 bg-[#457B9D] border-2 border-black flex items-center justify-center mr-3">
+                <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 2v20M17 5l-5-3-5 3M17 19l-5 3-5-3" />
+                </svg>
+              </div>
+              Phase 2 Roadmap
+            </h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              {features.phase2.map((feature, idx) => (
+                <div key={idx} className="bg-white/70 p-3 border border-[#457B9D]">
+                  <h5 className="font-bold text-sm">{feature.name}</h5>
+                  <p className="text-xs text-gray-600 mt-1">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </motion.section>
 
       {/* Tech Stack */}

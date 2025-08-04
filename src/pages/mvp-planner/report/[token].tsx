@@ -88,6 +88,47 @@ const MVPPlannerReport = () => {
 
   // Check if report content exists and has required data
   if (!reportContent || !reportContent.summary) {
+    // Check if it's a validation error
+    if (reportContent?.error === true && reportContent?.validationType === 'input_validation') {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="max-w-2xl w-full mx-4">
+            <div className="bg-white p-8 border-3 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+              <div className="mb-6">
+                <svg className="w-16 h-16 text-red-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h1 className="text-3xl font-black text-gray-900 mb-4 text-center uppercase">Input Validation Failed</h1>
+              <p className="text-lg text-gray-700 mb-6 text-center">{reportContent.message}</p>
+              
+              {reportContent.issues && reportContent.issues.length > 0 && (
+                <div className="bg-gray-100 p-4 border-2 border-gray-300 mb-6">
+                  <h2 className="font-bold text-gray-900 mb-2">Issues Found:</h2>
+                  <ul className="list-disc list-inside space-y-1">
+                    {reportContent.issues.map((issue: string, index: number) => (
+                      <li key={index} className="text-gray-700">{issue}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              
+              <div className="flex justify-center">
+                <Button 
+                  onClick={() => window.history.back()} 
+                  intent="primary"
+                  className="px-8 py-3"
+                >
+                  Go Back and Fix Issues
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    
+    // Default loading state
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -145,6 +186,7 @@ const MVPPlannerReport = () => {
             investment={reportContent.investment}
             techStack={reportContent.techStack}
             timeline={reportContent.timeline}
+            features={reportContent.features}
           />
           
           {/* Tech Stack Rationale */}
@@ -155,61 +197,6 @@ const MVPPlannerReport = () => {
             </div>
           )}
           
-          {/* Features Breakdown */}
-          {reportContent.features && (
-            <div className="mt-8">
-              <h3 className="text-2xl font-bold mb-6">Feature Details</h3>
-              
-              <div className="mb-6">
-                <h4 className="text-xl font-semibold mb-4">Core Features (Included in Base Package)</h4>
-                <div className="space-y-3">
-                  {reportContent.features.core.map((feature: any, index: number) => (
-                    <div key={index} className="p-4 bg-white border-3 border-black">
-                      <div className="flex justify-between items-start">
-                        <div className="flex-1">
-                          <h5 className="font-bold">{feature.name}</h5>
-                          <p className="text-gray-600 text-sm mt-1">{feature.description}</p>
-                        </div>
-                        <span className={`ml-4 px-3 py-1 text-xs font-bold uppercase ${
-                          feature.complexity === 'simple' ? 'bg-green-200' :
-                          feature.complexity === 'complex' ? 'bg-red-200' : 'bg-yellow-200'
-                        }`}>
-                          {feature.complexity}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              {reportContent.features.additional.length > 0 && (
-                <div>
-                  <h4 className="text-xl font-semibold mb-4">Additional Features</h4>
-                  <div className="space-y-3">
-                    {reportContent.features.additional.map((feature: any, index: number) => (
-                      <div key={index} className="p-4 bg-gray-50 border-3 border-black">
-                        <div className="flex justify-between items-start">
-                          <div className="flex-1">
-                            <h5 className="font-bold">{feature.name}</h5>
-                            <p className="text-gray-600 text-sm mt-1">{feature.description}</p>
-                          </div>
-                          <div className="text-right ml-4">
-                            <span className={`px-3 py-1 text-xs font-bold uppercase ${
-                              feature.complexity === 'simple' ? 'bg-green-200' :
-                              feature.complexity === 'complex' ? 'bg-red-200' : 'bg-yellow-200'
-                            }`}>
-                              {feature.complexity}
-                            </span>
-                            <p className="text-sm font-bold mt-2">+$3,333</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
           
           {/* Next Steps CTA */}
           <div className="mt-12 p-8 bg-[#212121] text-white text-center print:hidden">

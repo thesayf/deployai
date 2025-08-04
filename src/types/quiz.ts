@@ -6,6 +6,9 @@ export type ScoringType = 'points' | 'contextual';
 export interface QuestionOption {
   value: string;
   label: string;
+  description?: string;
+  examples?: string;
+  icon?: string;
   points?: number;
   aiCategory?: string;
   integrationComplexity?: string;

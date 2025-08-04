@@ -1,64 +1,36 @@
 {
   "questions": [
     {
-      "id": "appType",
+      "id": "platform",
       "questionNumber": 1,
-      "title": "Which best describes your app?",
+      "title": "What platform will your app run on?",
+      "subtitle": "Choose where users will access your app",
       "type": "single-select",
       "required": true,
       "options": [
         {
-          "value": "marketplace",
-          "label": "Two-sided marketplace",
-          "description": "Connect two groups like Uber connects drivers & riders",
-          "points": 5
-        },
-        {
-          "value": "b2b-saas",
-          "label": "Business tool B2B SaaS",
-          "description": "Help businesses manage something like Slack or Monday.com",
-          "points": 4
-        },
-        {
-          "value": "b2c-app",
-          "label": "Consumer app B2C",
-          "description": "Direct to consumers for personal use like Spotify or Headspace",
-          "points": 3
-        },
-        {
-          "value": "ecommerce",
-          "label": "E-commerce/Shop",
-          "description": "Sell products or services like Amazon or Shopify stores",
-          "points": 3
-        },
-        {
-          "value": "social-platform",
-          "label": "Social/Community platform",
-          "description": "People connect and share content like Instagram or Reddit",
-          "points": 4
-        },
-        {
-          "value": "ai-tool",
-          "label": "AI/Automation tool",
-          "description": "Use AI to automate or generate something like ChatGPT or Jasper",
-          "points": 5
-        },
-        {
-          "value": "internal-tool",
-          "label": "Internal business tool",
-          "description": "Custom software for one company's operations",
+          "value": "web",
+          "label": "Website/Web App",
+          "description": "Works on all devices through a web browser",
+          "examples": "Google Docs • Notion • Stripe Dashboard • GitHub",
+          "icon": "🌐",
           "points": 2
         },
         {
-          "value": "content-platform",
-          "label": "Content/Media platform",
-          "description": "Deliver articles, videos, courses like Netflix or Coursera",
-          "points": 3
+          "value": "mobile",
+          "label": "Mobile App",
+          "description": "Native app downloaded from App Store/Google Play",
+          "examples": "Instagram • Uber • TikTok • WhatsApp",
+          "icon": "📱",
+          "points": 4
         },
         {
-          "value": "other",
-          "label": "Other",
-          "points": 3
+          "value": "desktop",
+          "label": "Desktop Software",
+          "description": "Installed application for Windows/Mac/Linux",
+          "examples": "Slack Desktop • Figma • VS Code • Photoshop",
+          "icon": "💻",
+          "points": 5
         }
       ],
       "scoring": {
@@ -68,13 +40,13 @@
     {
       "id": "appDescription",
       "questionNumber": 2,
-      "title": "Describe your app idea in 2-3 sentences",
-      "subtitle": "Example: An app that connects pet owners with trusted dog walkers in their area. Users can book walks, track their dog via GPS, and pay through the app.",
+      "title": "Tell us about your app idea",
+      "subtitle": "Describe what it does and who uses it. The more detail, the better we can estimate your project.",
       "type": "textarea",
       "required": true,
       "maxLength": 1000,
       "minLength": 20,
-      "placeholder": "Tell us about your app idea...",
+      "placeholder": "Example: A marketplace app that connects dog owners with trusted walkers in their area. Owners can browse walker profiles, book walks, track their dog via GPS during the walk, and pay through the app. Similar to Uber but for dog walking services.",
       "scoring": {
         "type": "contextual"
       }
@@ -105,57 +77,6 @@
       "placeholder": "Describe your target user...",
       "scoring": {
         "type": "contextual"
-      }
-    },
-    {
-      "id": "userLogin",
-      "questionNumber": 5,
-      "title": "Do your users need to log in?",
-      "type": "single-select",
-      "required": true,
-      "options": [
-        {"value": "yes", "label": "Yes - personal accounts needed", "points": 3},
-        {"value": "no", "label": "No - anonymous usage is fine", "points": 1},
-        {"value": "optional", "label": "Optional - some features only", "points": 2}
-      ],
-      "scoring": {
-        "type": "points"
-      }
-    },
-    {
-      "id": "monetization",
-      "questionNumber": 6,
-      "title": "How will you make money?",
-      "type": "single-select",
-      "required": true,
-      "options": [
-        {"value": "subscription", "label": "Monthly subscriptions", "points": 4},
-        {"value": "one-time", "label": "One-time purchase", "points": 2},
-        {"value": "transaction-fees", "label": "Transaction fees (marketplace)", "points": 4},
-        {"value": "freemium", "label": "Freemium (free + paid tier)", "points": 3},
-        {"value": "ads", "label": "Ads", "points": 2},
-        {"value": "not-sure", "label": "Not sure yet", "points": 1},
-        {"value": "other", "label": "Other", "points": 2}
-      ],
-      "scoring": {
-        "type": "points"
-      }
-    },
-    {
-      "id": "timeline",
-      "questionNumber": 7,
-      "title": "When do you need this launched?",
-      "type": "single-select",
-      "required": true,
-      "options": [
-        {"value": "1-4-weeks", "label": "1-4 weeks", "points": 5},
-        {"value": "5-8-weeks", "label": "5-8 weeks", "points": 4},
-        {"value": "9-12-weeks", "label": "9-12 weeks", "points": 3},
-        {"value": "13-16-weeks", "label": "13-16 weeks", "points": 2},
-        {"value": "planning", "label": "Just planning ahead", "points": 1}
-      ],
-      "scoring": {
-        "type": "points"
       }
     }
   ]
