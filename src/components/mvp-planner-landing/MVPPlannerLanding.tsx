@@ -94,8 +94,12 @@ export const MVPPlannerLanding: React.FC<MVPPlannerLandingProps> = ({
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="w-full h-96 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white text-6xl font-bold">MVP</span>
+            <div className="relative max-w-md mx-auto">
+              <img 
+                src="/images/mvp-estimator-4.png" 
+                alt="AI MVP Cost Analyzer Report"
+                className="w-full h-auto rounded-lg border-3 border-black"
+              />
             </div>
           </motion.div>
         </div>
