@@ -206,7 +206,7 @@ export const MVPPricingInteractive: React.FC<MVPPricingInteractiveProps> = ({
             <h3 className={`${typography.displayS} mb-4`}>Calculate Your MVP Cost</h3>
             
             <p className={`${typography.bodyL} mb-6 opacity-90`}>
-              Get instant clarity on your project's scope, timeline, and investment.
+              Our AI analyzes your requirements to generate a detailed development plan.
             </p>
 
             <ul className="space-y-4 mb-8">
@@ -309,7 +309,7 @@ export const MVPPricingInteractive: React.FC<MVPPricingInteractiveProps> = ({
             </motion.button>
 
             <p className={`text-center mt-4 ${typography.bodyS} opacity-80`}>
-              Takes 2 minutes • No email required to start
+              Takes 2 minutes • AI-powered analysis
             </p>
           </div>
         </motion.div>
