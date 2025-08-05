@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/shared/Button';
 import { useRouter } from 'next/router';
 
 export const MVPBlueprintCTA: React.FC = () => {
   const router = useRouter();
+  const [stats, setStats] = useState({ totalCount: 0, weekCount: 0 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/mvp-planner/stats')
+      .then(res => res.json())
+      .then(data => {
+        setStats(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -39,11 +53,11 @@ export const MVPBlueprintCTA: React.FC = () => {
           </div>
 
           <h2 className="text-3xl md:text-4xl font-black mb-4 text-gray-900">
-            Not Ready for a Call? Get Your Custom MVP Blueprint First
+            Not Ready for a Call? Try Our AI-Powered MVP Estimator
           </h2>
           
           <p className="text-xl text-gray-700 mb-8 max-w-3xl mx-auto">
-            Answer 4 simple questions and instantly receive a detailed blueprint with pricing, timeline, and tech recommendations for your app idea.
+            Answer 4 simple questions and instantly receive AI-generated cost estimates, timeline projections, and tech recommendations for your app idea.
           </p>
 
           {/* What You Do / What You Get Grid */}
@@ -135,7 +149,7 @@ export const MVPBlueprintCTA: React.FC = () => {
               intent="cta"
               className="!bg-purple-600 !border-black hover:!bg-purple-700"
             >
-              Get Your Free MVP Blueprint →
+              Try the MVP Estimator →
             </Button>
             <Button 
               onClick={() => window.open('https://calendly.com/hello-deployai/30min', '_blank')}
@@ -148,7 +162,20 @@ export const MVPBlueprintCTA: React.FC = () => {
 
           {/* Urgency/Social Proof */}
           <p className="mt-6 text-sm text-gray-600">
-            <span className="font-semibold">217 blueprints</span> generated this week • Used by founders from YC, Techstars & more
+            {loading ? (
+              <span className="animate-pulse">Loading stats...</span>
+            ) : (
+              <>
+                {stats.weekCount > 0 && (
+                  <><span className="font-semibold">{stats.weekCount} estimates</span> generated this week • </>
+                )}
+                {stats.totalCount > 0 ? (
+                  <span>Join {stats.totalCount}+ founders who've clarity on their MVP costs</span>
+                ) : (
+                  <span>Be among the first to get clarity on your MVP costs</span>
+                )}
+              </>
+            )}
           </p>
         </div>
       </motion.div>
