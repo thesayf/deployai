@@ -13,12 +13,42 @@ const MVPPlannerReport = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [stage, setStage] = useState<'analyzing' | 'generating' | 'finalizing'>('analyzing');
 
   useEffect(() => {
     if (token) {
       fetchReport();
     }
   }, [token, retryCount]);
+
+  // Progress bar animation
+  useEffect(() => {
+    if (loading) {
+      const duration = 60000; // 60 seconds
+      const interval = 100; // Update every 100ms
+      const increment = (100 / duration) * interval;
+      
+      const timer = setInterval(() => {
+        setProgress(prev => {
+          const newProgress = Math.min(prev + increment, 95); // Cap at 95% until actually complete
+          
+          // Update stage based on progress
+          if (newProgress < 30) {
+            setStage('analyzing');
+          } else if (newProgress < 70) {
+            setStage('generating');
+          } else {
+            setStage('finalizing');
+          }
+          
+          return newProgress;
+        });
+      }, interval);
+      
+      return () => clearInterval(timer);
+    }
+  }, [loading]);
 
   const fetchReport = async () => {
     try {
@@ -31,7 +61,11 @@ const MVPPlannerReport = () => {
 
       if (data.status === 'completed') {
         setReportData(data);
-        setLoading(false);
+        setProgress(100);
+        // Small delay to show 100% before transitioning
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
       } else if (data.status === 'failed') {
         setError(data.error || 'Report generation failed');
         setLoading(false);
@@ -54,11 +88,87 @@ const MVPPlannerReport = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-gray-600 mb-2">Generating your MVP plan...</p>
-          <p className="text-sm text-gray-500">This usually takes 30-60 seconds</p>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+        <div className="w-full max-w-2xl">
+          <div className="bg-white p-8 md:p-12 border-3 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            {/* Logo */}
+            <div className="text-center mb-8">
+              <img src="/logo.png" alt="deployAI" className="h-12 w-auto mx-auto" />
+            </div>
+            
+            {/* Progress Animation */}
+            <div className="mb-8">
+              <div className="flex justify-center mb-6">
+                {stage === 'analyzing' && (
+                  <svg className="w-20 h-20 text-blue-500" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                  </svg>
+                )}
+                {stage === 'generating' && (
+                  <svg className="w-20 h-20 text-orange-500 animate-pulse" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                )}
+                {stage === 'finalizing' && (
+                  <svg className="w-20 h-20 text-green-500" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                )}
+              </div>
+              
+              <h2 className="text-2xl font-bold text-center mb-2">
+                {stage === 'analyzing' && 'Analyzing Your Requirements...'}
+                {stage === 'generating' && 'Generating Your Custom MVP Plan...'}
+                {stage === 'finalizing' && 'Finalizing Your Blueprint...'}
+              </h2>
+              
+              <p className="text-gray-600 text-center mb-6">
+                {stage === 'analyzing' && 'Understanding your project needs and goals'}
+                {stage === 'generating' && 'Creating detailed technical specifications'}
+                {stage === 'finalizing' && 'Adding final touches to your plan'}
+              </p>
+            </div>
+            
+            {/* Progress Bar */}
+            <div className="mb-6">
+              <div className="flex justify-between text-sm text-gray-600 mb-2">
+                <span>Progress</span>
+                <span>{Math.round(progress)}%</span>
+              </div>
+              <div className="w-full bg-gray-200 h-4 border-2 border-black">
+                <div 
+                  className="h-full bg-gradient-to-r from-blue-500 via-orange-500 to-green-500 transition-all duration-300 ease-linear"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
+            
+            {/* Stage Indicators */}
+            <div className="flex justify-between mb-6">
+              <div className={`text-center ${stage === 'analyzing' ? 'text-blue-600' : 'text-gray-400'}`}>
+                <div className={`w-8 h-8 mx-auto mb-1 border-2 ${stage === 'analyzing' ? 'border-blue-600 bg-blue-100' : 'border-gray-300'} rounded-full flex items-center justify-center`}>
+                  1
+                </div>
+                <span className="text-xs">Analyze</span>
+              </div>
+              <div className={`text-center ${stage === 'generating' ? 'text-orange-600' : stage === 'finalizing' ? 'text-gray-600' : 'text-gray-400'}`}>
+                <div className={`w-8 h-8 mx-auto mb-1 border-2 ${stage === 'generating' ? 'border-orange-600 bg-orange-100' : stage === 'finalizing' ? 'border-gray-600' : 'border-gray-300'} rounded-full flex items-center justify-center`}>
+                  2
+                </div>
+                <span className="text-xs">Generate</span>
+              </div>
+              <div className={`text-center ${stage === 'finalizing' ? 'text-green-600' : 'text-gray-400'}`}>
+                <div className={`w-8 h-8 mx-auto mb-1 border-2 ${stage === 'finalizing' ? 'border-green-600 bg-green-100' : 'border-gray-300'} rounded-full flex items-center justify-center`}>
+                  3
+                </div>
+                <span className="text-xs">Finalize</span>
+              </div>
+            </div>
+            
+            <p className="text-sm text-gray-500 text-center">
+              Your personalized MVP blueprint is being created with AI precision
+            </p>
+          </div>
         </div>
       </div>
     );

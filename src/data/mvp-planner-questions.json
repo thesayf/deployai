@@ -69,7 +69,7 @@
       "id": "targetUser",
       "questionNumber": 4,
       "title": "Who is your ideal first user?",
-      "subtitle": "Example: Busy professionals in Dubai who work long hours and need reliable pet care",
+      "subtitle": "Example: Busy professionals who work long hours and need reliable pet care",
       "type": "textarea",
       "required": true,
       "maxLength": 1000,

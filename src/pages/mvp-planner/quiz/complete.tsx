@@ -8,7 +8,6 @@ import {
   selectResponses,
   selectTotalScore,
   setSubmitting,
-  setProcessingStage,
   setReportId,
   setError,
   resetQuiz
@@ -25,7 +24,6 @@ const MVPPlannerComplete = () => {
   const quizId = useAppSelector(selectQuizId);
   const responses = useAppSelector(selectResponses);
   const totalScore = useAppSelector(selectTotalScore);
-  const processingStage = useAppSelector(state => state.mvpPlanner.processingStage);
   const error = useAppSelector(state => state.mvpPlanner.error);
   
   const [submitted, setSubmitted] = useState(false);
@@ -38,17 +36,16 @@ const MVPPlannerComplete = () => {
     }
 
     // Auto-submit when page loads
-    if (!submitted && processingStage === null) {
+    if (!submitted) {
       handleSubmit();
     }
-  }, [userInfo, quizId, responses, submitted, processingStage]);
+  }, [userInfo, quizId, responses, submitted]);
 
   const handleSubmit = async () => {
     if (submitted) return;
     
     setSubmitted(true);
     dispatch(setSubmitting(true));
-    dispatch(setProcessingStage('submitting'));
     
     try {
       const response = await fetch('/api/mvp-planner/submit', {
@@ -65,26 +62,14 @@ const MVPPlannerComplete = () => {
 
       if (result.success) {
         dispatch(setReportId(result.reportId));
-        dispatch(setProcessingStage('generating'));
-        
-        // Simulate processing time
-        setTimeout(() => {
-          dispatch(setProcessingStage('complete'));
-        }, 2000);
-        
-        // Redirect to report after a delay
-        setTimeout(() => {
-          // Clear quiz state before redirecting
-          dispatch(resetQuiz());
-          router.push(`/mvp-planner/report/${result.accessToken}`);
-        }, 3500);
+        // Redirect immediately to report page
+        router.push(`/mvp-planner/report/${result.accessToken}`);
       } else {
         throw new Error(result.error || 'Failed to submit assessment');
       }
     } catch (error) {
       console.error('Error submitting assessment:', error);
       dispatch(setError(error instanceof Error ? error.message : 'An error occurred'));
-      dispatch(setProcessingStage(null));
       dispatch(setSubmitting(false));
     }
   };
@@ -92,7 +77,6 @@ const MVPPlannerComplete = () => {
   const handleRetry = () => {
     setSubmitted(false);
     dispatch(setError(null));
-    dispatch(setProcessingStage(null));
     handleSubmit();
   };
 
@@ -145,22 +129,12 @@ const MVPPlannerComplete = () => {
                 <CompleteAnimation />
                 
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                  {processingStage === 'complete' ? 'Your MVP Plan is Ready!' : 'Creating Your MVP Plan...'}
+                  Submitting Your Answers...
                 </h1>
                 
                 <p className="text-lg text-gray-600 mb-8">
-                  {processingStage === 'submitting' && 'Analyzing your project requirements...'}
-                  {processingStage === 'generating' && 'Generating personalized recommendations...'}
-                  {processingStage === 'complete' && `Great work, ${userInfo.firstName}! Your custom MVP development plan is ready.`}
+                  Please wait while we process your information.
                 </p>
-                
-                {processingStage === 'complete' && (
-                  <div className="bg-blue-50 rounded-lg p-6">
-                    <p className="text-gray-700">
-                      You'll be redirected to your plan in a moment...
-                    </p>
-                  </div>
-                )}
               </>
             )}
           </div>
