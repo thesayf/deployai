@@ -26,15 +26,15 @@ export function generateStage2UserPrompt(
 ## Company Profile
 - Industry: ${responses.industry}
 - Company Size: ${responses.companySize}
-- Current Tech Stack: ${responses.currentTech || 'Not specified'}
+- Current Systems: ${responses.currentSystems?.join(', ') || 'Not specified'}
 - Budget Range: ${responses.budget || 'Not specified'}
 - Timeline: ${responses.timeline || 'Not specified'}
-- Decision Makers: ${responses.decisionMakers || 'Not specified'}
+- Decision Making: ${responses.decisionMaking || 'Not specified'}
 
 ## Assessment Results
 - Score: ${scoreResult.totalScore}/85 (${scoreResult.category})
-- Primary Objectives: ${responses.aiObjectives}
-- Key Challenges: ${responses.challenges}
+- Primary Objectives: ${responses.businessObjectives?.join(', ') || 'Not specified'}
+- Key Challenges: ${responses.biggestChallenge || 'Not specified'}
 
 ## Initial Assessment Summary
 ${stage1Content.substring(0, 1000)}...
@@ -114,10 +114,10 @@ export function generateStage2EnhancedPrompt(
   const basePrompt = generateStage2UserPrompt(responses, scoreResult, stage1Content);
   
   // Add industry-specific enhancements
-  const industryEnhancements = getIndustrySpecificPrompts(responses.industry);
+  const industryEnhancements = getIndustrySpecificPrompts(responses.industry || 'Technology');
   
   // Add size-specific considerations
-  const sizeConsiderations = getCompanySizeConsiderations(responses.companySize);
+  const sizeConsiderations = getCompanySizeConsiderations(responses.companySize || 'Small (1-50 employees)');
   
   return `${basePrompt}
 

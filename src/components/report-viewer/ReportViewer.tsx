@@ -116,12 +116,17 @@ export function ReportViewer({
 
       <div className="grid md:grid-cols-2 gap-6">
         <div className="bg-white border-3 border-black p-6 shadow-hard">
-          <h3 className="text-lg font-bold uppercase mb-4">Priority Areas</h3>
+          <h3 className="text-lg font-bold uppercase mb-4">Primary Pain Points</h3>
           <ul className="space-y-3">
-            {stage1Analysis.analysis.businessAssessment.priorityProcesses.map((process, idx) => (
-              <li key={idx} className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-black rounded-full" />
-                <span className="font-medium">{process}</span>
+            {stage1Analysis.analysis.problemAnalysis.primaryPainPoints.map((painPoint, idx) => (
+              <li key={idx} className="flex items-start gap-3">
+                <div className="w-2 h-2 bg-black rounded-full mt-2 flex-shrink-0" />
+                <div>
+                  <span className="font-medium">{painPoint.problem}</span>
+                  <span className="text-sm text-gray-600 ml-2">
+                    ({painPoint.severity} severity)
+                  </span>
+                </div>
               </li>
             ))}
           </ul>
@@ -385,7 +390,14 @@ export function ReportViewer({
 }
 
 // Helper Components
-function ScoreCard({ title, score, color, icon }: any) {
+interface ScoreCardProps {
+  title: string;
+  score: number;
+  color: 'blue' | 'green' | 'purple';
+  icon: React.ReactNode;
+}
+
+function ScoreCard({ title, score, color, icon }: ScoreCardProps) {
   const bgColor = {
     blue: 'bg-blue-50',
     green: 'bg-green-50',
@@ -407,7 +419,12 @@ function ScoreCard({ title, score, color, icon }: any) {
   );
 }
 
-function RiskIndicator({ label, level }: { label: string; level: string }) {
+interface RiskIndicatorProps {
+  label: string;
+  level: 'Low' | 'Medium' | 'High';
+}
+
+function RiskIndicator({ label, level }: RiskIndicatorProps) {
   const color = {
     Low: 'bg-green-500',
     Medium: 'bg-yellow-500',
@@ -425,7 +442,28 @@ function RiskIndicator({ label, level }: { label: string; level: string }) {
   );
 }
 
-function ToolCard({ tool }: any) {
+interface ToolCardProps {
+  tool: {
+    name: string;
+    vendor: string;
+    description: string;
+    pricing: {
+      model: string;
+      cost: number;
+    };
+    roi: {
+      metric: string;
+      value: number;
+      unit: string;
+      timeframe: string;
+    };
+    implementation: {
+      complexity: string;
+    };
+  };
+}
+
+function ToolCard({ tool }: ToolCardProps) {
   return (
     <div className="border-3 border-black p-4">
       <h4 className="font-bold text-lg mb-2">{tool.name}</h4>
@@ -450,7 +488,13 @@ function ToolCard({ tool }: any) {
   );
 }
 
-function MetricCard({ label, value, color }: any) {
+interface MetricCardProps {
+  label: string;
+  value: string;
+  color: 'green' | 'blue' | 'purple';
+}
+
+function MetricCard({ label, value, color }: MetricCardProps) {
   const bgColor = {
     green: 'bg-green-100 border-green-600',
     blue: 'bg-blue-100 border-blue-600',
@@ -465,16 +509,35 @@ function MetricCard({ label, value, color }: any) {
   );
 }
 
-function CostItem({ label, value, bold = false }: any) {
+interface CostItemProps {
+  label: string;
+  value: string | number;
+  bold?: boolean;
+}
+
+function CostItem({ label, value, bold = false }: CostItemProps) {
+  const formattedValue = typeof value === 'number' 
+    ? `$${value.toLocaleString()}`
+    : value.toString().startsWith('$') ? value : `$${value}`;
+    
   return (
     <div className={`flex justify-between ${bold ? 'font-bold' : ''}`}>
       <span>{label}:</span>
-      <span>${value.toLocaleString()}</span>
+      <span>{formattedValue}</span>
     </div>
   );
 }
 
-function ScenarioCard({ title, scenario, color }: any) {
+interface ScenarioCardProps {
+  title: string;
+  scenario: {
+    roi: number;
+    payback: string;
+  };
+  color: 'gray' | 'blue' | 'green';
+}
+
+function ScenarioCard({ title, scenario, color }: ScenarioCardProps) {
   const bgColor = {
     gray: 'bg-gray-100',
     blue: 'bg-blue-100',
@@ -496,12 +559,24 @@ function ScenarioCard({ title, scenario, color }: any) {
   );
 }
 
-function PriorityCard({ priority }: any) {
+interface PriorityCardProps {
+  priority: {
+    priority: number;
+    initiative: string;
+    rationale: string;
+    expectedROI: string;
+    timeToValue: string;
+    riskLevel: 'low' | 'medium' | 'high';
+    quickWin?: boolean;
+  };
+}
+
+function PriorityCard({ priority }: PriorityCardProps) {
   const riskColor = {
     low: 'bg-green-100',
     medium: 'bg-yellow-100',
     high: 'bg-red-100'
-  }[priority.riskLevel.toLowerCase()];
+  }[priority.riskLevel];
 
   return (
     <div className="border-3 border-black p-4 flex items-center gap-4">
@@ -565,7 +640,14 @@ function PhaseCard({ phase, number }: any) {
   );
 }
 
-function ActionCard({ title, actions, color, icon }: any) {
+interface ActionCardProps {
+  title: string;
+  actions: string[];
+  color: 'red' | 'orange' | 'yellow';
+  icon: React.ReactNode;
+}
+
+function ActionCard({ title, actions, color, icon }: ActionCardProps) {
   const bgColor = {
     red: 'bg-red-50',
     orange: 'bg-orange-50',

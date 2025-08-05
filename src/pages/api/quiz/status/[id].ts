@@ -1,6 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { QuizStatusResponse } from '@/types/quiz';
 import { supabaseAdmin } from '@/lib/supabase';
+
+// Define the response type
+interface QuizStatusResponse {
+  status: 'in_progress' | 'completed' | 'generating' | 'ready' | 'error';
+  message?: string;
+  error?: string;
+  reportId?: string;
+  accessToken?: string;
+}
 
 export default async function handler(
   req: NextApiRequest,

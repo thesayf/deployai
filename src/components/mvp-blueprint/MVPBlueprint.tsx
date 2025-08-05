@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/shared/Button';
+import Link from 'next/link';
 
 interface MVPBlueprintProps {
   summary: {
@@ -213,12 +214,12 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
               <p className="text-gray-700 mb-4">
                 {investment.mvpPackage.simplificationOptions}
               </p>
-              <a 
+              <Link 
                 href="/mvp-planner" 
                 className="inline-flex items-center text-blue-600 font-bold hover:underline"
               >
                 Start over with a simpler scope →
-              </a>
+              </Link>
             </div>
           )}
         </motion.section>
@@ -429,28 +430,6 @@ export const MVPBlueprint: React.FC<MVPBlueprintProps> = ({
               </div>
             </motion.div>
           ))}
-        </div>
-      </motion.section>
-
-      {/* CTA Section */}
-      <motion.section 
-        className="bg-[#212121] text-white p-12 text-center border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] print:hidden"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
-      >
-        <h2 className="text-3xl font-bold mb-4">Ready to Build Your MVP?</h2>
-        <p className="text-lg mb-8 max-w-2xl mx-auto text-gray-300">
-          This blueprint gives you everything you need to go from idea to launch in 4 weeks. 
-          Let's make it happen together.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="large" intent="cta" onClick={() => window.location.href = 'mailto:team@deployai.com'}>
-            Start Building Today
-          </Button>
-          <Button size="large" intent="secondary" onClick={() => window.print()}>
-            Download Blueprint PDF
-          </Button>
         </div>
       </motion.section>
     </div>

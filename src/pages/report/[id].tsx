@@ -81,7 +81,7 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
       // Transform the data to match our interface
       const reportData: ReportData = {
         ...data,
-        quiz_response: data.quiz_responses
+        quiz_response: data.quiz_responses[0]
       };
 
       setReport(reportData);

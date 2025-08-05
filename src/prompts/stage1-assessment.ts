@@ -46,8 +46,8 @@ ${formattedResponses}
 ## Additional Context
 - Industry: ${responses.industry}
 - Company Size: ${responses.companySize}
-- Primary Objectives: ${formatResponseForDisplay('aiObjectives', responses.aiObjectives)}
-- Key Challenges: ${formatResponseForDisplay('challenges', responses.challenges)}
+- Primary Objectives: ${formatResponseForDisplay('businessObjectives', responses.businessObjectives)}
+- Key Challenges: ${formatResponseForDisplay('biggestChallenge', responses.biggestChallenge)}
 
 Please provide a comprehensive AI readiness assessment with:
 

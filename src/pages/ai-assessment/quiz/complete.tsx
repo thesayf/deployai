@@ -68,22 +68,24 @@ const CompletePage = () => {
       setSubmitted(true);
       
       // Send confirmation email
-      try {
-        await fetch('/api/quiz/send-confirmation', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            quizId,
-            reportId: data.reportId,
-            userEmail: userInfo.email,
-            firstName: userInfo.firstName,
-            lastName: userInfo.lastName,
-            company: userInfo.company
-          }),
-        });
-      } catch (emailError) {
-        console.error('Failed to send confirmation email:', emailError);
-        // Don't fail the whole process if email fails
+      if (userInfo) {
+        try {
+          await fetch('/api/quiz/send-confirmation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              quizId,
+              reportId: data.reportId,
+              userEmail: userInfo.email,
+              firstName: userInfo.firstName,
+              lastName: userInfo.lastName,
+              company: userInfo.company
+            }),
+          });
+        } catch (emailError) {
+          console.error('Failed to send confirmation email:', emailError);
+          // Don't fail the whole process if email fails
+        }
       }
 
     } catch (error) {

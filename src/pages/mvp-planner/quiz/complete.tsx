@@ -142,7 +142,7 @@ const MVPPlannerComplete = () => {
               </>
             ) : (
               <>
-                <CompleteAnimation stage={processingStage || 'submitting'} />
+                <CompleteAnimation />
                 
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                   {processingStage === 'complete' ? 'Your MVP Plan is Ready!' : 'Creating Your MVP Plan...'}

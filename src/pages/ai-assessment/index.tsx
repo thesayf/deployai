@@ -36,8 +36,8 @@ const AIAssessmentLanding = () => {
         dispatch(setUserInfo({
           email: data.email,
           firstName: data.firstName,
-          lastName: data.lastName,
-          company: data.company,
+          lastName: '', // Not collected in this form
+          company: '', // Not collected in this form
         }));
         
         // Save quiz ID

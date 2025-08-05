@@ -1,4 +1,4 @@
-import { QuizResponseData, ScoreCalculation, ScoreCategory, SCORE_RANGES } from '@/types/quiz';
+import { QuizResponseData, ScoreCalculation, ScoreCategory, SCORE_RANGES, QuizQuestion } from '@/types/quiz';
 import quizData from '@/data/quiz-questions.json';
 
 /**
@@ -171,8 +171,8 @@ export function validateResponse(questionId: string, response: any): { valid: bo
 /**
  * Get question by step number
  */
-export function getQuestionByStep(step: number) {
-  return quizData.questions.find(q => q.questionNumber === step);
+export function getQuestionByStep(step: number): QuizQuestion | undefined {
+  return quizData.questions.find(q => q.questionNumber === step) as QuizQuestion | undefined;
 }
 
 /**

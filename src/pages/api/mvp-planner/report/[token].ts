@@ -45,7 +45,7 @@ export default async function handler(
     }
 
     // Extract the nested response data
-    const response = report.mvp_planner_responses;
+    const response = report.mvp_planner_responses as any;
     if (!response) {
       return res.status(404).json({ error: 'Quiz response not found' });
     }

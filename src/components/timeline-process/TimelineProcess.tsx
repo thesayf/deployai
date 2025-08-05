@@ -539,9 +539,9 @@ export const TimelineProcess: React.FC<TimelineProcessProps> = ({
             )}
           </AnimatePresence>
 
-          {/* Status Badge */}
+          {/* Status Badge - Moved to left */}
           <div
-            className="absolute -top-3 -right-3"
+            className="absolute -top-3 -left-3"
             style={{
               background: isCompleted ? colors.emerald : isActive ? colors.sapphire : colors.white,
               color: isCompleted || isActive ? colors.white : colors.black,

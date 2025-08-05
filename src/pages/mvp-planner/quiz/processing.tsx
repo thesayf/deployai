@@ -27,7 +27,7 @@ const MVPPlannerProcessing = () => {
           <div className="bg-white rounded-lg shadow-2xl p-8 md:p-12 text-center">
             <img src="/logo.png" alt="deployAI" className="h-12 w-auto mx-auto mb-8" />
             
-            <CompleteAnimation stage="generating" />
+            <CompleteAnimation />
             
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Processing Your Responses...

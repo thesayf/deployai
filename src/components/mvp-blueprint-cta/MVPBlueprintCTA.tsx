@@ -23,21 +23,22 @@ export const MVPBlueprintCTA: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto">
       <motion.div 
-        className="bg-gradient-to-br from-blue-50 to-purple-50 p-8 md:p-12 border-3 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden"
+        className="bg-gradient-to-br from-purple-50 via-white to-orange-50 p-8 md:p-12 border-3 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
         {/* Background Pattern */}
-        <div className="absolute top-0 right-0 w-64 h-64 opacity-10">
-          <div className="absolute inset-0 rotate-45">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="absolute border-2 border-black bg-white" 
+        <div className="absolute -top-10 -right-10 w-80 h-80 opacity-10">
+          <div className="absolute inset-0 rotate-12">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="absolute border-3 border-purple-300" 
                    style={{
-                     width: `${(i + 1) * 40}px`,
-                     height: `${(i + 1) * 40}px`,
-                     top: `${i * 20}px`,
-                     left: `${i * 20}px`,
+                     width: `${(i + 1) * 60}px`,
+                     height: `${(i + 1) * 60}px`,
+                     top: `${i * 30}px`,
+                     left: `${i * 30}px`,
+                     borderRadius: '8px',
                    }} />
             ))}
           </div>
@@ -45,11 +46,11 @@ export const MVPBlueprintCTA: React.FC = () => {
 
         <div className="relative z-10 text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-purple-600 text-white px-4 py-2 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6">
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-orange-500 text-white px-5 py-2.5 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6 transform -rotate-1">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            <span className="font-bold uppercase text-sm">Free Tool</span>
+            <span className="font-black uppercase text-sm tracking-wider">Free AI Tool</span>
           </div>
 
           <h2 className="text-3xl md:text-4xl font-black mb-4 text-gray-900">
@@ -63,9 +64,9 @@ export const MVPBlueprintCTA: React.FC = () => {
           {/* What You Do / What You Get Grid */}
           <div className="grid md:grid-cols-2 gap-6 mb-8 max-w-4xl mx-auto">
             {/* What You Do */}
-            <div className="bg-white p-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            <div className="bg-white p-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all">
               <h3 className="font-bold text-lg mb-4 flex items-center justify-center gap-2">
-                <div className="w-8 h-8 bg-orange-500 text-white flex items-center justify-center font-black border-2 border-black">1</div>
+                <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-500 text-white flex items-center justify-center font-black border-2 border-black">1</div>
                 What You Do
               </h3>
               <ul className="text-left space-y-2">
@@ -85,9 +86,9 @@ export const MVPBlueprintCTA: React.FC = () => {
             </div>
 
             {/* What You Get */}
-            <div className="bg-white p-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            <div className="bg-white p-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all">
               <h3 className="font-bold text-lg mb-4 flex items-center justify-center gap-2">
-                <div className="w-8 h-8 bg-blue-500 text-white flex items-center justify-center font-black border-2 border-black">2</div>
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 text-white flex items-center justify-center font-black border-2 border-black">2</div>
                 What You Get
               </h3>
               <ul className="text-left space-y-2">

@@ -187,6 +187,14 @@ export interface ReportStatusResponse {
   error?: string;
 }
 
+export interface QuizStatusResponse {
+  status: 'in_progress' | 'completed' | 'generating' | 'ready' | 'error';
+  message?: string;
+  error?: string;
+  reportId?: string;
+  accessToken?: string;
+}
+
 // Scoring Helpers
 export interface ScoreCalculation {
   totalScore: number;

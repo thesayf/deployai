@@ -38,7 +38,7 @@ const MVPPlannerQuizStep = () => {
     setIsHydrated(true);
   }, []);
 
-  const currentQuestion = mvpPlannerQuestions.questions.find(q => q.questionNumber === currentStep);
+  const currentQuestion = mvpPlannerQuestions.questions.find(q => q.questionNumber === currentStep) as any;
   const currentAnswer = currentQuestion ? responses[currentQuestion.id] : undefined;
 
   useEffect(() => {

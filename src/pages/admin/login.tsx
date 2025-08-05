@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 
 const AdminLogin = () => {
@@ -84,9 +85,9 @@ const AdminLogin = () => {
             </form>
 
             <div className="mt-6 text-center">
-              <a href="/" className="text-sm text-gray-600 hover:text-gray-900 underline">
+              <Link href="/" className="text-sm text-gray-600 hover:text-gray-900 underline">
                 Back to homepage
-              </a>
+              </Link>
             </div>
           </div>
         </div>

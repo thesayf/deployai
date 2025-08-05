@@ -13,6 +13,7 @@ import {
   previousStep
 } from '@/store/slices/quizSlice';
 import { ModernNavBar } from '@/components/navigation/ModernNavBar';
+import { QuizResponseData } from '@/types/quiz';
 import { SectionWrapper } from '@/components/section-wrapper';
 import { QuestionCard } from '@/components/quiz/QuestionCard';
 import { ProgressBar } from '@/components/progress-bar';
@@ -39,7 +40,7 @@ const QuizStep = () => {
   }, []);
 
   const currentQuestion = getQuestionByStep(currentStep);
-  const currentAnswer = currentQuestion ? responses[currentQuestion.id] : undefined;
+  const currentAnswer = currentQuestion ? responses[currentQuestion.id as keyof QuizResponseData] : undefined;
 
   useEffect(() => {
     // Redirect to landing if no user info or quiz ID

@@ -36,6 +36,7 @@ export default async function handler(
       .select(`
         id,
         mvp_planner_response_id,
+        access_token,
         mvp_planner_responses (
           user_email,
           user_first_name,
@@ -51,7 +52,7 @@ export default async function handler(
       return res.status(404).json({ error: 'Report not found' });
     }
 
-    const quizResponse = report.mvp_planner_responses;
+    const quizResponse = report.mvp_planner_responses as any;
     if (!quizResponse) {
       return res.status(404).json({ error: 'Quiz response not found' });
     }

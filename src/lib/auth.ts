@@ -8,11 +8,11 @@ export const adminSessions = new Map<string, { expiresAt: number }>();
 if (typeof window === 'undefined') {
   setInterval(() => {
     const now = Date.now();
-    for (const [token, session] of adminSessions.entries()) {
+    Array.from(adminSessions.entries()).forEach(([token, session]) => {
       if (session.expiresAt < now) {
         adminSessions.delete(token);
       }
-    }
+    });
   }, 60 * 60 * 1000); // Clean up every hour
 }
 

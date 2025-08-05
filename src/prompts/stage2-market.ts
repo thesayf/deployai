@@ -81,7 +81,7 @@ RESEARCH REQUIREMENTS:
 
 SEARCH STRATEGY:
 You MUST use web search to find current information. Search for:
-- "[industry] AI tools for [specific problem]" (e.g., "${responses.industry} AI tools for ${responses.problemAreas.join(', ')}")
+- "[industry] AI tools for [specific problem]" (e.g., "${responses.industry} AI tools for ${responses.problemAreas?.join(', ') || 'operational efficiency'}")
 - "[problem area] automation ROI case studies" 
 - "best AI solutions for [company size] [industry]" (e.g., "best AI solutions for ${responses.companySize} ${responses.industry}")
 - "[specific tool] pricing implementation timeline"
