@@ -1,19 +1,18 @@
 import { NextApiRequest } from 'next';
+import jwt from 'jsonwebtoken';
 
-// Session store - shared across the application
-// In production, use Redis or database
-export const adminSessions = new Map<string, { expiresAt: number }>();
+const JWT_SECRET = process.env.ADMIN_JWT_SECRET || 'your-secret-key-change-this-in-production';
 
-// Clean up expired sessions periodically
-if (typeof window === 'undefined') {
-  setInterval(() => {
-    const now = Date.now();
-    Array.from(adminSessions.entries()).forEach(([token, session]) => {
-      if (session.expiresAt < now) {
-        adminSessions.delete(token);
-      }
-    });
-  }, 60 * 60 * 1000); // Clean up every hour
+export function generateAdminToken(): string {
+  // Create token with 24 hour expiry
+  return jwt.sign(
+    { 
+      admin: true,
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60) // 24 hours
+    },
+    JWT_SECRET
+  );
 }
 
 export function checkAdminAuth(req: NextApiRequest): boolean {
@@ -23,12 +22,18 @@ export function checkAdminAuth(req: NextApiRequest): boolean {
     return false;
   }
 
-  const session = adminSessions.get(token);
-  
-  if (!session || session.expiresAt < Date.now()) {
-    adminSessions.delete(token);
+  try {
+    // Verify the token
+    const decoded = jwt.verify(token, JWT_SECRET) as any;
+    
+    // Check if it's an admin token
+    if (decoded.admin === true) {
+      return true;
+    }
+    
+    return false;
+  } catch (error) {
+    // Token is invalid or expired
     return false;
   }
-
-  return true;
 }

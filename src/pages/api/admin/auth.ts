@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { createHash } from 'crypto';
-import { adminSessions } from '@/lib/auth';
+import { generateAdminToken, checkAdminAuth } from '@/lib/auth';
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,15 +24,8 @@ export default async function handler(
       return res.status(401).json({ error: 'Invalid password' });
     }
 
-    // Create session token
-    const token = createHash('sha256')
-      .update(`${Date.now()}-${Math.random()}`)
-      .digest('hex');
-    
-    // Store session with 24 hour expiry
-    adminSessions.set(token, {
-      expiresAt: Date.now() + (24 * 60 * 60 * 1000)
-    });
+    // Generate JWT token
+    const token = generateAdminToken();
 
     // Set cookie with more permissive settings for development
     const isProduction = process.env.NODE_ENV === 'production';
@@ -43,40 +35,18 @@ export default async function handler(
   } 
   
   if (req.method === 'GET') {
-    // Check auth status
-    const cookieHeader = req.headers.cookie;
-    console.log('Cookie header:', cookieHeader);
+    // Check auth status using JWT
+    const isAuthenticated = checkAdminAuth(req);
     
-    const token = req.cookies['admin-token'];
-    console.log('Parsed token:', token);
-    console.log('Active sessions:', adminSessions.size);
-    
-    if (!token) {
-      return res.status(401).json({ authenticated: false, reason: 'No token' });
-    }
-
-    const session = adminSessions.get(token);
-    
-    if (!session) {
-      return res.status(401).json({ authenticated: false, reason: 'No session' });
-    }
-    
-    if (session.expiresAt < Date.now()) {
-      adminSessions.delete(token);
-      return res.status(401).json({ authenticated: false, reason: 'Session expired' });
+    if (!isAuthenticated) {
+      return res.status(401).json({ authenticated: false });
     }
 
     return res.status(200).json({ authenticated: true });
   }
   
   if (req.method === 'DELETE') {
-    // Logout
-    const token = req.cookies['admin-token'];
-    
-    if (token) {
-      adminSessions.delete(token);
-    }
-    
+    // Logout - just clear the cookie
     res.setHeader('Set-Cookie', 'admin-token=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0');
     return res.status(200).json({ success: true });
   }
