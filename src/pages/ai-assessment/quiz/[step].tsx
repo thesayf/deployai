@@ -97,22 +97,21 @@ const QuizStep = () => {
   const handleAnswer = async (answer: any) => {
     if (!currentQuestion) return;
     
-    // Update Redux state
+    // Update Redux state immediately
     dispatch(saveResponse({ questionId: currentQuestion.id, answer }));
-    
-    // Save to backend
-    await saveProgress(currentQuestion.id, answer);
     
     // Clear validation error when user answers
     setValidationError(undefined);
     
-    // Auto-advance for single-select questions
-    if (currentQuestion.type === 'single-select') {
-      // Small delay to show selection before advancing
-      setTimeout(() => {
-        handleNext();
-      }, 300);
+    // Auto-advance for single-select questions IMMEDIATELY
+    if (currentQuestion.type === 'single-select' && currentStep < 17) {
+      // Navigate immediately for best UX
+      dispatch(nextStep());
+      router.push(`/ai-assessment/quiz/${currentStep + 1}`);
     }
+    
+    // Save to backend asynchronously (don't await)
+    saveProgress(currentQuestion.id, answer);
   };
 
   const handleNext = async () => {
