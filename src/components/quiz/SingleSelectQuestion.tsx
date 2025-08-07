@@ -63,14 +63,7 @@ export const SingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
               name={`question-${question.id}`}
               value={option.value}
               checked={value === option.value}
-              onChange={(e) => {
-                console.log('Radio onChange fired:', {
-                  value: e.target.value,
-                  questionId: question.id,
-                  currentValue: value
-                });
-                onChange(e.target.value);
-              }}
+              onChange={(e) => onChange(e.target.value)}
               className="sr-only"
             />
             

@@ -101,17 +101,9 @@ const quizSlice = createSlice({
     saveResponse: (state, action: PayloadAction<{ questionId: string; answer: any }>) => {
       const { questionId, answer } = action.payload;
       const responseKey = getResponseKeyForQuestion(questionId);
-      console.log('saveResponse called:', {
-        questionId,
-        answer,
-        responseKey,
-        willSave: !!responseKey
-      });
       if (responseKey) {
         (state.responses as any)[responseKey] = answer;
         saveState(state);
-      } else {
-        console.error(`No mapping found for question ID: ${questionId}`);
       }
     },
     
