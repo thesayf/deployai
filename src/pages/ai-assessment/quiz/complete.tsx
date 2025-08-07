@@ -67,6 +67,10 @@ const CompletePage = () => {
 
       setSubmitted(true);
       
+      // Clear quiz responses after successful submission
+      // This ensures user data is not retained unnecessarily
+      dispatch(resetQuiz());
+      
       // Send confirmation email
       try {
         await fetch('/api/quiz/send-confirmation', {
@@ -167,7 +171,7 @@ const CompletePage = () => {
                   <div className="space-y-3">
                     <button
                       onClick={() => {
-                        dispatch(resetQuiz());
+                        // Quiz already reset after successful submission
                         router.push('/ai-assessment');
                       }}
                       className="w-full bg-[#457B9D] text-white px-6 py-3 rounded-lg hover:bg-[#3a6a89] transition-colors"
