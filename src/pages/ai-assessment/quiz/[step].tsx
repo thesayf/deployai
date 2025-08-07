@@ -97,17 +97,28 @@ const QuizStep = () => {
   const handleAnswer = async (answer: any) => {
     if (!currentQuestion) return;
     
+    // Check if this is a change to an existing answer
+    const isChangingAnswer = currentAnswer !== undefined && currentAnswer !== answer;
+    
     // Update Redux state immediately
     dispatch(saveResponse({ questionId: currentQuestion.id, answer }));
     
     // Clear validation error when user answers
     setValidationError(undefined);
     
-    // Auto-advance for single-select questions IMMEDIATELY
+    // Auto-advance for single-select questions
     if (currentQuestion.type === 'single-select' && currentStep < 17) {
-      // Navigate immediately for best UX
-      dispatch(nextStep());
-      router.push(`/ai-assessment/quiz/${currentStep + 1}`);
+      if (isChangingAnswer) {
+        // Small delay to show visual feedback when changing answer
+        setTimeout(() => {
+          dispatch(nextStep());
+          router.push(`/ai-assessment/quiz/${currentStep + 1}`);
+        }, 150);
+      } else {
+        // Navigate immediately for first-time answers
+        dispatch(nextStep());
+        router.push(`/ai-assessment/quiz/${currentStep + 1}`);
+      }
     }
     
     // Save to backend asynchronously (don't await)
