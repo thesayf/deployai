@@ -50,11 +50,12 @@ export const SingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
           style={{ scrollbarWidth: 'thin' }}
         >
         {question.options?.map((option, index) => (
-        <motion.label
+        <motion.div
           key={option.value}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.05 }}
+          onClick={() => onChange(option.value)}
           className={`
             block cursor-pointer p-4 rounded-lg
             transition-all duration-200
@@ -65,15 +66,6 @@ export const SingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
           `}
         >
           <div className="flex">
-            <input
-              type="radio"
-              name={`question-${question.id}`}
-              value={option.value}
-              checked={value === option.value}
-              onChange={(e) => onChange(e.target.value)}
-              className="sr-only"
-            />
-            
             {/* Custom Radio Button */}
             <div className={`
               w-5 h-5 rounded-full mr-4 flex-shrink-0 transition-colors mt-1
@@ -98,7 +90,7 @@ export const SingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
               </div>
             </div>
           </div>
-        </motion.label>
+        </motion.div>
         ))}
         </div>
         

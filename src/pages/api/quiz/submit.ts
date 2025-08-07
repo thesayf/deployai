@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { SubmitQuizRequest, SubmitQuizResponse, QuizResponseData } from '@/types/quiz';
 import { supabaseAdmin } from '@/lib/supabase';
-import { calculateQuizScore } from '@/utils/scoring';
 import quizData from '@/data/quiz-questions.json';
 
 export default async function handler(
@@ -48,15 +47,11 @@ export default async function handler(
 
     const supabase = supabaseAdmin();
 
-    // Calculate final score
-    const scoreResult = calculateQuizScore(finalResponses);
-
-    // Update quiz with final responses and score
+    // Update quiz with final responses (no scoring)
     const { data: updatedQuiz, error: updateError } = await supabase
       .from('quiz_responses')
       .update({
         responses: finalResponses,
-        total_score: scoreResult.totalScore,
         industry: finalResponses.industry,
         company_size: finalResponses.companySize,
         completed_at: new Date().toISOString(),
@@ -95,11 +90,11 @@ export default async function handler(
       });
     }
 
-    // Trigger AI report generation asynchronously (Stage 1 first)
+    // Trigger AI report generation asynchronously (Step 1 first)
     // We'll return immediately and process in the background
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
     
-    fetch(`${baseUrl}/api/reports/generate-stage1`, {
+    fetch(`${baseUrl}/api/ai-analysis/step1-analyze`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -110,13 +105,13 @@ export default async function handler(
         reportId: report.id,
       }),
     }).catch(error => {
-      console.error('Failed to trigger stage 1 generation:', error);
+      console.error('Failed to trigger step 1 analysis:', error);
     });
 
     res.status(200).json({
       success: true,
       reportId: report.id,
-      processingTime: '60-90 seconds',
+      processingTime: '45-60 seconds',
     });
   } catch (error) {
     console.error('Error submitting quiz:', error);

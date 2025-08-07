@@ -31,13 +31,14 @@ export default async function handler(
       .select(`
         id,
         completed_at,
-        total_score,
         ai_reports (
           id,
           report_status,
           access_token,
-          stage1_content,
-          stage2_content,
+          problem_analysis,
+          tool_research,
+          curated_tools,
+          final_report,
           created_at,
           updated_at
         )

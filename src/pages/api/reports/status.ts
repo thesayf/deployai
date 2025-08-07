@@ -18,7 +18,7 @@ export default async function handler(
   try {
     const { data, error } = await supabase
       .from('ai_reports')
-      .select('id, report_status, failed_at_stage, error_message, created_at, updated_at')
+      .select('id, report_status, created_at, updated_at')
       .eq('id', reportId)
       .single();
 
@@ -30,22 +30,11 @@ export default async function handler(
     let progress = 0;
     let statusMessage = 'Initializing...';
 
+    // Simple status for new system
     switch (data.report_status) {
       case 'generating':
-        progress = 10;
-        statusMessage = 'Starting AI analysis...';
-        break;
-      case 'stage1_complete':
-        progress = 25;
-        statusMessage = 'Business intelligence analysis complete. Researching market solutions...';
-        break;
-      case 'stage2_complete':
         progress = 50;
-        statusMessage = 'Market research complete. Analyzing financial impact...';
-        break;
-      case 'stage3_complete':
-        progress = 75;
-        statusMessage = 'Financial analysis complete. Creating strategic recommendations...';
+        statusMessage = 'AI is analyzing your business and researching solutions...';
         break;
       case 'completed':
         progress = 100;
@@ -65,8 +54,6 @@ export default async function handler(
       status: data.report_status,
       progress,
       message: statusMessage,
-      failedAtStage: data.failed_at_stage,
-      errorMessage: data.error_message,
       createdAt: data.created_at,
       updatedAt: data.updated_at
     });

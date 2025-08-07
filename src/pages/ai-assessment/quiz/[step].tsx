@@ -16,7 +16,7 @@ import { ModernNavBar } from '@/components/navigation/ModernNavBar';
 import { SectionWrapper } from '@/components/section-wrapper';
 import { QuestionCard } from '@/components/quiz/QuestionCard';
 import { ProgressBar } from '@/components/progress-bar';
-import { getQuestionByStep, validateResponse, calculateProgress, estimateCompletionTime } from '@/utils/scoring';
+import { getQuestionByStep, validateResponse, calculateProgress, estimateCompletionTime } from '@/utils/quiz-helpers';
 import { SaveProgressRequest } from '@/types/quiz';
 
 const QuizStep = () => {
@@ -105,6 +105,14 @@ const QuizStep = () => {
     
     // Clear validation error when user answers
     setValidationError(undefined);
+    
+    // Auto-advance for single-select questions
+    if (currentQuestion.type === 'single-select') {
+      // Small delay to show selection before advancing
+      setTimeout(() => {
+        handleNext();
+      }, 300);
+    }
   };
 
   const handleNext = async () => {

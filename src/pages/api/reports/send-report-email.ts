@@ -42,7 +42,8 @@ export default async function handler(
           user_first_name,
           user_last_name,
           user_company,
-          total_score
+          industry,
+          company_size
         )
       `)
       .eq('id', reportId)

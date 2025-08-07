@@ -38,24 +38,16 @@ export default async function handler(
 
     const supabase = supabaseAdmin();
 
-    // Get quiz data to include score in email
+    // Verify quiz exists
     const { data: quizData, error: quizError } = await supabase
       .from('quiz_responses')
-      .select('total_score')
+      .select('id, industry, company_size')
       .eq('id', quizId)
       .single();
 
     if (quizError || !quizData) {
       console.error('Failed to fetch quiz data:', quizError);
       return res.status(404).json({ error: 'Quiz not found' });
-    }
-
-    // Determine score category
-    let scoreCategory = 'Early Stage';
-    if (quizData.total_score >= 35) {
-      scoreCategory = 'High AI Readiness';
-    } else if (quizData.total_score >= 25) {
-      scoreCategory = 'Medium AI Readiness';
     }
 
     // Send confirmation email
@@ -84,12 +76,12 @@ export default async function handler(
           <div class="content">
             <p>Hi ${firstName},</p>
             
-            <p>Thank you for completing the AI Readiness Assessment${company ? ` for ${company}` : ''}. We're currently analyzing your responses to create a personalized report with actionable insights and recommendations.</p>
+            <p>Thank you for completing the AI Readiness Assessment${company ? ` for ${company}` : ''}. Our AI is currently analyzing your responses to identify the best opportunities for AI implementation in your business.</p>
             
             <div class="score-preview">
-              <h3>Your Initial Score</h3>
-              <p style="font-size: 36px; font-weight: bold; color: #457B9D; margin: 10px 0;">${quizData.total_score}/50</p>
-              <p style="color: #666;">${scoreCategory}</p>
+              <h3>Analysis in Progress</h3>
+              <p style="font-size: 24px; color: #457B9D; margin: 10px 0;">🔍 Identifying AI Opportunities</p>
+              <p style="color: #666;">Our AI is researching solutions specific to your ${quizData.industry || 'industry'}</p>
             </div>
             
             <h3>What's Next?</h3>
