@@ -43,19 +43,11 @@ export const SingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
   return (
     <div className="h-full flex flex-col overflow-hidden">
       {/* Scrollable container for options */}
-      <div className="relative flex-1 min-h-0">
-        <div 
-          ref={scrollContainerRef}
-          className="absolute inset-0 overflow-y-auto pr-2 space-y-2" 
-          style={{ scrollbarWidth: 'thin' }}
-        >
+      <div className="flex-1 overflow-y-auto" ref={scrollContainerRef}>
+        <div className="space-y-2 pr-2">
         {question.options?.map((option, index) => (
-        <motion.div
+        <label
           key={option.value}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.05 }}
-          onClick={() => onChange(option.value)}
           className={`
             block cursor-pointer p-4 rounded-lg
             transition-all duration-200
@@ -66,6 +58,22 @@ export const SingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
           `}
         >
           <div className="flex">
+            <input
+              type="radio"
+              name={`question-${question.id}`}
+              value={option.value}
+              checked={value === option.value}
+              onChange={(e) => {
+                console.log('Radio onChange fired:', {
+                  value: e.target.value,
+                  questionId: question.id,
+                  currentValue: value
+                });
+                onChange(e.target.value);
+              }}
+              className="sr-only"
+            />
+            
             {/* Custom Radio Button */}
             <div className={`
               w-5 h-5 rounded-full mr-4 flex-shrink-0 transition-colors mt-1
@@ -90,17 +98,9 @@ export const SingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
               </div>
             </div>
           </div>
-        </motion.div>
+        </label>
         ))}
         </div>
-        
-        {/* Scroll indicator gradient */}
-        <div 
-          className={`absolute bottom-0 left-0 right-0 h-16 pointer-events-none transition-opacity duration-300 ${showGradient ? 'opacity-100' : 'opacity-0'}`}
-          style={{
-            background: 'linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.9))'
-          }}
-        />
       </div>
       
       {/* Reserve space for error message to prevent content shift */}

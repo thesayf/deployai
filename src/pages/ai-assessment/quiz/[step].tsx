@@ -97,6 +97,12 @@ const QuizStep = () => {
   const handleAnswer = async (answer: any) => {
     if (!currentQuestion) return;
     
+    console.log('handleAnswer called:', {
+      questionId: currentQuestion.id,
+      answer,
+      currentResponses: responses
+    });
+    
     // Update Redux state
     dispatch(saveResponse({ questionId: currentQuestion.id, answer }));
     

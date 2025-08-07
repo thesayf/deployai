@@ -101,9 +101,17 @@ const quizSlice = createSlice({
     saveResponse: (state, action: PayloadAction<{ questionId: string; answer: any }>) => {
       const { questionId, answer } = action.payload;
       const responseKey = getResponseKeyForQuestion(questionId);
+      console.log('saveResponse called:', {
+        questionId,
+        answer,
+        responseKey,
+        willSave: !!responseKey
+      });
       if (responseKey) {
         (state.responses as any)[responseKey] = answer;
         saveState(state);
+      } else {
+        console.error(`No mapping found for question ID: ${questionId}`);
       }
     },
     
@@ -164,23 +172,30 @@ const quizSlice = createSlice({
 // Helper function to map question IDs to response keys
 function getResponseKeyForQuestion(questionId: string): keyof QuizResponseData | null {
   const mapping: Record<string, keyof QuizResponseData> = {
+    // Business Context
     'industry': 'industry',
-    'companySize': 'companySize',
+    'customerCommunication': 'customerCommunication',
+    'revenueOptimization': 'revenueOptimization',
+    'dataDecisionMaking': 'dataDecisionMaking',
+    
+    // Operations  
+    'repetitiveTasks': 'repetitiveTasks',
+    'qualityConsistency': 'qualityConsistency',
+    'responseSpeed': 'responseSpeed',
     'businessObjectives': 'businessObjectives',
-    'biggestChallenge': 'biggestChallenge',
-    'problemAreas': 'problemAreas',
+    
+    // Financial & Systems
     'costImpact': 'costImpact',
-    'manualWork': 'manualWork',
-    'decisionMaking': 'decisionMaking',
     'currentSystems': 'currentSystems',
     'integrationChallenges': 'integrationChallenges',
-    'aiFocus': 'aiFocus',
+    
+    // Team & Implementation
+    'teamCapability': 'teamCapability',
     'aiExperience': 'aiExperience',
-    'teamSkills': 'teamSkills',
-    'budget': 'budget',
+    'companySize': 'companySize',
+    'monthlyBudget': 'monthlyBudget',
     'timeline': 'timeline',
-    'successMetrics': 'successMetrics',
-    'leadership': 'leadership',
+    'decisionAuthority': 'decisionAuthority',
   };
   
   return mapping[questionId] || null;
