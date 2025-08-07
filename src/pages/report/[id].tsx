@@ -14,12 +14,14 @@ import type {
 
 interface ReportData {
   id: string;
-  stage1_analysis: Stage1Analysis;
-  stage2_market: Stage2MarketIntelligence;
-  stage3_financial: Stage3FinancialAnalysis;
-  stage4_strategic: Stage4StrategicRecommendations;
+  stage1_problem_analysis: Stage1Analysis;
+  stage2_tool_research: Stage2MarketIntelligence;
+  stage3_tool_selection: Stage3FinancialAnalysis;
+  stage4_report_content: Stage4StrategicRecommendations;
+  final_report: any;
   report_status: string;
   created_at: string;
+  company_name: string;
   quiz_response: {
     user_company: string;
     user_first_name: string;
@@ -52,12 +54,14 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
         .from('ai_reports')
         .select(`
           id,
-          stage1_analysis,
-          stage2_market,
-          stage3_financial,
-          stage4_strategic,
+          stage1_problem_analysis,
+          stage2_tool_research,
+          stage3_tool_selection,
+          stage4_report_content,
+          final_report,
           report_status,
           created_at,
+          company_name,
           quiz_responses!inner(
             user_company,
             user_first_name,
@@ -73,7 +77,7 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
         return;
       }
 
-      if (data.report_status !== 'completed') {
+      if (data.report_status !== 'report_generated' && data.report_status !== 'completed') {
         setError('Report is still being generated. Please check back later.');
         return;
       }

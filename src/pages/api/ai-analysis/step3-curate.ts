@@ -66,7 +66,8 @@ export default async function handler(
     const { error: updateError } = await supabase
       .from('ai_reports')
       .update({
-        curated_tools: curatedTools,
+        stage3_tool_selection: curatedTools,
+        report_status: 'stage3_complete',
         updated_at: new Date().toISOString()
       })
       .eq('id', reportId);

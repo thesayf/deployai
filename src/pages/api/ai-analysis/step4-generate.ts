@@ -66,8 +66,10 @@ export default async function handler(
     const { error: updateError } = await supabase
       .from('ai_reports')
       .update({
+        stage4_report_content: finalReport,
         final_report: finalReport,
-        report_status: 'completed',
+        report_status: 'report_generated',
+        report_generated_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       })
       .eq('id', reportId);

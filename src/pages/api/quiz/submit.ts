@@ -76,6 +76,8 @@ export default async function handler(
       .insert({
         quiz_response_id: quizId,
         report_status: 'generating',
+        company_name: updatedQuiz.user_company || 'Your Organization',
+        industry_context: finalResponses.industry,
       })
       .select('id, access_token')
       .single();
