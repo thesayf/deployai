@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
 import { generateStep1Prompt } from '@/prompts/step1-problem-analysis';
+import { cleanAndParseJSON } from '@/utils/clean-json';
 import Anthropic from '@anthropic-ai/sdk';
 
 interface AnalyzeRequest {
@@ -65,10 +66,12 @@ export default async function handler(
     let problemAnalysis;
     
     try {
-      problemAnalysis = JSON.parse(content);
+      problemAnalysis = cleanAndParseJSON(content);
+      console.log('Step 1 - Successfully parsed problem analysis');
     } catch (parseError) {
-      console.error('Failed to parse AI response:', content);
-      throw new Error('Invalid AI response format');
+      console.error('Failed to parse AI response in Step 1');
+      console.error('Response content:', content);
+      throw new Error('Invalid AI response format in Step 1');
     }
 
     // Update report with Step 1 analysis

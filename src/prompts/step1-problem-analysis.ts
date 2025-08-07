@@ -65,5 +65,7 @@ OUTPUT FORMAT (return only valid JSON):
   ]
 }
 
-Focus on extracting clear, specific problems that can be solved with existing AI tools. Replace [industry] placeholder with their actual industry.`;
+Focus on extracting clear, specific problems that can be solved with existing AI tools. Replace [industry] placeholder with their actual industry.
+
+CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }`;
 }

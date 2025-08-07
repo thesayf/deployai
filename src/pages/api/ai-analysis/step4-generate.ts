@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
 import { generateStep4Prompt } from '@/prompts/step4-report-generation';
 import { ProblemAnalysis, CuratedTools } from '@/types/ai-analysis-new';
+import { cleanAndParseJSON } from '@/utils/clean-json';
 import Anthropic from '@anthropic-ai/sdk';
 
 interface GenerateRequest {
@@ -56,10 +57,13 @@ export default async function handler(
     let finalReport;
     
     try {
-      finalReport = JSON.parse(content);
+      finalReport = cleanAndParseJSON(content);
+      console.log('Step 4 - Successfully parsed final report');
+      console.log('Final report structure:', Object.keys(finalReport));
     } catch (parseError) {
-      console.error('Failed to parse AI response:', content);
-      throw new Error('Invalid AI response format');
+      console.error('Failed to parse AI response in Step 4');
+      console.error('Response content:', content);
+      throw new Error('Invalid AI response format in Step 4');
     }
 
     // Update report with final report and mark as completed
@@ -79,8 +83,31 @@ export default async function handler(
       throw updateError;
     }
 
-    // Send email notification to user (if implemented)
-    // This is where you would trigger email sending with the report link
+    // Send email notification to user with report link
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
+    
+    try {
+      const emailResponse = await fetch(`${baseUrl}/api/reports/send-report-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key',
+        },
+        body: JSON.stringify({
+          reportId
+        }),
+      });
+
+      if (!emailResponse.ok) {
+        console.error('Failed to send report email:', await emailResponse.text());
+        // Don't fail the whole process if email fails
+      } else {
+        console.log('Report email sent successfully');
+      }
+    } catch (emailError) {
+      console.error('Error sending report email:', emailError);
+      // Continue anyway - report is still generated
+    }
 
     res.status(200).json({ 
       success: true, 

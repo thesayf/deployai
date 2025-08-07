@@ -90,5 +90,7 @@ OUTPUT FORMAT (return only valid JSON):
   ]
 }
 
-Research real tools with actual pricing and verified case studies. Focus on tools that match their budget and technical capability.`;
+Research real tools with actual pricing and verified case studies. Focus on tools that match their budget and technical capability.
+
+CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }`;
 }

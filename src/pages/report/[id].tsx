@@ -3,7 +3,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import { ReportViewer } from '@/components/report-viewer';
+import { ProfessionalReport } from '@/components/report/ProfessionalReport';
+import type { ReportData as ProfessionalReportData } from '@/components/report/types';
 import { Loader2, AlertCircle, Lock } from 'lucide-react';
 import type { 
   Stage1Analysis, 
@@ -79,6 +80,12 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
 
       if (data.report_status !== 'report_generated' && data.report_status !== 'completed') {
         setError('Report is still being generated. Please check back later.');
+        return;
+      }
+
+      // Check if we have the final_report data
+      if (!data.final_report) {
+        setError('Report data is not available yet. Please try again later.');
         return;
       }
 
@@ -181,7 +188,7 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
     return null;
   }
 
-  const companyName = report.quiz_response.user_company || 
+  const companyName = report.company_name || report.quiz_response.user_company || 
     `${report.quiz_response.user_first_name}'s Company`;
 
   return (
@@ -191,12 +198,12 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
         <meta name="description" content="Your personalized AI readiness assessment and implementation roadmap" />
       </Head>
 
-      <ReportViewer
-        stage1Analysis={report.stage1_analysis}
-        stage2Market={report.stage2_market}
-        stage3Financial={report.stage3_financial}
-        stage4Strategic={report.stage4_strategic}
+      <ProfessionalReport
+        data={report.final_report as ProfessionalReportData}
         companyName={companyName}
+        generatedDate={new Date(report.created_at)}
+        variant="executive"
+        onScheduleConsultation={() => router.push('/consultation')}
       />
 
       {/* Footer with actions */}

@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
 import { generateStep3Prompt } from '@/prompts/step3-tool-curation';
 import { ProblemAnalysis, ToolResearch } from '@/types/ai-analysis-new';
+import { cleanAndParseJSON } from '@/utils/clean-json';
 import Anthropic from '@anthropic-ai/sdk';
 
 interface CurateRequest {
@@ -56,10 +57,12 @@ export default async function handler(
     let curatedTools;
     
     try {
-      curatedTools = JSON.parse(content);
+      curatedTools = cleanAndParseJSON(content);
+      console.log('Step 3 - Successfully parsed curated tools');
     } catch (parseError) {
-      console.error('Failed to parse AI response:', content);
-      throw new Error('Invalid AI response format');
+      console.error('Failed to parse AI response in Step 3');
+      console.error('Response content:', content);
+      throw new Error('Invalid AI response format in Step 3');
     }
 
     // Update report with Step 3 curation

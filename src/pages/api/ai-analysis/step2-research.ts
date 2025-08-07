@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
 import { generateStep2Prompt } from '@/prompts/step2-tool-research';
 import { ProblemAnalysis } from '@/types/ai-analysis-new';
+import { cleanAndParseJSON } from '@/utils/clean-json';
 import Anthropic from '@anthropic-ai/sdk';
 
 interface ResearchRequest {
@@ -56,16 +57,12 @@ export default async function handler(
     let toolResearch;
     
     try {
-      // Try to extract JSON from the response
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        toolResearch = JSON.parse(jsonMatch[0]);
-      } else {
-        throw new Error('No JSON found in response');
-      }
+      toolResearch = cleanAndParseJSON(content);
+      console.log('Step 2 - Successfully parsed tool research');
     } catch (parseError) {
-      console.error('Failed to parse AI response:', content);
-      throw new Error('Invalid AI response format');
+      console.error('Failed to parse AI response in Step 2');
+      console.error('Response content:', content);
+      throw new Error('Invalid AI response format in Step 2');
     }
 
     // Update report with Step 2 research

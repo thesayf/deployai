@@ -2,9 +2,8 @@ export interface ReportEmailData {
   firstName: string;
   lastName: string;
   company?: string;
-  score: number;
-  scoreCategory: string;
   reportUrl: string;
+  industry?: string;
 }
 
 export function generateReportReadyEmail(data: ReportEmailData): string {
@@ -31,20 +30,19 @@ export function generateReportReadyEmail(data: ReportEmailData): string {
     <body>
       <div class="container">
         <div class="header">
-          <h1>Your AI Readiness Report is Ready!</h1>
-          <p style="font-size: 18px; margin: 0;">Personalized insights for ${data.firstName} at ${data.company || 'your organization'}</p>
+          <h1>Your AI Implementation Report is Ready!</h1>
+          <p style="font-size: 18px; margin: 0;">Personalized AI strategy for ${data.company || 'your organization'}</p>
         </div>
         
         <div class="content">
           <div class="score-display">
-            <div class="score-circle">
-              <div>
-                <div style="font-size: 36px; font-weight: bold; color: #457B9D;">${data.score}</div>
-                <div style="font-size: 14px; color: #666;">out of 50</div>
-              </div>
+            <div style="text-align: center;">
+              <div style="font-size: 48px; margin-bottom: 10px;">✅</div>
+              <h2 style="color: #333; margin: 0;">Analysis Complete</h2>
+              <p style="color: #666; font-size: 16px; margin-top: 10px;">
+                ${data.industry ? `Customized for the ${data.industry} industry` : 'Your personalized report is ready'}
+              </p>
             </div>
-            <h2 style="color: #333; margin: 0;">${data.scoreCategory}</h2>
-            <p style="color: #666; font-size: 16px;">AI Readiness Level</p>
           </div>
           
           <div class="report-preview">

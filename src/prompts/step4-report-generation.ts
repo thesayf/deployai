@@ -90,5 +90,7 @@ EXAMPLES OF GOOD SOLUTION CATEGORIES:
 - "Workflow Automation Platform" (not "Zapier alternative")  
 - "Sales Intelligence Dashboard" (not "CRM analytics")
 - "Document Processing Engine" (not "AI document reader")
-- "Quality Control Assistant" (not "inspection software")`;
+- "Quality Control Assistant" (not "inspection software")
+
+CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }`;
 }

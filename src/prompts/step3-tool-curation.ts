@@ -152,5 +152,7 @@ QUALITY REQUIREMENTS:
 - Confirm tools actually integrate with their stated current systems
 - Match implementation complexity to their stated technical capability
 - Provide specific, actionable next steps
-- Include concrete success metrics that can be measured`;
+- Include concrete success metrics that can be measured
+
+CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }`;
 }
