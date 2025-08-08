@@ -1,38 +1,96 @@
-// Report Data Types - Exact match to JSON schema from 4-report-content-generation.md
-// All word limits are enforced as per the schema requirements
+// Report Data Types - Matches new structure from improve-report.md
 
 export interface ReportData {
-  problemSummary: ProblemSummary;
-  solutions: [Solution, Solution, Solution]; // Exactly 3 solutions
-  measurableImprovements: [Improvement, Improvement, Improvement]; // Exactly 3 improvements
-  actionPlan: ActionPlan;
+  executiveSummary: ExecutiveSummary;
+  keyProblems: KeyProblem[];
+  recommendedSolutions: RecommendedSolution[];
+  projectedOutcomes: ProjectedOutcome[];
+  whereToStart: WhereToStart;
+  callToAction: CallToAction;
+  
+  // Legacy fields for backwards compatibility
+  problemSummary?: ProblemSummary;
+  solutions?: Solution[];
+  measurableImprovements?: Improvement[];
+  actionPlan?: ActionPlan;
 }
 
+// New interfaces for improved report structure
+export interface ExecutiveSummary {
+  readinessLevel: string; // "High" / "Medium" / "Low"
+  estimatedAnnualOpportunity: string; // "$XXX,XXX"
+  immediateROI: string; // "XXX%"
+}
+
+export interface KeyProblem {
+  problem: string; // Clear headline describing the pain
+  currentCost: string; // Monetary, time, or risk cost
+  potentialGain: string; // Expected improvement from AI
+}
+
+export interface RecommendedSolution {
+  solutionName: string; // Verbose descriptive name
+  directImpact: string[]; // Which problems it solves
+  primaryBenefits: string[]; // 3 key benefits
+  description: string; // Full paragraph explaining the tool
+  realWorldProof: CaseStudy[]; // 1-3 case studies
+  implementationTime: string; // "X weeks"
+}
+
+export interface CaseStudy {
+  caseStudy: string; // Company description and result
+  metric: string; // Specific improvement metric
+}
+
+export interface ProjectedOutcome {
+  tool: string; // Solution name
+  metric: string; // What's being measured
+  current: string; // Current state
+  projected: string; // After implementation
+  improvementPercentage: string; // "XX%"
+}
+
+export interface WhereToStart {
+  recommendation: string; // Which solution to start with
+  targetBottleneck: string; // The problem it addresses
+  immediateImpact: string; // Expected quick wins
+  timelineEstimate: string; // Implementation timeline
+  expectedROI: string; // Based on similar clients
+  implementationNote?: string; // "Our team handles complexity"
+}
+
+export interface CallToAction {
+  primaryCTA: string; // "Schedule Your Free Consultation"
+  secondaryCTA: string; // "Retake the Assessment"
+  urgencyMessage: string; // Timing-specific reason
+}
+
+// Legacy interfaces (kept for backwards compatibility)
 export interface ProblemSummary {
-  industryProfile: string; // 1 sentence, 25 words max
-  topProblems: [string, string, string]; // Each 15 words max
-  monthlyOpportunity: string; // Format: "$X,XXX"
+  industryProfile: string;
+  topProblems: [string, string, string];
+  monthlyOpportunity: string;
 }
 
 export interface Solution {
-  category: string; // AI solution category name - no tool brands (4 words max)
-  outcome: string; // Expected specific result (12 words max)
-  timeline: string; // Format: "X weeks to implement"
-  caseStudy: string; // Anonymized success story (30 words max)
+  category: string;
+  outcome: string;
+  timeline: string;
+  caseStudy: string;
 }
 
 export interface Improvement {
-  metric: string; // Metric name (e.g., "Response Time")
-  currentState: string; // Current metric value (e.g., "24 hours")
-  projectedState: string; // Projected metric value (e.g., "2 minutes")
-  improvement: string; // Improvement percentage (e.g., "95% faster")
+  metric: string;
+  currentState: string;
+  projectedState: string;
+  improvement: string;
 }
 
 export interface ActionPlan {
-  roiProjection: string; // Format: "XXX% in X months"
-  readinessLevel: string; // "High/Medium/Foundation" + brief 10-word explanation
-  ctaText: string; // Book consultation text (15 words max)
-  urgency: string; // Industry/timing-specific urgency reason (12 words max)
+  roiProjection: string;
+  readinessLevel: string;
+  ctaText: string;
+  urgency: string;
 }
 
 // Report Viewer Props

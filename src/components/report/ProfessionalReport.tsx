@@ -253,152 +253,390 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
     );
   }
 
-  // Default: Executive Brief Format
-  return (
-    <div className={`max-w-6xl mx-auto p-8 ${className}`}>
-      {/* Header Section with Company Info and Readiness Score */}
-      <header className="mb-12 p-8 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-        <div className="flex justify-between items-start">
-          <div>
-            <p className="text-gray-600 mb-2">{data.problemSummary.industryProfile}</p>
-            <h1 className="text-3xl font-black text-black uppercase">AI Readiness Assessment</h1>
-            <p className="text-gray-600 mt-2">Prepared for: {companyName}</p>
-            <p className="text-sm text-gray-500">
-              {generatedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} • 
-              ID: {reportId}
-            </p>
-          </div>
-          <div className="text-right">
-            <p className="text-sm text-gray-600 mb-1">Readiness</p>
-            <p className="text-4xl font-black text-black">{readinessStatus}</p>
-            <p className="text-sm text-gray-600 mt-1">team data ready</p>
-          </div>
-        </div>
-      </header>
-
-      {/* Top Problems & Opportunity Section */}
-      <section className="mb-12">
-        <div className="mb-6">
-          <h2 className="text-3xl font-black text-black uppercase mb-2">Top problems & opportunity</h2>
-          <p className="text-xl text-gray-700">
-            Potential: <span className="font-bold text-black">{data.problemSummary.monthlyOpportunity}</span>
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {data.problemSummary.topProblems.map((problem, index) => (
-            <div key={index} className="p-6 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-              <p className="text-sm text-gray-600 mb-2 uppercase">Problem {index + 1}</p>
-              <h3 className="text-xl font-black text-black">
-                {problem}
-              </h3>
+  // Check if we have new or legacy data structure
+  const isNewFormat = data.executiveSummary && data.keyProblems && data.recommendedSolutions;
+  
+  // Default: Executive Brief Format with new structure
+  if (isNewFormat) {
+    return (
+      <div className={`max-w-6xl mx-auto p-8 ${className}`}>
+        {/* Executive Summary Header */}
+        <header className="mb-12 p-8 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-3xl font-black text-black uppercase">AI Readiness Assessment</h1>
+              <p className="text-gray-600 mt-2">Prepared for: {companyName}</p>
+              <p className="text-sm text-gray-500">
+                {generatedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} • 
+                ID: {reportId}
+              </p>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Recommended AI Solutions Section */}
-      <section className="mb-12">
-        <h2 className="text-3xl font-black text-black uppercase mb-8">Recommended AI Solutions</h2>
-        
-        <div className="space-y-8">
-          {data.solutions.map((solution, index) => (
-            <div key={index} className="p-8 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-              <div className="flex items-start">
-                <div className="w-8 h-8 rounded-full bg-orange-500 mr-4 flex-shrink-0 mt-1"></div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-black text-black mb-2">{solution.category}</h3>
-                  <p className="text-gray-600 mb-3">
-                    {solution.outcome} • {solution.timeline}
-                  </p>
-                  <div className="p-4 bg-yellow-50 border-l-4 border-yellow-500">
-                    <p className="text-gray-700">
-                      {solution.caseStudy}
-                    </p>
-                  </div>
+            <div className="text-right">
+              <div className="mb-4">
+                <p className="text-sm text-gray-600 mb-1">Readiness Level</p>
+                <p className="text-4xl font-black text-black">{data.executiveSummary.readinessLevel}</p>
+              </div>
+              <div className="space-y-2">
+                <div>
+                  <p className="text-xs text-gray-600">Annual Opportunity</p>
+                  <p className="text-xl font-bold text-green-600">{data.executiveSummary.estimatedAnnualOpportunity}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-600">Immediate ROI</p>
+                  <p className="text-xl font-bold text-blue-600">{data.executiveSummary.immediateROI}</p>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </header>
 
-      {/* Expected Business Outcomes Section */}
-      <section className="mb-12">
-        <h2 className="text-3xl font-black text-black uppercase mb-8">Expected Business Outcomes</h2>
-        
-        <div className="p-8 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b-4 border-black">
-                <th className="py-3 text-left text-sm uppercase font-black text-gray-600">Metric</th>
-                <th className="py-3 text-left text-sm uppercase font-black text-gray-600">Current</th>
-                <th className="py-3 text-left text-sm uppercase font-black text-gray-600">Projected</th>
-                <th className="py-3 text-left text-sm uppercase font-black text-gray-600">Improvement</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.measurableImprovements.map((improvement, index) => (
-                <tr key={index} className="border-b-2 border-gray-200">
-                  <td className="py-4 font-medium text-black">{improvement.metric}</td>
-                  <td className="py-4 text-red-600 font-bold">{improvement.currentState}</td>
-                  <td className="py-4 text-green-600 font-bold">{improvement.projectedState}</td>
-                  <td className="py-4">
-                    <span className="px-3 py-1 bg-green-100 text-green-800 font-black uppercase text-sm">
-                      {improvement.improvement}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Recommended Next Steps Section */}
-      <section className="mb-12">
-        <h2 className="text-3xl font-black text-black uppercase mb-8">Recommended Next Steps</h2>
-        
-        <div className="space-y-6">
-          {/* ROI and Readiness Card */}
-          <div className="p-8 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <p className="text-sm uppercase text-gray-600 mb-2">Expected ROI</p>
-                <p className="text-3xl font-black text-black">{data.actionPlan.roiProjection}</p>
+        {/* Key Problems & Missed Opportunities */}
+        <section className="mb-12">
+          <h2 className="text-3xl font-black text-black uppercase mb-8">Key Problems & Missed Opportunities</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {data.keyProblems.map((problem, index) => (
+              <div key={index} className="p-6 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+                <div className="mb-4">
+                  <p className="text-sm text-gray-600 mb-2 uppercase">Problem {index + 1}</p>
+                  <h3 className="text-xl font-black text-black mb-3">
+                    {problem.problem}
+                  </h3>
+                </div>
+                <div className="space-y-3">
+                  <div className="p-3 bg-red-50 border-l-4 border-red-500">
+                    <p className="text-xs text-red-700 uppercase font-bold mb-1">Current Cost</p>
+                    <p className="text-red-900 font-semibold">{problem.currentCost}</p>
+                  </div>
+                  <div className="p-3 bg-green-50 border-l-4 border-green-500">
+                    <p className="text-xs text-green-700 uppercase font-bold mb-1">Potential Gain</p>
+                    <p className="text-green-900 font-semibold">{problem.potentialGain}</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <p className="text-sm uppercase text-gray-600 mb-2">Readiness Assessment</p>
-                <p className="text-3xl font-black text-black">{readinessStatus}</p>
-                <p className="text-gray-600 mt-1">{readinessExplanation}</p>
+            ))}
+          </div>
+        </section>
+
+        {/* Recommended AI Solutions Section */}
+        <section className="mb-12">
+          <h2 className="text-3xl font-black text-black uppercase mb-8">Recommended AI Solutions</h2>
+          
+          <div className="space-y-8">
+            {data.recommendedSolutions.map((solution, index) => (
+              <div key={index} className="p-8 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+                <div className="flex items-start">
+                  <div className="w-12 h-12 bg-orange-500 flex items-center justify-center flex-shrink-0 mr-6">
+                    <span className="text-white font-black text-xl">{index + 1}</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-black text-black mb-3">{solution.solutionName}</h3>
+                    
+                    {/* Direct Impact */}
+                    <div className="mb-4">
+                      <p className="text-sm text-gray-600 uppercase font-bold mb-2">Solves These Problems:</p>
+                      <div className="flex flex-wrap gap-2">
+                        {solution.directImpact.map((impact, i) => (
+                          <span key={i} className="px-3 py-1 bg-blue-100 text-blue-800 font-semibold text-sm">
+                            {impact}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Primary Benefits */}
+                    <div className="mb-4">
+                      <p className="text-sm text-gray-600 uppercase font-bold mb-2">Key Benefits:</p>
+                      <ul className="space-y-2">
+                        {solution.primaryBenefits.map((benefit, i) => (
+                          <li key={i} className="flex items-start">
+                            <span className="text-green-500 mr-2">✓</span>
+                            <span className="text-gray-700">{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Description */}
+                    <div className="mb-4">
+                      <p className="text-gray-700 leading-relaxed">{solution.description}</p>
+                    </div>
+
+                    {/* Real World Proof */}
+                    <div className="space-y-3">
+                      <p className="text-sm text-gray-600 uppercase font-bold">Real-World Results:</p>
+                      {solution.realWorldProof.map((proof, i) => (
+                        <div key={i} className="p-4 bg-yellow-50 border-l-4 border-yellow-500">
+                          <p className="text-gray-700 mb-2">{proof.caseStudy}</p>
+                          <p className="text-sm font-bold text-yellow-700">📊 {proof.metric}</p>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Implementation Time */}
+                    <div className="mt-4 p-3 bg-gray-100 inline-block">
+                      <p className="text-sm font-bold text-gray-700">
+                        ⏱️ Implementation Time: {solution.implementationTime}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Projected Business Outcomes Section */}
+        <section className="mb-12">
+          <h2 className="text-3xl font-black text-black uppercase mb-8">Projected Business Outcomes</h2>
+          
+          <div className="p-8 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b-4 border-black">
+                  <th className="py-3 text-left text-sm uppercase font-black text-gray-600">Tool</th>
+                  <th className="py-3 text-left text-sm uppercase font-black text-gray-600">Metric</th>
+                  <th className="py-3 text-left text-sm uppercase font-black text-gray-600">Current</th>
+                  <th className="py-3 text-left text-sm uppercase font-black text-gray-600">Projected</th>
+                  <th className="py-3 text-left text-sm uppercase font-black text-gray-600">Improvement</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.projectedOutcomes.map((outcome, index) => (
+                  <tr key={index} className="border-b-2 border-gray-200">
+                    <td className="py-4 font-medium text-black">{outcome.tool}</td>
+                    <td className="py-4 text-gray-700">{outcome.metric}</td>
+                    <td className="py-4 text-red-600 font-bold">{outcome.current}</td>
+                    <td className="py-4 text-green-600 font-bold">{outcome.projected}</td>
+                    <td className="py-4">
+                      <span className="px-3 py-1 bg-green-100 text-green-800 font-black uppercase text-sm">
+                        {outcome.improvementPercentage}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Where To Start Section */}
+        <section className="mb-12">
+          <h2 className="text-3xl font-black text-black uppercase mb-8">Where To Start</h2>
+          
+          <div className="p-8 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <div className="mb-6">
+              <p className="text-gray-600 mb-4">
+                Consider where you would like to start in your AI journey. We recommend targeting your most immediate bottleneck first.
+              </p>
+              
+              <div className="p-6 bg-blue-50 border-l-8 border-blue-500">
+                <h3 className="text-xl font-black text-black mb-3">
+                  🎯 Our Recommendation: {data.whereToStart.recommendation}
+                </h3>
+                
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm text-gray-600 uppercase font-bold mb-1">Addresses This Bottleneck:</p>
+                    <p className="text-gray-800 font-semibold">{data.whereToStart.targetBottleneck}</p>
+                  </div>
+                  
+                  <div>
+                    <p className="text-sm text-gray-600 uppercase font-bold mb-1">Immediate Impact:</p>
+                    <p className="text-gray-800">{data.whereToStart.immediateImpact}</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <div className="p-3 bg-white border-2 border-gray-300">
+                      <p className="text-xs text-gray-600 uppercase">Timeline</p>
+                      <p className="font-bold text-black">{data.whereToStart.timelineEstimate}</p>
+                    </div>
+                    <div className="p-3 bg-white border-2 border-gray-300">
+                      <p className="text-xs text-gray-600 uppercase">Expected ROI</p>
+                      <p className="font-bold text-green-600">{data.whereToStart.expectedROI}</p>
+                    </div>
+                    <div className="p-3 bg-white border-2 border-gray-300">
+                      <p className="text-xs text-gray-600 uppercase">Complexity</p>
+                      <p className="font-bold text-black">Handled by Us</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {data.whereToStart.implementationNote && (
+                  <p className="mt-4 text-sm text-blue-700 italic">
+                    💡 {data.whereToStart.implementationNote}
+                  </p>
+                )}
               </div>
             </div>
           </div>
+        </section>
 
-          {/* Urgency Alert */}
-          <div className="p-6 bg-red-50 border-4 border-red-500 shadow-[6px_6px_0px_0px_rgba(239,68,68,1)]">
-            <p className="text-sm uppercase text-red-700 font-black mb-2">⚠️ Timing Consideration</p>
-            <p className="text-red-900 font-bold">{data.actionPlan.urgency}</p>
+        {/* Call to Action Section */}
+        <section className="mb-12">
+          <div className="p-8 bg-gradient-to-r from-orange-500 to-red-500 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <div className="text-center">
+              <h2 className="text-3xl font-black text-white uppercase mb-4">Ready to Transform Your Business?</h2>
+              
+              {data.callToAction.urgencyMessage && (
+                <div className="max-w-2xl mx-auto mb-6 p-4 bg-white/20 backdrop-blur-sm">
+                  <p className="text-white font-semibold">
+                    ⏰ {data.callToAction.urgencyMessage}
+                  </p>
+                </div>
+              )}
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+                <button
+                  onClick={handleConsultation}
+                  className="px-8 py-4 bg-white text-black font-black uppercase text-lg border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all"
+                >
+                  {data.callToAction.primaryCTA}
+                </button>
+                
+                <button
+                  onClick={() => window.location.href = '/quiz'}
+                  className="px-6 py-3 bg-transparent text-white font-bold uppercase border-2 border-white hover:bg-white hover:text-black transition-all"
+                >
+                  {data.callToAction.secondaryCTA}
+                </button>
+              </div>
+            </div>
           </div>
+        </section>
 
-          {/* CTA Section */}
-          <div className="p-8 bg-gradient-to-r from-orange-500 to-red-500 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-            <h3 className="text-2xl font-black text-white uppercase mb-4">Ready to Get Started?</h3>
-            <p className="text-white mb-6">{data.actionPlan.ctaText}</p>
-            <button
-              onClick={handleConsultation}
-              className="px-8 py-4 bg-white text-black font-black uppercase text-lg border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all"
-            >
-              Schedule Implementation Planning
-            </button>
+        <footer className="border-t-4 border-black pt-6 text-sm text-gray-600">
+          <p>© {new Date().getFullYear()} deployAI. This report contains proprietary analysis and recommendations.</p>
+          <p className="mt-2">Report ID: {reportId} | Generated: {generatedDate.toLocaleDateString()}</p>
+        </footer>
+      </div>
+    );
+  }
+
+  // Legacy format fallback - use existing executive variant
+  return (
+    <div className={`max-w-4xl mx-auto ${className}`}>
+      <div className="p-12 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+        <header className="mb-10 border-b-4 border-black pb-6">
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-4xl font-black text-black uppercase">AI Readiness Assessment</h1>
+              <p className="text-gray-600 mt-2">Prepared for: {companyName}</p>
+              <p className="text-sm text-gray-500">
+                {generatedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} • 
+                Report ID: {reportId}
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-sm text-gray-600 mb-1">Monthly Opportunity</p>
+              <p className="text-3xl font-black text-green-600">{data.problemSummary?.monthlyOpportunity}</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </header>
 
-      <footer className="border-t-4 border-black pt-6 text-sm text-gray-600">
-        <p>© {new Date().getFullYear()} deployAI. This report contains proprietary analysis and recommendations.</p>
-        <p className="mt-2">Report ID: {reportId} | Generated: {generatedDate.toLocaleDateString()}</p>
-      </footer>
+        <section className="mb-10">
+          <h2 className="text-2xl font-black text-black uppercase mb-6">Executive Summary</h2>
+          <div className="p-6 bg-gray-50 border-l-4 border-gray-800">
+            <p className="text-gray-700 leading-relaxed">
+              {data.problemSummary?.industryProfile}
+            </p>
+            <div className="mt-4 space-y-2">
+              <p className="font-semibold text-gray-900">Key operational challenges identified:</p>
+              <ul className="list-disc pl-5 space-y-1">
+                {data.problemSummary?.topProblems.map((problem, index) => (
+                  <li key={index} className="text-gray-700">{problem}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-2xl font-black text-black uppercase mb-6">Recommended Solutions</h2>
+          <div className="grid gap-6">
+            {data.solutions?.map((solution, index) => (
+              <div key={index} className="p-6 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+                <h3 className="text-xl font-bold text-black mb-3">{solution.category}</h3>
+                <p className="text-gray-700 mb-3">{solution.outcome}</p>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-semibold text-gray-600">{solution.timeline}</span>
+                  <span className="text-sm px-3 py-1 bg-blue-100 text-blue-800 font-semibold">
+                    Priority {index + 1}
+                  </span>
+                </div>
+                <div className="mt-4 p-3 bg-yellow-50 border-l-4 border-yellow-500">
+                  <p className="text-sm text-gray-700 italic">{solution.caseStudy}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-2xl font-black text-black uppercase mb-6">Expected Outcomes</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b-2 border-gray-300">
+                  <th className="py-3 px-4 text-left text-sm font-bold text-gray-600 uppercase">Metric</th>
+                  <th className="py-3 px-4 text-left text-sm font-bold text-gray-600 uppercase">Current</th>
+                  <th className="py-3 px-4 text-left text-sm font-bold text-gray-600 uppercase">Projected</th>
+                  <th className="py-3 px-4 text-left text-sm font-bold text-gray-600 uppercase">Improvement</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.measurableImprovements?.map((improvement, index) => (
+                  <tr key={index} className="border-b border-gray-200">
+                    <td className="py-4 px-4 font-medium text-gray-900">{improvement.metric}</td>
+                    <td className="py-4 px-4 text-red-600 font-semibold">{improvement.currentState}</td>
+                    <td className="py-4 px-4 text-green-600 font-semibold">{improvement.projectedState}</td>
+                    <td className="py-4 px-4">
+                      <span className="px-2 py-1 bg-green-100 text-green-800 font-bold text-sm">
+                        {improvement.improvement}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-2xl font-black text-black uppercase mb-6">Implementation Roadmap</h2>
+          <div className="p-6 bg-blue-50 border-4 border-blue-500 shadow-[6px_6px_0px_0px_rgba(59,130,246,1)]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <p className="text-sm font-semibold text-gray-600 mb-1">Expected ROI</p>
+                <p className="text-2xl font-black text-black">{data.actionPlan?.roiProjection}</p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-600 mb-1">Readiness Level</p>
+                <p className="text-lg font-bold text-black">{readinessStatus}</p>
+                <p className="text-sm text-gray-600">{readinessExplanation}</p>
+              </div>
+            </div>
+            <div className="mt-6 p-4 bg-red-50 border-l-4 border-red-500">
+              <p className="text-sm font-semibold text-red-700 mb-1">⚠️ Timing Consideration</p>
+              <p className="text-red-900">{data.actionPlan?.urgency}</p>
+            </div>
+            <div className="mt-6">
+              <p className="text-gray-700 mb-4">{data.actionPlan?.ctaText}</p>
+              <button
+                onClick={handleConsultation}
+                className="px-6 py-3 bg-black text-white font-bold uppercase hover:bg-gray-800 transition-colors"
+              >
+                Schedule Consultation
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <footer className="border-t-2 border-gray-300 pt-6 text-sm text-gray-600">
+          <p>© {new Date().getFullYear()} deployAI. This report contains proprietary analysis and recommendations.</p>
+          <p className="mt-2">Report ID: {reportId} | Generated: {generatedDate.toLocaleDateString()}</p>
+        </footer>
+      </div>
     </div>
   );
 };

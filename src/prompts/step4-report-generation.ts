@@ -1,127 +1,142 @@
 import { ProblemAnalysis, CuratedTools } from '@/types/ai-analysis-new';
 
 export function generateStep4Prompt(problemAnalysis: ProblemAnalysis, curatedTools: CuratedTools): string {
-  return `You are creating a persuasive AI readiness report that follows a specific structure to build urgency and excitement. Transform the technical analysis into a compelling business case.
+  return `You are creating a persuasive AI readiness report. Your job is to transform raw data into a compelling narrative that feels personalized to their ${problemAnalysis.businessContext.industry} business.
 
-BUSINESS CONTEXT:
-${JSON.stringify(problemAnalysis.businessContext, null, 2)}
+CRITICAL CONTEXT FOR NARRATIVE VOICE:
+- They are a ${problemAnalysis.businessContext.companySize} ${problemAnalysis.businessContext.industry} company
+- Their budget is ${problemAnalysis.businessContext.monthlyBudget}
+- Their timeline urgency is ${problemAnalysis.businessContext.urgency}
+- They currently use: ${problemAnalysis.businessContext.currentSystems}
+- Their main objectives: ${problemAnalysis.businessContext.businessObjectives}
 
-IDENTIFIED PROBLEMS WITH EVIDENCE:
-${JSON.stringify(problemAnalysis.topOpportunities, null, 2)}
+RAW DATA TO TRANSFORM:
+Problems Identified: ${JSON.stringify(problemAnalysis.topOpportunities, null, 2)}
+Solutions & Case Studies: ${JSON.stringify(curatedTools, null, 2)}
 
-CURATED SOLUTIONS WITH FULL DATA:
-${JSON.stringify(curatedTools, null, 2)}
-
-REPORT STRUCTURE (per improve-report.md):
-1. Executive Summary - High-level impact snapshot
-2. Key Problems & Missed Opportunities - Quantified pain points
-3. Recommended AI Solutions - Solutions with proof
-4. Projected Business Outcomes - Table format
-5. Where To Start - Clear first step
-6. Call to Action - Drive next action
+YOUR TRANSFORMATION TASK:
+1. Extract all numerical data, metrics, and case studies from curatedTools
+2. Rewrite everything in language appropriate for their industry
+3. Make problems feel urgent using their actual pain points
+4. Position solutions as transformative (but stay truthful to data)
+5. Use ALL case studies but make them relatable to their business size/type
+6. Create a narrative arc: current pain → possible future → clear next step
 
 OUTPUT FORMAT (return only valid JSON):
 {
   "executiveSummary": {
-    "readinessLevel": "High/Medium/Low",
-    "estimatedAnnualOpportunity": "$XXX,XXX (from curatedTools)",
-    "immediateROI": "XXX% from recommended tools"
+    "readinessLevel": "Assess as High/Medium/Low based on: Do they have modern systems? AI experience? Clear objectives? Budget allocated?",
+    "estimatedAnnualOpportunity": "Take curatedTools.executiveSummary.estimatedAnnualOpportunity exactly",
+    "immediateROI": "Take curatedTools.totalInvestmentSummary.netROI exactly"
   },
   
   "keyProblems": [
     {
-      "problem": "Clear headline describing the pain point",
-      "currentCost": "$X,XXX monthly or X hours/week",
-      "potentialGain": "Time saved or % revenue increase from AI solution"
+      "problem": "Transform problemAnalysis.topOpportunities[0] into urgent headline. Example: If problem is 'slow customer response', write 'Your customers are waiting 24+ hours while competitors respond instantly'",
+      "currentCost": "Extract numbers from problemEvidence. Make it hurt. '$5,000/month in lost sales' or '15 hours/week of manual work'",
+      "potentialGain": "Use actual metrics from curatedTools.selectedTools that solve this. '90% faster response times' or '$60,000 annual savings'"
     },
     {
-      "problem": "Second problem headline",
-      "currentCost": "Quantified cost or time impact",
-      "potentialGain": "Expected improvement from AI"
+      "problem": "Make problem 2 feel like they're falling behind competitors",
+      "currentCost": "Quantify the pain specifically for their industry size and type",
+      "potentialGain": "Pull real improvement numbers from the matching solution in curatedTools"
     },
     {
-      "problem": "Third problem headline",
-      "currentCost": "Monetary, time, or risk cost",
-      "potentialGain": "Specific gain from automation"
+      "problem": "Frame problem 3 as missed opportunity or growing risk",
+      "currentCost": "Use industry-appropriate metrics (revenue loss, compliance risk, efficiency gap)",
+      "potentialGain": "Use case study improvements from curatedTools to show what's possible"
     }
   ],
   
   "recommendedSolutions": [
     {
-      "solutionName": "Verbose solution name from curated tools (e.g., Advanced Workflow Automation Platform)",
+      "solutionName": "Use curatedTools.selectedTools[0].verboseName exactly - this is already generic",
       "directImpact": [
-        "Which problem(s) it solves from keyProblems"
+        "List which problems from above this solves - use curatedTools.selectedTools[0].directImpact"
       ],
       "primaryBenefits": [
-        "One-sentence promise from curatedTools",
-        "Second key benefit",
-        "Third key benefit"
+        "Copy curatedTools.selectedTools[0].primaryBenefits[0] exactly",
+        "Copy curatedTools.selectedTools[0].primaryBenefits[1] exactly",
+        "Copy curatedTools.selectedTools[0].primaryBenefits[2] exactly"
       ],
-      "description": "Paragraph from curatedTools explaining what this tool does and how it works",
+      "description": "Use curatedTools.selectedTools[0].solutionDescription but add context about how it fits their current systems",
       "realWorldProof": [
         {
-          "caseStudy": "Company description and result from curatedTools",
-          "metric": "Specific improvement metric"
+          "caseStudy": "Rewrite curatedTools.selectedTools[0].businessCase.caseStudies[0] to be relatable. If they're a 50-person company, make the case study about a similar size",
+          "metric": "Use exact metric from caseStudies[0].metric"
         },
         {
-          "caseStudy": "Second case study if available",
-          "metric": "Quantified result"
+          "caseStudy": "Transform second case study if available - make industry relevant",
+          "metric": "Exact metric from caseStudies[1].metric"
         }
       ],
-      "implementationTime": "X weeks"
+      "implementationTime": "Use curatedTools.selectedTools[0].implementation.estimatedSetupTime"
     }
   ],
   
   "projectedOutcomes": [
     {
-      "tool": "Solution name",
-      "metric": "Metric name",
-      "current": "Current state",
-      "projected": "After implementation",
-      "improvementPercentage": "XX%"
+      "tool": "Solution name from above",
+      "metric": "Pull from curatedTools.selectedTools[x].successMetrics[0].metric",
+      "current": "Use curatedTools.selectedTools[x].successMetrics[0].currentState",
+      "projected": "Use curatedTools.selectedTools[x].successMetrics[0].targetState",
+      "improvementPercentage": "Calculate from current vs projected"
     }
   ],
   
   "whereToStart": {
-    "recommendation": "We recommend starting with [Solution Name]",
-    "targetBottleneck": "It addresses your most immediate bottleneck of [problem]",
-    "immediateImpact": "Expected immediate impact description",
-    "timelineEstimate": "X weeks to full implementation with our expert team",
-    "expectedROI": "Based on similar clients, expect XXX% ROI description",
-    "implementationNote": "Our team handles all technical complexity"
+    "recommendation": "Use curatedTools.whereToStart.recommendedTool but phrase conversationally",
+    "targetBottleneck": "Use curatedTools.whereToStart.immediateBottleneck",
+    "immediateImpact": "Use curatedTools.whereToStart.expectedImpact",
+    "timelineEstimate": "Use curatedTools.whereToStart.timelineToInstallation",
+    "expectedROI": "Use curatedTools.whereToStart.expectedROI",
+    "implementationNote": "Our senior engineers handle all technical complexity"
   },
   
   "callToAction": {
     "primaryCTA": "Schedule Your Free Consultation",
     "secondaryCTA": "Retake the Assessment",
-    "urgencyMessage": "Timing-specific reason to act now"
+    "urgencyMessage": "Create urgency based on their timeline (${problemAnalysis.businessContext.urgency}) and industry trends"
   }
 }
 
-CONTENT REQUIREMENTS:
-- Use generic AI solution categories, NEVER mention specific tool brands (Zapier, Intercom, HubSpot, etc.)
-- Transform tool names into descriptive categories (e.g., "Intercom" → "Intelligent Customer Response System")
-- Base all problem descriptions on actual quiz responses and problem analysis
-- Include ALL case studies from curatedTools (1-3 per solution) - make anonymous but keep specifics
-- Pull exact metrics and improvements from curatedTools success metrics
-- whereToStart MUST reference the Priority 1 tool from curatedTools
-- Calculate costs and gains from the problem analysis and tool research data
-- Executive summary data comes directly from curatedTools.executiveSummary
-- Projected outcomes should create a clear before/after table view
+CONTEXTUAL TRANSFORMATION RULES:
 
-TRANSFORMATION RULES:
-- Keep case study details but anonymize company names ("Mid-size SaaS with 200 employees" not "Acme Corp")
-- Use the verboseName from curatedTools for solutionName
-- Pull primaryBenefits directly from curatedTools
-- Use full description paragraphs from curatedTools
-- Map each solution to specific problems using directImpact data
+1. PROBLEM FRAMING:
+   - Transform generic problems into industry-specific pain points
+   - If they're in healthcare: frame in terms of patient outcomes, compliance, efficiency
+   - If they're in retail: frame as customer experience, inventory, sales optimization
+   - If they're in manufacturing: frame as quality, downtime, supply chain
+   - Always quantify pain using their actual numbers from problemEvidence
 
-EXAMPLES OF GOOD SOLUTION NAMES:
-- "Intelligent Customer Response and Engagement Platform"
-- "Advanced Workflow Automation and Integration System"
-- "AI-Powered Sales Intelligence and Forecasting Platform"
-- "Document Intelligence and Processing Engine"
-- "Predictive Maintenance and Quality Control System"
+2. SOLUTION POSITIONING:
+   - NEVER mention tool brands (Zapier, Intercom, etc.)
+   - Use verboseName from curatedTools as-is (already generic)
+   - Add context: "This integrates seamlessly with your [current systems they mentioned]"
+   - Frame benefits in their business terms, not generic tech terms
+
+3. CASE STUDY ADAPTATION:
+   - Keep ALL case studies from curatedTools (don't skip any)
+   - Transform company descriptions to match their profile:
+     * If case study is "500 employee company" but they have 50, rewrite as "growing company in your industry"
+     * If case study is different industry, emphasize the similar challenge not the industry
+   - Keep exact metrics (75% improvement, $200K saved) but contextualize
+
+4. URGENCY CREATION:
+   - Use their stated timeline urgency
+   - Reference their business objectives
+   - If they said "ASAP" emphasize competitive pressure
+   - If they said "This quarter" emphasize Q4 planning
+   - Connect to industry trends they'd recognize
+
+5. DATA EXTRACTION RULES:
+   - estimatedAnnualOpportunity: Pull EXACTLY from curatedTools.executiveSummary
+   - ROI numbers: Pull EXACTLY from curatedTools.totalInvestmentSummary
+   - Success metrics: Pull EXACTLY from curatedTools.selectedTools[x].successMetrics
+   - Case study metrics: Keep EXACT numbers, just reframe the context
+   - whereToStart: Use EXACT recommendation from curatedTools.whereToStart
+
+Remember: You're translating technical data into THEIR business language while keeping all numbers accurate.
 
 CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }`;
 }
