@@ -25,23 +25,24 @@ const CompletePage = () => {
   const [isHydrated, setIsHydrated] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [savedUserInfo] = useState(userInfo); // Save user info before it gets cleared
 
   useEffect(() => {
     setIsHydrated(true);
   }, []);
 
   useEffect(() => {
-    // Redirect if no quiz data
-    if (isHydrated && (!userInfo || !quizId)) {
+    // Redirect if no quiz data (use savedUserInfo for initial check)
+    if (isHydrated && (!savedUserInfo || !quizId)) {
       router.push('/ai-assessment');
       return;
     }
 
     // Submit quiz if not already submitted
-    if (isHydrated && userInfo && quizId && !submitted && !isSubmitting) {
+    if (isHydrated && savedUserInfo && quizId && !submitted && !isSubmitting) {
       submitQuiz();
     }
-  }, [isHydrated, userInfo, quizId, submitted, isSubmitting]);
+  }, [isHydrated, savedUserInfo, quizId, submitted, isSubmitting]);
 
   const submitQuiz = async () => {
     if (!quizId || isSubmitting) return;
@@ -67,11 +68,7 @@ const CompletePage = () => {
 
       setSubmitted(true);
       
-      // Clear quiz responses after successful submission
-      // This ensures user data is not retained unnecessarily
-      dispatch(resetQuiz());
-      
-      // Send confirmation email
+      // Send confirmation email (use savedUserInfo since we're about to clear the store)
       try {
         await fetch('/api/quiz/send-confirmation', {
           method: 'POST',
@@ -79,16 +76,21 @@ const CompletePage = () => {
           body: JSON.stringify({
             quizId,
             reportId: data.reportId,
-            userEmail: userInfo.email,
-            firstName: userInfo.firstName,
-            lastName: userInfo.lastName,
-            company: userInfo.company
+            userEmail: savedUserInfo?.email || userInfo.email,
+            firstName: savedUserInfo?.firstName || userInfo.firstName,
+            lastName: savedUserInfo?.lastName || userInfo.lastName,
+            company: savedUserInfo?.company || userInfo.company
           }),
         });
       } catch (emailError) {
         console.error('Failed to send confirmation email:', emailError);
         // Don't fail the whole process if email fails
       }
+      
+      // Clear quiz responses after successful submission
+      // This ensures user data is not retained unnecessarily
+      // Do this AFTER sending the email
+      dispatch(resetQuiz());
 
     } catch (error) {
       console.error('Failed to submit quiz:', error);
@@ -102,8 +104,11 @@ const CompletePage = () => {
     return null;
   }
 
-  if (!userInfo || !quizId) {
-    return null; // Will redirect
+  // Use savedUserInfo for the check since userInfo gets cleared after submission
+  if (!savedUserInfo || !quizId) {
+    if (!submitted) {
+      return null; // Will redirect only if not submitted
+    }
   }
 
   return (
@@ -170,19 +175,19 @@ const CompletePage = () => {
                   </p>
                   <div className="space-y-3">
                     <button
+                      onClick={() => router.push('/')}
+                      className="w-full bg-[#457B9D] text-white px-6 py-3 rounded-lg hover:bg-[#3a6a89] transition-colors"
+                    >
+                      Return to Homepage
+                    </button>
+                    <button
                       onClick={() => {
                         // Quiz already reset after successful submission
                         router.push('/ai-assessment');
                       }}
-                      className="w-full bg-[#457B9D] text-white px-6 py-3 rounded-lg hover:bg-[#3a6a89] transition-colors"
-                    >
-                      Take Another Assessment
-                    </button>
-                    <button
-                      onClick={() => router.push('/')}
                       className="w-full bg-white text-[#457B9D] border border-[#457B9D] px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors"
                     >
-                      Return to Homepage
+                      Take Another Assessment
                     </button>
                   </div>
                 </>
