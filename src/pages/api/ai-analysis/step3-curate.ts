@@ -41,7 +41,7 @@ export default async function handler(
 
     // Call Claude
     const response = await anthropic.messages.create({
-      model: 'claude-3-sonnet-20240229',
+      model: 'claude-sonnet-4-20250514',
       max_tokens: 4000,
       temperature: 0.2,
       messages: [
@@ -81,13 +81,16 @@ export default async function handler(
     }
 
     // Trigger Step 4 (Report Generation)
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://${req.headers.host}`;
+    const step4Url = `${baseUrl}/api/ai-analysis/step4-generate`;
     
-    fetch(`${baseUrl}/api/ai-analysis/step4-generate`, {
+    console.log('Triggering Step 4 at:', step4Url);
+    
+    fetch(step4Url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key',
+        'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key-12345',
       },
       body: JSON.stringify({
         quizResponseId,

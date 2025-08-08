@@ -1,24 +1,29 @@
 import { QuizResponseData } from '@/types/quiz';
 
 export function generateStep1Prompt(responses: QuizResponseData): string {
+  // Handle missing or incomplete responses
+  if (!responses || Object.keys(responses).length === 0) {
+    throw new Error('Quiz responses are empty or missing');
+  }
+
   const quizJson = {
-    industry: responses.industry,
-    customerCommunication: responses.customerCommunication,
-    revenueOptimization: responses.revenueOptimization,
-    dataDecisionMaking: responses.dataDecisionMaking,
-    repetitiveTasks: responses.repetitiveTasks,
-    qualityConsistency: responses.qualityConsistency,
-    responseSpeed: responses.responseSpeed,
-    businessObjectives: responses.businessObjectives,
-    costImpact: responses.costImpact,
-    currentSystems: responses.currentSystems,
-    integrationChallenges: responses.integrationChallenges,
-    teamCapability: responses.teamCapability,
-    aiExperience: responses.aiExperience,
-    companySize: responses.companySize,
-    monthlyBudget: responses.monthlyBudget,
-    timeline: responses.timeline,
-    decisionAuthority: responses.decisionAuthority
+    industry: responses.industry || 'not specified',
+    customerCommunication: responses.customerCommunication || 'not specified',
+    revenueOptimization: responses.revenueOptimization || 'not specified',
+    dataDecisionMaking: responses.dataDecisionMaking || 'not specified',
+    repetitiveTasks: responses.repetitiveTasks || [],
+    qualityConsistency: responses.qualityConsistency || 'not specified',
+    responseSpeed: responses.responseSpeed || 'not specified',
+    businessObjectives: responses.businessObjectives || [],
+    costImpact: responses.costImpact || 'not specified',
+    currentSystems: responses.currentSystems || [],
+    integrationChallenges: responses.integrationChallenges || 'not specified',
+    teamCapability: responses.teamCapability || 'not specified',
+    aiExperience: responses.aiExperience || 'not specified',
+    companySize: responses.companySize || 'not specified',
+    monthlyBudget: responses.monthlyBudget || responses.budget || 'not specified',
+    timeline: responses.timeline || 'not specified',
+    decisionAuthority: responses.decisionAuthority || responses.leadership || 'not specified'
   };
 
   return `You are an AI business consultant. Analyze this assessment and identify the top 3 AI opportunity areas for tool research.

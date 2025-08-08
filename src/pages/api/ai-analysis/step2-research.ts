@@ -28,6 +28,15 @@ export default async function handler(
   try {
     const { quizResponseId, reportId, problemAnalysis } = req.body as ResearchRequest;
 
+    // Validate problemAnalysis structure
+    if (!problemAnalysis || !problemAnalysis.businessContext || !problemAnalysis.topOpportunities) {
+      console.error('Invalid problemAnalysis structure:', problemAnalysis);
+      return res.status(400).json({ 
+        error: 'Invalid problem analysis data',
+        received: problemAnalysis ? Object.keys(problemAnalysis) : 'null'
+      });
+    }
+
     const supabase = supabaseAdmin();
 
     // Initialize Anthropic client - Claude Sonnet 4 with web search
@@ -35,12 +44,15 @@ export default async function handler(
       apiKey: process.env.ANTHROPIC_API_KEY!,
     });
 
+    console.log('Step 2 - Processing with business context:', problemAnalysis.businessContext);
+    console.log('Step 2 - Number of opportunities:', problemAnalysis.topOpportunities.length);
+
     // Generate prompt
     const prompt = generateStep2Prompt(problemAnalysis);
 
     // Call Claude Sonnet 4 with web search capability
     const response = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022', // Claude Sonnet 4 with web search
+      model: 'claude-sonnet-4-20250514', // Claude Sonnet 4 with web search
       max_tokens: 4000,
       temperature: 0.3,
       system: "You have access to web search. Use it to find real AI tools, pricing, and case studies for the business problems identified.",
@@ -81,13 +93,16 @@ export default async function handler(
     }
 
     // Trigger Step 3 (Tool Curation)
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://${req.headers.host}`;
+    const step3Url = `${baseUrl}/api/ai-analysis/step3-curate`;
     
-    fetch(`${baseUrl}/api/ai-analysis/step3-curate`, {
+    console.log('Triggering Step 3 at:', step3Url);
+    
+    fetch(step3Url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key',
+        'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key-12345',
       },
       body: JSON.stringify({
         quizResponseId,

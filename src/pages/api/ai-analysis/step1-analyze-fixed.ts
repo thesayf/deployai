@@ -40,19 +40,19 @@ export default async function handler(
       return res.status(404).json({ error: 'Quiz not found' });
     }
 
-    // Verify report exists
-    const { data: existingReport, error: reportCheckError } = await supabase
+    // Check which columns exist in the database
+    const { data: reportCheck, error: checkError } = await supabase
       .from('ai_reports')
-      .select('id, report_status')
+      .select('*')
       .eq('id', reportId)
       .single();
 
-    if (reportCheckError || !existingReport) {
-      console.error('Report not found:', reportId, reportCheckError);
+    if (checkError || !reportCheck) {
+      console.error('Report not found:', reportId, checkError);
       return res.status(404).json({ error: 'Report not found' });
     }
 
-    console.log('Found existing report:', existingReport);
+    console.log('Report columns available:', Object.keys(reportCheck));
 
     // Initialize Anthropic client
     const anthropic = new Anthropic({
@@ -82,82 +82,85 @@ export default async function handler(
     try {
       problemAnalysis = cleanAndParseJSON(content);
       console.log('Step 1 - Successfully parsed problem analysis');
-      console.log('Problem analysis keys:', Object.keys(problemAnalysis));
-      console.log('Problem analysis sample:', JSON.stringify(problemAnalysis).substring(0, 200));
+      console.log('Problem analysis structure:', Object.keys(problemAnalysis));
     } catch (parseError) {
       console.error('Failed to parse AI response in Step 1');
-      console.error('Response content:', content);
+      console.error('Raw content:', content);
       throw new Error('Invalid AI response format in Step 1');
     }
 
-    // Log what we're about to save
-    console.log('Attempting to save to report ID:', reportId);
-    console.log('Data type of problemAnalysis:', typeof problemAnalysis);
-    console.log('Is problemAnalysis an object?', problemAnalysis && typeof problemAnalysis === 'object');
-    console.log('problemAnalysis keys:', problemAnalysis ? Object.keys(problemAnalysis) : 'null');
-    console.log('Full problemAnalysis:', JSON.stringify(problemAnalysis, null, 2));
+    // Determine which column name to use based on what exists
+    const hasNewColumns = 'stage1_problem_analysis' in reportCheck;
+    const hasOldColumns = 'stage1_analysis' in reportCheck;
+    
+    console.log('Has new columns (stage1_problem_analysis):', hasNewColumns);
+    console.log('Has old columns (stage1_analysis):', hasOldColumns);
+
+    let updateData: any = {
+      report_status: 'stage1_complete',
+      updated_at: new Date().toISOString()
+    };
+
+    // Use the correct column name based on what exists
+    if (hasNewColumns) {
+      updateData.stage1_problem_analysis = problemAnalysis;
+      console.log('Using new column name: stage1_problem_analysis');
+    } else if (hasOldColumns) {
+      updateData.stage1_analysis = problemAnalysis;
+      console.log('Using old column name: stage1_analysis');
+    } else {
+      console.error('ERROR: No recognized stage1 column found in database!');
+      console.error('Available columns:', Object.keys(reportCheck));
+      throw new Error('Database schema mismatch - no stage1 column found');
+    }
 
     // Update report with Step 1 analysis
     const { data: updatedReport, error: updateError } = await supabase
       .from('ai_reports')
-      .update({
-        stage1_problem_analysis: problemAnalysis,
-        report_status: 'stage1_complete',
-        updated_at: new Date().toISOString()
-      })
+      .update(updateData)
       .eq('id', reportId)
-      .select('id, stage1_problem_analysis, report_status')
+      .select('*')
       .single();
 
     if (updateError) {
       console.error('Error updating report:', updateError);
-      console.error('Update error details:', JSON.stringify(updateError, null, 2));
+      console.error('Attempted update data:', updateData);
       throw updateError;
     }
 
     // Verify the update worked
-    console.log('Update successful, returned data:', updatedReport);
-    console.log('Saved stage1_problem_analysis:', updatedReport?.stage1_problem_analysis ? 'Data exists' : 'No data');
+    const savedColumn = hasNewColumns ? 'stage1_problem_analysis' : 'stage1_analysis';
+    console.log('Update successful!');
+    console.log(`Data saved to ${savedColumn}:`, updatedReport[savedColumn] ? 'YES' : 'NO');
     
-    if (!updatedReport?.stage1_problem_analysis) {
+    if (!updatedReport[savedColumn]) {
       console.error('WARNING: Data was not saved to database!');
-      console.error('Attempted to save:', problemAnalysis);
+      console.error('Full updated report:', updatedReport);
     }
 
     // Trigger Step 2 (Tool Research)
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://${req.headers.host}`;
-    const step2Url = `${baseUrl}/api/ai-analysis/step2-research`;
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
     
-    console.log('Triggering Step 2 at:', step2Url);
-    console.log('With problemAnalysis keys:', Object.keys(problemAnalysis));
-    
-    fetch(step2Url, {
+    fetch(`${baseUrl}/api/ai-analysis/step2-research`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key-12345',
+        'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key',
       },
       body: JSON.stringify({
         quizResponseId,
         reportId,
         problemAnalysis
       }),
-    })
-    .then(res => {
-      console.log('Step 2 trigger response status:', res.status);
-      if (!res.ok) {
-        return res.text().then(text => {
-          console.error('Step 2 trigger error response:', text.substring(0, 500));
-        });
-      }
-    })
-    .catch(error => {
+    }).catch(error => {
       console.error('Failed to trigger step 2:', error);
     });
 
     res.status(200).json({ 
       success: true, 
-      message: 'Step 1 analysis complete'
+      message: 'Step 1 analysis complete',
+      savedTo: savedColumn,
+      dataSaved: !!updatedReport[savedColumn]
     });
 
   } catch (error) {

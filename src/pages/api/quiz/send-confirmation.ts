@@ -119,11 +119,10 @@ export default async function handler(
     const { data, error } = await resend.emails.send({
       from: 'AI Assessment <assessment@deployai.studio>',
       to: [userEmail],
-      subject: `Processing Your AI Readiness Assessment - Score: ${quizData.total_score}/50`,
+      subject: 'Processing Your AI Readiness Assessment',
       html: emailHtml,
       tags: [
         { name: 'type', value: 'assessment-confirmation' },
-        { name: 'score', value: quizData.total_score.toString() },
         { name: 'quiz_id', value: quizId }
       ]
     });
