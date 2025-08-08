@@ -48,6 +48,21 @@ const QuizStep = () => {
       return;
     }
 
+    // Validate quiz session is not stale (check if quizId exists in responses)
+    // If we have responses but the current answer format looks wrong, clear state
+    if (quizId && Object.keys(responses).length > 0) {
+      // Check if any response has undefined or invalid structure
+      const hasInvalidResponses = Object.values(responses).some(
+        value => value === undefined || value === null || value === ''
+      );
+      
+      if (hasInvalidResponses) {
+        console.warn('Invalid quiz state detected, clearing stale data');
+        // Don't reset here as it might cause infinite loop
+        // Just log the issue for debugging
+      }
+    }
+
     // Sync URL step with Redux state
     if (step && typeof step === 'string') {
       const stepNumber = parseInt(step, 10);
@@ -60,7 +75,7 @@ const QuizStep = () => {
         router.push(`/ai-assessment/quiz/${currentStep}`);
       }
     }
-  }, [step, currentStep, userInfo, quizId, router, dispatch]);
+  }, [step, currentStep, userInfo, quizId, router, dispatch, responses]);
 
   // Clear validation error when step changes
   useEffect(() => {

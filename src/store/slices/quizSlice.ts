@@ -100,11 +100,10 @@ const quizSlice = createSlice({
     // Response management
     saveResponse: (state, action: PayloadAction<{ questionId: string; answer: any }>) => {
       const { questionId, answer } = action.payload;
-      const responseKey = getResponseKeyForQuestion(questionId);
-      if (responseKey) {
-        (state.responses as any)[responseKey] = answer;
-        saveState(state);
-      }
+      // Store responses with the actual question ID as key
+      // This ensures consistency with what the API expects
+      (state.responses as any)[questionId] = answer;
+      saveState(state);
     },
     
     // Quiz session management
@@ -161,37 +160,7 @@ const quizSlice = createSlice({
   },
 });
 
-// Helper function to map question IDs to response keys
-function getResponseKeyForQuestion(questionId: string): keyof QuizResponseData | null {
-  const mapping: Record<string, keyof QuizResponseData> = {
-    // Business Context
-    'industry': 'industry',
-    'customerCommunication': 'customerCommunication',
-    'revenueOptimization': 'revenueOptimization',
-    'dataDecisionMaking': 'dataDecisionMaking',
-    
-    // Operations  
-    'repetitiveTasks': 'repetitiveTasks',
-    'qualityConsistency': 'qualityConsistency',
-    'responseSpeed': 'responseSpeed',
-    'businessObjectives': 'businessObjectives',
-    
-    // Financial & Systems
-    'costImpact': 'costImpact',
-    'currentSystems': 'currentSystems',
-    'integrationChallenges': 'integrationChallenges',
-    
-    // Team & Implementation
-    'teamCapability': 'teamCapability',
-    'aiExperience': 'aiExperience',
-    'companySize': 'companySize',
-    'monthlyBudget': 'monthlyBudget',
-    'timeline': 'timeline',
-    'decisionAuthority': 'decisionAuthority',
-  };
-  
-  return mapping[questionId] || null;
-}
+// No longer needed - we store responses directly with question IDs
 
 // Export actions
 export const {
