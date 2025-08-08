@@ -43,7 +43,12 @@ OUTPUT FORMAT (return only valid JSON):
     "companySize": "employee count range", 
     "monthlyBudget": "budget range from responses",
     "urgency": "timeline from responses",
-    "techCapability": "team skill level"
+    "techCapability": "team skill level",
+    "currentSystems": "list of current systems they use",
+    "integrationNeeds": "any integration challenges mentioned",
+    "aiExperience": "current AI experience level",
+    "businessObjectives": "primary business goals",
+    "decisionAuthority": "who makes decisions"
   },
   "topOpportunities": [
     {

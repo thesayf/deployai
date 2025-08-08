@@ -1,96 +1,115 @@
 import { ProblemAnalysis } from '@/types/ai-analysis-new';
 
 export function generateStep2Prompt(analysis: ProblemAnalysis): string {
-  return `Find AI tools for this business using web search:
+  return `Use web search to find AI tools or AI powere systems or automations that are actively being used by other companies in the market in the same industry or similar industries using web search. You are researching real tools to solve specific business problems.
 
 BUSINESS CONTEXT:
 Industry: ${analysis.businessContext.industry}
 Company Size: ${analysis.businessContext.companySize}
-Budget: ${analysis.businessContext.monthlyBudget}
+Monthly Budget: ${analysis.businessContext.monthlyBudget}
 Tech Capability: ${analysis.businessContext.techCapability}
+Urgency: ${analysis.businessContext.urgency}
+Current Systems: ${analysis.businessContext.currentSystems}
+Integration Needs: ${analysis.businessContext.integrationNeeds}
+AI Experience: ${analysis.businessContext.aiExperience}
+Business Objectives: ${analysis.businessContext.businessObjectives}
+Decision Authority: ${analysis.businessContext.decisionAuthority}
 
-SEARCH FOR TOOLS THAT SOLVE:
+PROBLEMS TO SOLVE (with estimated costs/impact):
 Problem 1: ${analysis.topOpportunities[0].problemArea}
-Keywords: ${analysis.topOpportunities[0].searchKeywords.join(', ')}
+Impact: ${analysis.topOpportunities[0].problemEvidence}
+Search Keywords: ${analysis.topOpportunities[0].searchKeywords.join(', ')}
 
-Problem 2: ${analysis.topOpportunities[1].problemArea}  
-Keywords: ${analysis.topOpportunities[1].searchKeywords.join(', ')}
+Problem 2: ${analysis.topOpportunities[1].problemArea}
+Impact: ${analysis.topOpportunities[1].problemEvidence}
+Search Keywords: ${analysis.topOpportunities[1].searchKeywords.join(', ')}
 
 Problem 3: ${analysis.topOpportunities[2].problemArea}
-Keywords: ${analysis.topOpportunities[2].searchKeywords.join(', ')}
+Impact: ${analysis.topOpportunities[2].problemEvidence}
+Search Keywords: ${analysis.topOpportunities[2].searchKeywords.join(', ')}
 
-For each problem area, aim to find 3-5 tools that is applicable to the business and industry. Also pull pricing and results-focussed case studies where available as these are important for conversions; include verifiable company names where available. never make up software or data. if you cannot find a tool or value, return 'no available data'.
+RESEARCH REQUIREMENTS:
+For each problem area, find 3-5 real AI tools. For EACH tool, gather:
+1. Verbose solution name (descriptive enough to understand function)
+2. Three specific benefit promises/value propositions
+3. A detailed paragraph explaining what the tool does and how it works
+4. 1-3 REAL case studies with specific metrics (MUST include company description)
+5. Implementation timeline estimate
+6. Pricing information
+7. Potential cost savings, revenue gains (annual), or other efficiency gains (e.g. time saved, % revenue increase etc)
+
+CRITICAL DATA INTEGRITY RULES:
+- NEVER make up tools, companies, or case studies
+- If you cannot find specific data, use "Data not available"
+- Case studies MUST be real and verifiable
+- Include source URLs where available
+- If fewer than 3 case studies exist, provide what's available
+- All metrics must be from actual reports/testimonials
 
 OUTPUT FORMAT (return only valid JSON):
 {
+  "estimatedAnnualOpportunity": "$XXX,XXX",
   "recommendedSolutions": [
     {
       "problemArea": "Customer Service Bottleneck",
+      "estimatedMonthlyCost": "$X,XXX",
+      "estimatedAnnualCost": "$XX,XXX",
       "tools": [
         {
           "name": "Intercom",
-          "category": "Customer Service AI", 
-          "description": "AI-powered customer messaging platform",
-          "pricing": "$39-99/month per seat",
-          "bestFor": "Small to medium businesses",
-          "keyFeatures": ["AI chatbots", "Live chat", "Help desk"],
-          "integrations": ["Salesforce", "Slack", "Shopify"],
-          "roiData": {
-            "metric": "Response time reduction",
-            "improvement": "75% faster responses",
-            "source": "[htttp://some-url-to-the-case-study]"
+          "verboseName": "Intelligent Customer Response and Engagement Platform",
+          "category": "Customer Service AI",
+          "description": "Intercom is an AI-powered customer messaging platform that combines live chat, chatbots, and a help desk in one solution. It uses machine learning to automatically route conversations, suggest responses, and resolve common queries without human intervention. The platform learns from your team's interactions to continuously improve its automated responses.",
+          "primaryBenefits": [
+            "Automate 80% of repetitive customer inquiries with AI chatbots",
+            "Reduce average response time from hours to seconds",
+            "Scale support without proportionally increasing headcount"
+          ],
+          "pricing": {
+            "model": "Per seat monthly",
+            "range": "$39-99/month per seat",
+            "setupFee": "$0",
+            "notes": "Volume discounts available"
           },
-          "caseStudy": "Law firm reduced response time from 24 hours to 2 minutes",
+          "implementationTime": "2-3 weeks",
+          "caseStudies": [
+            {
+              "company": "Mid-size SaaS company with 200 employees",
+              "industry": "Software",
+              "result": "Reduced response time by 75%, handled 10,000 more tickets/month with same team size",
+              "metric": "75% faster responses",
+              "source": "Data not available"
+            },
+            {
+              "company": "E-commerce retailer with $50M annual revenue",
+              "industry": "Retail",
+              "result": "Automated 60% of customer inquiries, saved $200K annually in support costs",
+              "metric": "$200K annual savings",
+              "source": "Data not available"
+            }
+          ],
+          "annualROI": {
+            "potentialSavings": "$150,000",
+            "percentageImprovement": "250%",
+            "paybackPeriod": "4 months"
+          },
+          "bestFor": "Companies with high volume repetitive inquiries",
+          "integrations": ["Salesforce", "Slack", "Shopify", "HubSpot"],
           "implementationComplexity": "Low"
-        }
-      ]
-    },
-    {
-      "problemArea": "Manual Data Entry",
-      "tools": [
-        {
-          "name": "Zapier",
-          "category": "Workflow Automation",
-          "description": "Connect apps and automate workflows",
-          "pricing": "$19.99-599/month based on tasks",
-          "bestFor": "Businesses with multiple software tools",
-          "keyFeatures": ["App integrations", "Workflow automation", "Data sync"],
-          "integrations": ["5000+ apps"],
-          "roiData": {
-            "metric": "Time savings",
-            "improvement": "10-15 hours per week saved",
-            "source": "[htttp://some-url-to-the-case-study]"
-          },
-          "caseStudy": "Real estate company eliminated 20 hours of weekly data entry",
-          "implementationComplexity": "Medium"
-        }
-      ]
-    },
-    {
-      "problemArea": "Revenue Tracking Gaps",
-      "tools": [
-        {
-          "name": "HubSpot Sales Analytics",
-          "category": "Sales Intelligence",
-          "description": "AI-powered sales analytics and forecasting",
-          "pricing": "$500-1200/month",
-          "bestFor": "Growing sales teams",
-          "keyFeatures": ["Sales forecasting", "Pipeline analytics", "Revenue attribution"],
-          "integrations": ["CRM systems", "Marketing platforms"],
-          "roiData": {
-            "metric": "Revenue increase",
-            "improvement": "25% increase in qualified leads",
-            "source": "[htttp://some-url-to-the-report]"
-          },
-          "caseStudy": "Manufacturing company increased revenue visibility by 40%",
-          "implementationComplexity": "Medium"
         }
       ]
     }
   ]
 }
 
-Research real tools with actual pricing and verified case studies. Focus on tools that match their budget and technical capability.
+Focus on finding tools that:
+1. Match their budget constraints
+2. Provide maximum business value and ROI
+3. Have proven success in similar industries
+4. Can be implemented within their urgency timeline
+5. Integrate with their current systems (${analysis.businessContext.currentSystems})
+6. Support their business objectives (${analysis.businessContext.businessObjectives})
+7. Are appropriate for their decision-making structure
 
 CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }`;
 }

@@ -8,6 +8,11 @@ export interface ProblemAnalysis {
     monthlyBudget: string;
     urgency: string;
     techCapability: string;
+    currentSystems: string;
+    integrationNeeds: string;
+    aiExperience: string;
+    businessObjectives: string;
+    decisionAuthority: string;
   };
   topOpportunities: Array<{
     problemArea: string;
@@ -20,22 +25,38 @@ export interface ProblemAnalysis {
 
 // Step 2: Tool Research
 export interface ToolResearch {
+  estimatedAnnualOpportunity: string;
   recommendedSolutions: Array<{
     problemArea: string;
+    estimatedMonthlyCost: string;
+    estimatedAnnualCost: string;
     tools: Array<{
       name: string;
+      verboseName: string;
       category: string;
       description: string;
-      pricing: string;
-      bestFor: string;
-      keyFeatures: string[];
-      integrations: string[];
-      roiData: {
-        metric: string;
-        improvement: string;
-        source: string;
+      primaryBenefits: string[];
+      pricing: {
+        model: string;
+        range: string;
+        setupFee: string;
+        notes: string;
       };
-      caseStudy: string;
+      implementationTime: string;
+      caseStudies: Array<{
+        company: string;
+        industry: string;
+        result: string;
+        metric: string;
+        source: string;
+      }>;
+      annualROI: {
+        potentialSavings: string;
+        percentageImprovement: string;
+        paybackPeriod: string;
+      };
+      bestFor: string;
+      integrations: string[];
       implementationComplexity: 'Low' | 'Medium' | 'High';
     }>;
   }>;
@@ -49,13 +70,17 @@ export interface CuratedTools {
     expectedROI: string;
     implementationTimeline: string;
     keyBenefits: string[];
+    estimatedAnnualOpportunity: string;
   };
   selectedTools: Array<{
     priority: number;
     toolName: string;
     vendor: string;
     category: string;
+    verboseName: string;
     problemSolved: string;
+    directImpact: string[];
+    primaryBenefits: string[];
     solutionDescription: string;
     pricing: {
       model: string;
@@ -68,7 +93,12 @@ export interface CuratedTools {
       projectedSavings: string;
       paybackPeriod: string;
       roiPercentage: string;
-      caseStudyEvidence: string;
+      caseStudies: Array<{
+        company: string;
+        industry: string;
+        result: string;
+        metric: string;
+      }>;
     };
     implementation: {
       complexity: 'Low' | 'Medium' | 'High';
@@ -90,6 +120,14 @@ export interface CuratedTools {
       probability: 'Low' | 'Medium' | 'High';
     }>;
   }>;
+  whereToStart: {
+    recommendedTool: string;
+    rationale: string;
+    immediateBottleneck: string;
+    expectedImpact: string;
+    timelineToInstallation: string;
+    expectedROI: string;
+  };
   implementationRoadmap: {
     phase1: {
       timeline: string;
@@ -136,27 +174,44 @@ export interface CuratedTools {
 
 // Step 4: Final Report Generation
 export interface FinalReport {
-  problemSummary: {
-    industryProfile: string;
-    topProblems: string[];
-    monthlyOpportunity: string;
-  };
-  solutions: Array<{
-    category: string;
-    outcome: string;
-    timeline: string;
-    caseStudy: string;
-  }>;
-  measurableImprovements: Array<{
-    metric: string;
-    currentState: string;
-    projectedState: string;
-    improvement: string;
-  }>;
-  actionPlan: {
-    roiProjection: string;
+  executiveSummary: {
     readinessLevel: string;
-    ctaText: string;
-    urgency: string;
+    estimatedAnnualOpportunity: string;
+    immediateROI: string;
+  };
+  keyProblems: Array<{
+    problem: string;
+    currentCost: string;
+    potentialGain: string;
+  }>;
+  recommendedSolutions: Array<{
+    solutionName: string;
+    directImpact: string[];
+    primaryBenefits: string[];
+    description: string;
+    realWorldProof: Array<{
+      caseStudy: string;
+      metric: string;
+    }>;
+    implementationTime: string;
+  }>;
+  projectedOutcomes: Array<{
+    tool: string;
+    metric: string;
+    current: string;
+    projected: string;
+    improvementPercentage: string;
+  }>;
+  whereToStart: {
+    recommendation: string;
+    targetBottleneck: string;
+    immediateImpact: string;
+    timelineEstimate: string;
+    expectedROI: string;
+  };
+  callToAction: {
+    primaryCTA: string;
+    secondaryCTA: string;
+    urgencyMessage: string;
   };
 }

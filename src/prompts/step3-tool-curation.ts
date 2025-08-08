@@ -1,29 +1,34 @@
 import { ProblemAnalysis, ToolResearch } from '@/types/ai-analysis-new';
 
 export function generateStep3Prompt(problemAnalysis: ProblemAnalysis, toolResearch: ToolResearch): string {
-  return `You are a senior AI implementation consultant. Based on the problem analysis and tool research, select the 3 most appropriate AI tools for this business and create a comprehensive implementation report.
+  return `You are a senior AI implementation consultant. Based on the problem analysis and tool research, select the 3 most appropriate AI tools for this business and determine the optimal starting point.
 
 BUSINESS CONTEXT:
 ${JSON.stringify(problemAnalysis.businessContext, null, 2)}
 
-IDENTIFIED PROBLEMS:
+IDENTIFIED PROBLEMS WITH COSTS:
 ${JSON.stringify(problemAnalysis.topOpportunities, null, 2)}
 
-RESEARCHED TOOLS:
-${JSON.stringify(toolResearch.recommendedSolutions, null, 2)}
+RESEARCHED TOOLS WITH COMPREHENSIVE DATA:
+${JSON.stringify(toolResearch, null, 2)}
 
 SELECTION CRITERIA:
 1. Problem-solution fit (how well the tool addresses their specific issues)
 2. Budget alignment (fits within their stated budget range)
-3. Implementation complexity (matches their technical capability)
-4. ROI potential (strong business case with measurable returns)
-5. Industry relevance (proven success in similar businesses)
+3. ROI potential (strong business case with measurable returns)
+4. Industry relevance (proven success in similar businesses)
+5. Business impact (maximum value regardless of complexity)
 
-ANALYSIS INSTRUCTIONS:
-1. Evaluate all researched tools against the selection criteria
-2. Select the 3 highest-scoring tools (may be from different problem areas or multiple tools for the same problem)
-3. Provide detailed justification for each selection
-4. Include implementation roadmap and success metrics
+CRITICAL INSTRUCTIONS:
+1. Select exactly 3 tools that provide the best overall value
+2. Preserve ALL case studies from the research (1-3 per tool)
+3. Calculate which tool should be implemented FIRST based on:
+   - Highest immediate impact on revenue/cost savings
+   - Fastest time to value
+   - Addresses most urgent business bottleneck
+   - Best ROI regardless of complexity
+4. Map each tool to the specific problems it solves
+5. Calculate total annual opportunity from all problems
 
 OUTPUT FORMAT (return only valid JSON):
 {
@@ -36,7 +41,8 @@ OUTPUT FORMAT (return only valid JSON):
       "Primary benefit 1",
       "Primary benefit 2", 
       "Primary benefit 3"
-    ]
+    ],
+    "estimatedAnnualOpportunity": "$XXX,XXX (sum of all problem costs)"
   },
   "selectedTools": [
     {
@@ -44,8 +50,18 @@ OUTPUT FORMAT (return only valid JSON):
       "toolName": "Specific Tool Name",
       "vendor": "Company Name",
       "category": "AI Tool Category",
+      "verboseName": "Descriptive name from research",
       "problemSolved": "Specific problem from original analysis",
-      "solutionDescription": "How this tool solves their problem",
+      "directImpact": [
+        "Which specific problem it addresses",
+        "Secondary problem it helps with"
+      ],
+      "primaryBenefits": [
+        "Benefit 1 from research",
+        "Benefit 2 from research",
+        "Benefit 3 from research"
+      ],
+      "solutionDescription": "Full paragraph from research explaining how tool works",
       "pricing": {
         "model": "Monthly/Annual/Per-user/One-time",
         "cost": "$XXX per month/year",
@@ -57,7 +73,14 @@ OUTPUT FORMAT (return only valid JSON):
         "projectedSavings": "Monthly savings expected", 
         "paybackPeriod": "X months",
         "roiPercentage": "XXX% annual ROI",
-        "caseStudyEvidence": "Similar business achieved X% improvement"
+        "caseStudies": [
+          {
+            "company": "Company description from research",
+            "industry": "Industry",
+            "result": "What they achieved",
+            "metric": "Specific metric improvement"
+          }
+        ]
       },
       "implementation": {
         "complexity": "Low/Medium/High",
@@ -84,6 +107,14 @@ OUTPUT FORMAT (return only valid JSON):
       ]
     }
   ],
+  "whereToStart": {
+    "recommendedTool": "Name of priority 1 tool",
+    "rationale": "Why this tool should be implemented first",
+    "immediateBottleneck": "The specific bottleneck it addresses",
+    "expectedImpact": "Immediate impact description", 
+    "timelineToInstallation": "X weeks",
+    "expectedROI": "Based on similar clients, expect XXX% ROI in X months"
+  },
   "implementationRoadmap": {
     "phase1": {
       "timeline": "Week 1-2",
@@ -150,9 +181,13 @@ QUALITY REQUIREMENTS:
 - Ensure all cost figures are realistic and sourced from research
 - Verify ROI projections are conservative and achievable
 - Confirm tools actually integrate with their stated current systems
-- Match implementation complexity to their stated technical capability
+- Focus on business value and ROI, not technical limitations
 - Provide specific, actionable next steps
 - Include concrete success metrics that can be measured
+- PRESERVE ALL CASE STUDIES from the research (1-3 per tool, don't summarize)
+- The whereToStart section MUST recommend the Priority 1 tool with clear justification
+- Calculate estimatedAnnualOpportunity as the sum of all problem costs from the analysis
+- Each tool must clearly map to which problems it solves (directImpact field)
 
 CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }`;
 }

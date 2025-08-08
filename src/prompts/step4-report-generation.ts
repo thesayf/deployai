@@ -1,96 +1,127 @@
 import { ProblemAnalysis, CuratedTools } from '@/types/ai-analysis-new';
 
 export function generateStep4Prompt(problemAnalysis: ProblemAnalysis, curatedTools: CuratedTools): string {
-  return `You are a senior AI consultant creating a business impact report. Generate a concise report that shows this business what AI can achieve for them without revealing specific tool names.
+  return `You are creating a persuasive AI readiness report that follows a specific structure to build urgency and excitement. Transform the technical analysis into a compelling business case.
 
 BUSINESS CONTEXT:
 ${JSON.stringify(problemAnalysis.businessContext, null, 2)}
 
-IDENTIFIED PROBLEMS:
+IDENTIFIED PROBLEMS WITH EVIDENCE:
 ${JSON.stringify(problemAnalysis.topOpportunities, null, 2)}
 
-CURATED SOLUTIONS:
+CURATED SOLUTIONS WITH FULL DATA:
 ${JSON.stringify(curatedTools, null, 2)}
 
-Create a report that builds excitement and positions us as the AI implementation experts they need.
+REPORT STRUCTURE (per improve-report.md):
+1. Executive Summary - High-level impact snapshot
+2. Key Problems & Missed Opportunities - Quantified pain points
+3. Recommended AI Solutions - Solutions with proof
+4. Projected Business Outcomes - Table format
+5. Where To Start - Clear first step
+6. Call to Action - Drive next action
 
 OUTPUT FORMAT (return only valid JSON):
 {
-  "problemSummary": {
-    "industryProfile": "1 sentence describing their business type and size (25 words max)",
-    "topProblems": [
-      "Problem 1 description based on their responses (15 words max)",
-      "Problem 2 description based on their responses (15 words max)", 
-      "Problem 3 description based on their responses (15 words max)"
-    ],
-    "monthlyOpportunity": "$X,XXX"
+  "executiveSummary": {
+    "readinessLevel": "High/Medium/Low",
+    "estimatedAnnualOpportunity": "$XXX,XXX (from curatedTools)",
+    "immediateROI": "XXX% from recommended tools"
   },
   
-  "solutions": [
+  "keyProblems": [
     {
-      "category": "AI solution category name - no tool brands (4 words max)",
-      "outcome": "Expected specific result (12 words max)",
-      "timeline": "X weeks to implement",
-      "caseStudy": "Anonymized success story from similar business (30 words max)"
+      "problem": "Clear headline describing the pain point",
+      "currentCost": "$X,XXX monthly or X hours/week",
+      "potentialGain": "Time saved or % revenue increase from AI solution"
     },
     {
-      "category": "Second AI solution category (4 words max)",
-      "outcome": "Expected specific result (12 words max)",
-      "timeline": "X weeks to implement", 
-      "caseStudy": "Anonymized success story from similar business (30 words max)"
+      "problem": "Second problem headline",
+      "currentCost": "Quantified cost or time impact",
+      "potentialGain": "Expected improvement from AI"
     },
     {
-      "category": "Third AI solution category (4 words max)",
-      "outcome": "Expected specific result (12 words max)",
-      "timeline": "X weeks to implement",
-      "caseStudy": "Anonymized success story from similar business (30 words max)"
-    }
-  ],
-
-  "measurableImprovements": [
-    {
-      "metric": "Response Time", 
-      "currentState": "24 hours",
-      "projectedState": "2 minutes",
-      "improvement": "95% faster"
-    },
-    {
-      "metric": "Data Entry Hours",
-      "currentState": "20 hours/week", 
-      "projectedState": "2 hours/week",
-      "improvement": "90% reduction"
-    },
-    {
-      "metric": "Lead Conversion Rate",
-      "currentState": "15%",
-      "projectedState": "25%", 
-      "improvement": "67% increase"
+      "problem": "Third problem headline",
+      "currentCost": "Monetary, time, or risk cost",
+      "potentialGain": "Specific gain from automation"
     }
   ],
   
-  "actionPlan": {
-    "roiProjection": "XXX% in X months",
-    "readinessLevel": "High/Medium/Foundation + brief 10-word explanation",
-    "ctaText": "Book consultation for specific tool recommendations (15 words max)",
-    "urgency": "Industry/timing-specific urgency reason (12 words max)"
+  "recommendedSolutions": [
+    {
+      "solutionName": "Verbose solution name from curated tools (e.g., Advanced Workflow Automation Platform)",
+      "directImpact": [
+        "Which problem(s) it solves from keyProblems"
+      ],
+      "primaryBenefits": [
+        "One-sentence promise from curatedTools",
+        "Second key benefit",
+        "Third key benefit"
+      ],
+      "description": "Paragraph from curatedTools explaining what this tool does and how it works",
+      "realWorldProof": [
+        {
+          "caseStudy": "Company description and result from curatedTools",
+          "metric": "Specific improvement metric"
+        },
+        {
+          "caseStudy": "Second case study if available",
+          "metric": "Quantified result"
+        }
+      ],
+      "implementationTime": "X weeks"
+    }
+  ],
+  
+  "projectedOutcomes": [
+    {
+      "tool": "Solution name",
+      "metric": "Metric name",
+      "current": "Current state",
+      "projected": "After implementation",
+      "improvementPercentage": "XX%"
+    }
+  ],
+  
+  "whereToStart": {
+    "recommendation": "We recommend starting with [Solution Name]",
+    "targetBottleneck": "It addresses your most immediate bottleneck of [problem]",
+    "immediateImpact": "Expected immediate impact description",
+    "timelineEstimate": "X weeks to full implementation with our expert team",
+    "expectedROI": "Based on similar clients, expect XXX% ROI description",
+    "implementationNote": "Our team handles all technical complexity"
+  },
+  
+  "callToAction": {
+    "primaryCTA": "Schedule Your Free Consultation",
+    "secondaryCTA": "Retake the Assessment",
+    "urgencyMessage": "Timing-specific reason to act now"
   }
 }
 
 CONTENT REQUIREMENTS:
-- Use generic AI solution categories, never mention specific tool names (Zapier, Intercom, etc.)
-- Base problem descriptions on their actual quiz responses 
-- Pull measurable improvements from the curated tools data
-- Make case studies anonymous but specific ("Law firm with 15 employees...")  
-- Calculate monthly opportunity from their stated cost impact
-- Ensure all content limits are strictly followed
-- Focus on building confidence and demonstrating our expertise
+- Use generic AI solution categories, NEVER mention specific tool brands (Zapier, Intercom, HubSpot, etc.)
+- Transform tool names into descriptive categories (e.g., "Intercom" → "Intelligent Customer Response System")
+- Base all problem descriptions on actual quiz responses and problem analysis
+- Include ALL case studies from curatedTools (1-3 per solution) - make anonymous but keep specifics
+- Pull exact metrics and improvements from curatedTools success metrics
+- whereToStart MUST reference the Priority 1 tool from curatedTools
+- Calculate costs and gains from the problem analysis and tool research data
+- Executive summary data comes directly from curatedTools.executiveSummary
+- Projected outcomes should create a clear before/after table view
 
-EXAMPLES OF GOOD SOLUTION CATEGORIES:
-- "Intelligent Client Response System" (not "chatbot")
-- "Workflow Automation Platform" (not "Zapier alternative")  
-- "Sales Intelligence Dashboard" (not "CRM analytics")
-- "Document Processing Engine" (not "AI document reader")
-- "Quality Control Assistant" (not "inspection software")
+TRANSFORMATION RULES:
+- Keep case study details but anonymize company names ("Mid-size SaaS with 200 employees" not "Acme Corp")
+- Use the verboseName from curatedTools for solutionName
+- Pull primaryBenefits directly from curatedTools
+- Use full description paragraphs from curatedTools
+- Map each solution to specific problems using directImpact data
+
+EXAMPLES OF GOOD SOLUTION NAMES:
+- "Intelligent Customer Response and Engagement Platform"
+- "Advanced Workflow Automation and Integration System"
+- "AI-Powered Sales Intelligence and Forecasting Platform"
+- "Document Intelligence and Processing Engine"
+- "Predictive Maintenance and Quality Control System"
 
 CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }`;
 }
