@@ -20,8 +20,18 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
 }) => {
   const reportId = Math.random().toString(36).substr(2, 9).toUpperCase();
   
-  // Parse readiness level
-  const [readinessStatus, readinessExplanation] = data.actionPlan.readinessLevel.split(' - ');
+  // Parse readiness level - handle both new and old formats
+  let readinessStatus = '';
+  let readinessExplanation = '';
+  
+  if (data.actionPlan?.readinessLevel) {
+    // Legacy format
+    [readinessStatus, readinessExplanation] = data.actionPlan.readinessLevel.split(' - ');
+  } else if (data.executiveSummary?.readinessLevel) {
+    // New format - readiness level is just a string like "High" or "Medium"
+    readinessStatus = data.executiveSummary.readinessLevel;
+    readinessExplanation = ''; // New format doesn't have explanation in readiness level
+  }
 
   const handleConsultation = () => {
     if (onScheduleConsultation) {
