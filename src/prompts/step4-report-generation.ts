@@ -3,6 +3,8 @@ import { ProblemAnalysis, CuratedTools } from '@/types/ai-analysis-new';
 export function generateStep4Prompt(problemAnalysis: ProblemAnalysis, curatedTools: CuratedTools): string {
   return `You are creating a persuasive AI readiness report. Your job is to transform raw data into a compelling narrative that feels personalized to their ${problemAnalysis.businessContext.industry} business.
 
+IMPORTANT: You MUST include ALL tools from curatedTools.selectedTools in the report. If there are 3 tools in selectedTools, the report MUST have 3 solutions. Each tool solves a specific problem - include them all.
+
 CRITICAL CONTEXT FOR NARRATIVE VOICE:
 - They are a ${problemAnalysis.businessContext.companySize} ${problemAnalysis.businessContext.industry} company
 - Their budget is ${problemAnalysis.businessContext.monthlyBudget}
@@ -21,6 +23,8 @@ YOUR TRANSFORMATION TASK:
 4. Position solutions as transformative (but stay truthful to data)
 5. Use ALL case studies but make them relatable to their business size/type
 6. Create a narrative arc: current pain → possible future → clear next step
+7. MANDATORY: Include ALL tools from curatedTools.selectedTools - if there are 3 tools, create 3 solution entries
+8. MANDATORY: Include projectedOutcomes for ALL tools - one outcome per tool
 
 OUTPUT FORMAT (return only valid JSON):
 {
@@ -49,6 +53,8 @@ OUTPUT FORMAT (return only valid JSON):
   ],
   
   "recommendedSolutions": [
+    // CREATE ONE ENTRY FOR EACH TOOL IN curatedTools.selectedTools
+    // Example for tool 0:
     {
       "solutionName": "Use curatedTools.selectedTools[0].verboseName exactly - this is already generic",
       "directImpact": [
@@ -71,15 +77,58 @@ OUTPUT FORMAT (return only valid JSON):
         }
       ],
       "implementationTime": "Use curatedTools.selectedTools[0].implementation.estimatedSetupTime"
+    },
+    // Example for tool 1:
+    {
+      "solutionName": "Use curatedTools.selectedTools[1].verboseName exactly",
+      "directImpact": ["From curatedTools.selectedTools[1].directImpact"],
+      "primaryBenefits": ["Copy all 3 benefits from curatedTools.selectedTools[1].primaryBenefits"],
+      "description": "Use curatedTools.selectedTools[1].solutionDescription with context",
+      "realWorldProof": [
+        {
+          "caseStudy": "From curatedTools.selectedTools[1].businessCase.caseStudies[0]",
+          "metric": "Exact metric"
+        }
+      ],
+      "implementationTime": "From curatedTools.selectedTools[1].implementation.estimatedSetupTime"
+    },
+    // Example for tool 2:
+    {
+      "solutionName": "Use curatedTools.selectedTools[2].verboseName exactly",
+      "directImpact": ["From curatedTools.selectedTools[2].directImpact"],
+      "primaryBenefits": ["Copy all 3 benefits from curatedTools.selectedTools[2].primaryBenefits"],
+      "description": "Use curatedTools.selectedTools[2].solutionDescription with context",
+      "realWorldProof": [
+        {
+          "caseStudy": "From curatedTools.selectedTools[2].businessCase.caseStudies[0]",
+          "metric": "Exact metric"
+        }
+      ],
+      "implementationTime": "From curatedTools.selectedTools[2].implementation.estimatedSetupTime"
     }
   ],
   
   "projectedOutcomes": [
+    // CREATE ONE ENTRY FOR EACH TOOL'S PRIMARY SUCCESS METRIC
     {
-      "tool": "Solution name from above",
-      "metric": "Pull from curatedTools.selectedTools[x].successMetrics[0].metric",
-      "current": "Use curatedTools.selectedTools[x].successMetrics[0].currentState",
-      "projected": "Use curatedTools.selectedTools[x].successMetrics[0].targetState",
+      "tool": "Use curatedTools.selectedTools[0].verboseName",
+      "metric": "Pull from curatedTools.selectedTools[0].successMetrics[0].metric",
+      "current": "Use curatedTools.selectedTools[0].successMetrics[0].currentState",
+      "projected": "Use curatedTools.selectedTools[0].successMetrics[0].targetState",
+      "improvementPercentage": "Calculate from current vs projected"
+    },
+    {
+      "tool": "Use curatedTools.selectedTools[1].verboseName",
+      "metric": "Pull from curatedTools.selectedTools[1].successMetrics[0].metric",
+      "current": "Use curatedTools.selectedTools[1].successMetrics[0].currentState",
+      "projected": "Use curatedTools.selectedTools[1].successMetrics[0].targetState",
+      "improvementPercentage": "Calculate from current vs projected"
+    },
+    {
+      "tool": "Use curatedTools.selectedTools[2].verboseName",
+      "metric": "Pull from curatedTools.selectedTools[2].successMetrics[0].metric",
+      "current": "Use curatedTools.selectedTools[2].successMetrics[0].currentState",
+      "projected": "Use curatedTools.selectedTools[2].successMetrics[0].targetState",
       "improvementPercentage": "Calculate from current vs projected"
     }
   ],
