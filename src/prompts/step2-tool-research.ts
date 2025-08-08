@@ -1,7 +1,7 @@
 import { ProblemAnalysis } from '@/types/ai-analysis-new';
 
 export function generateStep2Prompt(analysis: ProblemAnalysis): string {
-  return `Use web search to find AI tools or AI powere systems or automations that are actively being used by other companies in the market in the same industry or similar industries using web search. You are researching real tools to solve specific business problems.
+  return `YOU MUST USE WEB SEARCH to find REAL, CURRENT AI tools. Search for actual tools, their current pricing, and real case studies. DO NOT use training data - use ONLY web search results.
 
 BUSINESS CONTEXT:
 Industry: ${analysis.businessContext.industry}
@@ -28,15 +28,22 @@ Problem 3: ${analysis.topOpportunities[2].problemArea}
 Impact: ${analysis.topOpportunities[2].problemEvidence}
 Search Keywords: ${analysis.topOpportunities[2].searchKeywords.join(', ')}
 
+WEB SEARCH STRATEGY:
+1. SEARCH: "best AI tools for [problem keyword] 2025"
+2. SEARCH: "[specific tool name] pricing plans"
+3. SEARCH: "[specific tool name] case studies ROI"
+4. SEARCH: "[specific tool name] implementation timeline"
+5. SEARCH: "AI automation ${analysis.businessContext.industry} industry"
+
 RESEARCH REQUIREMENTS:
-For each problem area, find 3-5 real AI tools. For EACH tool, gather:
-1. Verbose solution name (descriptive enough to understand function)
-2. Three specific benefit promises/value propositions
-3. A detailed paragraph explaining what the tool does and how it works
-4. 1-3 REAL case studies with specific metrics (MUST include company description)
-5. Implementation timeline estimate
-6. Pricing information
-7. Potential cost savings, revenue gains (annual), or other efficiency gains (e.g. time saved, % revenue increase etc)
+For each problem area, USE WEB SEARCH to find 3-5 real AI tools. For EACH tool, SEARCH FOR:
+1. Verbose solution name (search their website for description)
+2. Three specific benefit promises (from their website via search)
+3. A detailed paragraph explaining the tool (from search results)
+4. 1-3 REAL case studies with metrics (search "[tool] case study")
+5. Implementation timeline (search "[tool] implementation time")
+6. Current pricing (search "[tool] pricing 2025")
+7. ROI metrics (search "[tool] ROI savings")
 
 CRITICAL DATA INTEGRITY RULES:
 - NEVER make up tools, companies, or case studies

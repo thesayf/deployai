@@ -50,30 +50,66 @@ export default async function handler(
     // Generate prompt
     const prompt = generateStep2Prompt(problemAnalysis);
 
-    // Call Claude Sonnet 4 with web search capability
+    // Call Claude Sonnet 4 with web search tool enabled
     const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514', // Claude Sonnet 4 with web search
+      model: 'claude-sonnet-4-20250514',
       max_tokens: 4000,
       temperature: 0.3,
-      system: "You have access to web search. Use it to find real AI tools, pricing, and case studies for the business problems identified.",
+      system: "You are an AI tools expert. Use web search to find real, current AI tools and their actual pricing, features, and case studies. Search for specific tools that solve the identified business problems.",
       messages: [
         {
           role: 'user',
           content: prompt
         }
-      ]
+      ],
+      tools: [{
+        type: 'web_search_20250305',
+        name: 'web_search',
+        max_uses: 10  // Allow multiple searches to gather comprehensive data
+      }]
     });
 
-    // Extract JSON from response
-    const content = response.content[0].type === 'text' ? response.content[0].text : '';
+    // Extract JSON from response - handle potential pause_turn for long searches
+    let content = '';
+    
+    // Check if we need to handle pause_turn (long-running search)
+    if (response.stop_reason === 'pause_turn') {
+      console.log('Step 2 - Handling long-running web search...');
+      
+      // Continue the conversation to get complete results
+      const continuation = await anthropic.messages.create({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 4000,
+        temperature: 0.3,
+        messages: [
+          { role: 'user', content: prompt },
+          { role: 'assistant', content: response.content }
+        ],
+        tools: [{
+          type: 'web_search_20250305',
+          name: 'web_search',
+          max_uses: 10
+        }]
+      });
+      
+      // Get the final content from continuation
+      const finalContent = continuation.content.find(c => c.type === 'text');
+      content = finalContent ? finalContent.text : '';
+    } else {
+      // Normal response - extract text content
+      const textContent = response.content.find(c => c.type === 'text');
+      content = textContent ? textContent.text : '';
+    }
+    
     let toolResearch;
     
     try {
       toolResearch = cleanAndParseJSON(content);
-      console.log('Step 2 - Successfully parsed tool research');
+      console.log('Step 2 - Successfully parsed tool research with web search data');
+      console.log('Step 2 - Annual opportunity:', toolResearch.estimatedAnnualOpportunity);
     } catch (parseError) {
       console.error('Failed to parse AI response in Step 2');
-      console.error('Response content:', content);
+      console.error('Response content preview:', content.substring(0, 500));
       throw new Error('Invalid AI response format in Step 2');
     }
 
