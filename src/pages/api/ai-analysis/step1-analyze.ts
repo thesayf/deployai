@@ -128,8 +128,12 @@ export default async function handler(
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://${req.headers.host}`;
     const step2Url = `${baseUrl}/api/ai-analysis/step2-research`;
     
-    console.log('Triggering Step 2 at:', step2Url);
-    console.log('With problemAnalysis keys:', Object.keys(problemAnalysis));
+    console.log('[STEP1->STEP2] Starting Step 2 trigger');
+    console.log('[STEP1->STEP2] URL:', step2Url);
+    console.log('[STEP1->STEP2] Report ID:', reportId);
+    console.log('[STEP1->STEP2] Quiz Response ID:', quizResponseId);
+    console.log('[STEP1->STEP2] ProblemAnalysis keys:', Object.keys(problemAnalysis));
+    console.log('[STEP1->STEP2] API Key present:', !!process.env.INTERNAL_API_KEY);
     
     fetch(step2Url, {
       method: 'POST',
@@ -144,15 +148,22 @@ export default async function handler(
       }),
     })
     .then(res => {
-      console.log('Step 2 trigger response status:', res.status);
+      console.log('[STEP1->STEP2] Response received. Status:', res.status);
+      console.log('[STEP1->STEP2] Response headers:', res.headers);
       if (!res.ok) {
         return res.text().then(text => {
-          console.error('Step 2 trigger error response:', text.substring(0, 500));
+          console.error('[STEP1->STEP2] ERROR - Non-OK response:', res.status);
+          console.error('[STEP1->STEP2] ERROR - Response body:', text.substring(0, 1000));
         });
+      } else {
+        console.log('[STEP1->STEP2] SUCCESS - Step 2 triggered successfully');
       }
     })
     .catch(error => {
-      console.error('Failed to trigger step 2:', error);
+      console.error('[STEP1->STEP2] CRITICAL ERROR - Failed to trigger Step 2');
+      console.error('[STEP1->STEP2] Error type:', error.name);
+      console.error('[STEP1->STEP2] Error message:', error.message);
+      console.error('[STEP1->STEP2] Error stack:', error.stack);
     });
 
     res.status(200).json({ 

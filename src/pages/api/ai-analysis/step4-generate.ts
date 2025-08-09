@@ -16,18 +16,33 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log('[STEP4] Handler called. Method:', req.method);
+  
   if (req.method !== 'POST') {
+    console.error('[STEP4] ERROR - Invalid method:', req.method);
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   // Verify internal API key for security
   const apiKey = req.headers['x-api-key'];
+  console.log('[STEP4] API Key check - Received:', apiKey ? 'Present' : 'Missing');
+  
   if (apiKey !== process.env.INTERNAL_API_KEY) {
+    console.error('[STEP4] ERROR - Unauthorized. Key mismatch');
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
+  console.log('[STEP4] Authentication passed');
+
   try {
     const { quizResponseId, reportId, problemAnalysis, curatedTools } = req.body as GenerateRequest;
+    
+    console.log('[STEP4] Starting report generation for:');
+    console.log('[STEP4] Report ID:', reportId);
+    console.log('[STEP4] Quiz Response ID:', quizResponseId);
+    console.log('[STEP4] ProblemAnalysis received:', !!problemAnalysis);
+    console.log('[STEP4] CuratedTools received:', !!curatedTools);
+    console.log('[STEP4] Selected tools count:', curatedTools?.selectedTools?.length);
 
     const supabase = supabaseAdmin();
 
@@ -38,8 +53,10 @@ export default async function handler(
 
     // Generate prompt
     const prompt = generateStep4Prompt(problemAnalysis, curatedTools);
+    console.log('[STEP4] Prompt generated. Length:', prompt.length);
 
     // Call Claude
+    console.log('[STEP4] Calling Claude API...');
     const response = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 2000,
@@ -53,16 +70,22 @@ export default async function handler(
     });
 
     // Extract JSON from response
+    console.log('[STEP4] Claude API response received');
     const content = response.content[0].type === 'text' ? response.content[0].text : '';
+    console.log('[STEP4] Response content length:', content.length);
+    
     let finalReport;
     
     try {
+      console.log('[STEP4] Attempting to parse JSON response...');
       finalReport = cleanAndParseJSON(content);
-      console.log('Step 4 - Successfully parsed final report');
-      console.log('Final report structure:', Object.keys(finalReport));
+      console.log('[STEP4] SUCCESS - Parsed final report');
+      console.log('[STEP4] Final report structure:', Object.keys(finalReport));
+      console.log('[STEP4] Recommendations count:', finalReport.recommendedSolutions?.length);
     } catch (parseError) {
-      console.error('Failed to parse AI response in Step 4');
-      console.error('Response content:', content);
+      console.error('[STEP4] ERROR - Failed to parse AI response');
+      console.error('[STEP4] Parse error:', parseError.message);
+      console.error('[STEP4] Response content preview:', content.substring(0, 500));
       throw new Error('Invalid AI response format in Step 4');
     }
 
@@ -86,6 +109,9 @@ export default async function handler(
     // Send email notification to user with report link
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
     
+    console.log('[STEP4] Sending report email...');
+    console.log('[STEP4] Email API URL:', `${baseUrl}/api/reports/send-report-email`);
+    
     try {
       const emailResponse = await fetch(`${baseUrl}/api/reports/send-report-email`, {
         method: 'POST',
@@ -99,13 +125,15 @@ export default async function handler(
       });
 
       if (!emailResponse.ok) {
-        console.error('Failed to send report email:', await emailResponse.text());
+        const errorText = await emailResponse.text();
+        console.error('[STEP4] ERROR - Failed to send report email. Status:', emailResponse.status);
+        console.error('[STEP4] Email error response:', errorText);
         // Don't fail the whole process if email fails
       } else {
-        console.log('Report email sent successfully');
+        console.log('[STEP4] SUCCESS - Report email sent successfully');
       }
     } catch (emailError) {
-      console.error('Error sending report email:', emailError);
+      console.error('[STEP4] ERROR - Exception sending report email:', emailError);
       // Continue anyway - report is still generated
     }
 
@@ -116,7 +144,10 @@ export default async function handler(
     });
 
   } catch (error) {
-    console.error('Error in step 4 generation:', error);
+    console.error('[STEP4] CRITICAL ERROR in step 4 generation');
+    console.error('[STEP4] Error type:', error.name);
+    console.error('[STEP4] Error message:', error.message);
+    console.error('[STEP4] Error stack:', error.stack);
     
     // Mark report as failed
     const supabase = supabaseAdmin();

@@ -15,18 +15,34 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log('[STEP2] Handler called. Method:', req.method);
+  console.log('[STEP2] Headers:', req.headers);
+  
   if (req.method !== 'POST') {
+    console.error('[STEP2] ERROR - Invalid method:', req.method);
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   // Verify internal API key for security
   const apiKey = req.headers['x-api-key'];
+  console.log('[STEP2] API Key check - Received:', apiKey ? 'Present' : 'Missing');
+  console.log('[STEP2] API Key check - Expected:', process.env.INTERNAL_API_KEY ? 'Set' : 'Not set');
+  
   if (apiKey !== process.env.INTERNAL_API_KEY) {
+    console.error('[STEP2] ERROR - Unauthorized. Key mismatch');
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
+  console.log('[STEP2] Authentication passed');
+
   try {
     const { quizResponseId, reportId, problemAnalysis } = req.body as ResearchRequest;
+    
+    console.log('[STEP2] Starting research for:');
+    console.log('[STEP2] Report ID:', reportId);
+    console.log('[STEP2] Quiz Response ID:', quizResponseId);
+    console.log('[STEP2] ProblemAnalysis received:', !!problemAnalysis);
+    console.log('[STEP2] Top opportunities count:', problemAnalysis?.topOpportunities?.length);
 
     // Validate problemAnalysis structure
     if (!problemAnalysis || !problemAnalysis.businessContext || !problemAnalysis.topOpportunities) {
@@ -49,8 +65,13 @@ export default async function handler(
 
     // Generate prompt
     const prompt = generateStep2Prompt(problemAnalysis);
+    console.log('[STEP2] Prompt generated. Length:', prompt.length);
 
     // Call Claude Sonnet 4 with web search tool enabled
+    console.log('[STEP2] Calling Claude API with web search tool...');
+    console.log('[STEP2] Model: claude-sonnet-4-20250514');
+    console.log('[STEP2] Web search tool: web_search_20250305');
+    
     const response = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 4000,
@@ -68,13 +89,17 @@ export default async function handler(
         max_uses: 10  // Allow multiple searches to gather comprehensive data
       }]
     });
+    
+    console.log('[STEP2] Claude API response received');
+    console.log('[STEP2] Stop reason:', response.stop_reason);
+    console.log('[STEP2] Content blocks:', response.content.length);
 
     // Extract JSON from response - handle potential pause_turn for long searches
     let content = '';
     
     // Check if we need to handle pause_turn (long-running search)
     if (response.stop_reason === 'pause_turn') {
-      console.log('Step 2 - Handling long-running web search...');
+      console.log('[STEP2] Handling pause_turn for long-running web search...');
       
       // Continue the conversation to get complete results
       const continuation = await anthropic.messages.create({
@@ -99,17 +124,21 @@ export default async function handler(
       // Normal response - extract text content
       const textContent = response.content.find(c => c.type === 'text');
       content = textContent ? textContent.text : '';
+      console.log('[STEP2] Normal response - extracted text content. Length:', content.length);
     }
     
     let toolResearch;
     
     try {
+      console.log('[STEP2] Attempting to parse JSON response...');
       toolResearch = cleanAndParseJSON(content);
-      console.log('Step 2 - Successfully parsed tool research with web search data');
-      console.log('Step 2 - Annual opportunity:', toolResearch.estimatedAnnualOpportunity);
+      console.log('[STEP2] SUCCESS - Parsed tool research');
+      console.log('[STEP2] Annual opportunity:', toolResearch.estimatedAnnualOpportunity);
+      console.log('[STEP2] Number of tools found:', toolResearch.researchedTools?.length);
     } catch (parseError) {
-      console.error('Failed to parse AI response in Step 2');
-      console.error('Response content preview:', content.substring(0, 500));
+      console.error('[STEP2] ERROR - Failed to parse AI response');
+      console.error('[STEP2] Parse error:', parseError.message);
+      console.error('[STEP2] Response content preview:', content.substring(0, 500));
       throw new Error('Invalid AI response format in Step 2');
     }
 
@@ -132,7 +161,10 @@ export default async function handler(
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://${req.headers.host}`;
     const step3Url = `${baseUrl}/api/ai-analysis/step3-curate`;
     
-    console.log('Triggering Step 3 at:', step3Url);
+    console.log('[STEP2->STEP3] Starting Step 3 trigger');
+    console.log('[STEP2->STEP3] URL:', step3Url);
+    console.log('[STEP2->STEP3] Sending data - reportId:', reportId);
+    console.log('[STEP2->STEP3] Sending data - quizResponseId:', quizResponseId);
     
     fetch(step3Url, {
       method: 'POST',
@@ -156,7 +188,16 @@ export default async function handler(
     });
 
   } catch (error) {
-    console.error('Error in step 2 research:', error);
+    console.error('[STEP2] CRITICAL ERROR in step 2 research');
+    console.error('[STEP2] Error type:', error.name);
+    console.error('[STEP2] Error message:', error.message);
+    console.error('[STEP2] Error stack:', error.stack);
+    
+    // Log specific error details
+    if (error.response) {
+      console.error('[STEP2] API Response error:', error.response);
+    }
+    
     res.status(500).json({ 
       error: 'Failed to research tools',
       details: error instanceof Error ? error.message : 'Unknown error'
