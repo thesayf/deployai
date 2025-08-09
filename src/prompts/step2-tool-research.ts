@@ -3,40 +3,48 @@ import { ProblemAnalysis } from '@/types/ai-analysis-new';
 export function generateStep2Prompt(analysis: ProblemAnalysis): string {
   const companyName = analysis.businessContext.companyName || 'the organization';
   
-  return `YOU MUST USE WEB SEARCH to find REAL, CURRENT AI tools. Search for actual tools, their current pricing, and real case studies. DO NOT use training data - use ONLY web search results.
+  return `You have identified 3 specific problems for ${companyName} in the ${analysis.businessContext.industry} industry. Now use web search to find the EXACT tools that solve THEIR specific problems.
 
-BUSINESS CONTEXT:
-Company: ${companyName}
-Industry: ${analysis.businessContext.industry}
-Company Size: ${analysis.businessContext.companySize}
-Monthly Budget: ${analysis.businessContext.monthlyBudget}
-Tech Capability: ${analysis.businessContext.techCapability}
-Urgency: ${analysis.businessContext.urgency}
-Current Systems: ${analysis.businessContext.currentSystems}
-Integration Needs: ${analysis.businessContext.integrationNeeds}
-AI Experience: ${analysis.businessContext.aiExperience}
-Business Objectives: ${analysis.businessContext.businessObjectives}
-Decision Authority: ${analysis.businessContext.decisionAuthority}
+THEIR SPECIFIC SITUATION:
+- Company: ${companyName} 
+- Industry: ${analysis.businessContext.industry}
+- Size: ${analysis.businessContext.companySize}
+- Budget: ${analysis.businessContext.monthlyBudget}/month
+- Current tools they use: ${analysis.businessContext.currentSystems}
+- They need to integrate with: ${analysis.businessContext.integrationNeeds}
 
-PROBLEMS TO SOLVE (with estimated costs/impact):
-Problem 1: ${analysis.topOpportunities[0].problemArea}
-Impact: ${analysis.topOpportunities[0].problemEvidence}
-Search Keywords: ${analysis.topOpportunities[0].searchKeywords.join(', ')}
+THEIR SPECIFIC PROBLEMS TO SOLVE:
 
-Problem 2: ${analysis.topOpportunities[1].problemArea}
-Impact: ${analysis.topOpportunities[1].problemEvidence}
-Search Keywords: ${analysis.topOpportunities[1].searchKeywords.join(', ')}
+PROBLEM 1: ${analysis.topOpportunities[0].problemArea}
+Evidence: "${analysis.topOpportunities[0].problemEvidence}"
+YOU MUST SEARCH FOR:
+${analysis.topOpportunities[0].searchKeywords.map(k => `- "${k}"`).join('\n')}
 
-Problem 3: ${analysis.topOpportunities[2].problemArea}
-Impact: ${analysis.topOpportunities[2].problemEvidence}
-Search Keywords: ${analysis.topOpportunities[2].searchKeywords.join(', ')}
+PROBLEM 2: ${analysis.topOpportunities[1].problemArea}
+Evidence: "${analysis.topOpportunities[1].problemEvidence}"
+YOU MUST SEARCH FOR:
+${analysis.topOpportunities[1].searchKeywords.map(k => `- "${k}"`).join('\n')}
 
-WEB SEARCH STRATEGY:
-1. SEARCH: "best AI tools for [problem keyword] 2025"
-2. SEARCH: "[specific tool name] pricing plans"
-3. SEARCH: "[specific tool name] case studies ROI"
-4. SEARCH: "[specific tool name] implementation timeline"
-5. SEARCH: "AI automation ${analysis.businessContext.industry} industry"
+PROBLEM 3: ${analysis.topOpportunities[2].problemArea}
+Evidence: "${analysis.topOpportunities[2].problemEvidence}"
+YOU MUST SEARCH FOR:
+${analysis.topOpportunities[2].searchKeywords.map(k => `- "${k}"`).join('\n')}
+
+CRITICAL SEARCH INSTRUCTIONS:
+1. DO NOT default to generic tools like Zapier/Make.com unless they SPECIFICALLY solve the EXACT problem identified
+2. Search for tools that are SPECIFIC to their industry: ${analysis.businessContext.industry}
+3. If they need "appointment scheduling for dental clinics", don't recommend "Zapier" - find "Dentrix" or "SimplePractice"
+4. If they need "restaurant inventory tracking", don't recommend "Make.com" - find "MarketMan" or "BlueCart"
+5. Search for: "[exact problem] software ${analysis.businessContext.industry}"
+6. Search for: "${analysis.businessContext.industry} [specific workflow] automation tools"
+7. Look for tools that ALREADY integrate with: ${analysis.businessContext.currentSystems}
+
+FOR EACH PROBLEM, FIND:
+- Tools built SPECIFICALLY for their industry (not generic automation platforms)
+- Tools that solve their EXACT workflow (not just "automation")
+- Real pricing for THEIR company size (${analysis.businessContext.companySize})
+- Case studies from similar ${analysis.businessContext.industry} businesses
+- Tools that work with their tech level (${analysis.businessContext.techCapability})
 
 RESEARCH REQUIREMENTS:
 For each problem area, USE WEB SEARCH to find 3-5 real AI tools. For EACH tool, SEARCH FOR:

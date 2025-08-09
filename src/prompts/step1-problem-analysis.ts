@@ -27,57 +27,58 @@ export function generateStep1Prompt(responses: QuizResponseData, companyName?: s
     decisionAuthority: responses.decisionAuthority || 'not specified'
   };
 
-  return `You are an AI business consultant. Analyze this assessment and identify the top 3 AI opportunity areas for tool research.
+  return `Deeply analyze this business assessment. Think carefully about their SPECIFIC situation, not generic problems.
 
-ASSESSMENT DATA:
+THEIR ACTUAL RESPONSES:
 ${JSON.stringify(quizJson, null, 2)}
 
-ANALYSIS INSTRUCTIONS:
-1. Identify the 3 biggest problems/opportunities based on their responses
-2. For each, determine the specific AI solution category needed  
-3. Extract key business context for tool research
+YOUR TASK:
+Read their responses carefully. What are they ACTUALLY struggling with? Don't give me generic problems like "workflow automation" or "customer service." 
+
+Based on what they told us:
+- They said customer communication is: "${responses.customerCommunication}"
+- They're losing money because: "${responses.revenueOptimization}"
+- Their data problems are: "${responses.dataDecisionMaking}"
+- They waste time on: ${JSON.stringify(responses.repetitiveTasks || [])}
+- Quality issues: "${responses.qualityConsistency}"
+- Response speed: "${responses.responseSpeed}"
+- They use these systems: ${JSON.stringify(responses.currentSystems || [])}
+- Integration challenges: "${responses.integrationChallenges}"
+
+Now identify their 3 BIGGEST, MOST EXPENSIVE problems. Be SPECIFIC. If they're a dental clinic struggling with appointment reminders, say "Dental clinic staff spending 2 hours daily calling patients for appointment reminders" NOT "customer communication challenges."
 
 OUTPUT FORMAT (return only valid JSON):
 {
   "businessContext": {
-    "companyName": "company name from assessment data",
-    "industry": "specific industry from responses",
-    "companySize": "employee count range", 
-    "monthlyBudget": "budget range from responses",
-    "urgency": "timeline from responses",
-    "techCapability": "team skill level",
-    "currentSystems": "list of current systems they use",
-    "integrationNeeds": "any integration challenges mentioned",
-    "aiExperience": "current AI experience level",
-    "businessObjectives": "primary business goals",
-    "decisionAuthority": "who makes decisions"
+    "companyName": "${companyName}",
+    "industry": "${responses.industry}",
+    "companySize": "${responses.companySize}", 
+    "monthlyBudget": "${responses.monthlyBudget}",
+    "urgency": "${responses.timeline}",
+    "techCapability": "${responses.teamCapability}",
+    "currentSystems": ${JSON.stringify(responses.currentSystems || [])},
+    "integrationNeeds": "${responses.integrationChallenges}",
+    "aiExperience": "${responses.aiExperience}",
+    "businessObjectives": "Based on their responses, infer their main business goals",
+    "decisionAuthority": "${responses.decisionAuthority}"
   },
   "topOpportunities": [
     {
-      "problemArea": "Customer Service Bottleneck",
-      "aiSolutionType": "customer-service-chatbots",
-      "problemEvidence": "Takes next business day to respond, customers often wait too long",
-      "searchKeywords": ["customer service AI", "business chatbots", "[industry] customer support automation"],
-      "expectedOutcome": "Reduce response time from days to minutes"
-    },
-    {
-      "problemArea": "Manual Data Entry",
-      "aiSolutionType": "workflow-automation", 
-      "problemEvidence": "Manual data entry between systems, scattered data",
-      "searchKeywords": ["workflow automation tools", "data integration AI", "[industry] process automation"],
-      "expectedOutcome": "Eliminate manual data transfer, integrate systems"
-    },
-    {
-      "problemArea": "Revenue Tracking Gaps", 
-      "aiSolutionType": "sales-analytics-ai",
-      "problemEvidence": "Not sure where losing money, basic tracking only", 
-      "searchKeywords": ["sales analytics AI", "revenue optimization tools", "[industry] business intelligence"],
-      "expectedOutcome": "Identify revenue leaks, predict sales trends"
+      "problemArea": "The EXACT problem they described, using their words and context",
+      "aiSolutionType": "SPECIFIC type of solution for this exact problem",
+      "problemEvidence": "Direct quotes from their responses showing this problem",
+      "searchKeywords": [
+        "Very specific search terms that will find solutions for THEIR exact problem",
+        "Include their industry, company size, and specific use case",
+        "Name specific software they use that needs integration",
+        "Search for '[their exact workflow] automation [their industry]'"
+      ],
+      "expectedOutcome": "Specific, measurable improvement for their business"
     }
   ]
 }
 
-Focus on extracting clear, specific problems that can be solved with existing AI tools. Replace [industry] placeholder with their actual industry.
+Think about THIS business, not any business. What makes THEIR situation unique? What specific combination of industry + size + current tools + problems do they have?
 
-CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }`;
+CRITICAL: Return ONLY the JSON object. Start with { and end with }`;
 }

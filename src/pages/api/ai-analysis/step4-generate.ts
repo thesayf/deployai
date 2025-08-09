@@ -4,6 +4,7 @@ import { generateStep4Prompt } from '@/prompts/step4-report-generation';
 import { ProblemAnalysis, CuratedTools } from '@/types/ai-analysis-new';
 import { cleanAndParseJSON } from '@/utils/clean-json';
 import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 
 interface GenerateRequest {
   quizResponseId: string;
@@ -46,32 +47,74 @@ export default async function handler(
 
     const supabase = supabaseAdmin();
 
-    // Initialize Anthropic client
-    const anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY!,
-    });
+    // Determine which model to use
+    const modelChoice = process.env.WRITE_UP_MODEL || 'claude-4';
+    console.log('[STEP4] Using model:', modelChoice);
 
     // Generate prompt
     const prompt = generateStep4Prompt(problemAnalysis, curatedTools);
     console.log('[STEP4] Prompt generated. Length:', prompt.length);
 
-    // Call Claude
-    console.log('[STEP4] Calling Claude API...');
-    const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 2000,
-      temperature: 0.3,
-      messages: [
-        {
-          role: 'user',
-          content: prompt
-        }
-      ]
-    });
+    let content = '';
 
-    // Extract JSON from response
-    console.log('[STEP4] Claude API response received');
-    const content = response.content[0].type === 'text' ? response.content[0].text : '';
+    if (modelChoice === 'gpt-5') {
+      // Initialize OpenAI client
+      const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY!,
+      });
+
+      console.log('[STEP4] Calling GPT-5 API (full model)...');
+      try {
+        const response = await openai.chat.completions.create({
+          model: 'gpt-5', // Full GPT-5 model for maximum performance
+          messages: [
+            {
+              role: 'system',
+              content: 'You are an AI business consultant creating professional reports. You must return only valid JSON without any explanations or markdown. The output must be a JSON object.'
+            },
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          // temperature: 1, // GPT-5 only supports default temperature of 1
+          max_completion_tokens: 25000, // GPT-5 uses max_completion_tokens instead of max_tokens
+          response_format: { type: "json_object" }, // Ensures JSON response
+          // GPT-5 specific parameters
+          reasoning_effort: "medium", // Options: minimal, low, medium, high
+          verbosity: "medium" // Options: low, medium, high
+        } as any); // Using 'as any' since TypeScript types might not be updated yet for GPT-5
+
+        console.log('[STEP4] GPT-5 API response received');
+        console.log('[STEP4] Finish reason:', response.choices[0].finish_reason);
+        console.log('[STEP4] Model used:', response.model);
+        content = response.choices[0].message.content || '';
+      } catch (error) {
+        console.error('[STEP4] GPT-5 API error:', error);
+        throw error;
+      }
+    } else {
+      // Use Claude (default)
+      const anthropic = new Anthropic({
+        apiKey: process.env.ANTHROPIC_API_KEY!,
+      });
+
+      console.log('[STEP4] Calling Claude API...');
+      const response = await anthropic.messages.create({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        temperature: 0.3,
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ]
+      });
+
+      console.log('[STEP4] Claude API response received');
+      content = response.content[0].type === 'text' ? response.content[0].text : '';
+    }
     console.log('[STEP4] Response content length:', content.length);
     
     let finalReport;

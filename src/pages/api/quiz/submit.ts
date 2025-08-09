@@ -71,17 +71,24 @@ export default async function handler(
     }
 
     // Check if a report already exists for this quiz
-    const { data: existingReport } = await supabase
+    console.log(`[SUBMIT] Checking for existing report for quiz ${quizId}...`);
+    const { data: existingReport, error: existingCheckError } = await supabase
       .from('ai_reports')
       .select('id, access_token, report_status')
       .eq('quiz_response_id', quizId)
       .single();
+    
+    if (existingCheckError && existingCheckError.code !== 'PGRST116') {
+      console.error('[SUBMIT] Error checking for existing report:', existingCheckError);
+    }
 
     let report;
     
     if (existingReport) {
       // Report already exists, use it
-      console.log(`Report already exists for quiz ${quizId}, using existing report ${existingReport.id}`);
+      console.log(`[SUBMIT] DUPLICATE PREVENTED: Report already exists for quiz ${quizId}`);
+      console.log(`[SUBMIT] Existing report ID: ${existingReport.id}`);
+      console.log(`[SUBMIT] Existing report status: ${existingReport.report_status}`);
       report = existingReport;
       
       // Only trigger analysis if the report hasn't started processing yet
@@ -95,6 +102,7 @@ export default async function handler(
       }
     } else {
       // Create new AI report record
+      console.log(`[SUBMIT] No existing report found, creating new report for quiz ${quizId}...`);
       const { data: newReport, error: reportError } = await supabase
         .from('ai_reports')
         .insert({
@@ -107,7 +115,7 @@ export default async function handler(
         .single();
 
       if (reportError || !newReport) {
-        console.error('Failed to create report:', reportError);
+        console.error('[SUBMIT] Failed to create report:', reportError);
         return res.status(500).json({
           success: false,
           reportId: '',
@@ -116,6 +124,7 @@ export default async function handler(
         });
       }
       
+      console.log(`[SUBMIT] NEW REPORT CREATED: ${newReport.id} for quiz ${quizId}`);
       report = newReport;
     }
 

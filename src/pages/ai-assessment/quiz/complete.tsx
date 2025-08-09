@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { useAppSelector, useAppDispatch } from '@/store';
@@ -33,25 +33,49 @@ const CompletePage = () => {
   const [pageState, setPageState] = useState<PageState>('loading');
   const [error, setError] = useState<string | null>(null);
   const [reportId, setReportId] = useState<string | null>(null);
+  
+  // Use a ref to track if submission has already started
+  // This prevents double submission in React StrictMode
+  const hasSubmittedRef = useRef(false);
 
   useEffect(() => {
+    console.log('[COMPLETE] useEffect triggered');
+    console.log('[COMPLETE] hasSubmittedRef.current:', hasSubmittedRef.current);
+    
     // Check if we have valid data and submit
     if (!initialData.quizId || !initialData.userInfo) {
+      console.log('[COMPLETE] No valid data, redirecting to start');
       // No valid data, redirect to start
       router.push('/ai-assessment');
       return;
     }
     
-    // Have valid data, submit it
+    // Prevent double submission in StrictMode
+    if (hasSubmittedRef.current) {
+      console.log('[COMPLETE] DUPLICATE PREVENTED: Submission already in progress, skipping duplicate');
+      return;
+    }
+    
+    // Mark as submitted and proceed
+    console.log('[COMPLETE] First submission, proceeding...');
+    hasSubmittedRef.current = true;
     submitQuiz();
   }, []); // Run once on mount
 
   const submitQuiz = async () => {
+    console.log(`[COMPLETE] Starting quiz submission for quiz ID: ${initialData.quizId}`);
+    console.log('[COMPLETE] Quiz data:', {
+      quizId: initialData.quizId,
+      hasResponses: !!initialData.responses,
+      hasUserInfo: !!initialData.userInfo,
+    });
+    
     setPageState('submitting');
     setError(null);
 
     try {
       // Submit quiz using captured initial data
+      console.log('[COMPLETE] Making API call to /api/quiz/submit...');
       const response = await fetch('/api/quiz/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
