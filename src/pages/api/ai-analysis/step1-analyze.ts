@@ -59,8 +59,8 @@ export default async function handler(
       apiKey: process.env.ANTHROPIC_API_KEY!,
     });
 
-    // Generate prompt
-    const prompt = generateStep1Prompt(quizData.responses);
+    // Generate prompt with company name
+    const prompt = generateStep1Prompt(quizData.responses, quizData.user_company);
 
     // Call Claude
     const response = await anthropic.messages.create({

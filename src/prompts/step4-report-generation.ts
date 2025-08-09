@@ -1,11 +1,14 @@
 import { ProblemAnalysis, CuratedTools } from '@/types/ai-analysis-new';
 
 export function generateStep4Prompt(problemAnalysis: ProblemAnalysis, curatedTools: CuratedTools): string {
-  return `You are creating a persuasive AI readiness report. Your job is to transform raw data into a compelling narrative that feels personalized to their ${problemAnalysis.businessContext.industry} business.
+  const companyName = problemAnalysis.businessContext.companyName || 'Your organization';
+  
+  return `You are creating a persuasive AI readiness report. Your job is to transform raw data into a compelling narrative that feels personalized to ${companyName} in the ${problemAnalysis.businessContext.industry} industry.
 
 IMPORTANT: You MUST include ALL tools from curatedTools.selectedTools in the report. If there are 3 tools in selectedTools, the report MUST have 3 solutions. Each tool solves a specific problem - include them all.
 
 CRITICAL CONTEXT FOR NARRATIVE VOICE:
+- Company: ${companyName}
 - They are a ${problemAnalysis.businessContext.companySize} ${problemAnalysis.businessContext.industry} company
 - Their budget is ${problemAnalysis.businessContext.monthlyBudget}
 - Their timeline urgency is ${problemAnalysis.businessContext.urgency}
@@ -36,19 +39,19 @@ OUTPUT FORMAT (return only valid JSON):
   
   "keyProblems": [
     {
-      "problem": "Transform problemAnalysis.topOpportunities[0] into urgent headline. Example: If problem is 'slow customer response', write 'Your customers are waiting 24+ hours while competitors respond instantly'",
-      "currentCost": "Extract numbers from problemEvidence. Make it hurt. '$5,000/month in lost sales' or '15 hours/week of manual work'",
-      "potentialGain": "Use actual metrics from curatedTools.selectedTools that solve this. '90% faster response times' or '$60,000 annual savings'"
+      "problem": "Transform problemAnalysis.topOpportunities[0] into urgent headline for ${companyName}. Example: If problem is 'slow customer response', write 'At ${companyName}, customers are waiting 24+ hours while competitors respond instantly'",
+      "currentCost": "Extract numbers from problemEvidence. Make it hurt. '$5,000/month in lost sales' or '15 hours/week of manual work at ${companyName}'",
+      "potentialGain": "Use actual metrics from curatedTools.selectedTools that solve this. '90% faster response times' or '$60,000 annual savings for ${companyName}'"
     },
     {
-      "problem": "Make problem 2 feel like they're falling behind competitors",
-      "currentCost": "Quantify the pain specifically for their industry size and type",
+      "problem": "Make problem 2 feel like ${companyName} is falling behind competitors",
+      "currentCost": "Quantify the pain specifically for ${companyName}'s industry size and type",
       "potentialGain": "Pull real improvement numbers from the matching solution in curatedTools"
     },
     {
-      "problem": "Frame problem 3 as missed opportunity or growing risk",
-      "currentCost": "Use industry-appropriate metrics (revenue loss, compliance risk, efficiency gap)",
-      "potentialGain": "Use case study improvements from curatedTools to show what's possible"
+      "problem": "Frame problem 3 as missed opportunity or growing risk for ${companyName}",
+      "currentCost": "Use industry-appropriate metrics (revenue loss, compliance risk, efficiency gap) that ${companyName} faces",
+      "potentialGain": "Use case study improvements from curatedTools to show what's possible for ${companyName}"
     }
   ],
   

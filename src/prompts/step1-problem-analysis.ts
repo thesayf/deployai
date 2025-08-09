@@ -1,12 +1,13 @@
 import { QuizResponseData } from '@/types/quiz';
 
-export function generateStep1Prompt(responses: QuizResponseData): string {
+export function generateStep1Prompt(responses: QuizResponseData, companyName?: string | null): string {
   // Handle missing or incomplete responses
   if (!responses || Object.keys(responses).length === 0) {
     throw new Error('Quiz responses are empty or missing');
   }
 
   const quizJson = {
+    companyName: companyName || 'Your Organization',
     industry: responses.industry || 'not specified',
     customerCommunication: responses.customerCommunication || 'not specified',
     revenueOptimization: responses.revenueOptimization || 'not specified',
@@ -39,6 +40,7 @@ ANALYSIS INSTRUCTIONS:
 OUTPUT FORMAT (return only valid JSON):
 {
   "businessContext": {
+    "companyName": "company name from assessment data",
     "industry": "specific industry from responses",
     "companySize": "employee count range", 
     "monthlyBudget": "budget range from responses",

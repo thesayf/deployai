@@ -3,6 +3,7 @@
 // Step 1: Problem Analysis
 export interface ProblemAnalysis {
   businessContext: {
+    companyName?: string;
     industry: string;
     companySize: string;
     monthlyBudget: string;

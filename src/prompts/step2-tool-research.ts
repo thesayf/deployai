@@ -1,9 +1,12 @@
 import { ProblemAnalysis } from '@/types/ai-analysis-new';
 
 export function generateStep2Prompt(analysis: ProblemAnalysis): string {
+  const companyName = analysis.businessContext.companyName || 'the organization';
+  
   return `YOU MUST USE WEB SEARCH to find REAL, CURRENT AI tools. Search for actual tools, their current pricing, and real case studies. DO NOT use training data - use ONLY web search results.
 
 BUSINESS CONTEXT:
+Company: ${companyName}
 Industry: ${analysis.businessContext.industry}
 Company Size: ${analysis.businessContext.companySize}
 Monthly Budget: ${analysis.businessContext.monthlyBudget}
