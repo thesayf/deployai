@@ -7,56 +7,57 @@ import {
   selectResponses,
   selectUserInfo,
   resetQuiz,
-  selectIsSubmitting,
   setSubmitting
 } from '@/store/slices/quizSlice';
 import { CompleteAnimation } from '@/components/quiz/CompleteAnimation';
 import { SubmitQuizRequest } from '@/types/quiz';
 
+type PageState = 'loading' | 'submitting' | 'success' | 'error';
+
 const CompletePage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   
+  // Get Redux data - these will be captured by useState on first render
   const quizId = useAppSelector(selectQuizId);
   const responses = useAppSelector(selectResponses);
   const userInfo = useAppSelector(selectUserInfo);
-  const isSubmitting = useAppSelector(selectIsSubmitting);
   
-  const [isHydrated, setIsHydrated] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  // Capture Redux data immediately on mount
+  const [initialData] = useState(() => {
+    // Store the initial values from first render
+    return { quizId, responses, userInfo };
+  });
+  
+  // Local state for page behavior
+  const [pageState, setPageState] = useState<PageState>('loading');
   const [error, setError] = useState<string | null>(null);
-  const [savedUserInfo] = useState(userInfo); // Save user info before it gets cleared
+  const [reportId, setReportId] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    // Redirect if no quiz data (use savedUserInfo for initial check)
-    if (isHydrated && (!savedUserInfo || !quizId)) {
+    // Check if we have valid data and submit
+    if (!initialData.quizId || !initialData.userInfo) {
+      // No valid data, redirect to start
       router.push('/ai-assessment');
       return;
     }
-
-    // Submit quiz if not already submitted
-    if (isHydrated && savedUserInfo && quizId && !submitted && !isSubmitting) {
-      submitQuiz();
-    }
-  }, [isHydrated, savedUserInfo, quizId, submitted, isSubmitting]);
+    
+    // Have valid data, submit it
+    submitQuiz();
+  }, []); // Run once on mount
 
   const submitQuiz = async () => {
-    if (!quizId || isSubmitting) return;
-
-    dispatch(setSubmitting(true));
+    setPageState('submitting');
     setError(null);
 
     try {
+      // Submit quiz using captured initial data
       const response = await fetch('/api/quiz/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          quizId,
-          finalResponses: responses
+          quizId: initialData.quizId,
+          finalResponses: initialData.responses
         } as SubmitQuizRequest),
       });
 
@@ -66,20 +67,24 @@ const CompletePage = () => {
         throw new Error(data.error || 'Failed to submit quiz');
       }
 
-      setSubmitted(true);
+      setReportId(data.reportId);
       
-      // Send confirmation email (use savedUserInfo since we're about to clear the store)
+      // IMMEDIATELY clear Redux after successful submission
+      // This prevents stale data if user closes the page
+      dispatch(resetQuiz());
+      
+      // Send confirmation email
       try {
         await fetch('/api/quiz/send-confirmation', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            quizId,
+            quizId: initialData.quizId,
             reportId: data.reportId,
-            userEmail: savedUserInfo?.email || userInfo.email,
-            firstName: savedUserInfo?.firstName || userInfo.firstName,
-            lastName: savedUserInfo?.lastName || userInfo.lastName,
-            company: savedUserInfo?.company || userInfo.company
+            userEmail: initialData.userInfo.email,
+            firstName: initialData.userInfo.firstName,
+            lastName: initialData.userInfo.lastName,
+            company: initialData.userInfo.company
           }),
         });
       } catch (emailError) {
@@ -87,28 +92,18 @@ const CompletePage = () => {
         // Don't fail the whole process if email fails
       }
       
-      // Clear quiz responses after successful submission
-      // This ensures user data is not retained unnecessarily
-      // Do this AFTER sending the email
-      dispatch(resetQuiz());
+      setPageState('success');
 
     } catch (error) {
       console.error('Failed to submit quiz:', error);
       setError(error instanceof Error ? error.message : 'Failed to submit quiz');
-    } finally {
-      dispatch(setSubmitting(false));
+      setPageState('error');
     }
   };
 
-  if (!isHydrated) {
-    return null;
-  }
-
-  // Use savedUserInfo for the check since userInfo gets cleared after submission
-  if (!savedUserInfo || !quizId) {
-    if (!submitted) {
-      return null; // Will redirect only if not submitted
-    }
+  // Render based on page state, not Redux
+  if (pageState === 'loading') {
+    return null; // Will redirect if no data
   }
 
   return (
@@ -127,7 +122,22 @@ const CompletePage = () => {
         <div className="flex-1 flex items-center justify-center px-4">
           <div className="w-full max-w-md">
             <div className="bg-white border border-gray-300 rounded-lg p-8 text-center">
-              {error ? (
+              
+              {pageState === 'submitting' && (
+                <>
+                  <div className="w-16 h-16 mx-auto mb-6">
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#457B9D]"></div>
+                  </div>
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                    Processing your assessment...
+                  </h2>
+                  <p className="text-gray-600">
+                    Please wait while we submit your responses.
+                  </p>
+                </>
+              )}
+              
+              {pageState === 'error' && (
                 <>
                   <div className="w-16 h-16 mx-auto mb-6 text-red-500">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -142,36 +152,28 @@ const CompletePage = () => {
                     {error}
                   </p>
                   <button
-                    onClick={() => {
-                      setError(null);
-                      setSubmitted(false);
-                      submitQuiz();
-                    }}
+                    onClick={() => submitQuiz()}
                     className="bg-[#457B9D] text-white px-6 py-3 rounded-lg hover:bg-[#3a6a89] transition-colors"
                   >
                     Try Again
                   </button>
                 </>
-              ) : isSubmitting ? (
-                <>
-                  <div className="w-16 h-16 mx-auto mb-6">
-                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#457B9D]"></div>
-                  </div>
-                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                    Processing your assessment...
-                  </h2>
-                  <p className="text-gray-600">
-                    Please wait while we submit your responses.
-                  </p>
-                </>
-              ) : (
+              )}
+              
+              {pageState === 'success' && (
                 <>
                   <CompleteAnimation />
                   <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                     Complete!
                   </h2>
-                  <p className="text-gray-600 mb-6">
-                    We are generating your report and will send it to your email when it is ready. You may close this page.
+                  <p className="text-gray-600 mb-2">
+                    Your AI readiness report is being generated and will be sent to:
+                  </p>
+                  <p className="font-semibold text-gray-800 mb-4">
+                    {initialData.userInfo?.email}
+                  </p>
+                  <p className="text-sm text-gray-500 mb-6">
+                    You should receive it within 5-10 minutes. You can safely close this page.
                   </p>
                   <div className="space-y-3">
                     <button
@@ -181,10 +183,7 @@ const CompletePage = () => {
                       Return to Homepage
                     </button>
                     <button
-                      onClick={() => {
-                        // Quiz already reset after successful submission
-                        router.push('/ai-assessment');
-                      }}
+                      onClick={() => router.push('/ai-assessment')}
                       className="w-full bg-white text-[#457B9D] border border-[#457B9D] px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors"
                     >
                       Take Another Assessment
@@ -196,17 +195,17 @@ const CompletePage = () => {
           </div>
         </div>
 
-        {/* Bottom progress bar - always at 100% */}
+        {/* Bottom progress bar */}
         <div className="bg-gray-100 px-4 py-4 flex-shrink-0">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
-              <span>100% Complete</span>
+              <span>{pageState === 'success' ? '100% Complete' : 'Processing...'}</span>
               <span className="text-xs text-gray-500">Powered by deployAI</span>
             </div>
             <div className="w-full bg-gray-300 rounded-full h-2">
               <div 
                 className="bg-[#457B9D] h-2 rounded-full transition-all duration-300"
-                style={{ width: '100%' }}
+                style={{ width: pageState === 'success' ? '100%' : '95%' }}
               />
             </div>
           </div>
