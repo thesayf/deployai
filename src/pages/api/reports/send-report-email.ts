@@ -2,6 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Resend } from 'resend';
 import { supabaseAdmin } from '@/lib/supabase';
 import { generateReportReadyEmail } from '@/lib/email-templates/report-ready';
+import { getEmailSender, EMAIL_CONFIG } from '@/config/email';
+import { getBaseUrl } from '@/lib/utils/environment';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -57,7 +59,12 @@ export default async function handler(
     const quizData = report.quiz_responses;
 
     // Generate report URL with access token
-    const reportUrl = `${process.env.NEXT_PUBLIC_APP_URL}/report/view/${report.access_token}`;
+    const baseUrl = getBaseUrl(req);
+    const reportUrl = `${baseUrl}/report/view/${report.access_token}`;
+    
+    console.log('[REPORT-EMAIL] Sending report email to:', quizData.user_email);
+    console.log('[REPORT-EMAIL] Base URL:', baseUrl);
+    console.log('[REPORT-EMAIL] Report URL:', reportUrl);
 
     // Generate email HTML
     const emailHtml = generateReportReadyEmail({
@@ -70,9 +77,9 @@ export default async function handler(
 
     // Send email
     const { data, error } = await resend.emails.send({
-      from: 'AI Reports <reports@deployai.studio>',
+      from: getEmailSender('reports'),
       to: [quizData.user_email],
-      subject: `Your AI Implementation Report is Ready - ${quizData.user_company || 'Action Required'}`,
+      subject: EMAIL_CONFIG.subjects.reportReady(quizData.user_company),
       html: emailHtml,
       tags: [
         { name: 'type', value: 'report-ready' },
@@ -83,9 +90,20 @@ export default async function handler(
     });
 
     if (error) {
-      console.error('Failed to send email:', error);
-      return res.status(500).json({ error: 'Failed to send report email' });
+      console.error('[REPORT-EMAIL] Failed to send email:', error);
+      console.error('[REPORT-EMAIL] Error details:', JSON.stringify(error, null, 2));
+      console.error('[REPORT-EMAIL] From address:', getEmailSender('reports'));
+      
+      // Check for domain verification issues
+      if (error.message?.includes('domain') || error.message?.includes('verify')) {
+        console.error('[REPORT-EMAIL] Domain verification issue detected');
+        console.error('[REPORT-EMAIL] Set USE_FALLBACK_SENDER=true in .env to use fallback sender');
+      }
+      
+      return res.status(500).json({ error: 'Failed to send report email', details: error });
     }
+    
+    console.log('[REPORT-EMAIL] Email sent successfully. Email ID:', data?.id);
 
     // Update report to mark email as sent
     await supabase

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Resend } from 'resend';
 import { supabaseAdmin } from '@/lib/supabase';
+import { getEmailSender, EMAIL_CONFIG } from '@/config/email';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -31,8 +32,13 @@ export default async function handler(
       company 
     } = req.body as SendConfirmationRequest;
 
+    console.log('[CONFIRMATION-EMAIL] Request received for:', userEmail);
+    console.log('[CONFIRMATION-EMAIL] Quiz ID:', quizId);
+    console.log('[CONFIRMATION-EMAIL] Report ID:', reportId);
+
     // Validate required fields
     if (!quizId || !reportId || !userEmail || !firstName || !lastName) {
+      console.error('[CONFIRMATION-EMAIL] Missing required fields');
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
@@ -117,9 +123,9 @@ export default async function handler(
     `;
 
     const { data, error } = await resend.emails.send({
-      from: 'AI Assessment <assessment@deployai.studio>',
+      from: getEmailSender('assessment'),
       to: [userEmail],
-      subject: 'Processing Your AI Readiness Assessment',
+      subject: EMAIL_CONFIG.subjects.confirmation,
       html: emailHtml,
       tags: [
         { name: 'type', value: 'assessment-confirmation' },
@@ -128,9 +134,22 @@ export default async function handler(
     });
 
     if (error) {
-      console.error('Failed to send email:', error);
-      return res.status(500).json({ error: 'Failed to send confirmation email' });
+      console.error('[CONFIRMATION-EMAIL] Failed to send email:', error);
+      console.error('[CONFIRMATION-EMAIL] Error details:', JSON.stringify(error, null, 2));
+      console.error('[CONFIRMATION-EMAIL] Attempted to send to:', userEmail);
+      console.error('[CONFIRMATION-EMAIL] From address:', getEmailSender('assessment'));
+      
+      // Check for domain verification issues
+      if (error.message?.includes('domain') || error.message?.includes('verify')) {
+        console.error('[CONFIRMATION-EMAIL] Domain verification issue detected');
+        console.error('[CONFIRMATION-EMAIL] Set USE_FALLBACK_SENDER=true in .env to use fallback sender');
+      }
+      
+      return res.status(500).json({ error: 'Failed to send confirmation email', details: error });
     }
+    
+    console.log('[CONFIRMATION-EMAIL] Email sent successfully to:', userEmail);
+    console.log('[CONFIRMATION-EMAIL] Email ID:', data?.id);
 
     res.status(200).json({ success: true, emailId: data?.id });
   } catch (error) {
