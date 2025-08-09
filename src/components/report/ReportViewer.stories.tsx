@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import { ReportViewer } from './ReportViewer';
 import { 
   generateEcommerceExample, 
@@ -154,33 +154,145 @@ export const PlayfulManufacturing: Story = {
 
 // Custom data example showing word limit compliance
 const customData: ReportData = {
+  executiveSummary: {
+    readinessLevel: "High",
+    estimatedAnnualOpportunity: "$420,000",
+    immediateROI: "380%"
+  },
+  keyProblems: [
+    {
+      problem: "Tax preparation taking twice industry standard time",
+      currentCost: "$140,000 annually in lost productivity",
+      potentialGain: "70% reduction in preparation time"
+    },
+    {
+      problem: "Client document collection causes significant delays",
+      currentCost: "3 days average collection time",
+      potentialGain: "80% faster document processing"
+    },
+    {
+      problem: "Manual data entry prone to costly errors",
+      currentCost: "4.5% error rate costing $50,000 annually",
+      potentialGain: "96% reduction in errors"
+    }
+  ],
+  recommendedSolutions: [
+    {
+      solutionName: "Tax Automation Suite",
+      directImpact: ["Tax preparation time", "Accuracy"],
+      primaryBenefits: [
+        "Complete returns 70% faster with built-in accuracy checks",
+        "Eliminate overtime costs during tax season",
+        "Improve client satisfaction with faster turnaround"
+      ],
+      description: "Comprehensive tax preparation software that automates calculations, validates entries, and streamlines the entire return process.",
+      realWorldProof: [
+        {
+          caseStudy: "Small CPA firm with 8 CPAs",
+          metric: "Processed 500 returns in half the time"
+        }
+      ],
+      implementationTime: "3 weeks"
+    },
+    {
+      solutionName: "Document Intelligence Portal",
+      directImpact: ["Document collection", "Client experience"],
+      primaryBenefits: [
+        "Clients upload documents directly with automatic categorization",
+        "Eliminate missing documents and follow-ups",
+        "Improve client experience through self-service"
+      ],
+      description: "Smart client portal that automates document requests, provides secure uploads, and uses AI to categorize and extract data.",
+      realWorldProof: [
+        {
+          caseStudy: "Accounting practice serving 200 businesses",
+          metric: "Reduced document collection time by 80%"
+        }
+      ],
+      implementationTime: "2 weeks"
+    },
+    {
+      solutionName: "Data Extraction Engine",
+      directImpact: ["Manual data entry", "Error rates"],
+      primaryBenefits: [
+        "Extract financial data from any document format instantly",
+        "Reduce errors to near zero",
+        "Save 30 hours weekly during tax season"
+      ],
+      description: "AI-powered OCR and data extraction system that automatically pulls financial data from PDFs, images, and scanned documents.",
+      realWorldProof: [
+        {
+          caseStudy: "Tax firm processing 1000+ returns annually",
+          metric: "Eliminated manual entry and saved 30 hours weekly"
+        }
+      ],
+      implementationTime: "4 weeks"
+    }
+  ],
+  projectedOutcomes: [
+    {
+      tool: "Tax Automation Suite",
+      metric: "Return Preparation",
+      current: "8 hours",
+      projected: "2.5 hours",
+      improvementPercentage: "69%"
+    },
+    {
+      tool: "Data Extraction Engine",
+      metric: "Error Rate",
+      current: "4.5%",
+      projected: "0.2%",
+      improvementPercentage: "96%"
+    },
+    {
+      tool: "Document Intelligence Portal",
+      metric: "Client Onboarding",
+      current: "3 days",
+      projected: "30 minutes",
+      improvementPercentage: "99%"
+    }
+  ],
+  whereToStart: {
+    recommendation: "Document Intelligence Portal",
+    targetBottleneck: "Client document collection causing significant delays",
+    immediateImpact: "80% reduction in document collection time within 2 weeks",
+    timelineEstimate: "2 weeks full implementation",
+    expectedROI: "150% within first month",
+    implementationNote: "Quick win with minimal disruption to existing processes"
+  },
+  callToAction: {
+    primaryCTA: "Book Demo of Accounting AI Tools",
+    secondaryCTA: "Download ROI Calculator",
+    urgencyMessage: "Tax season approaching - implement before January"
+  },
+  // Legacy fields for backwards compatibility
   problemSummary: {
-    industryProfile: "Small accounting firm with 8 CPAs serving 200 local businesses", // 11 words ✓
+    industryProfile: "Small accounting firm with 8 CPAs serving 200 local businesses",
     topProblems: [
-      "Tax preparation taking twice industry standard time", // 7 words ✓
-      "Client document collection causes significant delays", // 6 words ✓
-      "Manual data entry prone to costly errors" // 7 words ✓
+      "Tax preparation taking twice industry standard time",
+      "Client document collection causes significant delays",
+      "Manual data entry prone to costly errors"
     ],
     monthlyOpportunity: "$35,000"
   },
   solutions: [
     {
-      category: "Tax Automation Suite", // 3 words ✓
-      outcome: "Complete returns 70% faster with built-in accuracy checks", // 9 words ✓
+      category: "Tax Automation Suite",
+      outcome: "Complete returns 70% faster with built-in accuracy checks",
       timeline: "3 weeks to implement",
-      caseStudy: "Small CPA firm processed 500 returns in half the time, eliminating overtime costs and improving client satisfaction significantly" // 18 words ✓
+      caseStudy: "Small CPA firm processed 500 returns in half the time, eliminating overtime costs and improving client satisfaction significantly"
     },
     {
-      category: "Document Intelligence Portal", // 3 words ✓
-      outcome: "Clients upload documents directly with automatic categorization", // 7 words ✓
+      category: "Document Intelligence Portal",
+      outcome: "Clients upload documents directly with automatic categorization",
       timeline: "2 weeks to implement",
-      caseStudy: "Accounting practice reduced document collection time by 80%, eliminated missing documents, and improved client experience through self-service portal" // 18 words ✓
+      caseStudy: "Accounting practice reduced document collection time by 80%, eliminated missing documents, and improved client experience through self-service portal"
     },
     {
-      category: "Data Extraction Engine", // 3 words ✓
-      outcome: "Extract financial data from any document format instantly", // 8 words ✓
+      category: "Data Extraction Engine",
+      outcome: "Extract financial data from any document format instantly",
       timeline: "4 weeks to implement",
-      caseStudy: "Tax firm eliminated manual entry, reduced errors to near zero, saved 30 hours weekly during tax season" // 17 words ✓
+      caseStudy: "Tax firm eliminated manual entry, reduced errors to near zero, saved 30 hours weekly during tax season"
     }
   ],
   measurableImprovements: [
@@ -206,8 +318,8 @@ const customData: ReportData = {
   actionPlan: {
     roiProjection: "380% in 4 months",
     readinessLevel: "High - Cloud-based systems already in place",
-    ctaText: "Book demo of accounting AI tools for your firm", // 9 words ✓
-    urgency: "Tax season approaching - implement before January" // 7 words ✓
+    ctaText: "Book demo of accounting AI tools for your firm",
+    urgency: "Tax season approaching - implement before January"
   }
 };
 

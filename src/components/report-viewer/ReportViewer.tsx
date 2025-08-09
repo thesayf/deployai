@@ -116,12 +116,22 @@ export function ReportViewer({
 
       <div className="grid md:grid-cols-2 gap-6">
         <div className="bg-white border-3 border-black p-6 shadow-hard">
-          <h3 className="text-lg font-bold uppercase mb-4">Priority Areas</h3>
+          <h3 className="text-lg font-bold uppercase mb-4">Primary Pain Points</h3>
           <ul className="space-y-3">
-            {stage1Analysis.analysis.businessAssessment.priorityProcesses.map((process, idx) => (
-              <li key={idx} className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-black rounded-full" />
-                <span className="font-medium">{process}</span>
+            {stage1Analysis.analysis.problemAnalysis.primaryPainPoints.map((pain, idx) => (
+              <li key={idx} className="flex items-start gap-3">
+                <div className="w-2 h-2 bg-black rounded-full mt-2" />
+                <div>
+                  <span className="font-medium">{pain.problem}</span>
+                  <span className={`ml-2 text-xs px-2 py-1 ${
+                    pain.severity === 'critical' ? 'bg-red-500 text-white' :
+                    pain.severity === 'high' ? 'bg-orange-500 text-white' :
+                    pain.severity === 'medium' ? 'bg-yellow-500 text-black' :
+                    'bg-gray-300 text-black'
+                  }`}>
+                    {pain.severity}
+                  </span>
+                </div>
               </li>
             ))}
           </ul>
@@ -385,7 +395,14 @@ export function ReportViewer({
 }
 
 // Helper Components
-function ScoreCard({ title, score, color, icon }: any) {
+interface ScoreCardProps {
+  title: string;
+  score: number;
+  color: 'blue' | 'green' | 'purple';
+  icon: React.ReactNode;
+}
+
+function ScoreCard({ title, score, color, icon }: ScoreCardProps) {
   const bgColor = {
     blue: 'bg-blue-50',
     green: 'bg-green-50',
@@ -450,7 +467,13 @@ function ToolCard({ tool }: any) {
   );
 }
 
-function MetricCard({ label, value, color }: any) {
+interface MetricCardProps {
+  label: string;
+  value: string | number;
+  color: 'green' | 'blue' | 'purple';
+}
+
+function MetricCard({ label, value, color }: MetricCardProps) {
   const bgColor = {
     green: 'bg-green-100 border-green-600',
     blue: 'bg-blue-100 border-blue-600',
@@ -465,16 +488,31 @@ function MetricCard({ label, value, color }: any) {
   );
 }
 
-function CostItem({ label, value, bold = false }: any) {
+interface CostItemProps {
+  label: string;
+  value: string | number;
+  bold?: boolean;
+}
+
+function CostItem({ label, value, bold = false }: CostItemProps) {
   return (
     <div className={`flex justify-between ${bold ? 'font-bold' : ''}`}>
       <span>{label}:</span>
-      <span>${value.toLocaleString()}</span>
+      <span>${typeof value === 'number' ? value.toLocaleString() : value}</span>
     </div>
   );
 }
 
-function ScenarioCard({ title, scenario, color }: any) {
+interface ScenarioCardProps {
+  title: string;
+  scenario: {
+    roi: number;
+    payback: string;
+  };
+  color: 'gray' | 'blue' | 'green';
+}
+
+function ScenarioCard({ title, scenario, color }: ScenarioCardProps) {
   const bgColor = {
     gray: 'bg-gray-100',
     blue: 'bg-blue-100',
@@ -496,7 +534,19 @@ function ScenarioCard({ title, scenario, color }: any) {
   );
 }
 
-function PriorityCard({ priority }: any) {
+interface PriorityCardProps {
+  priority: {
+    priority: number;
+    initiative: string;
+    rationale: string;
+    quickWin: boolean;
+    timeToValue: string;
+    expectedROI: string;
+    riskLevel: string;
+  };
+}
+
+function PriorityCard({ priority }: PriorityCardProps) {
   const riskColor = {
     low: 'bg-green-100',
     medium: 'bg-yellow-100',
@@ -565,7 +615,14 @@ function PhaseCard({ phase, number }: any) {
   );
 }
 
-function ActionCard({ title, actions, color, icon }: any) {
+interface ActionCardProps {
+  title: string;
+  actions: string[];
+  color: 'red' | 'orange' | 'yellow';
+  icon: React.ReactNode;
+}
+
+function ActionCard({ title, actions, color, icon }: ActionCardProps) {
   const bgColor = {
     red: 'bg-red-50',
     orange: 'bg-orange-50',
@@ -579,7 +636,7 @@ function ActionCard({ title, actions, color, icon }: any) {
         <h4 className="font-bold uppercase">{title}</h4>
       </div>
       <ul className="space-y-2">
-        {actions.map((action: string, idx: number) => (
+        {actions.map((action, idx) => (
           <li key={idx} className="flex items-start gap-2">
             <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
             <span className="text-sm">{action}</span>

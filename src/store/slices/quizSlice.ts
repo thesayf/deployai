@@ -41,7 +41,6 @@ const getInitialState = (): QuizState => {
     quizId: null,
     currentStep: 1,
     responses: {},
-    totalScore: 0,
     isModalOpen: false,
     isSubmitting: false,
     processingStage: null,
@@ -112,11 +111,6 @@ const quizSlice = createSlice({
       saveState(state);
     },
     
-    // Score management
-    updateScore: (state, action: PayloadAction<number>) => {
-      state.totalScore = action.payload;
-    },
-    
     // Processing state
     setProcessingStage: (state, action: PayloadAction<QuizState['processingStage']>) => {
       state.processingStage = action.payload;
@@ -152,7 +146,6 @@ const quizSlice = createSlice({
     clearProgress: (state) => {
       state.currentStep = 1;
       state.responses = {};
-      state.totalScore = 0;
       state.quizId = null;
       state.error = null;
       saveState(state);
@@ -172,7 +165,6 @@ export const {
   previousStep,
   saveResponse,
   setQuizId,
-  updateScore,
   setProcessingStage,
   setSubmitting,
   setReportId,
@@ -191,7 +183,6 @@ export const selectUserInfo = (state: { quiz: QuizState }) => state.quiz.userInf
 export const selectQuizId = (state: { quiz: QuizState }) => state.quiz.quizId;
 export const selectCurrentStep = (state: { quiz: QuizState }) => state.quiz.currentStep;
 export const selectResponses = (state: { quiz: QuizState }) => state.quiz.responses;
-export const selectTotalScore = (state: { quiz: QuizState }) => state.quiz.totalScore;
 export const selectIsModalOpen = (state: { quiz: QuizState }) => state.quiz.isModalOpen;
 export const selectProcessingStage = (state: { quiz: QuizState }) => state.quiz.processingStage;
 export const selectIsSubmitting = (state: { quiz: QuizState }) => state.quiz.isSubmitting;

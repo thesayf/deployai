@@ -61,15 +61,20 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
       setVariant((data.report_variant as any) || 'executive');
 
       // Update access count (fire and forget)
-      supabase
-        .from('ai_reports')
-        .update({ 
-          access_count: (data.access_count || 0) + 1,
-          report_accessed_at: new Date().toISOString()
-        })
-        .eq('access_token', accessToken)
-        .then(() => {})
-        .catch(err => console.error('Failed to update access count:', err));
+      const updateAccessCount = async () => {
+        try {
+          await supabase
+            .from('ai_reports')
+            .update({ 
+              access_count: (data.access_count || 0) + 1,
+              report_accessed_at: new Date().toISOString()
+            })
+            .eq('access_token', accessToken);
+        } catch (err) {
+          console.error('Failed to update access count:', err);
+        }
+      };
+      updateAccessCount();
 
     } catch (err) {
       console.error('Error:', err);

@@ -130,6 +130,17 @@ export interface StartQuizResponse {
   error?: string;
 }
 
+// Quiz Status Response
+export interface QuizStatusResponse {
+  status: 'pending' | 'processing' | 'completed' | 'error';
+  stage?: string;
+  reportId?: string;
+  accessToken?: string;
+  reportContent?: any;
+  error?: string;
+  message?: string;
+}
+
 export interface SaveProgressRequest {
   quizId: string;
   questionId: string;

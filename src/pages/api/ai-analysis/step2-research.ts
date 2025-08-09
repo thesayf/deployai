@@ -134,12 +134,13 @@ export default async function handler(
       toolResearch = cleanAndParseJSON(content);
       console.log('[STEP2] SUCCESS - Parsed tool research');
       console.log('[STEP2] Annual opportunity:', toolResearch.estimatedAnnualOpportunity);
-      console.log('[STEP2] Number of tools found:', toolResearch.researchedTools?.length);
+      console.log('[STEP2] Number of solutions found:', toolResearch.recommendedSolutions?.length);
     } catch (parseError) {
       console.error('[STEP2] ERROR - Failed to parse AI response');
-      console.error('[STEP2] Parse error:', parseError.message);
+      console.error('[STEP2] Parse error:', parseError instanceof Error ? parseError.message : parseError);
       console.error('[STEP2] Response content preview:', content.substring(0, 500));
       throw new Error('Invalid AI response format in Step 2');
+
     }
 
     // Update report with Step 2 research
@@ -189,12 +190,16 @@ export default async function handler(
 
   } catch (error) {
     console.error('[STEP2] CRITICAL ERROR in step 2 research');
-    console.error('[STEP2] Error type:', error.name);
-    console.error('[STEP2] Error message:', error.message);
-    console.error('[STEP2] Error stack:', error.stack);
+    if (error instanceof Error) {
+      console.error('[STEP2] Error type:', error.name);
+      console.error('[STEP2] Error message:', error.message);
+      console.error('[STEP2] Error stack:', error.stack);
+    } else {
+      console.error('[STEP2] Unknown error:', error);
+    }
     
     // Log specific error details
-    if (error.response) {
+    if (error && typeof error === 'object' && 'response' in error) {
       console.error('[STEP2] API Response error:', error.response);
     }
     

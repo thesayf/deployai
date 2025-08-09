@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import { ProfessionalReport } from './ProfessionalReport';
 import { 
   generateEcommerceExample, 
@@ -164,33 +164,145 @@ export const DatasheetManufacturing: Story = {
 
 // Custom Accounting Firm Example
 const accountingData: ReportData = {
+  executiveSummary: {
+    readinessLevel: "High",
+    estimatedAnnualOpportunity: "$540,000",
+    immediateROI: "425%"
+  },
+  keyProblems: [
+    {
+      problem: "Manual tax preparation consuming excessive billable hours",
+      currentCost: "$180,000 annually in lost productivity",
+      potentialGain: "65% reduction in preparation time"
+    },
+    {
+      problem: "Client portal lacks document automation features",
+      currentCost: "2 days average onboarding time",
+      potentialGain: "94% faster client onboarding"
+    },
+    {
+      problem: "Compliance tracking requires redundant manual processes",
+      currentCost: "8% error rate in compliance",
+      potentialGain: "99.8% accuracy rate achievable"
+    }
+  ],
+  recommendedSolutions: [
+    {
+      solutionName: "Intelligent Tax Software with AI-Powered Form Population",
+      directImpact: ["Manual tax preparation", "Calculation errors"],
+      primaryBenefits: [
+        "Automate calculations and populate forms from client data",
+        "Eliminate calculation errors completely",
+        "Increase client capacity by 40%"
+      ],
+      description: "Advanced tax preparation software that uses AI to automatically extract data from client documents, populate forms, and perform complex calculations. This solution integrates with existing practice management systems and provides real-time validation of entries.",
+      realWorldProof: [
+        {
+          caseStudy: "Regional firm with 20 CPAs serving 500 clients",
+          metric: "Reduced tax prep time by 65% and increased capacity by 40%"
+        }
+      ],
+      implementationTime: "4 weeks"
+    },
+    {
+      solutionName: "Client Experience Platform with Document Automation",
+      directImpact: ["Client onboarding", "Document collection"],
+      primaryBenefits: [
+        "Self-service portal with automated document collection",
+        "Reduce administrative workload by 60%",
+        "Improve client satisfaction scores by 45%"
+      ],
+      description: "Comprehensive client portal that automates document requests, provides secure file sharing, and offers self-service options for common client needs. Features include automated reminders, e-signatures, and intelligent document classification.",
+      realWorldProof: [
+        {
+          caseStudy: "Mid-size CPA practice with 350 clients",
+          metric: "Improved satisfaction scores by 45% while reducing admin work by 60%"
+        }
+      ],
+      implementationTime: "3 weeks"
+    },
+    {
+      solutionName: "Compliance Automation Suite with Deadline Tracking",
+      directImpact: ["Compliance tracking", "Deadline management"],
+      primaryBenefits: [
+        "Track deadlines and generate compliance reports automatically",
+        "Eliminate missed deadlines completely",
+        "Reduce compliance costs by 50%"
+      ],
+      description: "Intelligent compliance management system that automatically tracks regulatory deadlines, generates required reports, and provides audit trails. Includes built-in updates for changing regulations and customizable workflows for different compliance requirements.",
+      realWorldProof: [
+        {
+          caseStudy: "Accounting firm specializing in corporate compliance",
+          metric: "Eliminated missed deadlines and reduced compliance costs by 50%"
+        }
+      ],
+      implementationTime: "5 weeks"
+    }
+  ],
+  projectedOutcomes: [
+    {
+      tool: "Intelligent Tax Software",
+      metric: "Tax Return Time",
+      current: "6 hours",
+      projected: "2 hours",
+      improvementPercentage: "67%"
+    },
+    {
+      tool: "Client Experience Platform",
+      metric: "Client Onboarding",
+      current: "2 days",
+      projected: "1 hour",
+      improvementPercentage: "94%"
+    },
+    {
+      tool: "Compliance Automation Suite",
+      metric: "Compliance Accuracy",
+      current: "92%",
+      projected: "99.8%",
+      improvementPercentage: "8%"
+    }
+  ],
+  whereToStart: {
+    recommendation: "Intelligent Tax Software",
+    targetBottleneck: "Manual tax preparation consuming excessive billable hours",
+    immediateImpact: "65% reduction in tax preparation time within first month",
+    timelineEstimate: "4 weeks full implementation",
+    expectedROI: "425% within 6 months",
+    implementationNote: "Our team handles all technical complexity - your CPAs just use the system"
+  },
+  callToAction: {
+    primaryCTA: "Schedule Your Free Consultation",
+    secondaryCTA: "Download Implementation Guide",
+    urgencyMessage: "Tax season approaching - implement before January deadline"
+  },
+  // Legacy fields for backwards compatibility
   problemSummary: {
-    industryProfile: "Mid-size accounting firm with 15 CPAs serving 350 clients", // 10 words
+    industryProfile: "Mid-size accounting firm with 15 CPAs serving 350 clients",
     topProblems: [
-      "Manual tax preparation consuming excessive billable hours", // 7 words
-      "Client portal lacks document automation features", // 6 words
-      "Compliance tracking requires redundant manual processes" // 6 words
+      "Manual tax preparation consuming excessive billable hours",
+      "Client portal lacks document automation features",
+      "Compliance tracking requires redundant manual processes"
     ],
     monthlyOpportunity: "$45,000"
   },
   solutions: [
     {
-      category: "Intelligent Tax Software", // 3 words
-      outcome: "Automate calculations and populate forms from client data", // 8 words
+      category: "Intelligent Tax Software",
+      outcome: "Automate calculations and populate forms from client data",
       timeline: "4 weeks to implement",
-      caseStudy: "Regional firm reduced tax prep time by 65%, eliminated calculation errors, and increased client capacity by 40%" // 17 words
+      caseStudy: "Regional firm reduced tax prep time by 65%, eliminated calculation errors, and increased client capacity by 40%"
     },
     {
-      category: "Client Experience Platform", // 3 words
-      outcome: "Self-service portal with automated document collection", // 7 words
+      category: "Client Experience Platform",
+      outcome: "Self-service portal with automated document collection",
       timeline: "3 weeks to implement",
-      caseStudy: "CPA practice improved client satisfaction scores by 45% while reducing administrative staff workload by 60% annually" // 16 words
+      caseStudy: "CPA practice improved client satisfaction scores by 45% while reducing administrative staff workload by 60% annually"
     },
     {
-      category: "Compliance Automation Suite", // 3 words
-      outcome: "Track deadlines and generate compliance reports automatically", // 7 words
+      category: "Compliance Automation Suite",
+      outcome: "Track deadlines and generate compliance reports automatically",
       timeline: "5 weeks to implement",
-      caseStudy: "Accounting firm eliminated missed deadlines, reduced compliance costs by 50%, and avoided all regulatory penalties completely" // 16 words
+      caseStudy: "Accounting firm eliminated missed deadlines, reduced compliance costs by 50%, and avoided all regulatory penalties completely"
     }
   ],
   measurableImprovements: [
@@ -216,8 +328,8 @@ const accountingData: ReportData = {
   actionPlan: {
     roiProjection: "425% in 6 months",
     readinessLevel: "High - Modern infrastructure and tech-savvy team",
-    ctaText: "Schedule demo of accounting automation solutions today", // 7 words
-    urgency: "Tax season approaching - implement before January deadline" // 8 words
+    ctaText: "Schedule demo of accounting automation solutions today",
+    urgency: "Tax season approaching - implement before January deadline"
   }
 };
 
@@ -308,7 +420,6 @@ export const VariantComparison: Story = {
 
 // Print Preview Example
 export const PrintPreview: Story = {
-  name: 'Print Preview',
   render: (args) => (
     <div className="bg-white min-h-screen">
       <div className="p-4 bg-gray-100 border-b border-gray-300 print:hidden">

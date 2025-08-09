@@ -18,7 +18,7 @@ export default async function handler(
   try {
     const { data, error } = await supabase
       .from('ai_reports')
-      .select('id, report_status, created_at, updated_at')
+      .select('id, report_status, error_message, created_at, updated_at')
       .eq('id', reportId)
       .single();
 

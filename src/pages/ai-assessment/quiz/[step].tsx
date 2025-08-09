@@ -39,7 +39,9 @@ const QuizStep = () => {
   }, []);
 
   const currentQuestion = getQuestionByStep(currentStep);
-  const currentAnswer = currentQuestion ? responses[currentQuestion.id] : undefined;
+  const currentAnswer = currentQuestion 
+    ? (responses as any)[currentQuestion.id]
+    : undefined;
 
   useEffect(() => {
     // Redirect to landing if no user info or quiz ID

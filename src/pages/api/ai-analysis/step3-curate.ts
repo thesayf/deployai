@@ -42,7 +42,7 @@ export default async function handler(
     console.log('[STEP3] Quiz Response ID:', quizResponseId);
     console.log('[STEP3] ProblemAnalysis received:', !!problemAnalysis);
     console.log('[STEP3] ToolResearch received:', !!toolResearch);
-    console.log('[STEP3] Researched tools count:', toolResearch?.researchedTools?.length);
+    console.log('[STEP3] Recommended solutions count:', toolResearch?.recommendedSolutions?.length);
 
     const supabase = supabaseAdmin();
 
@@ -84,7 +84,7 @@ export default async function handler(
       console.log('[STEP3] Executive summary:', curatedTools.executiveSummary?.estimatedAnnualOpportunity);
     } catch (parseError) {
       console.error('[STEP3] ERROR - Failed to parse AI response');
-      console.error('[STEP3] Parse error:', parseError.message);
+      console.error('[STEP3] Parse error:', parseError instanceof Error ? parseError.message : parseError);
       console.error('[STEP3] Response content preview:', content.substring(0, 500));
       throw new Error('Invalid AI response format in Step 3');
     }
@@ -134,9 +134,13 @@ export default async function handler(
 
   } catch (error) {
     console.error('[STEP3] CRITICAL ERROR in step 3 curation');
-    console.error('[STEP3] Error type:', error.name);
-    console.error('[STEP3] Error message:', error.message);
-    console.error('[STEP3] Error stack:', error.stack);
+    if (error instanceof Error) {
+      console.error('[STEP3] Error type:', error.name);
+      console.error('[STEP3] Error message:', error.message);
+      console.error('[STEP3] Error stack:', error.stack);
+    } else {
+      console.error('[STEP3] Unknown error:', error);
+    }
     
     res.status(500).json({ 
       error: 'Failed to curate tools',

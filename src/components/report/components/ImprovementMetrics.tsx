@@ -41,6 +41,117 @@ const useAnimatedCounter = (
   return count;
 };
 
+// Separate component for metric card to avoid hook rules violation
+interface MetricCardProps {
+  improvement: {
+    metric: string;
+    currentState: string;
+    projectedState: string;
+    improvement: string;
+  };
+  index: number;
+  controls: any;
+  inView: boolean;
+  styles: any;
+  variant: string;
+}
+
+const MetricCard: React.FC<MetricCardProps> = ({ 
+  improvement, 
+  index, 
+  controls, 
+  inView, 
+  styles,
+  variant 
+}) => {
+  // Extract percentage from improvement string (e.g., "95% faster" -> 95)
+  const extractPercentage = (improvement: string): number => {
+    const match = improvement.match(/(\d+)/);
+    return match ? parseInt(match[1]) : 0;
+  };
+  
+  const percentage = extractPercentage(improvement.improvement);
+  const animatedValue = useAnimatedCounter(percentage, 2000, inView);
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={controls}
+      variants={{
+        visible: {
+          opacity: 1,
+          scale: 1,
+          transition: {
+            duration: 0.5,
+            delay: index * 0.15
+          }
+        }
+      }}
+      className={`border-3 ${styles.card} p-6 text-center`}
+      style={{
+        boxShadow: variant === 'executive' || variant === 'playful'
+          ? '6px 6px 0 rgba(0,0,0,0.2)'
+          : undefined
+      }}
+    >
+      {/* Metric Name */}
+      <h3 className={`text-lg font-black uppercase mb-6 ${styles.metric}`}>
+        {improvement.metric}
+      </h3>
+
+      {/* Before/After Comparison */}
+      <div className="flex items-center justify-center gap-3 mb-6">
+        <div className={`px-4 py-3 border-2 ${styles.current} font-bold text-sm`}>
+          {improvement.currentState}
+        </div>
+        
+        <motion.div
+          animate={{ x: [0, 5, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+          className={`text-3xl ${styles.arrow}`}
+        >
+          →
+        </motion.div>
+        
+        <div className={`px-4 py-3 border-2 ${styles.projected} font-bold text-sm`}>
+          {improvement.projectedState}
+        </div>
+      </div>
+
+      {/* Improvement Percentage */}
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={controls}
+        variants={{
+          visible: {
+            scale: 1,
+            transition: {
+              duration: 0.5,
+              delay: 0.5 + index * 0.15,
+              type: "spring",
+              stiffness: 200
+            }
+          }
+        }}
+        className={`inline-block px-4 py-2 border-2 ${styles.improvementBg}`}
+      >
+        <div className={`text-3xl font-black ${styles.improvement}`}>
+          {variant === 'minimal' ? (
+            improvement.improvement
+          ) : (
+            <>
+              {animatedValue}% 
+              <span className="text-lg ml-1">
+                {improvement.improvement.replace(/\d+%?\s*/, '')}
+              </span>
+            </>
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 export const ImprovementMetrics: React.FC<ImprovementMetricsProps> = ({
   improvements,
   variant = 'executive',
@@ -133,89 +244,17 @@ export const ImprovementMetrics: React.FC<ImprovementMetricsProps> = ({
 
         {/* Metrics Grid */}
         <div className="grid md:grid-cols-3 gap-8">
-          {improvements.map((improvement, index) => {
-            const percentage = extractPercentage(improvement.improvement);
-            const animatedValue = useAnimatedCounter(percentage, 2000, inView);
-            
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={controls}
-                variants={{
-                  visible: {
-                    opacity: 1,
-                    scale: 1,
-                    transition: {
-                      duration: 0.5,
-                      delay: index * 0.15
-                    }
-                  }
-                }}
-                className={`border-3 ${styles.card} p-6 text-center`}
-                style={{
-                  boxShadow: variant === 'executive' || variant === 'playful'
-                    ? '6px 6px 0 rgba(0,0,0,0.2)'
-                    : undefined
-                }}
-              >
-                {/* Metric Name */}
-                <h3 className={`text-lg font-black uppercase mb-6 ${styles.metric}`}>
-                  {improvement.metric}
-                </h3>
-
-                {/* Before/After Comparison */}
-                <div className="flex items-center justify-center gap-3 mb-6">
-                  <div className={`px-4 py-3 border-2 ${styles.current} font-bold text-sm`}>
-                    {improvement.currentState}
-                  </div>
-                  
-                  <motion.div
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                    className={`text-3xl ${styles.arrow}`}
-                  >
-                    →
-                  </motion.div>
-                  
-                  <div className={`px-4 py-3 border-2 ${styles.projected} font-bold text-sm`}>
-                    {improvement.projectedState}
-                  </div>
-                </div>
-
-                {/* Improvement Percentage */}
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={controls}
-                  variants={{
-                    visible: {
-                      scale: 1,
-                      transition: {
-                        duration: 0.5,
-                        delay: 0.5 + index * 0.15,
-                        type: "spring",
-                        stiffness: 200
-                      }
-                    }
-                  }}
-                  className={`inline-block px-4 py-2 border-2 ${styles.improvementBg}`}
-                >
-                  <div className={`text-3xl font-black ${styles.improvement}`}>
-                    {variant === 'minimal' ? (
-                      improvement.improvement
-                    ) : (
-                      <>
-                        {animatedValue}% 
-                        <span className="text-lg ml-1">
-                          {improvement.improvement.replace(/\d+%?\s*/, '')}
-                        </span>
-                      </>
-                    )}
-                  </div>
-                </motion.div>
-              </motion.div>
-            );
-          })}
+          {improvements.map((improvement, index) => (
+            <MetricCard
+              key={index}
+              improvement={improvement}
+              index={index}
+              controls={controls}
+              inView={inView}
+              styles={styles}
+              variant={variant}
+            />
+          ))}
         </div>
 
         {/* Visual Impact Statement */}

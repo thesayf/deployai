@@ -84,7 +84,7 @@ export default async function handler(
       console.log('[STEP4] Recommendations count:', finalReport.recommendedSolutions?.length);
     } catch (parseError) {
       console.error('[STEP4] ERROR - Failed to parse AI response');
-      console.error('[STEP4] Parse error:', parseError.message);
+      console.error('[STEP4] Parse error:', parseError instanceof Error ? parseError.message : parseError);
       console.error('[STEP4] Response content preview:', content.substring(0, 500));
       throw new Error('Invalid AI response format in Step 4');
     }
@@ -145,9 +145,13 @@ export default async function handler(
 
   } catch (error) {
     console.error('[STEP4] CRITICAL ERROR in step 4 generation');
-    console.error('[STEP4] Error type:', error.name);
-    console.error('[STEP4] Error message:', error.message);
-    console.error('[STEP4] Error stack:', error.stack);
+    if (error instanceof Error) {
+      console.error('[STEP4] Error type:', error.name);
+      console.error('[STEP4] Error message:', error.message);
+      console.error('[STEP4] Error stack:', error.stack);
+    } else {
+      console.error('[STEP4] Unknown error:', error);
+    }
     
     // Mark report as failed
     const supabase = supabaseAdmin();

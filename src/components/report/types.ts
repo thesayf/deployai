@@ -129,8 +129,58 @@ export interface ActionPlanProps {
   className?: string;
 }
 
+// Helper function to add new required fields to legacy data
+const addRequiredFields = (legacyData: any): ReportData => ({
+  executiveSummary: {
+    readinessLevel: legacyData.actionPlan?.readinessLevel?.split(' - ')[0] || "High",
+    estimatedAnnualOpportunity: `${parseInt(legacyData.problemSummary?.monthlyOpportunity?.replace(/[^0-9]/g, '') || '0') * 12}`,
+    immediateROI: legacyData.actionPlan?.roiProjection?.split(' ')[0] || "300%"
+  },
+  keyProblems: legacyData.problemSummary?.topProblems?.map((problem: string, index: number) => ({
+    problem,
+    currentCost: `$${(15000 * (3 - index)).toLocaleString()} monthly`,
+    potentialGain: `${70 - (index * 10)}% improvement`
+  })) || [],
+  recommendedSolutions: legacyData.solutions?.map((sol: any) => ({
+    solutionName: sol.category,
+    directImpact: [sol.category.split(' ')[0], "Efficiency"],
+    primaryBenefits: [
+      sol.outcome,
+      "Reduce operational costs",
+      "Improve customer satisfaction"
+    ],
+    description: `${sol.category} that ${sol.outcome.toLowerCase()}. ${sol.caseStudy}`,
+    realWorldProof: [{
+      caseStudy: sol.caseStudy.split('.')[0],
+      metric: sol.caseStudy.split('by ')[1]?.split(' ')[0] || "50%"
+    }],
+    implementationTime: sol.timeline.split(' to ')[0]
+  })) || [],
+  projectedOutcomes: legacyData.measurableImprovements?.map((imp: any) => ({
+    tool: legacyData.solutions?.[0]?.category || "AI Solution",
+    metric: imp.metric,
+    current: imp.currentState,
+    projected: imp.projectedState,
+    improvementPercentage: imp.improvement.match(/\d+/)?.[0] || "50"
+  })) || [],
+  whereToStart: {
+    recommendation: legacyData.solutions?.[0]?.category || "Primary Solution",
+    targetBottleneck: legacyData.problemSummary?.topProblems?.[0] || "Main challenge",
+    immediateImpact: legacyData.solutions?.[0]?.outcome || "Quick improvement",
+    timelineEstimate: legacyData.solutions?.[0]?.timeline || "4 weeks",
+    expectedROI: legacyData.actionPlan?.roiProjection || "300%",
+    implementationNote: "Our team handles all technical complexity"
+  },
+  callToAction: {
+    primaryCTA: "Schedule Your Free Consultation",
+    secondaryCTA: "Download Implementation Guide",
+    urgencyMessage: legacyData.actionPlan?.urgency || "Act now to stay competitive"
+  },
+  ...legacyData
+});
+
 // Example data generators for different industries
-export const generateEcommerceExample = (): ReportData => ({
+export const generateEcommerceExample = (): ReportData => addRequiredFields({
   problemSummary: {
     industryProfile: "Mid-size e-commerce retailer with 50 employees processing 10,000 monthly orders across three warehouses nationwide",
     topProblems: [
@@ -188,7 +238,7 @@ export const generateEcommerceExample = (): ReportData => ({
   }
 });
 
-export const generateLawFirmExample = (): ReportData => ({
+export const generateLawFirmExample = (): ReportData => addRequiredFields({
   problemSummary: {
     industryProfile: "Boutique law firm with 15 attorneys specializing in corporate litigation and contract law",
     topProblems: [
@@ -246,7 +296,7 @@ export const generateLawFirmExample = (): ReportData => ({
   }
 });
 
-export const generateHealthcareExample = (): ReportData => ({
+export const generateHealthcareExample = (): ReportData => addRequiredFields({
   problemSummary: {
     industryProfile: "Multi-location medical clinic serving 5,000 patients monthly with focus on family medicine",
     topProblems: [
@@ -304,7 +354,7 @@ export const generateHealthcareExample = (): ReportData => ({
   }
 });
 
-export const generateManufacturingExample = (): ReportData => ({
+export const generateManufacturingExample = (): ReportData => addRequiredFields({
   problemSummary: {
     industryProfile: "Precision manufacturing company with 200 employees operating three production facilities",
     topProblems: [

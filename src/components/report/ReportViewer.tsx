@@ -95,40 +95,48 @@ export const ReportViewer: React.FC<ReportViewerProps> = ({
       </SectionWrapper>
 
       {/* Problem Summary */}
-      <SectionWrapper 
-        variant={backgrounds.problem as any} 
-        spacing="large"
-        className={variant === 'impact' ? 'bg-gradient-to-br from-gray-900 to-black' : ''}
-      >
-        <ProblemSummary data={data.problemSummary} variant={variant} />
-      </SectionWrapper>
+      {data.problemSummary && (
+        <SectionWrapper 
+          variant={backgrounds.problem as any} 
+          spacing="large"
+          className={variant === 'impact' ? 'bg-gradient-to-br from-gray-900 to-black' : ''}
+        >
+          <ProblemSummary data={data.problemSummary} variant={variant} />
+        </SectionWrapper>
+      )}
 
       {/* Solutions */}
-      <SectionWrapper variant={backgrounds.solutions as any} spacing="large">
-        <SolutionCards solutions={data.solutions} variant={variant} />
-      </SectionWrapper>
+      {data.solutions && (
+        <SectionWrapper variant={backgrounds.solutions as any} spacing="large">
+          <SolutionCards solutions={data.solutions} variant={variant} />
+        </SectionWrapper>
+      )}
 
       {/* Measurable Improvements */}
-      <SectionWrapper 
-        variant={backgrounds.improvements as any} 
-        spacing="large"
-        className={variant === 'impact' ? 'bg-black' : ''}
-      >
-        <ImprovementMetrics improvements={data.measurableImprovements} variant={variant} />
-      </SectionWrapper>
+      {data.measurableImprovements && (
+        <SectionWrapper 
+          variant={backgrounds.improvements as any} 
+          spacing="large"
+          className={variant === 'impact' ? 'bg-black' : ''}
+        >
+          <ImprovementMetrics improvements={data.measurableImprovements} variant={variant} />
+        </SectionWrapper>
+      )}
 
       {/* Action Plan */}
-      <SectionWrapper 
-        variant={backgrounds.action as any} 
-        spacing="large"
-        className={variant === 'impact' ? 'bg-gradient-to-br from-gray-900 to-black' : ''}
-      >
-        <ActionPlan 
-          data={data.actionPlan} 
-          variant={variant} 
-          onScheduleConsultation={onScheduleConsultation}
-        />
-      </SectionWrapper>
+      {data.actionPlan && (
+        <SectionWrapper 
+          variant={backgrounds.action as any} 
+          spacing="large"
+          className={variant === 'impact' ? 'bg-gradient-to-br from-gray-900 to-black' : ''}
+        >
+          <ActionPlan 
+            data={data.actionPlan} 
+            variant={variant} 
+            onScheduleConsultation={onScheduleConsultation}
+          />
+        </SectionWrapper>
+      )}
 
       {/* Footer */}
       <SectionWrapper variant="dark" spacing="small">

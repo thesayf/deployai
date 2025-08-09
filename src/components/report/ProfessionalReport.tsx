@@ -58,7 +58,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
           <section className="mb-10">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">About Your Business</h2>
             <p className="text-gray-700 leading-relaxed">
-              {data.problemSummary.industryProfile} — This positions you in a competitive market where 
+              {data.problemSummary?.industryProfile || 'Your organization'} — This positions you in a competitive market where 
               operational efficiency directly impacts profitability and customer satisfaction.
             </p>
           </section>
@@ -73,7 +73,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
             <div className="space-y-4 my-6">
               <div className="pl-4 border-l-4 border-gray-300">
                 <p className="text-gray-700">
-                  <strong>{data.problemSummary.topProblems[0]}</strong> — This challenge alone accounts 
+                  <strong>{data.problemSummary?.topProblems?.[0] || 'Primary operational challenge'}</strong> — This challenge alone accounts 
                   for approximately 40% of your operational friction, affecting both employee productivity 
                   and customer experience.
                 </p>
@@ -81,14 +81,14 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
               
               <div className="pl-4 border-l-4 border-gray-300">
                 <p className="text-gray-700">
-                  <strong>{data.problemSummary.topProblems[1]}</strong> — Our analysis shows this creates 
+                  <strong>{data.problemSummary?.topProblems?.[1] || 'Secondary challenge'}</strong> — Our analysis shows this creates 
                   a cascade effect, impacting multiple departments and requiring redundant effort to manage.
                 </p>
               </div>
               
               <div className="pl-4 border-l-4 border-gray-300">
                 <p className="text-gray-700">
-                  <strong>{data.problemSummary.topProblems[2]}</strong> — During peak periods, this issue 
+                  <strong>{data.problemSummary?.topProblems?.[2] || 'Additional challenge'}</strong> — During peak periods, this issue 
                   can reduce your capacity by up to 30%, directly affecting revenue potential.
                 </p>
               </div>
@@ -96,7 +96,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
 
             <div className="p-4 bg-amber-50 border-l-4 border-amber-500 my-6">
               <p className="text-amber-900">
-                <strong>The cumulative financial impact of these challenges is approximately {data.problemSummary.monthlyOpportunity} per month</strong> in 
+                <strong>The cumulative financial impact of these challenges is approximately {data.problemSummary?.monthlyOpportunity || '$0'} per month</strong> in 
                 lost opportunities and inefficiencies.
               </p>
             </div>
@@ -108,7 +108,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
               Modern AI solutions can address each of these challenges systematically:
             </p>
 
-            {data.solutions.map((solution, index) => (
+            {(data.solutions || []).map((solution, index) => (
               <div key={index} className="mb-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   {index + 1}. {solution.category}
@@ -132,7 +132,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
             </p>
             
             <ul className="space-y-3 my-6">
-              {data.measurableImprovements.map((improvement, index) => (
+              {(data.measurableImprovements || []).map((improvement, index) => (
                 <li key={index} className="flex items-start">
                   <span className="text-green-600 mr-2">✓</span>
                   <span className="text-gray-700">
@@ -147,7 +147,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
           <section className="mb-10">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">Investment and Returns</h2>
             <p className="text-gray-700 leading-relaxed">
-              With an expected ROI of <strong>{data.actionPlan.roiProjection}</strong>, this implementation 
+              With an expected ROI of <strong>{data.actionPlan?.roiProjection || 'significant'}</strong>, this implementation 
               represents a strategic investment in your operational infrastructure. Your organization 
               shows <strong>{readinessStatus}</strong> readiness — {readinessExplanation}
             </p>
@@ -157,7 +157,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">Timing Considerations</h2>
             <div className="p-4 bg-red-50 border-l-4 border-red-500">
               <p className="text-red-900">
-                <strong>{data.actionPlan.urgency}</strong>. The current market conditions make this an 
+                <strong>{data.actionPlan?.urgency || 'Time is of the essence'}</strong>. The current market conditions make this an 
                 optimal time for implementation, allowing you to maintain competitive advantage while 
                 others delay adoption.
               </p>
@@ -168,7 +168,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">Next Steps</h2>
             <div className="p-6 bg-gray-50 border border-gray-300 rounded">
               <p className="text-gray-700 mb-4">
-                {data.actionPlan.ctaText}. Our team will provide a detailed implementation roadmap, 
+                {data.actionPlan?.ctaText || 'Schedule your consultation today'}. Our team will provide a detailed implementation roadmap, 
                 specific tool recommendations, and a fixed-cost proposal tailored to your exact requirements.
               </p>
               <button
@@ -199,11 +199,11 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
           <dl className="grid grid-cols-2 gap-4">
             <div>
               <dt className="text-sm text-gray-600">Business Profile</dt>
-              <dd className="font-medium text-gray-900">{data.problemSummary.industryProfile}</dd>
+              <dd className="font-medium text-gray-900">{data.problemSummary?.industryProfile || 'Your organization'}</dd>
             </div>
             <div>
               <dt className="text-sm text-gray-600">Monthly Opportunity Cost</dt>
-              <dd className="font-medium text-red-600">{data.problemSummary.monthlyOpportunity}</dd>
+              <dd className="font-medium text-red-600">{data.problemSummary?.monthlyOpportunity || '$0'}</dd>
             </div>
           </dl>
         </section>
@@ -211,7 +211,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
         <section className="mb-8">
           <h2 className="text-xs font-semibold uppercase text-gray-500 mb-3">Identified Issues</h2>
           <ul className="space-y-1 text-sm text-gray-700">
-            {data.problemSummary.topProblems.map((problem, index) => (
+            {(data.problemSummary?.topProblems || []).map((problem, index) => (
               <li key={index}>• {problem}</li>
             ))}
           </ul>
@@ -220,7 +220,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
         <section className="mb-8">
           <h2 className="text-xs font-semibold uppercase text-gray-500 mb-3">Proposed Solutions</h2>
           <div className="grid grid-cols-3 gap-4">
-            {data.solutions.map((solution, index) => (
+            {(data.solutions || []).map((solution, index) => (
               <div key={index} className="border border-gray-200 p-3">
                 <h3 className="font-semibold text-sm text-gray-900 mb-1">{solution.category}</h3>
                 <p className="text-xs text-gray-600 mb-2">{solution.outcome}</p>
@@ -233,7 +233,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
         <section className="mb-8">
           <h2 className="text-xs font-semibold uppercase text-gray-500 mb-3">Expected Improvements</h2>
           <div className="space-y-2">
-            {data.measurableImprovements.map((improvement, index) => (
+            {(data.measurableImprovements || []).map((improvement, index) => (
               <div key={index} className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="text-sm text-gray-700">{improvement.metric}</span>
                 <div className="text-sm">
@@ -250,7 +250,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
         <div className="border-t-2 border-gray-200 pt-4 flex justify-between items-center">
           <div>
             <span className="text-sm text-gray-600">Expected ROI:</span>
-            <span className="font-bold text-gray-900 ml-2">{data.actionPlan.roiProjection}</span>
+            <span className="font-bold text-gray-900 ml-2">{data.actionPlan?.roiProjection || 'Significant'}</span>
           </div>
           <button
             onClick={handleConsultation}

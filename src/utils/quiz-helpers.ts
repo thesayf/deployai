@@ -1,17 +1,18 @@
 import quizData from '@/data/quiz-questions.json';
+import { QuizQuestion } from '@/types/quiz';
 
 /**
  * Get question by step number
  */
-export function getQuestionByStep(step: number) {
-  return quizData.questions.find(q => q.questionNumber === step);
+export function getQuestionByStep(step: number): QuizQuestion | undefined {
+  return quizData.questions.find(q => q.questionNumber === step) as QuizQuestion | undefined;
 }
 
 /**
  * Get question by ID
  */
-export function getQuestionById(id: string) {
-  return quizData.questions.find(q => q.id === id);
+export function getQuestionById(id: string): QuizQuestion | undefined {
+  return quizData.questions.find(q => q.id === id) as QuizQuestion | undefined;
 }
 
 /**

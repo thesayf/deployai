@@ -22,9 +22,9 @@ export function generateStep1Prompt(responses: QuizResponseData, companyName?: s
     teamCapability: responses.teamCapability || 'not specified',
     aiExperience: responses.aiExperience || 'not specified',
     companySize: responses.companySize || 'not specified',
-    monthlyBudget: responses.monthlyBudget || responses.budget || 'not specified',
+    monthlyBudget: responses.monthlyBudget || 'not specified',
     timeline: responses.timeline || 'not specified',
-    decisionAuthority: responses.decisionAuthority || responses.leadership || 'not specified'
+    decisionAuthority: responses.decisionAuthority || 'not specified'
   };
 
   return `You are an AI business consultant. Analyze this assessment and identify the top 3 AI opportunity areas for tool research.

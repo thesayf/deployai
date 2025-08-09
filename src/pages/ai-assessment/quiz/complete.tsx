@@ -81,10 +81,10 @@ const CompletePage = () => {
           body: JSON.stringify({
             quizId: initialData.quizId,
             reportId: data.reportId,
-            userEmail: initialData.userInfo.email,
-            firstName: initialData.userInfo.firstName,
-            lastName: initialData.userInfo.lastName,
-            company: initialData.userInfo.company
+            userEmail: initialData.userInfo?.email || '',
+            firstName: initialData.userInfo?.firstName || '',
+            lastName: initialData.userInfo?.lastName || '',
+            company: initialData.userInfo?.company || ''
           }),
         });
       } catch (emailError) {
