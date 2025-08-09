@@ -3,7 +3,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import { ReportViewer } from '@/components/report-viewer';
+import { ProfessionalReport } from '@/components/report/ProfessionalReport';
+import type { ReportData as ProfessionalReportData } from '@/components/report/types';
 import { Loader2, AlertCircle, Lock } from 'lucide-react';
 import type { 
   Stage1Analysis, 
@@ -14,12 +15,14 @@ import type {
 
 interface ReportData {
   id: string;
-  stage1_analysis: Stage1Analysis;
-  stage2_market: Stage2MarketIntelligence;
-  stage3_financial: Stage3FinancialAnalysis;
-  stage4_strategic: Stage4StrategicRecommendations;
+  stage1_problem_analysis: Stage1Analysis;
+  stage2_tool_research: Stage2MarketIntelligence;
+  stage3_tool_selection: Stage3FinancialAnalysis;
+  stage4_report_content: Stage4StrategicRecommendations;
+  final_report: any;
   report_status: string;
   created_at: string;
+  company_name: string;
   quiz_response: {
     user_company: string;
     user_first_name: string;
@@ -52,12 +55,14 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
         .from('ai_reports')
         .select(`
           id,
-          stage1_analysis,
-          stage2_market,
-          stage3_financial,
-          stage4_strategic,
+          stage1_problem_analysis,
+          stage2_tool_research,
+          stage3_tool_selection,
+          stage4_report_content,
+          final_report,
           report_status,
           created_at,
+          company_name,
           quiz_responses!inner(
             user_company,
             user_first_name,
@@ -73,15 +78,21 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
         return;
       }
 
-      if (data.report_status !== 'completed') {
+      if (data.report_status !== 'report_generated' && data.report_status !== 'completed') {
         setError('Report is still being generated. Please check back later.');
+        return;
+      }
+
+      // Check if we have the final_report data
+      if (!data.final_report) {
+        setError('Report data is not available yet. Please try again later.');
         return;
       }
 
       // Transform the data to match our interface
       const reportData: ReportData = {
         ...data,
-        quiz_response: data.quiz_responses[0]
+        quiz_response: Array.isArray(data.quiz_responses) ? data.quiz_responses[0] : data.quiz_responses
       };
 
       setReport(reportData);
@@ -177,7 +188,7 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
     return null;
   }
 
-  const companyName = report.quiz_response.user_company || 
+  const companyName = report.company_name || report.quiz_response.user_company || 
     `${report.quiz_response.user_first_name}'s Company`;
 
   return (
@@ -187,12 +198,12 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
         <meta name="description" content="Your personalized AI readiness assessment and implementation roadmap" />
       </Head>
 
-      <ReportViewer
-        stage1Analysis={report.stage1_analysis}
-        stage2Market={report.stage2_market}
-        stage3Financial={report.stage3_financial}
-        stage4Strategic={report.stage4_strategic}
+      <ProfessionalReport
+        data={report.final_report as ProfessionalReportData}
         companyName={companyName}
+        generatedDate={new Date(report.created_at)}
+        variant="executive"
+        onScheduleConsultation={() => router.push('/consultation')}
       />
 
       {/* Footer with actions */}

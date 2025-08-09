@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { SubmitQuizRequest, SubmitQuizResponse, QuizResponseData } from '@/types/quiz';
 import { supabaseAdmin } from '@/lib/supabase';
-import { calculateQuizScore } from '@/utils/scoring';
 import quizData from '@/data/quiz-questions.json';
 
 export default async function handler(
@@ -48,15 +47,11 @@ export default async function handler(
 
     const supabase = supabaseAdmin();
 
-    // Calculate final score
-    const scoreResult = calculateQuizScore(finalResponses);
-
-    // Update quiz with final responses and score
+    // Update quiz with final responses (no scoring)
     const { data: updatedQuiz, error: updateError } = await supabase
       .from('quiz_responses')
       .update({
         responses: finalResponses,
-        total_score: scoreResult.totalScore,
         industry: finalResponses.industry,
         company_size: finalResponses.companySize,
         completed_at: new Date().toISOString(),
@@ -75,48 +70,91 @@ export default async function handler(
       });
     }
 
-    // Create AI report record
-    const { data: report, error: reportError } = await supabase
+    // Check if a report already exists for this quiz
+    console.log(`[SUBMIT] Checking for existing report for quiz ${quizId}...`);
+    const { data: existingReport, error: existingCheckError } = await supabase
       .from('ai_reports')
-      .insert({
-        quiz_response_id: quizId,
-        report_status: 'generating',
-      })
-      .select('id, access_token')
+      .select('id, access_token, report_status')
+      .eq('quiz_response_id', quizId)
       .single();
-
-    if (reportError || !report) {
-      console.error('Failed to create report:', reportError);
-      return res.status(500).json({
-        success: false,
-        reportId: '',
-        processingTime: '',
-        error: 'Failed to create report',
-      });
+    
+    if (existingCheckError && existingCheckError.code !== 'PGRST116') {
+      console.error('[SUBMIT] Error checking for existing report:', existingCheckError);
     }
 
-    // Trigger AI report generation asynchronously (Stage 1 first)
-    // We'll return immediately and process in the background
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
+    let report;
     
-    fetch(`${baseUrl}/api/reports/generate-stage1`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key',
-      },
-      body: JSON.stringify({
-        quizResponseId: quizId,
-        reportId: report.id,
-      }),
-    }).catch(error => {
-      console.error('Failed to trigger stage 1 generation:', error);
-    });
+    if (existingReport) {
+      // Report already exists, use it
+      console.log(`[SUBMIT] DUPLICATE PREVENTED: Report already exists for quiz ${quizId}`);
+      console.log(`[SUBMIT] Existing report ID: ${existingReport.id}`);
+      console.log(`[SUBMIT] Existing report status: ${existingReport.report_status}`);
+      report = existingReport;
+      
+      // Only trigger analysis if the report hasn't started processing yet
+      if (existingReport.report_status === 'generating') {
+        console.log('Report is already being generated, skipping duplicate trigger');
+        return res.status(200).json({
+          success: true,
+          reportId: existingReport.id,
+          processingTime: '45-60 seconds',
+        });
+      }
+    } else {
+      // Create new AI report record
+      console.log(`[SUBMIT] No existing report found, creating new report for quiz ${quizId}...`);
+      const { data: newReport, error: reportError } = await supabase
+        .from('ai_reports')
+        .insert({
+          quiz_response_id: quizId,
+          report_status: 'generating',
+          company_name: updatedQuiz.user_company || 'Your Organization',
+          industry_context: finalResponses.industry,
+        })
+        .select('id, access_token')
+        .single();
+
+      if (reportError || !newReport) {
+        console.error('[SUBMIT] Failed to create report:', reportError);
+        return res.status(500).json({
+          success: false,
+          reportId: '',
+          processingTime: '',
+          error: 'Failed to create report',
+        });
+      }
+      
+      console.log(`[SUBMIT] NEW REPORT CREATED: ${newReport.id} for quiz ${quizId}`);
+      report = newReport;
+    }
+
+    // Only trigger AI report generation if it's a new report or hasn't started processing
+    if (!existingReport || existingReport.report_status === 'pending') {
+      // Trigger AI report generation asynchronously (Step 1 first)
+      // We'll return immediately and process in the background
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
+      
+      fetch(`${baseUrl}/api/ai-analysis/step1-analyze`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key',
+        },
+        body: JSON.stringify({
+          quizResponseId: quizId,
+          reportId: report.id,
+        }),
+      }).catch(error => {
+        console.error('Failed to trigger step 1 analysis:', error);
+      });
+    } else {
+      console.log(`Report ${report.id} already processing or completed, skipping trigger`);
+    }
 
     res.status(200).json({
       success: true,
       reportId: report.id,
-      processingTime: '60-90 seconds',
+      processingTime: '45-60 seconds',
     });
   } catch (error) {
     console.error('Error submitting quiz:', error);

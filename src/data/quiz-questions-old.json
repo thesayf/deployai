@@ -1,0 +1,317 @@
+{
+  "questions": [
+    {
+      "id": "industry",
+      "questionNumber": 1,
+      "title": "What industry and business type best describes your company?",
+      "subtitle": "Be specific - e.g., \"Commercial real estate brokerage,\" \"Personal injury law firm,\" \"E-commerce clothing retailer\"",
+      "type": "text",
+      "required": true,
+      "maxLength": 100,
+      "minLength": 5,
+      "placeholder": "e.g., Commercial real estate brokerage, Personal injury law firm, E-commerce clothing retailer",
+      "validation": "minLength: 5",
+      "scoring": {
+        "type": "contextual"
+      },
+      "aiAnalysis": "industry-specific tools and case studies"
+    },
+    {
+      "id": "companySize",
+      "questionNumber": 2,
+      "title": "How many employees does your company have?",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "1-10", "label": "1-10 employees", "points": 1},
+        {"value": "11-50", "label": "11-50 employees", "points": 2},
+        {"value": "51-200", "label": "51-200 employees", "points": 3},
+        {"value": "201-1000", "label": "201-1000 employees", "points": 4},
+        {"value": "1000+", "label": "1000+ employees", "points": 5}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "businessObjectives",
+      "questionNumber": 3,
+      "title": "What are your most important measurable goals this year?",
+      "subtitle": "Choose up to 3",
+      "type": "multi-select",
+      "required": true,
+      "maxSelections": 3,
+      "minSelections": 1,
+      "options": [
+        {"value": "increase-revenue", "label": "Increase sales revenue by X%", "points": 3, "aiCategory": "sales-marketing"},
+        {"value": "reduce-response-time", "label": "Reduce customer response time (hours to minutes)", "points": 4, "aiCategory": "customer-service"},
+        {"value": "cut-costs", "label": "Cut operational costs by X%", "points": 3, "aiCategory": "process-automation"},
+        {"value": "improve-satisfaction", "label": "Improve customer satisfaction scores", "points": 3, "aiCategory": "customer-experience"},
+        {"value": "reduce-manual-work", "label": "Reduce manual processing time", "points": 4, "aiCategory": "automation"},
+        {"value": "increase-conversions", "label": "Increase lead conversion rates", "points": 3, "aiCategory": "sales-ai"},
+        {"value": "eliminate-errors", "label": "Eliminate data entry errors", "points": 4, "aiCategory": "data-automation"},
+        {"value": "speed-fulfillment", "label": "Speed up order fulfillment", "points": 3, "aiCategory": "operations-ai"},
+        {"value": "improve-quality", "label": "Improve product/service quality and reduce defects", "points": 4, "aiCategory": "quality-control"},
+        {"value": "prevent-fraud", "label": "Prevent fraud and reduce financial risks", "points": 5, "aiCategory": "fraud-detection"},
+        {"value": "reduce-downtime", "label": "Reduce equipment downtime and maintenance costs", "points": 5, "aiCategory": "predictive-maintenance"},
+        {"value": "improve-hiring", "label": "Improve employee retention and hiring efficiency", "points": 3, "aiCategory": "hr-ai"},
+        {"value": "enhance-security", "label": "Enhance cybersecurity and data protection", "points": 4, "aiCategory": "security-ai"},
+        {"value": "accelerate-innovation", "label": "Accelerate innovation and product development", "points": 4, "aiCategory": "innovation-ai"},
+        {"value": "meet-compliance", "label": "Meet regulatory compliance requirements", "points": 4, "aiCategory": "compliance-ai"},
+        {"value": "reduce-environmental-impact", "label": "Reduce environmental impact and energy costs", "points": 3, "aiCategory": "sustainability-ai"}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "biggestChallenge",
+      "questionNumber": 4,
+      "title": "What's the single biggest challenge limiting your business growth right now?",
+      "type": "textarea",
+      "required": true,
+      "maxLength": 500,
+      "minLength": 10,
+      "placeholder": "Describe the single biggest issue limiting your business growth...",
+      "scoring": {
+        "type": "contextual"
+      },
+      "aiAnalysis": "problem-specific solution mapping"
+    },
+    {
+      "id": "problemAreas",
+      "questionNumber": 5,
+      "title": "Which specific processes cause you the most headaches?",
+      "subtitle": "Select all that apply",
+      "type": "multi-select",
+      "required": true,
+      "maxSelections": 10,
+      "minSelections": 1,
+      "options": [
+        {"value": "lead-qualification", "label": "Lead qualification and follow-up", "points": 2, "aiCategory": "sales-automation"},
+        {"value": "customer-support", "label": "Customer inquiry response/support", "points": 3, "aiCategory": "customer-service-ai"},
+        {"value": "order-processing", "label": "Order processing and fulfillment", "points": 3, "aiCategory": "process-automation"},
+        {"value": "inventory-tracking", "label": "Inventory tracking and management", "points": 3, "aiCategory": "inventory-ai"},
+        {"value": "invoice-collections", "label": "Invoice creation and collections", "points": 2, "aiCategory": "finance-automation"},
+        {"value": "employee-scheduling", "label": "Employee scheduling and payroll", "points": 2, "aiCategory": "hr-automation"},
+        {"value": "appointment-booking", "label": "Appointment booking and calendar management", "points": 2, "aiCategory": "scheduling-automation"},
+        {"value": "document-creation", "label": "Document creation and review", "points": 3, "aiCategory": "document-ai"},
+        {"value": "data-entry", "label": "Data entry between systems", "points": 4, "aiCategory": "data-automation"},
+        {"value": "quality-control", "label": "Quality control and inspection", "points": 4, "aiCategory": "quality-ai"},
+        {"value": "reporting", "label": "Reporting and performance tracking", "points": 3, "aiCategory": "analytics-ai"}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "costImpact",
+      "questionNumber": 6,
+      "title": "What's the monthly cost impact of your biggest operational problem?",
+      "subtitle": "Think about lost revenue, extra labor costs, missed opportunities",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "under-1k", "label": "Under $1,000/month", "points": 1},
+        {"value": "1k-5k", "label": "$1,000 - $5,000/month", "points": 2},
+        {"value": "5k-15k", "label": "$5,000 - $15,000/month", "points": 3},
+        {"value": "15k-50k", "label": "$15,000 - $50,000/month", "points": 4},
+        {"value": "over-50k", "label": "Over $50,000/month", "points": 5},
+        {"value": "not-sure", "label": "Not sure, but it's significant", "points": 3}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "manualWork",
+      "questionNumber": 7,
+      "title": "How much time does your team spend on repetitive, manual tasks?",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "under-10", "label": "Less than 10%", "points": 1},
+        {"value": "10-25", "label": "10-25%", "points": 2},
+        {"value": "25-40", "label": "25-40%", "points": 3},
+        {"value": "40-60", "label": "40-60%", "points": 4},
+        {"value": "over-60", "label": "More than 60%", "points": 5}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "decisionMaking",
+      "questionNumber": 8,
+      "title": "How data-driven is your decision making?",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "gut-instinct", "label": "Mostly gut instinct and experience", "points": 1},
+        {"value": "some-data", "label": "Some data, but mainly for validation", "points": 2},
+        {"value": "data-influences", "label": "Data influences most decisions", "points": 3},
+        {"value": "strong-foundation", "label": "Strong data foundation with few gaps", "points": 4},
+        {"value": "comprehensive", "label": "Comprehensive data analysis drives everything", "points": 5}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "currentSystems",
+      "questionNumber": 9,
+      "title": "What business systems do you currently use?",
+      "subtitle": "Select all that apply",
+      "type": "multi-select",
+      "required": true,
+      "maxSelections": 10,
+      "minSelections": 1,
+      "options": [
+        {"value": "crm", "label": "CRM (Salesforce, HubSpot, etc.)", "integrationComplexity": "low"},
+        {"value": "accounting", "label": "Accounting software (QuickBooks, Xero, etc.)", "integrationComplexity": "low"},
+        {"value": "ecommerce", "label": "E-commerce platform (Shopify, WooCommerce, etc.)", "integrationComplexity": "medium"},
+        {"value": "erp", "label": "ERP system (SAP, NetSuite, etc.)", "integrationComplexity": "high"},
+        {"value": "project-mgmt", "label": "Project management tools (Asana, Monday, etc.)", "integrationComplexity": "low"},
+        {"value": "email-marketing", "label": "Email marketing platforms", "integrationComplexity": "low"},
+        {"value": "customer-support", "label": "Customer support software", "integrationComplexity": "medium"},
+        {"value": "inventory", "label": "Inventory management systems", "integrationComplexity": "medium"},
+        {"value": "spreadsheets", "label": "Just spreadsheets and basic tools", "integrationComplexity": "high"},
+        {"value": "custom", "label": "Custom/proprietary systems", "integrationComplexity": "very-high"}
+      ],
+      "scoring": {
+        "type": "contextual"
+      }
+    },
+    {
+      "id": "integrationChallenges",
+      "questionNumber": 10,
+      "title": "What's your biggest challenge with your current systems?",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "scattered-data", "label": "Data is scattered across different systems", "points": 4},
+        {"value": "manual-entry", "label": "Manual data entry between systems", "points": 5},
+        {"value": "no-reporting", "label": "Can't get real-time reporting/dashboards", "points": 3},
+        {"value": "no-integration", "label": "Systems don't talk to each other", "points": 4},
+        {"value": "switching-tools", "label": "Too much time spent switching between tools", "points": 3},
+        {"value": "lost-info", "label": "Information gets lost or outdated", "points": 4},
+        {"value": "no-single-source", "label": "No single source of truth for data", "points": 4},
+        {"value": "systems-fine", "label": "Systems work fine, no major issues", "points": 1}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "aiFocus",
+      "questionNumber": 11,
+      "title": "Where would AI tools have the biggest impact for your business?",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "customer-facing", "label": "Customer-facing (support, sales, marketing)", "aiCategory": "customer-experience"},
+        {"value": "internal-ops", "label": "Internal operations (admin, processing, analysis)", "aiCategory": "operations"},
+        {"value": "both-equal", "label": "Both equally important", "aiCategory": "comprehensive"},
+        {"value": "not-sure", "label": "Not sure yet", "aiCategory": "assessment-needed"}
+      ],
+      "scoring": {
+        "type": "contextual"
+      }
+    },
+    {
+      "id": "aiExperience",
+      "questionNumber": 12,
+      "title": "What's your experience with AI or automation tools?",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "not-explored", "label": "Haven't explored AI/automation yet", "points": 1},
+        {"value": "researching", "label": "Researching but haven't implemented", "points": 2},
+        {"value": "mixed-results", "label": "Tested some tools with mixed results", "points": 3},
+        {"value": "some-success", "label": "Have some successful implementations", "points": 4},
+        {"value": "experienced", "label": "Experienced and looking to expand", "points": 5}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "teamSkills",
+      "questionNumber": 13,
+      "title": "How tech-savvy is your team?",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "very-limited", "label": "Very limited - need lots of external help", "points": 1},
+        {"value": "basic", "label": "Basic - can use standard software", "points": 2},
+        {"value": "moderate", "label": "Moderate - comfortable with technology", "points": 3},
+        {"value": "advanced", "label": "Advanced - strong technical skills", "points": 4},
+        {"value": "expert", "label": "Expert - have data scientists/AI specialists", "points": 5}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "budget",
+      "questionNumber": 14,
+      "title": "What budget range are you considering for AI solutions in the next 6-12 months?",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "under-10k", "label": "Under $10K (small pilot)", "points": 1},
+        {"value": "10k-50k", "label": "$10K - $50K (moderate project)", "points": 2},
+        {"value": "50k-200k", "label": "$50K - $200K (significant investment)", "points": 3},
+        {"value": "200k-plus", "label": "$200K+ (major transformation)", "points": 4},
+        {"value": "need-roi", "label": "Need to see ROI projections first", "points": 2}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "timeline",
+      "questionNumber": 15,
+      "title": "What's your timeline for implementing AI solutions?",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {"value": "crisis-mode", "label": "Crisis mode - need solutions ASAP", "points": 4},
+        {"value": "high-priority", "label": "High priority - within 3 months", "points": 3},
+        {"value": "moderate-priority", "label": "Moderate priority - 6-12 months", "points": 2},
+        {"value": "low-priority", "label": "Low priority - exploring for future", "points": 1}
+      ],
+      "scoring": {
+        "type": "points"
+      }
+    },
+    {
+      "id": "successMetrics",
+      "questionNumber": 16,
+      "title": "Complete this statement: \"In 12 months, our biggest win would be...\"",
+      "type": "textarea",
+      "required": true,
+      "maxLength": 300,
+      "minLength": 8,
+      "placeholder": "In 12 months, our biggest win would be...",
+      "scoring": {
+        "type": "contextual"
+      },
+      "aiAnalysis": "ROI expectations and success criteria"
+    },
+    {
+      "id": "leadership",
+      "questionNumber": 17,
+      "title": "Who would champion and oversee AI implementation in your organization?",
+      "type": "textarea",
+      "required": true,
+      "maxLength": 200,
+      "minLength": 2,
+      "placeholder": "CEO, CTO, Operations Manager, etc.",
+      "scoring": {
+        "type": "contextual"
+      },
+      "aiAnalysis": "implementation feasibility"
+    }
+  ]
+}

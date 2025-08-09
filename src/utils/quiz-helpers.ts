@@ -1,92 +1,22 @@
+<<<<<<< HEAD:src/utils/scoring.ts
 import { QuizResponseData, ScoreCalculation, ScoreCategory, SCORE_RANGES, QuizQuestion } from '@/types/quiz';
+=======
+>>>>>>> feat/ai-quiz:src/utils/quiz-helpers.ts
 import quizData from '@/data/quiz-questions.json';
+import { QuizQuestion } from '@/types/quiz';
 
 /**
- * Calculate the total score from quiz responses
+ * Get question by step number
  */
-export function calculateQuizScore(responses: QuizResponseData): ScoreCalculation {
-  const breakdown: { questionId: string; score: number }[] = [];
-  let totalScore = 0;
-
-  // Process each question
-  quizData.questions.forEach((question) => {
-    const response = responses[question.id as keyof QuizResponseData];
-    
-    if (response === undefined || response === null) {
-      return; // Skip unanswered questions
-    }
-
-    let questionScore = 0;
-
-    switch (question.scoring.type) {
-      case 'points':
-        if (question.type === 'single-select') {
-          // Find the selected option and get its points
-          const selectedOption = question.options?.find(opt => opt.value === response);
-          if (selectedOption && 'points' in selectedOption && selectedOption.points) {
-            questionScore = selectedOption.points;
-          }
-        } else if (question.type === 'multi-select' && Array.isArray(response)) {
-          // Sum points for all selected options
-          response.forEach((value: string) => {
-            const option = question.options?.find(opt => opt.value === value);
-            if (option && 'points' in option && option.points) {
-              questionScore += option.points;
-            }
-          });
-        }
-        break;
-
-      case 'contextual':
-        // Contextual scoring is handled by AI analysis
-        // No points awarded here
-        questionScore = 0;
-        break;
-    }
-
-    if (questionScore > 0) {
-      breakdown.push({ questionId: question.id, score: questionScore });
-      totalScore += questionScore;
-    }
-  });
-
-  // Determine category based on score
-  const category = getScoreCategory(totalScore);
-
-  return {
-    totalScore,
-    category,
-    breakdown
-  };
+export function getQuestionByStep(step: number): QuizQuestion | undefined {
+  return quizData.questions.find(q => q.questionNumber === step) as QuizQuestion | undefined;
 }
 
 /**
- * Determine the score category based on total score
+ * Get question by ID
  */
-export function getScoreCategory(totalScore: number): ScoreCategory {
-  if (totalScore >= SCORE_RANGES.HIGH.min && totalScore <= SCORE_RANGES.HIGH.max) {
-    return 'High AI Readiness';
-  } else if (totalScore >= SCORE_RANGES.MEDIUM.min && totalScore <= SCORE_RANGES.MEDIUM.max) {
-    return 'Medium AI Readiness';
-  } else {
-    return 'Early Stage';
-  }
-}
-
-/**
- * Get a descriptive message for the score category
- */
-export function getScoreCategoryDescription(category: ScoreCategory): string {
-  switch (category) {
-    case 'High AI Readiness':
-      return 'Your organization is well-positioned for AI transformation with strong foundations in place.';
-    case 'Medium AI Readiness':
-      return 'Your organization has good potential for AI adoption with some areas needing development.';
-    case 'Early Stage':
-      return 'Your organization is in the early stages of AI readiness. We\'ll help you build a strong foundation.';
-    default:
-      return '';
-  }
+export function getQuestionById(id: string): QuizQuestion | undefined {
+  return quizData.questions.find(q => q.id === id) as QuizQuestion | undefined;
 }
 
 /**
@@ -169,6 +99,7 @@ export function validateResponse(questionId: string, response: any): { valid: bo
 }
 
 /**
+<<<<<<< HEAD:src/utils/scoring.ts
  * Get question by step number
  */
 export function getQuestionByStep(step: number): QuizQuestion | undefined {
@@ -183,6 +114,8 @@ export function getQuestionById(id: string) {
 }
 
 /**
+=======
+>>>>>>> feat/ai-quiz:src/utils/quiz-helpers.ts
  * Format response for display
  */
 export function formatResponseForDisplay(questionId: string, response: any): string {

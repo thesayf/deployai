@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useAppSelector, useAppDispatch } from '@/store';
-import { openEmailModal, closeEmailModal, setUserInfo, setQuizId } from '@/store/slices/quizSlice';
+import { openEmailModal, closeEmailModal, setUserInfo, setQuizId, resetQuiz } from '@/store/slices/quizSlice';
 import Image from 'next/image';
 import { Footer } from '@/components/footer/Footer';
 import { LogoTrustBanner } from '@/components/logo-trust-banner';
@@ -20,6 +20,9 @@ const AIAssessmentLanding = () => {
     setIsSubmitting(true);
     
     try {
+      // Reset any existing quiz state to ensure clean start
+      dispatch(resetQuiz());
+      
       // Call the start quiz API
       const response = await fetch('/api/quiz/start', {
         method: 'POST',

@@ -1,17 +1,19 @@
 // Quiz Question Types
 export type QuestionType = 'single-select' | 'multi-select' | 'text' | 'textarea';
-export type ScoringType = 'points' | 'contextual';
 
 // Question Option Interface
 export interface QuestionOption {
   value: string;
   label: string;
+<<<<<<< HEAD
   description?: string;
   examples?: string;
   icon?: string;
   points?: number;
+=======
+>>>>>>> feat/ai-quiz
   aiCategory?: string;
-  integrationComplexity?: string;
+  salesPriority?: 'high' | 'medium' | 'low';
 }
 
 // Quiz Question Interface
@@ -29,11 +31,7 @@ export interface QuizQuestion {
   maxLength?: number;
   minLength?: number;
   validation?: string;
-  scoring: {
-    type: ScoringType;
-    values?: Record<string, number>;
-  };
-  aiAnalysis?: string;
+  aiCategory?: string;
 }
 
 // User Information
@@ -46,34 +44,31 @@ export interface UserInfo {
 
 // Quiz Response Data
 export interface QuizResponseData {
-  // Q1-5
+  // Business Context
   industry?: string;
-  companySize?: string;
-  businessObjectives?: string[];
-  biggestChallenge?: string;
-  problemAreas?: string[];
+  customerCommunication?: string;
+  revenueOptimization?: string;
+  dataDecisionMaking?: string;
   
-  // Q6-10
+  // Operations
+  repetitiveTasks?: string[];
+  qualityConsistency?: string;
+  responseSpeed?: string;
+  businessObjectives?: string[];
+  
+  // Financial & Systems
   costImpact?: string;
-  manualWork?: string;
-  decisionMaking?: string;
   currentSystems?: string[];
   integrationChallenges?: string;
   
-  // Q11-15
-  aiFocus?: string;
+  // Team & Implementation
+  teamCapability?: string;
   aiExperience?: string;
-  teamSkills?: string;
-  budget?: string;
+  companySize?: string;
+  monthlyBudget?: string;
   timeline?: string;
-  
-  // Q16-17
-  successMetrics?: string;
-  leadership?: string;
+  decisionAuthority?: string;
 }
-
-// Score Categories (Updated ranges: 60-85, 40-59, 15-39)
-export type ScoreCategory = 'High AI Readiness' | 'Medium AI Readiness' | 'Early Stage';
 
 // Database Models
 export interface QuizResponse {
@@ -83,7 +78,6 @@ export interface QuizResponse {
   userLastName: string;
   userCompany?: string;
   responses: QuizResponseData;
-  totalScore: number;
   industry?: string;
   companySize?: string;
   startedAt: Date;
@@ -91,18 +85,15 @@ export interface QuizResponse {
   createdAt: Date;
 }
 
+import { ProblemAnalysis, ToolResearch, CuratedTools, FinalReport } from './ai-analysis-new';
+
 export interface AIReport {
   id: string;
   quizResponseId: string;
-  stage1Analysis?: {
-    industryLandscape: string;
-    readinessAssessment: string;
-    keyOpportunities: string[];
-    riskFactors: string[];
-    technologyRecommendations: string[];
-    competitivePositioning: string;
-  };
-  stage2Report?: string; // HTML content
+  problemAnalysis?: ProblemAnalysis;
+  toolResearch?: ToolResearch;
+  curatedTools?: CuratedTools;
+  finalReport?: FinalReport;
   reportStatus: 'generating' | 'completed' | 'failed';
   accessToken: string;
   createdAt: Date;
@@ -118,7 +109,6 @@ export interface QuizState {
   quizId: string | null;
   currentStep: number;
   responses: Partial<QuizResponseData>;
-  totalScore: number;
   
   // UI State
   isModalOpen: boolean;
@@ -145,6 +135,17 @@ export interface StartQuizResponse {
   success: boolean;
   quizId: string;
   error?: string;
+}
+
+// Quiz Status Response
+export interface QuizStatusResponse {
+  status: 'pending' | 'processing' | 'completed' | 'error';
+  stage?: string;
+  reportId?: string;
+  accessToken?: string;
+  reportContent?: any;
+  error?: string;
+  message?: string;
 }
 
 export interface SaveProgressRequest {
@@ -187,6 +188,7 @@ export interface ReportStatusResponse {
   error?: string;
 }
 
+<<<<<<< HEAD
 export interface QuizStatusResponse {
   status: 'in_progress' | 'completed' | 'generating' | 'ready' | 'error';
   message?: string;
@@ -212,6 +214,8 @@ export const SCORE_RANGES = {
   EARLY: { min: 15, max: 39, label: 'Early Stage' }
 } as const;
 
+=======
+>>>>>>> feat/ai-quiz
 // Form Validation Schemas (for use with Zod)
 export interface EmailCaptureFormData {
   email: string;
@@ -233,7 +237,6 @@ export interface QuizNavigationProps {
 export interface ReportViewerProps {
   reportContent: string;
   userInfo: UserInfo;
-  score: number;
   generatedAt: Date;
 }
 
@@ -241,12 +244,4 @@ export interface ReportViewerProps {
 export interface ProcessingScreenProps {
   stage: 'analyzing' | 'generating' | 'complete';
   estimatedTime?: number;
-}
-
-// Score Display Props
-export interface ScoreDisplayProps {
-  score: number;
-  maxScore: number;
-  category: ScoreCategory;
-  description: string;
 }

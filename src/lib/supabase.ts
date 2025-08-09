@@ -22,5 +22,8 @@ export const supabaseAdmin = () => {
       autoRefreshToken: false,
       persistSession: false,
     },
+    db: {
+      schema: 'public'
+    }
   });
 };

@@ -176,7 +176,6 @@ const BlogPostWrapper = ({ children, showContent = true }: { children: React.Rea
 
 // Stories
 export const WithBlogContent: Story = {
-  name: 'With Blog Content',
   args: {
     sections: blogSections,
     title: 'TABLE OF CONTENTS',
@@ -243,7 +242,6 @@ export const Default: Story = {
 };
 
 export const MobileWithContent: Story = {
-  name: 'Mobile With Content',
   args: {
     sections: blogSections,
     title: 'TABLE OF CONTENTS',

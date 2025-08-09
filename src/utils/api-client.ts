@@ -100,7 +100,7 @@ export const quizApi = {
           onProgress(status);
         }
 
-        if (status.status === 'ready' || status.status === 'error') {
+        if (status.status === 'completed' || status.status === 'error') {
           return status;
         }
 

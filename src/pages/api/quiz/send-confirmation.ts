@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Resend } from 'resend';
 import { supabaseAdmin } from '@/lib/supabase';
+import { getEmailSender, EMAIL_CONFIG } from '@/config/email';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -31,31 +32,28 @@ export default async function handler(
       company 
     } = req.body as SendConfirmationRequest;
 
+    console.log('[CONFIRMATION-EMAIL] Request received for:', userEmail);
+    console.log('[CONFIRMATION-EMAIL] Quiz ID:', quizId);
+    console.log('[CONFIRMATION-EMAIL] Report ID:', reportId);
+
     // Validate required fields
     if (!quizId || !reportId || !userEmail || !firstName || !lastName) {
+      console.error('[CONFIRMATION-EMAIL] Missing required fields');
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
     const supabase = supabaseAdmin();
 
-    // Get quiz data to include score in email
+    // Verify quiz exists
     const { data: quizData, error: quizError } = await supabase
       .from('quiz_responses')
-      .select('total_score')
+      .select('id, industry, company_size')
       .eq('id', quizId)
       .single();
 
     if (quizError || !quizData) {
       console.error('Failed to fetch quiz data:', quizError);
       return res.status(404).json({ error: 'Quiz not found' });
-    }
-
-    // Determine score category
-    let scoreCategory = 'Early Stage';
-    if (quizData.total_score >= 35) {
-      scoreCategory = 'High AI Readiness';
-    } else if (quizData.total_score >= 25) {
-      scoreCategory = 'Medium AI Readiness';
     }
 
     // Send confirmation email
@@ -84,12 +82,12 @@ export default async function handler(
           <div class="content">
             <p>Hi ${firstName},</p>
             
-            <p>Thank you for completing the AI Readiness Assessment${company ? ` for ${company}` : ''}. We're currently analyzing your responses to create a personalized report with actionable insights and recommendations.</p>
+            <p>Thank you for completing the AI Readiness Assessment${company ? ` for ${company}` : ''}. Our AI is currently analyzing your responses to identify the best opportunities for AI implementation in your business.</p>
             
             <div class="score-preview">
-              <h3>Your Initial Score</h3>
-              <p style="font-size: 36px; font-weight: bold; color: #457B9D; margin: 10px 0;">${quizData.total_score}/50</p>
-              <p style="color: #666;">${scoreCategory}</p>
+              <h3>Analysis in Progress</h3>
+              <p style="font-size: 24px; color: #457B9D; margin: 10px 0;">🔍 Identifying AI Opportunities</p>
+              <p style="color: #666;">Our AI is researching solutions specific to your ${quizData.industry || 'industry'}</p>
             </div>
             
             <h3>What's Next?</h3>
@@ -125,21 +123,33 @@ export default async function handler(
     `;
 
     const { data, error } = await resend.emails.send({
-      from: 'AI Assessment <assessment@deployai.studio>',
+      from: getEmailSender('assessment'),
       to: [userEmail],
-      subject: `Processing Your AI Readiness Assessment - Score: ${quizData.total_score}/50`,
+      subject: EMAIL_CONFIG.subjects.confirmation,
       html: emailHtml,
       tags: [
         { name: 'type', value: 'assessment-confirmation' },
-        { name: 'score', value: quizData.total_score.toString() },
         { name: 'quiz_id', value: quizId }
       ]
     });
 
     if (error) {
-      console.error('Failed to send email:', error);
-      return res.status(500).json({ error: 'Failed to send confirmation email' });
+      console.error('[CONFIRMATION-EMAIL] Failed to send email:', error);
+      console.error('[CONFIRMATION-EMAIL] Error details:', JSON.stringify(error, null, 2));
+      console.error('[CONFIRMATION-EMAIL] Attempted to send to:', userEmail);
+      console.error('[CONFIRMATION-EMAIL] From address:', getEmailSender('assessment'));
+      
+      // Check for domain verification issues
+      if (error.message?.includes('domain') || error.message?.includes('verify')) {
+        console.error('[CONFIRMATION-EMAIL] Domain verification issue detected');
+        console.error('[CONFIRMATION-EMAIL] Set USE_FALLBACK_SENDER=true in .env to use fallback sender');
+      }
+      
+      return res.status(500).json({ error: 'Failed to send confirmation email', details: error });
     }
+    
+    console.log('[CONFIRMATION-EMAIL] Email sent successfully to:', userEmail);
+    console.log('[CONFIRMATION-EMAIL] Email ID:', data?.id);
 
     res.status(200).json({ success: true, emailId: data?.id });
   } catch (error) {
