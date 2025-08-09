@@ -70,6 +70,25 @@ export interface QuizResponseData {
   // Q16-17
   successMetrics?: string;
   leadership?: string;
+  
+  // AI Assessment specific fields
+  customerCommunication?: string;
+  revenueOptimization?: string;
+  dataDecisionMaking?: string;
+  repetitiveTasks?: string[];
+  taskEfficiency?: string;
+  customerChallenges?: string;
+  revenueChallenges?: string;
+  dataManagement?: string;
+  currentSoftware?: string[];
+  integrationIssues?: string;
+  techReadiness?: string;
+  monthlyBudget?: string;
+  urgency?: string;
+  decisionAuthority?: string;
+  qualityConsistency?: string;
+  responseSpeed?: string;
+  teamCapability?: string;
 }
 
 // Score Categories (Updated ranges: 60-85, 40-59, 15-39)
@@ -188,11 +207,13 @@ export interface ReportStatusResponse {
 }
 
 export interface QuizStatusResponse {
-  status: 'in_progress' | 'completed' | 'generating' | 'ready' | 'error';
-  message?: string;
-  error?: string;
+  status: 'pending' | 'processing' | 'completed' | 'error';
+  stage?: string;
   reportId?: string;
   accessToken?: string;
+  reportContent?: any;
+  error?: string;
+  message?: string;
 }
 
 // Scoring Helpers
@@ -217,6 +238,14 @@ export interface EmailCaptureFormData {
   email: string;
   firstName: string;
   projectName: string;
+}
+
+// AI Assessment form data
+export interface AIAssessmentFormData {
+  email: string;
+  firstName: string;
+  lastName: string;
+  company: string;
 }
 
 // Quiz Navigation

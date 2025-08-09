@@ -1,14 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { QuizStatusResponse } from '@/types/quiz';
 import { supabaseAdmin } from '@/lib/supabase';
-
-// Define the response type
-interface QuizStatusResponse {
-  status: 'in_progress' | 'completed' | 'generating' | 'ready' | 'error';
-  message?: string;
-  error?: string;
-  reportId?: string;
-  accessToken?: string;
-}
 
 export default async function handler(
   req: NextApiRequest,
@@ -39,13 +31,14 @@ export default async function handler(
       .select(`
         id,
         completed_at,
-        total_score,
         ai_reports (
           id,
           report_status,
           access_token,
-          stage1_content,
-          stage2_content,
+          problem_analysis,
+          tool_research,
+          curated_tools,
+          final_report,
           created_at,
           updated_at
         )
@@ -63,7 +56,7 @@ export default async function handler(
     // If quiz is not completed yet
     if (!quiz.completed_at) {
       return res.status(200).json({
-        status: 'in_progress',
+        status: 'pending',
       });
     }
 
@@ -81,16 +74,16 @@ export default async function handler(
     let responseStatus: QuizStatusResponse['status'];
     switch (report.report_status) {
       case 'generating':
-        responseStatus = 'generating';
+        responseStatus = 'processing';
         break;
       case 'completed':
-        responseStatus = 'ready';
+        responseStatus = 'completed';
         break;
       case 'failed':
         responseStatus = 'error';
         break;
       default:
-        responseStatus = 'generating';
+        responseStatus = 'processing';
     }
 
     // Build response based on status
@@ -98,7 +91,7 @@ export default async function handler(
       status: responseStatus,
     };
 
-    if (responseStatus === 'ready' && report.access_token) {
+    if (responseStatus === 'completed' && report.access_token) {
       response.reportId = report.id;
       response.accessToken = report.access_token;
     } else if (responseStatus === 'error') {

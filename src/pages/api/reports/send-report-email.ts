@@ -64,7 +64,7 @@ export default async function handler(
     }
 
     // Generate report URL
-    const reportUrl = `${process.env.NEXT_PUBLIC_APP_URL}/report/${report.access_token}`;
+    const reportUrl = `${process.env.NEXT_PUBLIC_APP_URL}/report/view/${report.access_token}`;
 
     // Generate email HTML
     const emailHtml = generateReportReadyEmail({
@@ -78,7 +78,7 @@ export default async function handler(
 
     // Send email
     const { data, error } = await resend.emails.send({
-      from: 'AI Reports <reports@deployai.studio>',
+      from: 'AI Assessment <assessment@deployai.studio>',
       to: [quizData.user_email],
       subject: `Your AI Business Readiness Report is Ready! (Score: ${quizData.total_score}/50)`,
       html: emailHtml,

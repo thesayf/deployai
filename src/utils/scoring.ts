@@ -18,20 +18,28 @@ export function calculateQuizScore(responses: QuizResponseData): ScoreCalculatio
 
     let questionScore = 0;
 
-    switch (question.scoring.type) {
+    // Skip questions without scoring (AI assessment questions)
+    if (!('scoring' in question) || !question.scoring) {
+      return; // Use return instead of continue in forEach
+    }
+
+    // Type guard to ensure scoring exists and has type property
+    const scoring = question.scoring as { type: string; maxPoints?: number };
+    
+    switch (scoring.type) {
       case 'points':
         if (question.type === 'single-select') {
           // Find the selected option and get its points
           const selectedOption = question.options?.find(opt => opt.value === response);
           if (selectedOption && 'points' in selectedOption && selectedOption.points) {
-            questionScore = selectedOption.points;
+            questionScore = selectedOption.points as number;
           }
         } else if (question.type === 'multi-select' && Array.isArray(response)) {
           // Sum points for all selected options
           response.forEach((value: string) => {
             const option = question.options?.find(opt => opt.value === value);
             if (option && 'points' in option && option.points) {
-              questionScore += option.points;
+              questionScore += option.points as number;
             }
           });
         }

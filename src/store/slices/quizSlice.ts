@@ -41,7 +41,7 @@ const getInitialState = (): QuizState => {
     quizId: null,
     currentStep: 1,
     responses: {},
-    totalScore: 0,
+    totalScore: 0, // Not used in AI assessment but required by interface
     isModalOpen: false,
     isSubmitting: false,
     processingStage: null,
@@ -100,22 +100,16 @@ const quizSlice = createSlice({
     // Response management
     saveResponse: (state, action: PayloadAction<{ questionId: string; answer: any }>) => {
       const { questionId, answer } = action.payload;
-      const responseKey = getResponseKeyForQuestion(questionId);
-      if (responseKey) {
-        (state.responses as any)[responseKey] = answer;
-        saveState(state);
-      }
+      // Store responses with the actual question ID as key
+      // This ensures consistency with what the API expects
+      (state.responses as any)[questionId] = answer;
+      saveState(state);
     },
     
     // Quiz session management
     setQuizId: (state, action: PayloadAction<string>) => {
       state.quizId = action.payload;
       saveState(state);
-    },
-    
-    // Score management
-    updateScore: (state, action: PayloadAction<number>) => {
-      state.totalScore = action.payload;
     },
     
     // Processing state
@@ -153,7 +147,6 @@ const quizSlice = createSlice({
     clearProgress: (state) => {
       state.currentStep = 1;
       state.responses = {};
-      state.totalScore = 0;
       state.quizId = null;
       state.error = null;
       saveState(state);
@@ -161,30 +154,7 @@ const quizSlice = createSlice({
   },
 });
 
-// Helper function to map question IDs to response keys
-function getResponseKeyForQuestion(questionId: string): keyof QuizResponseData | null {
-  const mapping: Record<string, keyof QuizResponseData> = {
-    'industry': 'industry',
-    'companySize': 'companySize',
-    'businessObjectives': 'businessObjectives',
-    'biggestChallenge': 'biggestChallenge',
-    'problemAreas': 'problemAreas',
-    'costImpact': 'costImpact',
-    'manualWork': 'manualWork',
-    'decisionMaking': 'decisionMaking',
-    'currentSystems': 'currentSystems',
-    'integrationChallenges': 'integrationChallenges',
-    'aiFocus': 'aiFocus',
-    'aiExperience': 'aiExperience',
-    'teamSkills': 'teamSkills',
-    'budget': 'budget',
-    'timeline': 'timeline',
-    'successMetrics': 'successMetrics',
-    'leadership': 'leadership',
-  };
-  
-  return mapping[questionId] || null;
-}
+// No longer needed - we store responses directly with question IDs
 
 // Export actions
 export const {
@@ -196,7 +166,6 @@ export const {
   previousStep,
   saveResponse,
   setQuizId,
-  updateScore,
   setProcessingStage,
   setSubmitting,
   setReportId,
@@ -215,7 +184,6 @@ export const selectUserInfo = (state: { quiz: QuizState }) => state.quiz.userInf
 export const selectQuizId = (state: { quiz: QuizState }) => state.quiz.quizId;
 export const selectCurrentStep = (state: { quiz: QuizState }) => state.quiz.currentStep;
 export const selectResponses = (state: { quiz: QuizState }) => state.quiz.responses;
-export const selectTotalScore = (state: { quiz: QuizState }) => state.quiz.totalScore;
 export const selectIsModalOpen = (state: { quiz: QuizState }) => state.quiz.isModalOpen;
 export const selectProcessingStage = (state: { quiz: QuizState }) => state.quiz.processingStage;
 export const selectIsSubmitting = (state: { quiz: QuizState }) => state.quiz.isSubmitting;

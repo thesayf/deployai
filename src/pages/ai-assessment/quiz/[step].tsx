@@ -13,11 +13,10 @@ import {
   previousStep
 } from '@/store/slices/quizSlice';
 import { ModernNavBar } from '@/components/navigation/ModernNavBar';
-import { QuizResponseData } from '@/types/quiz';
 import { SectionWrapper } from '@/components/section-wrapper';
-import { QuestionCard } from '@/components/quiz/QuestionCard';
+import { AIQuestionCard } from '@/components/ai-quiz/AIQuestionCard';
 import { ProgressBar } from '@/components/progress-bar';
-import { getQuestionByStep, validateResponse, calculateProgress, estimateCompletionTime } from '@/utils/scoring';
+import { getQuestionByStep, validateResponse, calculateProgress, estimateCompletionTime } from '@/utils/quiz-helpers';
 import { SaveProgressRequest } from '@/types/quiz';
 
 const QuizStep = () => {
@@ -40,13 +39,30 @@ const QuizStep = () => {
   }, []);
 
   const currentQuestion = getQuestionByStep(currentStep);
-  const currentAnswer = currentQuestion ? responses[currentQuestion.id as keyof QuizResponseData] : undefined;
+  const currentAnswer = currentQuestion 
+    ? (responses as any)[currentQuestion.id]
+    : undefined;
 
   useEffect(() => {
     // Redirect to landing if no user info or quiz ID
     if ((!userInfo || !quizId) && router.isReady) {
       router.push('/ai-assessment');
       return;
+    }
+
+    // Validate quiz session is not stale (check if quizId exists in responses)
+    // If we have responses but the current answer format looks wrong, clear state
+    if (quizId && Object.keys(responses).length > 0) {
+      // Check if any response has undefined or invalid structure
+      const hasInvalidResponses = Object.values(responses).some(
+        value => value === undefined || value === null || value === ''
+      );
+      
+      if (hasInvalidResponses) {
+        console.warn('Invalid quiz state detected, clearing stale data');
+        // Don't reset here as it might cause infinite loop
+        // Just log the issue for debugging
+      }
     }
 
     // Sync URL step with Redux state
@@ -61,7 +77,7 @@ const QuizStep = () => {
         router.push(`/ai-assessment/quiz/${currentStep}`);
       }
     }
-  }, [step, currentStep, userInfo, quizId, router, dispatch]);
+  }, [step, currentStep, userInfo, quizId, router, dispatch, responses]);
 
   // Clear validation error when step changes
   useEffect(() => {
@@ -98,14 +114,32 @@ const QuizStep = () => {
   const handleAnswer = async (answer: any) => {
     if (!currentQuestion) return;
     
-    // Update Redux state
-    dispatch(saveResponse({ questionId: currentQuestion.id, answer }));
+    // Check if this is a change to an existing answer
+    const isChangingAnswer = currentAnswer !== undefined && currentAnswer !== answer;
     
-    // Save to backend
-    await saveProgress(currentQuestion.id, answer);
+    // Update Redux state immediately
+    dispatch(saveResponse({ questionId: currentQuestion.id, answer }));
     
     // Clear validation error when user answers
     setValidationError(undefined);
+    
+    // Auto-advance for single-select questions
+    if (currentQuestion.type === 'single-select' && currentStep < 17) {
+      if (isChangingAnswer) {
+        // Small delay to show visual feedback when changing answer
+        setTimeout(() => {
+          dispatch(nextStep());
+          router.push(`/ai-assessment/quiz/${currentStep + 1}`);
+        }, 150);
+      } else {
+        // Navigate immediately for first-time answers
+        dispatch(nextStep());
+        router.push(`/ai-assessment/quiz/${currentStep + 1}`);
+      }
+    }
+    
+    // Save to backend asynchronously (don't await)
+    saveProgress(currentQuestion.id, answer);
   };
 
   const handleNext = async () => {
@@ -199,7 +233,7 @@ const QuizStep = () => {
             
             {/* Question card with scrollable content area */}
             <div className="flex-1 min-h-0 overflow-hidden">
-              <QuestionCard
+              <AIQuestionCard
                 question={currentQuestion}
                 currentAnswer={currentAnswer}
                 onAnswer={handleAnswer}

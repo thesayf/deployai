@@ -2,13 +2,13 @@ import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useAppSelector, useAppDispatch } from '@/store';
-import { openEmailModal, closeEmailModal, setUserInfo, setQuizId } from '@/store/slices/quizSlice';
+import { openEmailModal, closeEmailModal, setUserInfo, setQuizId, resetQuiz } from '@/store/slices/quizSlice';
 import Image from 'next/image';
 import { Footer } from '@/components/footer/Footer';
 import { LogoTrustBanner } from '@/components/logo-trust-banner';
 import { AssessmentLanding } from '@/components/assessment-landing';
-import { EmailCaptureModal } from '@/components/email-capture-modal';
-import { EmailCaptureFormData } from '@/types/quiz';
+import { AIAssessmentModal } from '@/components/ai-assessment-modal';
+import { AIAssessmentFormData } from '@/types/quiz';
 
 const AIAssessmentLanding = () => {
   const router = useRouter();
@@ -16,10 +16,13 @@ const AIAssessmentLanding = () => {
   const isModalOpen = useAppSelector(state => state.quiz.isModalOpen);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-  const handleModalSubmit = async (data: EmailCaptureFormData) => {
+  const handleModalSubmit = async (data: AIAssessmentFormData) => {
     setIsSubmitting(true);
     
     try {
+      // Reset any existing quiz state to ensure clean start
+      dispatch(resetQuiz());
+      
       // Call the start quiz API
       const response = await fetch('/api/quiz/start', {
         method: 'POST',
@@ -36,8 +39,8 @@ const AIAssessmentLanding = () => {
         dispatch(setUserInfo({
           email: data.email,
           firstName: data.firstName,
-          lastName: '', // Not collected in this form
-          company: '', // Not collected in this form
+          lastName: data.lastName,
+          company: data.company,
         }));
         
         // Save quiz ID
@@ -106,7 +109,7 @@ const AIAssessmentLanding = () => {
       <Footer />
 
       {/* Email Capture Modal */}
-      <EmailCaptureModal
+      <AIAssessmentModal
         isOpen={isModalOpen}
         onClose={() => dispatch(closeEmailModal())}
         onSubmit={handleModalSubmit}

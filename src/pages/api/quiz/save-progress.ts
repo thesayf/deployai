@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { SaveProgressRequest, SaveProgressResponse } from '@/types/quiz';
 import { supabaseAdmin } from '@/lib/supabase';
-import { validateResponse } from '@/utils/scoring';
+import { validateResponse } from '@/utils/quiz-helpers';
 
 export default async function handler(
   req: NextApiRequest,
