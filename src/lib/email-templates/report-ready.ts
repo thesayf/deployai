@@ -3,6 +3,7 @@ export interface ReportEmailData {
   lastName: string;
   company?: string;
   reportUrl: string;
+  industry?: string;
 }
 
 export function generateReportReadyEmail(data: ReportEmailData): string {
@@ -17,6 +18,8 @@ export function generateReportReadyEmail(data: ReportEmailData): string {
         .container { max-width: 600px; margin: 0 auto; }
         .header { background: linear-gradient(135deg, #457B9D 0%, #3a6a89 100%); padding: 40px 30px; text-align: center; color: white; }
         .content { padding: 30px; background: #f9f9f9; }
+        .score-display { background: white; padding: 30px; text-align: center; border-radius: 8px; margin: 20px 0; }
+        .score-circle { width: 120px; height: 120px; margin: 0 auto 20px; border: 3px solid #457B9D; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: white; }
         .footer { padding: 30px; background: #1a1a1a; color: white; text-align: center; }
         .button { display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #457B9D 0%, #3a6a89 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; }
         .button-secondary { display: inline-block; padding: 12px 30px; border: 2px solid #457B9D; color: #457B9D; text-decoration: none; border-radius: 6px; font-weight: bold; }
@@ -27,11 +30,21 @@ export function generateReportReadyEmail(data: ReportEmailData): string {
     <body>
       <div class="container">
         <div class="header">
-          <h1>Your AI Readiness Report is Ready!</h1>
-          <p style="font-size: 18px; margin: 0;">Personalized insights for ${data.firstName} at ${data.company || 'your organization'}</p>
+          <h1>Your AI Implementation Report is Ready!</h1>
+          <p style="font-size: 18px; margin: 0;">Personalized AI strategy for ${data.company || 'your organization'}</p>
         </div>
         
         <div class="content">
+          <div class="score-display">
+            <div style="text-align: center;">
+              <div style="font-size: 48px; margin-bottom: 10px;">✅</div>
+              <h2 style="color: #333; margin: 0;">Analysis Complete</h2>
+              <p style="color: #666; font-size: 16px; margin-top: 10px;">
+                ${data.industry ? `Customized for the ${data.industry} industry` : 'Your personalized report is ready'}
+              </p>
+            </div>
+          </div>
+          
           <div class="report-preview">
             <h3>Your Complete Report Includes:</h3>
             <ul>

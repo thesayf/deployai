@@ -31,9 +31,18 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
         .from('ai_reports')
         .select(`
           id,
+<<<<<<< HEAD
           stage4_report_content,
           report_status,
           email_sent_at
+=======
+          final_report,
+          report_status,
+          report_variant,
+          company_name,
+          report_generated_at,
+          access_count
+>>>>>>> origin/main
         `)
         .eq('access_token', accessToken)
         .single();
@@ -44,17 +53,26 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
         return;
       }
 
+<<<<<<< HEAD
       if (data.report_status !== 'completed') {
+=======
+      if (data.report_status !== 'report_generated' && data.report_status !== 'completed') {
+>>>>>>> origin/main
         setError('Your report is still being generated. Please check back in a few minutes.');
         return;
       }
 
+<<<<<<< HEAD
       if (!data.stage4_report_content) {
+=======
+      if (!data.final_report) {
+>>>>>>> origin/main
         setError('Report content is not available yet. Please try again later.');
         return;
       }
 
       setReport(data);
+<<<<<<< HEAD
       setVariant('executive');
 
       // Update access count (fire and forget)
@@ -73,6 +91,25 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
       //   }
       // };
       // updateAccessCount();
+=======
+      setVariant((data.report_variant as any) || 'executive');
+
+      // Update access count (fire and forget)
+      const updateAccessCount = async () => {
+        try {
+          await supabase
+            .from('ai_reports')
+            .update({ 
+              access_count: (data.access_count || 0) + 1,
+              report_accessed_at: new Date().toISOString()
+            })
+            .eq('access_token', accessToken);
+        } catch (err) {
+          console.error('Failed to update access count:', err);
+        }
+      };
+      updateAccessCount();
+>>>>>>> origin/main
 
     } catch (err) {
       console.error('Error:', err);
@@ -182,9 +219,15 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
 
       {/* Report Content */}
       <ProfessionalReport
+<<<<<<< HEAD
         data={report.stage4_report_content as unknown as ReportData}
         companyName={'Your Organization'}
         generatedDate={report.email_sent_at ? new Date(report.email_sent_at) : new Date()}
+=======
+        data={report.final_report as ReportData}
+        companyName={report.company_name || 'Your Organization'}
+        generatedDate={report.report_generated_at ? new Date(report.report_generated_at) : new Date()}
+>>>>>>> origin/main
         variant={variant}
         onScheduleConsultation={() => {
           window.open('https://calendly.com/deployai-consultation', '_blank');

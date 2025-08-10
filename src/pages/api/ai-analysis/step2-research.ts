@@ -74,7 +74,11 @@ export default async function handler(
     
     const response = await anthropic.messages.create({
       model: 'claude-sonnet-4-20250514',
+<<<<<<< HEAD
       max_tokens: 15000,  // Increased from 4000 to handle complete responses
+=======
+      max_tokens: 4000,
+>>>>>>> origin/main
       temperature: 0.3,
       system: "You are an AI tools expert. Use web search to find real, current AI tools and their actual pricing, features, and case studies. Search for specific tools that solve the identified business problems.",
       messages: [
@@ -104,7 +108,11 @@ export default async function handler(
       // Continue the conversation to get complete results
       const continuation = await anthropic.messages.create({
         model: 'claude-sonnet-4-20250514',
+<<<<<<< HEAD
         max_tokens: 15000,  // Increased to match main request
+=======
+        max_tokens: 4000,
+>>>>>>> origin/main
         temperature: 0.3,
         messages: [
           { role: 'user', content: prompt },

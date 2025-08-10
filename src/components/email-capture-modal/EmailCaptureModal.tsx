@@ -17,6 +17,18 @@ const emailCaptureSchema = z.object({
   email: z.string()
     .min(1, 'Email is required')
     .email('Please enter a valid email address'),
+<<<<<<< HEAD
+=======
+  firstName: z.string()
+    .min(1, 'First name is required')
+    .min(2, 'First name must be at least 2 characters'),
+  lastName: z.string()
+    .min(1, 'Last name is required')
+    .min(2, 'Last name must be at least 2 characters'),
+  company: z.string()
+    .min(1, 'Company name is required')
+    .min(2, 'Company name must be at least 2 characters'),
+>>>>>>> feat/ai-quiz
 });
 
 interface EmailCaptureModalProps {
@@ -160,6 +172,28 @@ export const EmailCaptureModal: React.FC<EmailCaptureModalProps> = ({
                   />
                   {errors.email && (
                     <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+                  )}
+                </div>
+
+                {/* Company field */}
+                <div>
+                  <label htmlFor="company" className="block text-sm font-semibold mb-1">
+                    Company
+                  </label>
+                  <input
+                    {...register('company')}
+                    type="text"
+                    id="company"
+                    className={`
+                      w-full px-3 py-3 bg-white rounded-md
+                      transition-all outline-none text-sm
+                      ${errors.company ? 'ring-2 ring-red-500' : ''}
+                    `}
+                    placeholder="Your Company Name"
+                    disabled={isSubmitting}
+                  />
+                  {errors.company && (
+                    <p className="text-red-500 text-xs mt-1">{errors.company.message}</p>
                   )}
                 </div>
 

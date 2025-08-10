@@ -1,6 +1,5 @@
 // Quiz Question Types
 export type QuestionType = 'single-select' | 'multi-select' | 'text' | 'textarea';
-export type ScoringType = 'points' | 'contextual';
 
 // Question Option Interface
 export interface QuestionOption {
@@ -11,7 +10,7 @@ export interface QuestionOption {
   icon?: string;
   points?: number;
   aiCategory?: string;
-  integrationComplexity?: string;
+  salesPriority?: 'high' | 'medium' | 'low';
 }
 
 // Quiz Question Interface
@@ -29,11 +28,7 @@ export interface QuizQuestion {
   maxLength?: number;
   minLength?: number;
   validation?: string;
-  scoring: {
-    type: ScoringType;
-    values?: Record<string, number>;
-  };
-  aiAnalysis?: string;
+  aiCategory?: string;
 }
 
 // User Information
@@ -46,49 +41,30 @@ export interface UserInfo {
 
 // Quiz Response Data
 export interface QuizResponseData {
-  // Q1-5
+  // Business Context
   industry?: string;
-  companySize?: string;
-  businessObjectives?: string[];
-  biggestChallenge?: string;
-  problemAreas?: string[];
-  
-  // Q6-10
-  costImpact?: string;
-  manualWork?: string;
-  decisionMaking?: string;
-  currentSystems?: string[];
-  integrationChallenges?: string;
-  
-  // Q11-15
-  aiFocus?: string;
-  aiExperience?: string;
-  teamSkills?: string;
-  budget?: string;
-  timeline?: string;
-  
-  // Q16-17
-  successMetrics?: string;
-  leadership?: string;
-  
-  // AI Assessment specific fields
   customerCommunication?: string;
   revenueOptimization?: string;
   dataDecisionMaking?: string;
+  
+  // Operations
   repetitiveTasks?: string[];
-  taskEfficiency?: string;
-  customerChallenges?: string;
-  revenueChallenges?: string;
-  dataManagement?: string;
-  currentSoftware?: string[];
-  integrationIssues?: string;
-  techReadiness?: string;
-  monthlyBudget?: string;
-  urgency?: string;
-  decisionAuthority?: string;
   qualityConsistency?: string;
   responseSpeed?: string;
+  businessObjectives?: string[];
+  
+  // Financial & Systems
+  costImpact?: string;
+  currentSystems?: string[];
+  integrationChallenges?: string;
+  
+  // Team & Implementation
   teamCapability?: string;
+  aiExperience?: string;
+  companySize?: string;
+  monthlyBudget?: string;
+  timeline?: string;
+  decisionAuthority?: string;
 }
 
 // Database Models
@@ -106,18 +82,15 @@ export interface QuizResponse {
   createdAt: Date;
 }
 
+import { ProblemAnalysis, ToolResearch, CuratedTools, FinalReport } from './ai-analysis-new';
+
 export interface AIReport {
   id: string;
   quizResponseId: string;
-  stage1Analysis?: {
-    industryLandscape: string;
-    readinessAssessment: string;
-    keyOpportunities: string[];
-    riskFactors: string[];
-    technologyRecommendations: string[];
-    competitivePositioning: string;
-  };
-  stage2Report?: string; // HTML content
+  problemAnalysis?: ProblemAnalysis;
+  toolResearch?: ToolResearch;
+  curatedTools?: CuratedTools;
+  finalReport?: FinalReport;
   reportStatus: 'generating' | 'completed' | 'failed';
   accessToken: string;
   createdAt: Date;
@@ -161,6 +134,17 @@ export interface StartQuizResponse {
   error?: string;
 }
 
+// Quiz Status Response
+export interface QuizStatusResponse {
+  status: 'pending' | 'processing' | 'completed' | 'error';
+  stage?: string;
+  reportId?: string;
+  accessToken?: string;
+  reportContent?: any;
+  error?: string;
+  message?: string;
+}
+
 export interface SaveProgressRequest {
   quizId: string;
   questionId: string;
@@ -201,30 +185,11 @@ export interface ReportStatusResponse {
   error?: string;
 }
 
-export interface QuizStatusResponse {
-  status: 'pending' | 'processing' | 'completed' | 'error';
-  stage?: string;
-  reportId?: string;
-  accessToken?: string;
-  reportContent?: any;
-  error?: string;
-  message?: string;
-}
-
-
 // Form Validation Schemas (for use with Zod)
 export interface EmailCaptureFormData {
   email: string;
   firstName: string;
   projectName: string;
-}
-
-// AI Assessment form data
-export interface AIAssessmentFormData {
-  email: string;
-  firstName: string;
-  lastName: string;
-  company: string;
 }
 
 // Quiz Navigation
@@ -249,4 +214,3 @@ export interface ProcessingScreenProps {
   stage: 'analyzing' | 'generating' | 'complete';
   estimatedTime?: number;
 }
-
