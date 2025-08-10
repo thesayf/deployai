@@ -43,103 +43,74 @@ export async function sendConfirmationEmail({
   console.log('[CONFIRMATION-EMAIL] User email:', userEmail);
   
   try {
-    // Generate confirmation email HTML (inline for now, can be moved to template later)
+    // Fetch quiz data to get industry information
+    const supabase = supabaseAdmin();
+    const { data: quizData } = await supabase
+      .from('quiz_responses')
+      .select('industry, company_size')
+      .eq('id', quizId)
+      .single();
+
+    // Generate confirmation email HTML with original template design
     const emailHtml = `
       <!DOCTYPE html>
       <html>
       <head>
+        <meta charset="utf-8">
+        <title>Your AI Assessment is Being Processed</title>
         <style>
-          body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; margin: 0; padding: 20px; }
-          .container { max-width: 600px; margin: 0 auto; background: white; padding: 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-          .header { text-align: center; margin-bottom: 40px; }
-          .header h1 { color: #212121; margin: 0; font-size: 28px; }
-          .progress { background: #e0e0e0; height: 8px; border-radius: 4px; overflow: hidden; margin: 30px 0; }
-          .progress-bar { background: linear-gradient(90deg, #4CAF50 0%, #8BC34A 100%); height: 100%; width: 30%; animation: pulse 2s ease-in-out infinite; }
-          @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
-          .content { margin: 30px 0; }
-          .timeline { margin: 30px 0; }
-          .timeline-item { display: flex; align-items: center; margin: 20px 0; }
-          .timeline-icon { width: 40px; height: 40px; background: #f0f0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 20px; font-size: 20px; }
-          .timeline-icon.active { background: #4CAF50; color: white; }
-          .timeline-content h3 { margin: 0; font-size: 16px; }
-          .timeline-content p { margin: 5px 0; color: #666; font-size: 14px; }
-          .cta { background: #212121; color: white; padding: 20px; border-radius: 8px; text-align: center; margin: 30px 0; }
-          .cta h2 { margin: 0 0 10px 0; }
-          .cta p { margin: 10px 0; opacity: 0.9; }
-          .button { display: inline-block; background: white; color: #212121; padding: 12px 30px; text-decoration: none; border-radius: 4px; font-weight: bold; margin-top: 10px; }
-          .footer { text-align: center; margin-top: 40px; padding-top: 30px; border-top: 1px solid #e0e0e0; color: #666; }
-          .footer h3 { color: #333; margin-bottom: 10px; }
+          body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; }
+          .container { max-width: 600px; margin: 0 auto; }
+          .header { background: linear-gradient(135deg, #457B9D 0%, #3a6a89 100%); padding: 40px 30px; text-align: center; color: white; }
+          .content { padding: 30px; background: #f9f9f9; }
+          .footer { padding: 30px; background: #1a1a1a; color: white; text-align: center; }
+          .button { display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #457B9D 0%, #3a6a89 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+          .score-preview { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center; }
+          h1 { margin: 0; }
+          h3 { color: #333; }
         </style>
       </head>
       <body>
         <div class="container">
           <div class="header">
-            <h1>🚀 Your AI Assessment is Being Analyzed</h1>
+            <h1>Thank You for Taking the AI Readiness Assessment!</h1>
           </div>
           
           <div class="content">
             <p>Hi ${firstName},</p>
-            <p>Thank you for completing the AI Readiness Assessment${company ? ` for ${company}` : ''}! Our AI is now analyzing your responses to create a comprehensive implementation roadmap.</p>
             
-            <div class="progress">
-              <div class="progress-bar"></div>
+            <p>Thank you for completing the AI Readiness Assessment${company ? ` for ${company}` : ''}. Our AI is currently analyzing your responses to identify the best opportunities for AI implementation in your business.</p>
+            
+            <div class="score-preview">
+              <h3>Analysis in Progress</h3>
+              <p style="font-size: 24px; color: #457B9D; margin: 10px 0;">🔍 Identifying AI Opportunities</p>
+              <p style="color: #666;">Our AI is researching solutions specific to your ${quizData?.industry || 'industry'}</p>
             </div>
             
-            <div class="timeline">
-              <div class="timeline-item">
-                <div class="timeline-icon active">✓</div>
-                <div class="timeline-content">
-                  <h3>Assessment Completed</h3>
-                  <p>Your responses have been recorded</p>
-                </div>
-              </div>
-              
-              <div class="timeline-item">
-                <div class="timeline-icon">🤖</div>
-                <div class="timeline-content">
-                  <h3>AI Analysis in Progress</h3>
-                  <p>Processing your business requirements</p>
-                </div>
-              </div>
-              
-              <div class="timeline-item">
-                <div class="timeline-icon">📊</div>
-                <div class="timeline-content">
-                  <h3>Report Generation</h3>
-                  <p>Creating your personalized roadmap (${EMAIL_CONFIG.timing.reportGenerationMinutes})</p>
-                </div>
-              </div>
-              
-              <div class="timeline-item">
-                <div class="timeline-icon">📧</div>
-                <div class="timeline-content">
-                  <h3>Delivery</h3>
-                  <p>Report will be sent to this email</p>
-                </div>
-              </div>
-            </div>
+            <h3>What's Next?</h3>
+            <ul>
+              <li><strong>Report Generation:</strong> Your detailed AI strategy report is being generated and will be sent to this email within the next 5-10 minutes.</li>
+              <li><strong>Personalized Insights:</strong> Based on your responses, we'll provide industry-specific recommendations and implementation strategies.</li>
+              <li><strong>Action Plan:</strong> Your report will include a practical roadmap for AI adoption in your organization.</li>
+            </ul>
             
-            <div class="cta">
-              <h2>What Happens Next?</h2>
-              <p>You'll receive your comprehensive AI implementation report in approximately ${EMAIL_CONFIG.timing.reportGenerationMinutes}.</p>
-              <p>The report will include:</p>
-              <ul style="text-align: left; display: inline-block;">
-                <li>AI readiness score for your organization</li>
-                <li>Recommended AI tools and solutions</li>
-                <li>Implementation timeline and roadmap</li>
-                <li>ROI projections and cost analysis</li>
-                <li>Risk assessment and mitigation strategies</li>
-              </ul>
-            </div>
+            <p>The report will include:</p>
+            <ul>
+              <li>Detailed analysis of your AI readiness</li>
+              <li>Industry-specific opportunities</li>
+              <li>Recommended AI tools and technologies</li>
+              <li>Implementation timeline and priorities</li>
+              <li>ROI projections and cost estimates</li>
+            </ul>
+            
+            <p style="margin-top: 30px; padding: 15px; background: #e6f3f7; border-left: 4px solid #457B9D;">
+              <strong>Keep an eye on your inbox</strong> - your comprehensive report will arrive shortly!
+            </p>
           </div>
           
           <div class="footer">
-            <h3>Need Help Implementing AI?</h3>
-            <p>Our team specializes in custom AI solutions for businesses like yours.</p>
-            <a href="https://deployai.studio/contact" class="button" style="color: white;">Schedule a Consultation</a>
-            <p style="margin-top: 20px; font-size: 14px; opacity: 0.8;">
-              © ${new Date().getFullYear()} deployAI Studio. All rights reserved.
-            </p>
+            <p>Questions? Reply to this email or contact us at hello@deployai.studio</p>
+            <p style="font-size: 12px; color: #888; margin-top: 15px;">© ${new Date().getFullYear()} DeployAI. All rights reserved.</p>
           </div>
         </div>
       </body>

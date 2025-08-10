@@ -124,46 +124,30 @@ export default async function handler(
       console.error('Attempted to save:', problemAnalysis);
     }
 
-    // Trigger Step 2 (Tool Research)
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://${req.headers.host}`;
-    const step2Url = `${baseUrl}/api/ai-analysis/step2-research`;
-    
-    console.log('[STEP1->STEP2] Starting Step 2 trigger');
-    console.log('[STEP1->STEP2] URL:', step2Url);
+    // Trigger Step 2 using the pipeline module
+    console.log('[STEP1->STEP2] Starting Step 2 via pipeline');
     console.log('[STEP1->STEP2] Report ID:', reportId);
     console.log('[STEP1->STEP2] Quiz Response ID:', quizResponseId);
     console.log('[STEP1->STEP2] ProblemAnalysis keys:', Object.keys(problemAnalysis));
-    console.log('[STEP1->STEP2] API Key present:', !!process.env.INTERNAL_API_KEY);
     
-    fetch(step2Url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key-12345',
-      },
-      body: JSON.stringify({
+    // Import and execute Step 2 directly
+    import('@/lib/ai-analysis/pipeline').then(({ executeStep2Research }) => {
+      executeStep2Research({
         quizResponseId,
         reportId,
         problemAnalysis
-      }),
-    })
-    .then(res => {
-      console.log('[STEP1->STEP2] Response received. Status:', res.status);
-      console.log('[STEP1->STEP2] Response headers:', res.headers);
-      if (!res.ok) {
-        return res.text().then(text => {
-          console.error('[STEP1->STEP2] ERROR - Non-OK response:', res.status);
-          console.error('[STEP1->STEP2] ERROR - Response body:', text.substring(0, 1000));
-        });
-      } else {
-        console.log('[STEP1->STEP2] SUCCESS - Step 2 triggered successfully');
-      }
-    })
-    .catch(error => {
-      console.error('[STEP1->STEP2] CRITICAL ERROR - Failed to trigger Step 2');
-      console.error('[STEP1->STEP2] Error type:', error.name);
-      console.error('[STEP1->STEP2] Error message:', error.message);
-      console.error('[STEP1->STEP2] Error stack:', error.stack);
+      })
+      .then(result => {
+        if (result.success) {
+          console.log('[STEP1->STEP2] SUCCESS - Pipeline completed successfully');
+        } else {
+          console.error('[STEP1->STEP2] ERROR - Pipeline failed:', result.error);
+        }
+      })
+      .catch(error => {
+        console.error('[STEP1->STEP2] CRITICAL ERROR - Failed to execute pipeline');
+        console.error('[STEP1->STEP2] Error:', error);
+      });
     });
 
     res.status(200).json({ 
