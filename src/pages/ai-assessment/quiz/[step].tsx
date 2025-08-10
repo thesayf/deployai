@@ -14,7 +14,7 @@ import {
 } from '@/store/slices/quizSlice';
 import { ModernNavBar } from '@/components/navigation/ModernNavBar';
 import { SectionWrapper } from '@/components/section-wrapper';
-import { QuestionCard } from '@/components/quiz/QuestionCard';
+import { AIQuestionCard } from '@/components/ai-quiz/AIQuestionCard';
 import { ProgressBar } from '@/components/progress-bar';
 import { getQuestionByStep, validateResponse, calculateProgress, estimateCompletionTime } from '@/utils/quiz-helpers';
 import { SaveProgressRequest } from '@/types/quiz';
@@ -233,7 +233,7 @@ const QuizStep = () => {
             
             {/* Question card with scrollable content area */}
             <div className="flex-1 min-h-0 overflow-hidden">
-              <QuestionCard
+              <AIQuestionCard
                 question={currentQuestion}
                 currentAnswer={currentAnswer}
                 onAnswer={handleAnswer}

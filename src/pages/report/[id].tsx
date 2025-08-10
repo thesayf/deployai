@@ -19,7 +19,10 @@ interface ReportData {
   stage2_tool_research: Stage2MarketIntelligence;
   stage3_tool_selection: Stage3FinancialAnalysis;
   stage4_report_content: Stage4StrategicRecommendations;
+<<<<<<< HEAD
+=======
   final_report: any;
+>>>>>>> origin/main
   report_status: string;
   created_at: string;
   company_name: string;
@@ -59,7 +62,10 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
           stage2_tool_research,
           stage3_tool_selection,
           stage4_report_content,
+<<<<<<< HEAD
+=======
           final_report,
+>>>>>>> origin/main
           report_status,
           created_at,
           company_name,
@@ -83,8 +89,13 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
         return;
       }
 
+<<<<<<< HEAD
+      // Check if we have the stage4_report_content data
+      if (!data.stage4_report_content) {
+=======
       // Check if we have the final_report data
       if (!data.final_report) {
+>>>>>>> origin/main
         setError('Report data is not available yet. Please try again later.');
         return;
       }
@@ -199,7 +210,11 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
       </Head>
 
       <ProfessionalReport
+<<<<<<< HEAD
+        data={report.stage4_report_content as unknown as ProfessionalReportData}
+=======
         data={report.final_report as ProfessionalReportData}
+>>>>>>> origin/main
         companyName={companyName}
         generatedDate={new Date(report.created_at)}
         variant="executive"

@@ -5,13 +5,10 @@ export type QuestionType = 'single-select' | 'multi-select' | 'text' | 'textarea
 export interface QuestionOption {
   value: string;
   label: string;
-<<<<<<< HEAD
   description?: string;
   examples?: string;
   icon?: string;
   points?: number;
-=======
->>>>>>> feat/ai-quiz
   aiCategory?: string;
   salesPriority?: 'high' | 'medium' | 'low';
 }
@@ -188,34 +185,6 @@ export interface ReportStatusResponse {
   error?: string;
 }
 
-<<<<<<< HEAD
-export interface QuizStatusResponse {
-  status: 'in_progress' | 'completed' | 'generating' | 'ready' | 'error';
-  message?: string;
-  error?: string;
-  reportId?: string;
-  accessToken?: string;
-}
-
-// Scoring Helpers
-export interface ScoreCalculation {
-  totalScore: number;
-  category: ScoreCategory;
-  breakdown: {
-    questionId: string;
-    score: number;
-  }[];
-}
-
-// Score Range Configuration
-export const SCORE_RANGES = {
-  HIGH: { min: 60, max: 85, label: 'High AI Readiness' },
-  MEDIUM: { min: 40, max: 59, label: 'Medium AI Readiness' },
-  EARLY: { min: 15, max: 39, label: 'Early Stage' }
-} as const;
-
-=======
->>>>>>> feat/ai-quiz
 // Form Validation Schemas (for use with Zod)
 export interface EmailCaptureFormData {
   email: string;

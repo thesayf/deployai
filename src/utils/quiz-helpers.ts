@@ -1,15 +1,93 @@
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:src/utils/scoring.ts
+import { QuizResponseData, QuizQuestion } from '@/types/quiz';
+import { ScoreCalculation, ScoreCategory, SCORE_RANGES } from '@/types/mvp-planner';
+========
 <<<<<<< HEAD:src/utils/scoring.ts
 import { QuizResponseData, ScoreCalculation, ScoreCategory, SCORE_RANGES, QuizQuestion } from '@/types/quiz';
 =======
 >>>>>>> feat/ai-quiz:src/utils/quiz-helpers.ts
+>>>>>>>> origin/main:src/utils/quiz-helpers.ts
+>>>>>>> origin/main
 import quizData from '@/data/quiz-questions.json';
 import { QuizQuestion } from '@/types/quiz';
 
 /**
  * Get question by step number
  */
+<<<<<<< HEAD
 export function getQuestionByStep(step: number): QuizQuestion | undefined {
   return quizData.questions.find(q => q.questionNumber === step) as QuizQuestion | undefined;
+=======
+<<<<<<<< HEAD:src/utils/scoring.ts
+export function calculateQuizScore(responses: QuizResponseData): ScoreCalculation {
+  const breakdown: { questionId: string; score: number }[] = [];
+  let totalScore = 0;
+
+  // Process each question
+  quizData.questions.forEach((question) => {
+    const response = responses[question.id as keyof QuizResponseData];
+    
+    if (response === undefined || response === null) {
+      return; // Skip unanswered questions
+    }
+
+    let questionScore = 0;
+
+    // Skip questions without scoring (AI assessment questions)
+    if (!('scoring' in question) || !question.scoring) {
+      return; // Use return instead of continue in forEach
+    }
+
+    // Type guard to ensure scoring exists and has type property
+    const scoring = question.scoring as { type: string; maxPoints?: number };
+    
+    switch (scoring.type) {
+      case 'points':
+        if (question.type === 'single-select') {
+          // Find the selected option and get its points
+          const selectedOption = question.options?.find(opt => opt.value === response);
+          if (selectedOption && 'points' in selectedOption && selectedOption.points) {
+            questionScore = selectedOption.points as number;
+          }
+        } else if (question.type === 'multi-select' && Array.isArray(response)) {
+          // Sum points for all selected options
+          response.forEach((value: string) => {
+            const option = question.options?.find(opt => opt.value === value);
+            if (option && 'points' in option && option.points) {
+              questionScore += option.points as number;
+            }
+          });
+        }
+        break;
+
+      case 'contextual':
+        // Contextual scoring is handled by AI analysis
+        // No points awarded here
+        questionScore = 0;
+        break;
+    }
+
+    if (questionScore > 0) {
+      breakdown.push({ questionId: question.id, score: questionScore });
+      totalScore += questionScore;
+    }
+  });
+
+  // Determine category based on score
+  const category = getScoreCategory(totalScore);
+
+  return {
+    totalScore,
+    category,
+    breakdown
+  };
+========
+export function getQuestionByStep(step: number): QuizQuestion | undefined {
+  return quizData.questions.find(q => q.questionNumber === step) as QuizQuestion | undefined;
+>>>>>>>> origin/main:src/utils/quiz-helpers.ts
+>>>>>>> origin/main
 }
 
 /**
@@ -99,6 +177,8 @@ export function validateResponse(questionId: string, response: any): { valid: bo
 }
 
 /**
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD:src/utils/scoring.ts
  * Get question by step number
  */
@@ -116,6 +196,7 @@ export function getQuestionById(id: string) {
 /**
 =======
 >>>>>>> feat/ai-quiz:src/utils/quiz-helpers.ts
+>>>>>>> origin/main
  * Format response for display
  */
 export function formatResponseForDisplay(questionId: string, response: any): string {
