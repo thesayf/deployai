@@ -38,24 +38,16 @@ export default async function handler(
 
     const supabase = supabaseAdmin();
 
-    // Get quiz data to include score in email
+    // Verify quiz exists
     const { data: quizData, error: quizError } = await supabase
       .from('quiz_responses')
-      .select('total_score')
+      .select('id, industry, company_size')
       .eq('id', quizId)
       .single();
 
     if (quizError || !quizData) {
       console.error('Failed to fetch quiz data:', quizError);
       return res.status(404).json({ error: 'Quiz not found' });
-    }
-
-    // Determine score category
-    let scoreCategory = 'Early Stage';
-    if (quizData.total_score >= 35) {
-      scoreCategory = 'High AI Readiness';
-    } else if (quizData.total_score >= 25) {
-      scoreCategory = 'Medium AI Readiness';
     }
 
     // Send confirmation email
@@ -85,12 +77,6 @@ export default async function handler(
             <p>Hi ${firstName},</p>
             
             <p>Thank you for completing the AI Readiness Assessment${company ? ` for ${company}` : ''}. We're currently analyzing your responses to create a personalized report with actionable insights and recommendations.</p>
-            
-            <div class="score-preview">
-              <h3>Your Initial Score</h3>
-              <p style="font-size: 36px; font-weight: bold; color: #457B9D; margin: 10px 0;">${quizData.total_score}/50</p>
-              <p style="color: #666;">${scoreCategory}</p>
-            </div>
             
             <h3>What's Next?</h3>
             <ul>
@@ -127,11 +113,10 @@ export default async function handler(
     const { data, error } = await resend.emails.send({
       from: 'AI Assessment <assessment@deployai.studio>',
       to: [userEmail],
-      subject: `Processing Your AI Readiness Assessment - Score: ${quizData.total_score}/50`,
+      subject: 'Processing Your AI Business Assessment',
       html: emailHtml,
       tags: [
         { name: 'type', value: 'assessment-confirmation' },
-        { name: 'score', value: quizData.total_score.toString() },
         { name: 'quiz_id', value: quizId }
       ]
     });

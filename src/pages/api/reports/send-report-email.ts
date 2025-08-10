@@ -41,8 +41,7 @@ export default async function handler(
           user_email,
           user_first_name,
           user_last_name,
-          user_company,
-          total_score
+          user_company
         )
       `)
       .eq('id', reportId)
@@ -55,14 +54,6 @@ export default async function handler(
 
     const quizData = report.quiz_responses;
 
-    // Determine score category
-    let scoreCategory = 'Early Stage';
-    if (quizData.total_score >= 35) {
-      scoreCategory = 'High AI Readiness';
-    } else if (quizData.total_score >= 25) {
-      scoreCategory = 'Medium AI Readiness';
-    }
-
     // Generate report URL
     const reportUrl = `${process.env.NEXT_PUBLIC_APP_URL}/report/view/${report.access_token}`;
 
@@ -71,8 +62,6 @@ export default async function handler(
       firstName: quizData.user_first_name,
       lastName: quizData.user_last_name,
       company: quizData.user_company,
-      score: quizData.total_score,
-      scoreCategory,
       reportUrl
     });
 
@@ -80,12 +69,10 @@ export default async function handler(
     const { data, error } = await resend.emails.send({
       from: 'AI Assessment <assessment@deployai.studio>',
       to: [quizData.user_email],
-      subject: `Your AI Business Readiness Report is Ready! (Score: ${quizData.total_score}/50)`,
+      subject: 'Your AI Business Readiness Report is Ready!',
       html: emailHtml,
       tags: [
         { name: 'type', value: 'report-ready' },
-        { name: 'score', value: quizData.total_score.toString() },
-        { name: 'score_category', value: scoreCategory.toLowerCase().replace(' ', '_') },
         { name: 'report_id', value: reportId }
       ]
     });

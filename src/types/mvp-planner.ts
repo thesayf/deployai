@@ -1,5 +1,25 @@
 // MVP Planner specific types
 
+// Score Categories for MVP Planner
+export type ScoreCategory = 'High AI Readiness' | 'Medium AI Readiness' | 'Early Stage';
+
+// Scoring Helpers for MVP Planner
+export interface ScoreCalculation {
+  totalScore: number;
+  category: ScoreCategory;
+  breakdown: {
+    questionId: string;
+    score: number;
+  }[];
+}
+
+// Score Range Configuration for MVP Planner
+export const SCORE_RANGES = {
+  HIGH: { min: 60, max: 85, label: 'High AI Readiness' },
+  MEDIUM: { min: 40, max: 59, label: 'Medium AI Readiness' },
+  EARLY: { min: 15, max: 39, label: 'Early Stage' }
+} as const;
+
 export interface MVPPlannerUserInfo {
   email: string;
   firstName: string;

@@ -2,8 +2,6 @@ export interface ReportEmailData {
   firstName: string;
   lastName: string;
   company?: string;
-  score: number;
-  scoreCategory: string;
   reportUrl: string;
 }
 
@@ -19,8 +17,6 @@ export function generateReportReadyEmail(data: ReportEmailData): string {
         .container { max-width: 600px; margin: 0 auto; }
         .header { background: linear-gradient(135deg, #457B9D 0%, #3a6a89 100%); padding: 40px 30px; text-align: center; color: white; }
         .content { padding: 30px; background: #f9f9f9; }
-        .score-display { background: white; padding: 30px; text-align: center; border-radius: 8px; margin: 20px 0; }
-        .score-circle { width: 120px; height: 120px; margin: 0 auto 20px; border: 3px solid #457B9D; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: white; }
         .footer { padding: 30px; background: #1a1a1a; color: white; text-align: center; }
         .button { display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #457B9D 0%, #3a6a89 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; }
         .button-secondary { display: inline-block; padding: 12px 30px; border: 2px solid #457B9D; color: #457B9D; text-decoration: none; border-radius: 6px; font-weight: bold; }
@@ -36,17 +32,6 @@ export function generateReportReadyEmail(data: ReportEmailData): string {
         </div>
         
         <div class="content">
-          <div class="score-display">
-            <div class="score-circle">
-              <div>
-                <div style="font-size: 36px; font-weight: bold; color: #457B9D;">${data.score}</div>
-                <div style="font-size: 14px; color: #666;">out of 50</div>
-              </div>
-            </div>
-            <h2 style="color: #333; margin: 0;">${data.scoreCategory}</h2>
-            <p style="color: #666; font-size: 16px;">AI Readiness Level</p>
-          </div>
-          
           <div class="report-preview">
             <h3>Your Complete Report Includes:</h3>
             <ul>

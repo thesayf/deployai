@@ -41,7 +41,6 @@ const getInitialState = (): QuizState => {
     quizId: null,
     currentStep: 1,
     responses: {},
-    totalScore: 0, // Not used in AI assessment but required by interface
     isModalOpen: false,
     isSubmitting: false,
     processingStage: null,

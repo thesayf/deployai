@@ -1,4 +1,5 @@
-import { QuizResponseData, ScoreCalculation, ScoreCategory, SCORE_RANGES, QuizQuestion } from '@/types/quiz';
+import { QuizResponseData, QuizQuestion } from '@/types/quiz';
+import { ScoreCalculation, ScoreCategory, SCORE_RANGES } from '@/types/mvp-planner';
 import quizData from '@/data/quiz-questions.json';
 
 /**

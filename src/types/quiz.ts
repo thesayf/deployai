@@ -91,9 +91,6 @@ export interface QuizResponseData {
   teamCapability?: string;
 }
 
-// Score Categories (Updated ranges: 60-85, 40-59, 15-39)
-export type ScoreCategory = 'High AI Readiness' | 'Medium AI Readiness' | 'Early Stage';
-
 // Database Models
 export interface QuizResponse {
   id: string;
@@ -102,7 +99,6 @@ export interface QuizResponse {
   userLastName: string;
   userCompany?: string;
   responses: QuizResponseData;
-  totalScore: number;
   industry?: string;
   companySize?: string;
   startedAt: Date;
@@ -137,7 +133,6 @@ export interface QuizState {
   quizId: string | null;
   currentStep: number;
   responses: Partial<QuizResponseData>;
-  totalScore: number;
   
   // UI State
   isModalOpen: boolean;
@@ -216,22 +211,6 @@ export interface QuizStatusResponse {
   message?: string;
 }
 
-// Scoring Helpers
-export interface ScoreCalculation {
-  totalScore: number;
-  category: ScoreCategory;
-  breakdown: {
-    questionId: string;
-    score: number;
-  }[];
-}
-
-// Score Range Configuration
-export const SCORE_RANGES = {
-  HIGH: { min: 60, max: 85, label: 'High AI Readiness' },
-  MEDIUM: { min: 40, max: 59, label: 'Medium AI Readiness' },
-  EARLY: { min: 15, max: 39, label: 'Early Stage' }
-} as const;
 
 // Form Validation Schemas (for use with Zod)
 export interface EmailCaptureFormData {
@@ -262,7 +241,6 @@ export interface QuizNavigationProps {
 export interface ReportViewerProps {
   reportContent: string;
   userInfo: UserInfo;
-  score: number;
   generatedAt: Date;
 }
 
@@ -272,10 +250,3 @@ export interface ProcessingScreenProps {
   estimatedTime?: number;
 }
 
-// Score Display Props
-export interface ScoreDisplayProps {
-  score: number;
-  maxScore: number;
-  category: ScoreCategory;
-  description: string;
-}
