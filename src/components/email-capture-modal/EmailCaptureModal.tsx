@@ -8,17 +8,9 @@ import { EmailCaptureFormData } from '@/types/quiz';
 
 // Validation schema
 const emailCaptureSchema = z.object({
-  firstName: z.string()
-    .min(1, 'Name is required')
-    .min(2, 'Name must be at least 2 characters'),
-  projectName: z.string()
-    .min(1, 'Project name is required')
-    .min(2, 'Project name must be at least 2 characters'),
   email: z.string()
     .min(1, 'Email is required')
     .email('Please enter a valid email address'),
-<<<<<<< HEAD
-=======
   firstName: z.string()
     .min(1, 'First name is required')
     .min(2, 'First name must be at least 2 characters'),
@@ -28,7 +20,9 @@ const emailCaptureSchema = z.object({
   company: z.string()
     .min(1, 'Company name is required')
     .min(2, 'Company name must be at least 2 characters'),
->>>>>>> feat/ai-quiz
+  projectName: z.string()
+    .min(1, 'Project name is required')
+    .min(2, 'Project name must be at least 2 characters'),
 });
 
 interface EmailCaptureModalProps {

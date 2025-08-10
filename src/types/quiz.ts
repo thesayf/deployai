@@ -189,6 +189,8 @@ export interface ReportStatusResponse {
 export interface EmailCaptureFormData {
   email: string;
   firstName: string;
+  lastName: string;
+  company: string;
   projectName: string;
 }
 

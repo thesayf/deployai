@@ -4,7 +4,15 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/shared/Button';
-import { AIAssessmentFormData } from '@/types/quiz';
+import { UserInfo } from '@/types/quiz';
+
+// Define the form data type for AI assessment
+interface AIAssessmentFormData {
+  email: string;
+  firstName: string;
+  lastName: string;
+  company: string;
+}
 
 // Validation schema
 const emailCaptureSchema = z.object({

@@ -8,7 +8,14 @@ import { Footer } from '@/components/footer/Footer';
 import { LogoTrustBanner } from '@/components/logo-trust-banner';
 import { AssessmentLanding } from '@/components/assessment-landing';
 import { AIAssessmentModal } from '@/components/ai-assessment-modal';
-import { AIAssessmentFormData } from '@/types/quiz';
+
+// Define the form data type for AI assessment
+interface AIAssessmentFormData {
+  email: string;
+  firstName: string;
+  lastName: string;
+  company: string;
+}
 
 const AIAssessmentLanding = () => {
   const router = useRouter();

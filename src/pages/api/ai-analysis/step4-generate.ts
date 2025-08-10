@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
 import { generateStep4Prompt } from '@/prompts/step4-report-generation';
+import { sendReportReadyEmail } from '@/lib/email/email-service';
 import { ProblemAnalysis, CuratedTools } from '@/types/ai-analysis-new';
 import { cleanAndParseJSON } from '@/utils/clean-json';
 import Anthropic from '@anthropic-ai/sdk';
@@ -148,52 +149,54 @@ export default async function handler(
       throw updateError;
     }
 
-    // Fetch user data for email
-    console.log('[STEP4] Fetching user data for email...');
-    const { data: userData, error: userError } = await supabase
-      .from('quiz_responses')
-      .select('user_email, user_first_name, user_last_name, user_company')
-      .eq('id', quizResponseId)
+    // Get ALL the data we need in ONE query - report info AND user info
+    console.log('[STEP4] Getting report and user data for email...');
+    const { data: reportWithUser, error: fetchError } = await supabase
+      .from('ai_reports')
+      .select(`
+        access_token,
+        quiz_responses!inner(
+          user_email,
+          user_first_name,
+          user_last_name,
+          user_company
+        )
+      `)
+      .eq('id', reportId)
       .single();
 
-    if (userError || !userData) {
-      console.error('[STEP4] Failed to fetch user data:', userError);
-      // Continue anyway - report is still generated
-    }
-
-    // Send email notification to user with report link
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
-    
-    console.log('[STEP4] Sending report email...');
-    console.log('[STEP4] Email API URL:', `${baseUrl}/api/reports/send-report-email`);
-    console.log('[STEP4] User email:', userData?.user_email);
-    
-    try {
-      const emailResponse = await fetch(`${baseUrl}/api/reports/send-report-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          reportId,
-          userEmail: userData?.user_email,
-          firstName: userData?.user_first_name,
-          lastName: userData?.user_last_name,
-          company: userData?.user_company
-        }),
-      });
-
-      if (!emailResponse.ok) {
-        const errorText = await emailResponse.text();
-        console.error('[STEP4] ERROR - Failed to send report email. Status:', emailResponse.status);
-        console.error('[STEP4] Email error response:', errorText);
-        // Don't fail the whole process if email fails
+    if (fetchError || !reportWithUser) {
+      console.error('[STEP4] ERROR - Failed to fetch data for email:', fetchError);
+    } else {
+      // Extract user data (Supabase returns joined data as an object or array)
+      const userData = Array.isArray(reportWithUser.quiz_responses) 
+        ? reportWithUser.quiz_responses[0] 
+        : reportWithUser.quiz_responses;
+      
+      const userEmail = userData?.user_email;
+      
+      if (!userEmail) {
+        console.error('[STEP4] ERROR - No email address found');
       } else {
-        console.log('[STEP4] SUCCESS - Report email sent successfully');
+        // Send the email - SIMPLE
+        console.log('[STEP4] Sending report email to:', userEmail);
+        
+        const emailResult = await sendReportReadyEmail({
+          reportId,
+          userEmail,
+          firstName: userData.user_first_name || 'there',
+          lastName: userData.user_last_name || '',
+          company: userData.user_company,
+          accessToken: reportWithUser.access_token,
+          req
+        });
+
+        if (!emailResult.success) {
+          console.error('[STEP4] ERROR - Email failed:', emailResult.error);
+        } else {
+          console.log('[STEP4] SUCCESS - Email sent! ID:', emailResult.emailId);
+        }
       }
-    } catch (emailError) {
-      console.error('[STEP4] ERROR - Exception sending report email:', emailError);
-      // Continue anyway - report is still generated
     }
 
     res.status(200).json({ 

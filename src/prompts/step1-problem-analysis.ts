@@ -65,7 +65,7 @@ OUTPUT FORMAT (return only valid JSON):
   "topOpportunities": [
     {
       "problemArea": "The EXACT problem they described, using their words and context",
-      "aiSolutionType": "SPECIFIC type of solution for this exact problem",
+      "aiSolutionType": "SPECIFIC type of solution for this exact problem",thw
       "problemEvidence": "Direct quotes from their responses showing this problem",
       "searchKeywords": [
         "Very specific search terms that will find solutions for THEIR exact problem",

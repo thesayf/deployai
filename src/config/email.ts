@@ -31,15 +31,7 @@ export const EMAIL_CONFIG = {
  * You can update this logic based on which addresses are verified in Resend
  */
 export function getEmailSender(type: 'assessment' | 'reports'): string {
-  // Check if we should use fallback for unverified domains
-  const useFallback = process.env.USE_FALLBACK_SENDER === 'true';
-  
-  if (useFallback) {
-    console.log(`[EMAIL] Using fallback sender for ${type} emails`);
-    return EMAIL_CONFIG.senders.fallback;
-  }
-  
-  // Use the specific sender for this type
+  // deployai.studio domain is verified, so we can use it
   const sender = EMAIL_CONFIG.senders[type];
   console.log(`[EMAIL] Using ${type} sender: ${sender}`);
   return sender;

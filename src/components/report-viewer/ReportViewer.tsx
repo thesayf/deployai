@@ -118,28 +118,18 @@ export function ReportViewer({
         <div className="bg-white border-3 border-black p-6 shadow-hard">
           <h3 className="text-lg font-bold uppercase mb-4">Primary Pain Points</h3>
           <ul className="space-y-3">
-<<<<<<< HEAD
             {stage1Analysis.analysis.problemAnalysis.primaryPainPoints.map((painPoint, idx) => (
               <li key={idx} className="flex items-start gap-3">
                 <div className="w-2 h-2 bg-black rounded-full mt-2 flex-shrink-0" />
                 <div>
                   <span className="font-medium">{painPoint.problem}</span>
-                  <span className="text-sm text-gray-600 ml-2">
-                    ({painPoint.severity} severity)
-=======
-            {stage1Analysis.analysis.problemAnalysis.primaryPainPoints.map((pain, idx) => (
-              <li key={idx} className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-black rounded-full mt-2" />
-                <div>
-                  <span className="font-medium">{pain.problem}</span>
                   <span className={`ml-2 text-xs px-2 py-1 ${
-                    pain.severity === 'critical' ? 'bg-red-500 text-white' :
-                    pain.severity === 'high' ? 'bg-orange-500 text-white' :
-                    pain.severity === 'medium' ? 'bg-yellow-500 text-black' :
+                    painPoint.severity === 'critical' ? 'bg-red-500 text-white' :
+                    painPoint.severity === 'high' ? 'bg-orange-500 text-white' :
+                    painPoint.severity === 'medium' ? 'bg-yellow-500 text-black' :
                     'bg-gray-300 text-black'
                   }`}>
-                    {pain.severity}
->>>>>>> feat/ai-quiz
+                    {painPoint.severity}
                   </span>
                 </div>
               </li>
@@ -505,11 +495,7 @@ function ToolCard({ tool }: ToolCardProps) {
 
 interface MetricCardProps {
   label: string;
-<<<<<<< HEAD
-  value: string;
-=======
   value: string | number;
->>>>>>> feat/ai-quiz
   color: 'green' | 'blue' | 'purple';
 }
 
@@ -535,7 +521,6 @@ interface CostItemProps {
 }
 
 function CostItem({ label, value, bold = false }: CostItemProps) {
-<<<<<<< HEAD
   const formattedValue = typeof value === 'number' 
     ? `$${value.toLocaleString()}`
     : value.toString().startsWith('$') ? value : `$${value}`;
@@ -544,12 +529,6 @@ function CostItem({ label, value, bold = false }: CostItemProps) {
     <div className={`flex justify-between ${bold ? 'font-bold' : ''}`}>
       <span>{label}:</span>
       <span>{formattedValue}</span>
-=======
-  return (
-    <div className={`flex justify-between ${bold ? 'font-bold' : ''}`}>
-      <span>{label}:</span>
-      <span>${typeof value === 'number' ? value.toLocaleString() : value}</span>
->>>>>>> feat/ai-quiz
     </div>
   );
 }
@@ -590,17 +569,10 @@ interface PriorityCardProps {
     priority: number;
     initiative: string;
     rationale: string;
-<<<<<<< HEAD
     expectedROI: string;
     timeToValue: string;
     riskLevel: 'low' | 'medium' | 'high';
     quickWin?: boolean;
-=======
-    quickWin: boolean;
-    timeToValue: string;
-    expectedROI: string;
-    riskLevel: string;
->>>>>>> feat/ai-quiz
   };
 }
 

@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { sendContactEmail } from '@/lib/email/email-service';
 
 type Data = {
   message: string;
@@ -16,7 +14,9 @@ export default async function handler(
   console.log('Contact API called:', {
     method: req.method,
     body: req.body,
-    hasApiKey: !!process.env.RESEND_API_KEY
+    hasApiKey: !!process.env.RESEND_API_KEY,
+    apiKeyStarts: process.env.RESEND_API_KEY?.substring(0, 4),
+    apiKeyLength: process.env.RESEND_API_KEY?.length
   });
 
   if (req.method !== 'POST') {
@@ -39,47 +39,21 @@ export default async function handler(
       throw new Error('RESEND_API_KEY is not configured');
     }
 
-    // Configuration for sending emails
-    const toEmail = 'hello@deployai.studio';
-    const fromEmail = process.env.NODE_ENV === 'production' 
-      ? 'hello@deployai.studio' // Once domain is verified
-      : 'onboarding@resend.dev'; // Resend's default for development
-
-    const { data, error } = await resend.emails.send({
-      from: fromEmail,
-      to: toEmail,
-      replyTo: email, // Set reply-to as the user's email
-      subject: `New ${type === 'company' ? 'Company' : 'Individual'} Inquiry from ${name}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Type:</strong> ${type === 'company' ? 'Company' : 'Individual'}</p>
-        <p><strong>Name:</strong> ${name}</p>
-        ${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
-        <p><strong>Email:</strong> ${email}</p>
-        ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
-        <hr />
-        <h3>Message:</h3>
-        <p>${message.replace(/\n/g, '<br>')}</p>
-      `,
-      text: `
-        New Contact Form Submission
-        
-        Type: ${type === 'company' ? 'Company' : 'Individual'}
-        Name: ${name}
-        ${company ? `Company: ${company}` : ''}
-        Email: ${email}
-        ${phone ? `Phone: ${phone}` : ''}
-        
-        Message:
-        ${message}
-      `,
+    // Use the email service
+    const result = await sendContactEmail({
+      name,
+      company,
+      email,
+      phone,
+      message,
+      type: type || 'individual'
     });
 
-    if (error) {
-      console.error('Resend error:', error);
+    if (!result.success) {
+      console.error('Contact email failed:', result.error);
       return res.status(400).json({ 
         message: 'Failed to send email',
-        error: error.message 
+        error: result.error || 'Unknown error'
       });
     }
 
