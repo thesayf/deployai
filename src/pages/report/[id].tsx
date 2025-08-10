@@ -19,10 +19,8 @@ interface ReportData {
   stage2_tool_research: Stage2MarketIntelligence;
   stage3_tool_selection: Stage3FinancialAnalysis;
   stage4_report_content: Stage4StrategicRecommendations;
-  final_report: any;
   report_status: string;
   created_at: string;
-  company_name: string;
   quiz_response: {
     user_company: string;
     user_first_name: string;
@@ -59,10 +57,8 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
           stage2_tool_research,
           stage3_tool_selection,
           stage4_report_content,
-          final_report,
           report_status,
           created_at,
-          company_name,
           quiz_responses!inner(
             user_company,
             user_first_name,
@@ -78,13 +74,13 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
         return;
       }
 
-      if (data.report_status !== 'report_generated' && data.report_status !== 'completed') {
+      if (data.report_status !== 'completed') {
         setError('Report is still being generated. Please check back later.');
         return;
       }
 
-      // Check if we have the final_report data
-      if (!data.final_report) {
+      // Check if we have the stage4_report_content data
+      if (!data.stage4_report_content) {
         setError('Report data is not available yet. Please try again later.');
         return;
       }
@@ -188,7 +184,7 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
     return null;
   }
 
-  const companyName = report.company_name || report.quiz_response.user_company || 
+  const companyName = report.quiz_response.user_company || 
     `${report.quiz_response.user_first_name}'s Company`;
 
   return (
@@ -199,7 +195,7 @@ export default function ReportPage({ reportId, isPublic }: ReportPageProps) {
       </Head>
 
       <ProfessionalReport
-        data={report.final_report as ProfessionalReportData}
+        data={report.stage4_report_content as unknown as ProfessionalReportData}
         companyName={companyName}
         generatedDate={new Date(report.created_at)}
         variant="executive"

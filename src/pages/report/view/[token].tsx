@@ -31,12 +31,9 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
         .from('ai_reports')
         .select(`
           id,
-          final_report,
+          stage4_report_content,
           report_status,
-          report_variant,
-          company_name,
-          report_generated_at,
-          access_count
+          email_sent_at
         `)
         .eq('access_token', accessToken)
         .single();
@@ -47,34 +44,35 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
         return;
       }
 
-      if (data.report_status !== 'report_generated' && data.report_status !== 'completed') {
+      if (data.report_status !== 'completed') {
         setError('Your report is still being generated. Please check back in a few minutes.');
         return;
       }
 
-      if (!data.final_report) {
+      if (!data.stage4_report_content) {
         setError('Report content is not available yet. Please try again later.');
         return;
       }
 
       setReport(data);
-      setVariant((data.report_variant as any) || 'executive');
+      setVariant('executive');
 
       // Update access count (fire and forget)
-      const updateAccessCount = async () => {
-        try {
-          await supabase
-            .from('ai_reports')
-            .update({ 
-              access_count: (data.access_count || 0) + 1,
-              report_accessed_at: new Date().toISOString()
-            })
-            .eq('access_token', accessToken);
-        } catch (err) {
-          console.error('Failed to update access count:', err);
-        }
-      };
-      updateAccessCount();
+      // Note: access_count and report_accessed_at columns don't exist yet
+      // const updateAccessCount = async () => {
+      //   try {
+      //     await supabase
+      //       .from('ai_reports')
+      //       .update({ 
+      //         access_count: (data.access_count || 0) + 1,
+      //         report_accessed_at: new Date().toISOString()
+      //       })
+      //       .eq('access_token', accessToken);
+      //   } catch (err) {
+      //     console.error('Failed to update access count:', err);
+      //   }
+      // };
+      // updateAccessCount();
 
     } catch (err) {
       console.error('Error:', err);
@@ -184,9 +182,9 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
 
       {/* Report Content */}
       <ProfessionalReport
-        data={report.final_report as ReportData}
-        companyName={report.company_name || 'Your Organization'}
-        generatedDate={report.report_generated_at ? new Date(report.report_generated_at) : new Date()}
+        data={report.stage4_report_content as unknown as ReportData}
+        companyName={'Your Organization'}
+        generatedDate={report.email_sent_at ? new Date(report.email_sent_at) : new Date()}
         variant={variant}
         onScheduleConsultation={() => {
           window.open('https://calendly.com/deployai-consultation', '_blank');

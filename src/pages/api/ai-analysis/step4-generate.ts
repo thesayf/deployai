@@ -137,9 +137,8 @@ export default async function handler(
       .from('ai_reports')
       .update({
         stage4_report_content: finalReport,
-        final_report: finalReport,
-        report_status: 'report_generated',
-        report_generated_at: new Date().toISOString(),
+        report_status: 'completed',
+        email_sent_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       })
       .eq('id', reportId);
@@ -149,21 +148,38 @@ export default async function handler(
       throw updateError;
     }
 
+    // Fetch user data for email
+    console.log('[STEP4] Fetching user data for email...');
+    const { data: userData, error: userError } = await supabase
+      .from('quiz_responses')
+      .select('user_email, user_first_name, user_last_name, user_company')
+      .eq('id', quizResponseId)
+      .single();
+
+    if (userError || !userData) {
+      console.error('[STEP4] Failed to fetch user data:', userError);
+      // Continue anyway - report is still generated
+    }
+
     // Send email notification to user with report link
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
     
     console.log('[STEP4] Sending report email...');
     console.log('[STEP4] Email API URL:', `${baseUrl}/api/reports/send-report-email`);
+    console.log('[STEP4] User email:', userData?.user_email);
     
     try {
       const emailResponse = await fetch(`${baseUrl}/api/reports/send-report-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key',
         },
         body: JSON.stringify({
-          reportId
+          reportId,
+          userEmail: userData?.user_email,
+          firstName: userData?.user_first_name,
+          lastName: userData?.user_last_name,
+          company: userData?.user_company
         }),
       });
 
