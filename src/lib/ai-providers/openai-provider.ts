@@ -35,7 +35,7 @@ export class OpenAIProvider extends AIProvider {
 
       // Add optional parameters if they exist
       if (options.reasoning_effort) {
-        params.reasoning_effort = options.reasoning_effort;
+        params.reasoning = { effort: options.reasoning_effort };
       }
       if (options.verbosity) {
         params.verbosity = options.verbosity;
@@ -94,7 +94,7 @@ export class OpenAIProvider extends AIProvider {
 
       // Add optional parameters if they exist
       if (options.reasoning_effort) {
-        params.reasoning_effort = options.reasoning_effort;
+        params.reasoning = { effort: options.reasoning_effort };
       }
       if (options.verbosity) {
         params.verbosity = options.verbosity;
