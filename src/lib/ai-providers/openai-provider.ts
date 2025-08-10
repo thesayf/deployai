@@ -38,7 +38,7 @@ export class OpenAIProvider extends AIProvider {
         params.reasoning = { effort: options.reasoning_effort };
       }
       if (options.verbosity) {
-        params.verbosity = options.verbosity;
+        params.text = { verbosity: options.verbosity };
       }
       if (options.maxTokens) {
         params.max_tokens = options.maxTokens;
@@ -97,7 +97,7 @@ export class OpenAIProvider extends AIProvider {
         params.reasoning = { effort: options.reasoning_effort };
       }
       if (options.verbosity) {
-        params.verbosity = options.verbosity;
+        params.text = { verbosity: options.verbosity };
       }
       if (options.maxTokens) {
         params.max_tokens = options.maxTokens;
