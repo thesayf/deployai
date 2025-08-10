@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
 import { generateStep1Prompt } from '@/prompts/step1-problem-analysis';
 import { cleanAndParseJSON } from '@/utils/clean-json';
-import Anthropic from '@anthropic-ai/sdk';
+import { AIProviderFactory } from '@/lib/ai-providers/provider-factory';
 
 interface AnalyzeRequest {
   quizResponseId: string;
@@ -54,30 +54,32 @@ export default async function handler(
 
     console.log('Found existing report:', existingReport);
 
-    // Initialize Anthropic client
-    const anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY!,
-    });
+    // Get provider configuration for Step 1
+    const stepConfig = AIProviderFactory.getStepConfig(1);
+    const provider = AIProviderFactory.getProvider(stepConfig.provider, stepConfig.model);
+    
+    console.log(`[STEP1] Using provider: ${provider.getName()}`);
+    console.log(`[STEP1] Model: ${stepConfig.model}`);
 
     // Generate prompt with company name
     const prompt = generateStep1Prompt(quizData.responses, quizData.user_company);
 
-    // Call Claude
-    const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1500,
+    // Call AI provider
+    const response = await provider.generateCompletion({
+      prompt,
+      maxTokens: 1500,
       temperature: 0.2,
-      messages: [
-        {
-          role: 'user',
-          content: prompt
-        }
-      ]
+      reasoning_effort: stepConfig.reasoning_effort,
+      verbosity: stepConfig.verbosity,
     });
 
     // Extract JSON from response
-    const content = response.content[0].type === 'text' ? response.content[0].text : '';
+    const content = response.content;
     let problemAnalysis;
+    
+    if (response.usage) {
+      console.log('[STEP1] Token usage:', response.usage);
+    }
     
     try {
       problemAnalysis = cleanAndParseJSON(content);

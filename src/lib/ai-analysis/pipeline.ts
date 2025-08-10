@@ -1,6 +1,7 @@
 /**
  * AI Analysis Pipeline Module
  * Handles the complete AI analysis flow without server-to-server HTTP calls
+ * Supports multiple AI providers (OpenAI GPT-5-mini, Anthropic Claude)
  */
 
 import { supabaseAdmin } from '@/lib/supabase';
@@ -9,17 +10,13 @@ import { generateStep3Prompt } from '@/prompts/step3-tool-curation';
 import { generateStep4Prompt } from '@/prompts/step4-report-generation';
 import { cleanAndParseJSON } from '@/utils/clean-json';
 import { sendReportReadyEmail } from '@/lib/email/email-service';
-import Anthropic from '@anthropic-ai/sdk';
+import { AIProviderFactory } from '@/lib/ai-providers/provider-factory';
 import type { 
   ProblemAnalysis, 
   ToolResearch, 
   CuratedTools,
   FinalReport 
 } from '@/types/ai-analysis-new';
-
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY!,
-});
 
 /**
  * Step 2: Tool Research
@@ -40,22 +37,37 @@ export async function executeStep2Research({
   try {
     const supabase = supabaseAdmin();
     
+    // Get provider configuration for Step 2
+    const stepConfig = AIProviderFactory.getStepConfig(2);
+    const provider = AIProviderFactory.getProvider(stepConfig.provider, stepConfig.model);
+    
+    console.log(`[PIPELINE-STEP2] Using provider: ${provider.getName()}`);
+    console.log(`[PIPELINE-STEP2] Model: ${stepConfig.model}`);
+    
     const prompt = generateStep2Prompt(problemAnalysis);
     console.log('[PIPELINE-STEP2] Generated prompt length:', prompt.length);
 
-    const completion = await anthropic.messages.create({
-      model: 'claude-3-haiku-20240307',
-      max_tokens: 3000,
-      temperature: 0.7,
-      messages: [{ role: 'user', content: prompt }]
-    });
+    // Use web search for Step 2 if using OpenAI
+    const response = stepConfig.provider === 'openai' 
+      ? await provider.generateWithTools({
+          prompt,
+          maxTokens: 15000,
+          reasoning_effort: stepConfig.reasoning_effort,
+          verbosity: stepConfig.verbosity,
+          tools: [{ type: 'web_search' }],
+        })
+      : await provider.generateWithTools({
+          prompt,
+          maxTokens: 15000,
+          tools: [{ type: 'web_search' }], // Will use Claude's web search if available
+        });
 
-    const responseText = completion.content[0].type === 'text' 
-      ? completion.content[0].text 
-      : '';
-
-    const toolResearch = cleanAndParseJSON(responseText) as ToolResearch;
+    const toolResearch = cleanAndParseJSON(response.content) as ToolResearch;
     console.log('[PIPELINE-STEP2] Parsed research - Solutions count:', toolResearch.recommendedSolutions?.length);
+    
+    if (response.usage) {
+      console.log('[PIPELINE-STEP2] Token usage:', response.usage);
+    }
 
     // Save to database
     const { error: updateError } = await supabase
@@ -112,22 +124,30 @@ export async function executeStep3Curation({
   try {
     const supabase = supabaseAdmin();
     
+    // Get provider configuration for Step 3
+    const stepConfig = AIProviderFactory.getStepConfig(3);
+    const provider = AIProviderFactory.getProvider(stepConfig.provider, stepConfig.model);
+    
+    console.log(`[PIPELINE-STEP3] Using provider: ${provider.getName()}`);
+    console.log(`[PIPELINE-STEP3] Model: ${stepConfig.model}`);
+    
     const prompt = generateStep3Prompt(problemAnalysis, toolResearch);
     console.log('[PIPELINE-STEP3] Generated prompt length:', prompt.length);
 
-    const completion = await anthropic.messages.create({
-      model: 'claude-3-haiku-20240307',
-      max_tokens: 4000,
+    const response = await provider.generateCompletion({
+      prompt,
+      maxTokens: 4000,
       temperature: 0.7,
-      messages: [{ role: 'user', content: prompt }]
+      reasoning_effort: stepConfig.reasoning_effort,
+      verbosity: stepConfig.verbosity,
     });
 
-    const responseText = completion.content[0].type === 'text' 
-      ? completion.content[0].text 
-      : '';
-
-    const solutionCuration = cleanAndParseJSON(responseText) as CuratedTools;
+    const solutionCuration = cleanAndParseJSON(response.content) as CuratedTools;
     console.log('[PIPELINE-STEP3] Parsed solutions count:', solutionCuration.selectedTools?.length);
+    
+    if (response.usage) {
+      console.log('[PIPELINE-STEP3] Token usage:', response.usage);
+    }
 
     // Save to database
     const { error: updateError } = await supabase
@@ -187,22 +207,30 @@ export async function executeStep4Generate({
   try {
     const supabase = supabaseAdmin();
     
+    // Get provider configuration for Step 4
+    const stepConfig = AIProviderFactory.getStepConfig(4);
+    const provider = AIProviderFactory.getProvider(stepConfig.provider, stepConfig.model);
+    
+    console.log(`[PIPELINE-STEP4] Using provider: ${provider.getName()}`);
+    console.log(`[PIPELINE-STEP4] Model: ${stepConfig.model}`);
+    
     const prompt = generateStep4Prompt(problemAnalysis, solutionCuration);
     console.log('[PIPELINE-STEP4] Generated prompt length:', prompt.length);
 
-    const completion = await anthropic.messages.create({
-      model: 'claude-3-sonnet-20240229',
-      max_tokens: 8000,
+    const response = await provider.generateCompletion({
+      prompt,
+      maxTokens: 8000,
       temperature: 0.7,
-      messages: [{ role: 'user', content: prompt }]
+      reasoning_effort: stepConfig.reasoning_effort,
+      verbosity: stepConfig.verbosity, // High verbosity for comprehensive report
     });
 
-    const responseText = completion.content[0].type === 'text' 
-      ? completion.content[0].text 
-      : '';
-
-    const finalReport = cleanAndParseJSON(responseText) as FinalReport;
+    const finalReport = cleanAndParseJSON(response.content) as FinalReport;
     console.log('[PIPELINE-STEP4] Report generated successfully');
+    
+    if (response.usage) {
+      console.log('[PIPELINE-STEP4] Token usage:', response.usage);
+    }
 
     // Save to database
     const { error: updateError } = await supabase
