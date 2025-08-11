@@ -134,22 +134,32 @@ export default async function handler(
     }
 
     // Update report with final report and mark as completed
+    console.log('[STEP4] About to update report with final content...');
+    console.log('[STEP4] Report ID:', reportId);
+    const emailTimestamp = new Date().toISOString();
+    console.log('[STEP4] email_sent_at timestamp:', emailTimestamp);
+    
     const { error: updateError } = await supabase
       .from('ai_reports')
       .update({
         stage4_report_content: finalReport,
         report_status: 'completed',
-        email_sent_at: new Date().toISOString(),
+        email_sent_at: emailTimestamp,
         updated_at: new Date().toISOString()
       })
       .eq('id', reportId);
 
     if (updateError) {
-      console.error('Error updating report:', updateError);
+      console.error('[STEP4] ❌ Error updating report:', updateError);
+      console.error('[STEP4] Update error details:', JSON.stringify(updateError));
       throw updateError;
     }
+    
+    console.log('[STEP4] ✅ Report update completed successfully');
+    console.log('[STEP4] Updated: stage4_report_content, report_status, email_sent_at, updated_at');
 
     // Get ALL the data we need in ONE query - report info AND user info
+    console.log('[STEP4] Starting email preparation...');
     console.log('[STEP4] Getting report and user data for email...');
     const { data: reportWithUser, error: fetchError } = await supabase
       .from('ai_reports')
@@ -165,21 +175,36 @@ export default async function handler(
       .eq('id', reportId)
       .single();
 
+    console.log('[STEP4] Fetch complete. Data returned:', !!reportWithUser);
+    console.log('[STEP4] Fetch error:', fetchError ? JSON.stringify(fetchError) : 'none');
+    
     if (fetchError || !reportWithUser) {
       console.error('[STEP4] ERROR - Failed to fetch data for email:', fetchError);
+      console.error('[STEP4] Query failed - no email will be sent');
     } else {
+      console.log('[STEP4] Quiz responses found:', !!reportWithUser.quiz_responses);
       // Extract user data (Supabase returns joined data as an object or array)
       const userData = Array.isArray(reportWithUser.quiz_responses) 
         ? reportWithUser.quiz_responses[0] 
         : reportWithUser.quiz_responses;
       
       const userEmail = userData?.user_email;
+      console.log('[STEP4] Extracted user email:', userEmail || 'NONE');
       
       if (!userEmail) {
         console.error('[STEP4] ERROR - No email address found');
+        console.error('[STEP4] User data structure:', JSON.stringify(userData));
       } else {
         // Send the email - SIMPLE
-        console.log('[STEP4] Sending report email to:', userEmail);
+        console.log('[STEP4] About to call sendReportReadyEmail...');
+        console.log('[STEP4] Email params:', {
+          reportId,
+          userEmail,
+          firstName: userData.user_first_name || 'there',
+          lastName: userData.user_last_name || '',
+          company: userData.user_company,
+          hasAccessToken: !!reportWithUser.access_token
+        });
         
         const emailResult = await sendReportReadyEmail({
           reportId,
@@ -191,6 +216,9 @@ export default async function handler(
           req
         });
 
+        console.log('[STEP4] Email send attempt complete');
+        console.log('[STEP4] Email result:', JSON.stringify(emailResult));
+        
         if (!emailResult.success) {
           console.error('[STEP4] ERROR - Email failed:', emailResult.error);
         } else {
@@ -199,6 +227,7 @@ export default async function handler(
       }
     }
 
+    console.log('[STEP4] Function completing, returning success response');
     res.status(200).json({ 
       success: true, 
       message: 'Report generation complete',
