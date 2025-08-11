@@ -142,18 +142,19 @@ export async function executeStep3Curation({
           temperature: 0.7,
         });
 
-    const solutionCuration = cleanAndParseJSON(response.content) as CuratedTools;
-    console.log('[PIPELINE-STEP3] Parsed solutions count:', solutionCuration.selectedTools?.length);
+    const solutionCuration = cleanAndParseJSON(response.content) as any;
+    console.log('[PIPELINE-STEP3] Parsed solutions - internal tools:', solutionCuration.internalReference?.tools?.length);
+    console.log('[PIPELINE-STEP3] Parsed solutions - client solutions:', solutionCuration.clientSolution?.implementedSolutions?.length);
     
     if (response.usage) {
       console.log('[PIPELINE-STEP3] Token usage:', response.usage);
     }
 
-    // Save to database
+    // Save to database - keep both internal and client data for our records
     const { error: updateError } = await supabase
       .from('ai_reports')
       .update({
-        stage3_tool_selection: solutionCuration,
+        stage3_tool_selection: solutionCuration,  // Store complete data including internal references
         report_status: 'stage3_complete',
         updated_at: new Date().toISOString()
       })
@@ -166,13 +167,13 @@ export async function executeStep3Curation({
 
     console.log('[PIPELINE-STEP3] Curation saved successfully');
 
-    // Continue to Step 4
+    // Continue to Step 4 - pass ONLY clientSolution to prevent tool name leakage
     await executeStep4Generate({
       quizResponseId,
       reportId,
       problemAnalysis,
       toolResearch,
-      solutionCuration
+      clientSolution: solutionCuration.clientSolution  // Pass only client-safe data
     });
 
     return { success: true };
@@ -193,13 +194,13 @@ export async function executeStep4Generate({
   reportId,
   problemAnalysis,
   toolResearch,
-  solutionCuration
+  clientSolution
 }: {
   quizResponseId: string;
   reportId: string;
   problemAnalysis: ProblemAnalysis;
   toolResearch: ToolResearch;
-  solutionCuration: CuratedTools;
+  clientSolution: any;  // Client-safe solution data only
 }): Promise<{ success: boolean; error?: string }> {
   console.log('[PIPELINE-STEP4] Starting report generation');
   console.log('[PIPELINE-STEP4] Report ID:', reportId);
@@ -214,7 +215,7 @@ export async function executeStep4Generate({
     console.log(`[PIPELINE-STEP4] Using provider: ${provider.getName()}`);
     console.log(`[PIPELINE-STEP4] Model: ${stepConfig.model}`);
     
-    const prompt = generateStep4Prompt(problemAnalysis, solutionCuration);
+    const prompt = generateStep4Prompt(problemAnalysis, clientSolution);
     console.log('[PIPELINE-STEP4] Generated prompt length:', prompt.length);
 
     const response = stepConfig.provider === 'openai'

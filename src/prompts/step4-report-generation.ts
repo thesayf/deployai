@@ -1,11 +1,11 @@
 import { ProblemAnalysis, CuratedTools } from '@/types/ai-analysis-new';
 
-export function generateStep4Prompt(problemAnalysis: ProblemAnalysis, curatedTools: CuratedTools): string {
+export function generateStep4Prompt(problemAnalysis: ProblemAnalysis, clientSolution: any): string {
   const companyName = problemAnalysis.businessContext.companyName || 'Your organization';
   
   return `You are creating a persuasive AI readiness report. Your job is to transform raw data into a compelling narrative that feels personalized to ${companyName} in the ${problemAnalysis.businessContext.industry} industry.
 
-IMPORTANT: You MUST include ALL tools from curatedTools.selectedTools in the report. If there are 3 tools in selectedTools, the report MUST have 3 solutions. Each tool solves a specific problem - include them all.
+IMPORTANT: You MUST include ALL solutions from clientSolution.implementedSolutions in the report. If there are 3 solutions, the report MUST have 3 solution entries. Each solution addresses specific problems - include them all.
 
 CRITICAL CONTEXT FOR NARRATIVE VOICE:
 - Company: ${companyName}
@@ -17,131 +17,132 @@ CRITICAL CONTEXT FOR NARRATIVE VOICE:
 
 RAW DATA TO TRANSFORM:
 Problems Identified: ${JSON.stringify(problemAnalysis.topOpportunities, null, 2)}
-Solutions & Case Studies: ${JSON.stringify(curatedTools, null, 2)}
+Our Solutions: ${JSON.stringify(clientSolution, null, 2)}
 
 YOUR TRANSFORMATION TASK:
-1. Extract all numerical data, metrics, and case studies from curatedTools
+1. Extract all numerical data, metrics, and proven results from clientSolution
 2. Rewrite everything in language appropriate for their industry
 3. Make problems feel urgent using their actual pain points
-4. Position solutions as transformative (but stay truthful to data)
-5. Use ALL case studies but make them relatable to their business size/type
-6. Create a narrative arc: current pain → possible future → clear next step
-7. MANDATORY: Include ALL tools from curatedTools.selectedTools - if there are 3 tools, create 3 solution entries
-8. MANDATORY: Include projectedOutcomes for ALL tools - one outcome per tool
+4. Position DeployAI's solutions as transformative (but stay truthful to data)
+5. Use ALL proven results but make them relatable to their business size/type
+6. Create a narrative arc: current pain → what we'll implement → clear next step
+7. MANDATORY: Include ALL solutions from clientSolution.implementedSolutions
+8. MANDATORY: Include projectedOutcomes for ALL solutions
+9. Present everything as DeployAI's expertise and implementation, not third-party tools
 
 OUTPUT FORMAT (return only valid JSON):
 {
   "executiveSummary": {
     "readinessLevel": "Assess as High/Medium/Low based on: Do they have modern systems? AI experience? Clear objectives? Budget allocated?",
-    "estimatedAnnualOpportunity": "Take curatedTools.executiveSummary.estimatedAnnualOpportunity exactly",
-    "immediateROI": "Take curatedTools.totalInvestmentSummary.netROI exactly"
+    "estimatedAnnualOpportunity": "Take clientSolution.executiveSummary.estimatedAnnualOpportunity exactly",
+    "immediateROI": "Take clientSolution.totalInvestmentSummary.netROI exactly"
   },
   
   "keyProblems": [
     {
       "problem": "Transform problemAnalysis.topOpportunities[0] into urgent headline for ${companyName}. Example: If problem is 'slow customer response', write 'At ${companyName}, customers are waiting 24+ hours while competitors respond instantly'",
       "currentCost": "Extract numbers from problemEvidence. Make it hurt. '$5,000/month in lost sales' or '15 hours/week of manual work at ${companyName}'",
-      "potentialGain": "Use actual metrics from curatedTools.selectedTools that solve this. '90% faster response times' or '$60,000 annual savings for ${companyName}'"
+      "potentialGain": "Use actual metrics from clientSolution.implementedSolutions that solve this. '90% faster response times' or '$60,000 annual savings for ${companyName}'"
     },
     {
       "problem": "Make problem 2 feel like ${companyName} is falling behind competitors",
       "currentCost": "Quantify the pain specifically for ${companyName}'s industry size and type",
-      "potentialGain": "Pull real improvement numbers from the matching solution in curatedTools"
+      "potentialGain": "Pull real improvement numbers from the matching solution in clientSolution"
     },
     {
       "problem": "Frame problem 3 as missed opportunity or growing risk for ${companyName}",
       "currentCost": "Use industry-appropriate metrics (revenue loss, compliance risk, efficiency gap) that ${companyName} faces",
-      "potentialGain": "Use case study improvements from curatedTools to show what's possible for ${companyName}"
+      "potentialGain": "Use proven results from clientSolution to show what's possible for ${companyName}"
     }
   ],
   
   "recommendedSolutions": [
-    // CREATE ONE ENTRY FOR EACH TOOL IN curatedTools.selectedTools
-    // Example for tool 0:
+    // CREATE ONE ENTRY FOR EACH SOLUTION IN clientSolution.implementedSolutions
+    // Example for solution 0:
     {
-      "solutionName": "Use curatedTools.selectedTools[0].verboseName exactly - this is already generic",
+      "solutionName": "Use clientSolution.implementedSolutions[0].solutionName exactly",
       "directImpact": [
-        "List which problems from above this solves - use curatedTools.selectedTools[0].directImpact"
+        "Use clientSolution.implementedSolutions[0].howItSolvesYourProblem"
       ],
       "primaryBenefits": [
-        "Copy curatedTools.selectedTools[0].primaryBenefits[0] exactly",
-        "Copy curatedTools.selectedTools[0].primaryBenefits[1] exactly",
-        "Copy curatedTools.selectedTools[0].primaryBenefits[2] exactly"
+        "Copy clientSolution.implementedSolutions[0].capabilities[0] exactly",
+        "Copy clientSolution.implementedSolutions[0].capabilities[1] exactly",
+        "Copy clientSolution.implementedSolutions[0].capabilities[2] exactly"
       ],
-      "description": "Use curatedTools.selectedTools[0].solutionDescription but add context about how it fits their current systems",
+      "description": "Use clientSolution.implementedSolutions[0].whatWeImplement and emphasize DeployAI's role",
       "realWorldProof": [
         {
-          "caseStudy": "Rewrite curatedTools.selectedTools[0].businessCase.caseStudies[0] to be relatable. If they're a 50-person company, make the case study about a similar size",
-          "metric": "Use exact metric from caseStudies[0].metric"
+          "caseStudy": "Rewrite clientSolution.implementedSolutions[0].businessCase.provenResults[0] to be relatable",
+          "metric": "Use exact metric from provenResults[0].metric"
         },
         {
-          "caseStudy": "Transform second case study if available - make industry relevant",
-          "metric": "Exact metric from caseStudies[1].metric"
+          "caseStudy": "Transform second proven result if available",
+          "metric": "Exact metric from provenResults[1].metric"
         }
       ],
-      "implementationTime": "Use curatedTools.selectedTools[0].implementation.estimatedSetupTime"
+      "implementationTime": "Use clientSolution.implementedSolutions[0].ourImplementation.timeframe"
     },
-    // Example for tool 1:
+    // Example for solution 1:
     {
-      "solutionName": "Use curatedTools.selectedTools[1].verboseName exactly",
-      "directImpact": ["From curatedTools.selectedTools[1].directImpact"],
-      "primaryBenefits": ["Copy all 3 benefits from curatedTools.selectedTools[1].primaryBenefits"],
-      "description": "Use curatedTools.selectedTools[1].solutionDescription with context",
+      "solutionName": "Use clientSolution.implementedSolutions[1].solutionName exactly",
+      "directImpact": ["From clientSolution.implementedSolutions[1].howItSolvesYourProblem"],
+      "primaryBenefits": ["Copy all 3 from clientSolution.implementedSolutions[1].capabilities"],
+      "description": "Use clientSolution.implementedSolutions[1].whatWeImplement",
       "realWorldProof": [
         {
-          "caseStudy": "From curatedTools.selectedTools[1].businessCase.caseStudies[0]",
+          "caseStudy": "From clientSolution.implementedSolutions[1].businessCase.provenResults[0]",
           "metric": "Exact metric"
         }
       ],
-      "implementationTime": "From curatedTools.selectedTools[1].implementation.estimatedSetupTime"
+      "implementationTime": "From clientSolution.implementedSolutions[1].ourImplementation.timeframe"
     },
-    // Example for tool 2:
+    // Example for solution 2:
     {
-      "solutionName": "Use curatedTools.selectedTools[2].verboseName exactly",
-      "directImpact": ["From curatedTools.selectedTools[2].directImpact"],
-      "primaryBenefits": ["Copy all 3 benefits from curatedTools.selectedTools[2].primaryBenefits"],
-      "description": "Use curatedTools.selectedTools[2].solutionDescription with context",
+      "solutionName": "Use clientSolution.implementedSolutions[2].solutionName exactly",
+      "directImpact": ["From clientSolution.implementedSolutions[2].howItSolvesYourProblem"],
+      "primaryBenefits": ["Copy all 3 from clientSolution.implementedSolutions[2].capabilities"],
+      "description": "Use clientSolution.implementedSolutions[2].whatWeImplement",
       "realWorldProof": [
         {
-          "caseStudy": "From curatedTools.selectedTools[2].businessCase.caseStudies[0]",
+          "caseStudy": "From clientSolution.implementedSolutions[2].businessCase.provenResults[0]",
           "metric": "Exact metric"
         }
       ],
-      "implementationTime": "From curatedTools.selectedTools[2].implementation.estimatedSetupTime"
+      "implementationTime": "From clientSolution.implementedSolutions[2].ourImplementation.timeframe"
     }
   ],
   
   "projectedOutcomes": [
-    // CREATE ONE ENTRY FOR EACH TOOL'S PRIMARY SUCCESS METRIC
+    // CREATE ONE ENTRY FOR EACH SOLUTION'S PRIMARY SUCCESS METRIC
     {
-      "tool": "Use curatedTools.selectedTools[0].verboseName",
-      "metric": "Pull from curatedTools.selectedTools[0].successMetrics[0].metric",
-      "current": "Use curatedTools.selectedTools[0].successMetrics[0].currentState",
-      "projected": "Use curatedTools.selectedTools[0].successMetrics[0].targetState",
+      "solution": "Use clientSolution.implementedSolutions[0].solutionName",
+      "metric": "Pull from clientSolution.implementedSolutions[0].successMetrics[0].metric",
+      "current": "Use clientSolution.implementedSolutions[0].successMetrics[0].currentState",
+      "projected": "Use clientSolution.implementedSolutions[0].successMetrics[0].targetState",
       "improvementPercentage": "Calculate from current vs projected"
     },
     {
-      "tool": "Use curatedTools.selectedTools[1].verboseName",
-      "metric": "Pull from curatedTools.selectedTools[1].successMetrics[0].metric",
-      "current": "Use curatedTools.selectedTools[1].successMetrics[0].currentState",
-      "projected": "Use curatedTools.selectedTools[1].successMetrics[0].targetState",
+      "solution": "Use clientSolution.implementedSolutions[1].solutionName",
+      "metric": "Pull from clientSolution.implementedSolutions[1].successMetrics[0].metric",
+      "current": "Use clientSolution.implementedSolutions[1].successMetrics[0].currentState",
+      "projected": "Use clientSolution.implementedSolutions[1].successMetrics[0].targetState",
       "improvementPercentage": "Calculate from current vs projected"
     },
     {
-      "tool": "Use curatedTools.selectedTools[2].verboseName",
-      "metric": "Pull from curatedTools.selectedTools[2].successMetrics[0].metric",
-      "current": "Use curatedTools.selectedTools[2].successMetrics[0].currentState",
-      "projected": "Use curatedTools.selectedTools[2].successMetrics[0].targetState",
+      "solution": "Use clientSolution.implementedSolutions[2].solutionName",
+      "metric": "Pull from clientSolution.implementedSolutions[2].successMetrics[0].metric",
+      "current": "Use clientSolution.implementedSolutions[2].successMetrics[0].currentState",
+      "projected": "Use clientSolution.implementedSolutions[2].successMetrics[0].targetState",
       "improvementPercentage": "Calculate from current vs projected"
     }
   ],
   
   "whereToStart": {
-    "recommendation": "Use curatedTools.whereToStart.recommendedTool but phrase conversationally",
-    "targetBottleneck": "Use curatedTools.whereToStart.immediateBottleneck",
-    "immediateImpact": "Use curatedTools.whereToStart.expectedImpact",
-    "timelineEstimate": "Use curatedTools.whereToStart.timelineToInstallation",
-    "expectedROI": "Use curatedTools.whereToStart.expectedROI",
+    "recommendation": "Use clientSolution.ourRecommendation.firstPhase but phrase conversationally",
+    "targetBottleneck": "Use clientSolution.ourRecommendation.immediateBottleneck",
+    "immediateImpact": "Use clientSolution.ourRecommendation.expectedImpact",
+    "timelineEstimate": "Use clientSolution.ourRecommendation.timeToValue",
+    "expectedROI": "Use clientSolution.ourRecommendation.expectedROI",
     "implementationNote": "Our senior engineers handle all technical complexity"
   },
   
@@ -163,14 +164,14 @@ CONTEXTUAL TRANSFORMATION RULES:
 
 2. SOLUTION POSITIONING:
    - NEVER mention tool brands (Zapier, Intercom, TenantCloud, etc.)
-   - NEVER use "internalToolName" or "internalVendor" fields - those are for internal use only
-   - Use ONLY "verboseName" from curatedTools (already generic and client-safe)
-   - Do NOT reference "toolName" if it contains a real product name
+   - NEVER use any fields from "internalReference" - those are for internal use only
+   - Use ONLY fields from "clientSolution" which are already client-safe
+   - Present everything as DeployAI's expertise and implementation
    - Add context: "This integrates seamlessly with your [current systems they mentioned]"
    - Frame benefits in their business terms, not generic tech terms
 
 3. CASE STUDY ADAPTATION:
-   - Keep ALL case studies from curatedTools (don't skip any)
+   - Keep ALL case studies from clientSolution (don't skip any)
    - Transform company descriptions to match their profile:
      * If case study is "500 employee company" but they have 50, rewrite as "growing company in your industry"
      * If case study is different industry, emphasize the similar challenge not the industry
@@ -184,11 +185,11 @@ CONTEXTUAL TRANSFORMATION RULES:
    - Connect to industry trends they'd recognize
 
 5. DATA EXTRACTION RULES:
-   - estimatedAnnualOpportunity: Pull EXACTLY from curatedTools.executiveSummary
-   - ROI numbers: Pull EXACTLY from curatedTools.totalInvestmentSummary
-   - Success metrics: Pull EXACTLY from curatedTools.selectedTools[x].successMetrics
+   - estimatedAnnualOpportunity: Pull EXACTLY from clientSolution.executiveSummary
+   - ROI numbers: Pull EXACTLY from clientSolution.totalInvestmentSummary
+   - Success metrics: Pull EXACTLY from clientSolution.implementedSolutions[x].successMetrics
    - Case study metrics: Keep EXACT numbers, just reframe the context
-   - whereToStart: Use EXACT recommendation from curatedTools.whereToStart
+   - whereToStart: Use EXACT recommendation from clientSolution.ourRecommendation
 
 Remember: You're translating technical data into THEIR business language while keeping all numbers accurate.
 
