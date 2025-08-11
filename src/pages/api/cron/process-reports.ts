@@ -5,11 +5,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // Verify cron secret for security (Vercel cron jobs)
-  const authHeader = req.headers.authorization;
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    console.log('[CRON] Unauthorized access attempt');
-    return res.status(401).json({ error: 'Unauthorized' });
+  // Verify this is a Vercel cron job request in production
+  if (process.env.NODE_ENV === 'production') {
+    const authHeader = req.headers.authorization;
+    // Vercel automatically adds this header for cron jobs
+    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+      console.log('[CRON] Unauthorized access attempt');
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
   }
 
   console.log('[CRON] Starting report processing job at', new Date().toISOString());
