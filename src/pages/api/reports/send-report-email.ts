@@ -4,9 +4,9 @@ import { sendReportReadyEmail } from '@/lib/email/email-service';
 
 interface SendReportEmailRequest {
   reportId: string;
-  userEmail: string;
-  firstName: string;
-  lastName: string;
+  userEmail?: string;  // Made optional - can fetch from DB
+  firstName?: string;  // Made optional - can fetch from DB
+  lastName?: string;   // Made optional - can fetch from DB
   company?: string;
 }
 
@@ -23,21 +23,29 @@ export default async function handler(
 
     console.log('[API] Send report email request received');
     console.log('[API] Report ID:', reportId);
-    console.log('[API] User email:', userEmail);
+    console.log('[API] User email:', userEmail || 'Will fetch from DB');
     
     // Validate required fields
-    if (!reportId || !userEmail || !firstName || !lastName) {
-      console.error('[API] Missing required fields');
-      return res.status(400).json({ error: 'Missing required fields' });
+    if (!reportId) {
+      console.error('[API] Missing report ID');
+      return res.status(400).json({ error: 'Report ID is required' });
     }
 
     const supabase = supabaseAdmin();
 
-    // Get report access token for URL generation
-    console.log('[API] Fetching report access token...');
+    // Get report with user data
+    console.log('[API] Fetching report and user data...');
     const { data: report, error: reportError } = await supabase
       .from('ai_reports')
-      .select('access_token')
+      .select(`
+        access_token,
+        quiz_responses!inner(
+          user_email,
+          user_first_name,
+          user_last_name,
+          user_company
+        )
+      `)
       .eq('id', reportId)
       .single();
 
@@ -47,14 +55,30 @@ export default async function handler(
     }
     
     console.log('[API] Report access token fetched successfully');
+    
+    // Extract user data from the joined query
+    const userData = Array.isArray(report.quiz_responses) 
+      ? report.quiz_responses[0] 
+      : report.quiz_responses;
+    
+    // Use provided data or fallback to DB data
+    const finalEmail = userEmail || userData?.user_email;
+    const finalFirstName = firstName || userData?.user_first_name || 'there';
+    const finalLastName = lastName || userData?.user_last_name || '';
+    const finalCompany = company || userData?.user_company;
+    
+    if (!finalEmail) {
+      console.error('[API] No email address available');
+      return res.status(400).json({ error: 'No email address found for this report' });
+    }
 
     // Use the email service
     const result = await sendReportReadyEmail({
       reportId,
-      userEmail,
-      firstName,
-      lastName,
-      company,
+      userEmail: finalEmail,
+      firstName: finalFirstName,
+      lastName: finalLastName,
+      company: finalCompany,
       accessToken: report.access_token,
       req
     });

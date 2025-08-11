@@ -101,13 +101,13 @@ export default async function handler(
         });
       }
     } else {
-      // Create new AI report record
+      // Create new AI report record with 'pending' status for async processing
       console.log(`[SUBMIT] No existing report found, creating new report for quiz ${quizId}...`);
       const { data: newReport, error: reportError } = await supabase
         .from('ai_reports')
         .insert({
           quiz_response_id: quizId,
-          report_status: 'generating',
+          report_status: 'pending',  // Changed from 'generating' to 'pending' for async processing
           company_name: updatedQuiz.user_company || 'Your Organization',
           industry_context: finalResponses.industry,
         })
@@ -128,41 +128,11 @@ export default async function handler(
       report = newReport;
     }
 
-    // Only trigger AI report generation if it's a new report or hasn't started processing
-    if (!existingReport || existingReport.report_status === 'pending') {
-      console.log('[SUBMIT] Triggering Step 1 analysis...');
-      console.log('[SUBMIT] Report status:', existingReport?.report_status || 'new');
-      
-      // Trigger AI report generation asynchronously (Step 1 first)
-      // We'll return immediately and process in the background
-      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
-      console.log('[SUBMIT] Using base URL:', baseUrl);
-      console.log('[SUBMIT] Step 1 endpoint:', `${baseUrl}/api/ai-analysis/step1-analyze`);
-      
-      fetch(`${baseUrl}/api/ai-analysis/step1-analyze`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': process.env.INTERNAL_API_KEY || 'dev-key',
-        },
-        body: JSON.stringify({
-          quizResponseId: quizId,
-          reportId: report.id,
-        }),
-      })
-      .then(response => {
-        console.log('[SUBMIT] Step 1 trigger response status:', response.status);
-        return response.json();
-      })
-      .then(data => {
-        console.log('[SUBMIT] Step 1 trigger response:', data);
-      })
-      .catch(error => {
-        console.error('[SUBMIT] Failed to trigger step 1 analysis:', error);
-      });
-    } else {
-      console.log(`[SUBMIT] Report ${report.id} already processing or completed (status: ${existingReport?.report_status}), skipping trigger`);
-    }
+    // Report is now created with 'pending' status
+    // The cron job will pick it up and process it
+    // No need to trigger anything here - just return immediately
+    console.log('[SUBMIT] Report created with status: pending');
+    console.log('[SUBMIT] Report will be processed by cron job');
 
     res.status(200).json({
       success: true,
