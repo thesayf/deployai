@@ -36,12 +36,25 @@ export default async function handler(
 
   console.log('[STEP4] Authentication passed');
 
+  const startTime = Date.now();
+  console.log('[STEP4] Function start time:', new Date().toISOString());
+  
+  // Set timeout warnings for different Vercel plan limits
+  const timeout9s = setTimeout(() => {
+    console.error('[STEP4] ⚠️ WARNING: 9 seconds elapsed - Hobby plan timeout in 1 second!');
+  }, 9000);
+  
+  const timeout50s = setTimeout(() => {
+    console.error('[STEP4] ⚠️ WARNING: 50 seconds elapsed - Pro plan timeout in 10 seconds!');
+  }, 50000);
+  
   try {
     const { quizResponseId, reportId, problemAnalysis, curatedTools } = req.body as GenerateRequest;
     
     console.log('[STEP4] Starting report generation for:');
     console.log('[STEP4] Report ID:', reportId);
     console.log('[STEP4] Quiz Response ID:', quizResponseId);
+    console.log('[STEP4] Elapsed time:', (Date.now() - startTime) / 1000, 'seconds');
     console.log('[STEP4] ProblemAnalysis received:', !!problemAnalysis);
     console.log('[STEP4] CuratedTools received:', !!curatedTools);
     console.log('[STEP4] Selected tools count:', curatedTools?.selectedTools?.length);
@@ -136,6 +149,7 @@ export default async function handler(
     // Update report with final report and mark as completed
     console.log('[STEP4] About to update report with final content...');
     console.log('[STEP4] Report ID:', reportId);
+    console.log('[STEP4] Post-AI elapsed time:', (Date.now() - startTime) / 1000, 'seconds');
     const emailTimestamp = new Date().toISOString();
     console.log('[STEP4] email_sent_at timestamp:', emailTimestamp);
     
@@ -228,6 +242,12 @@ export default async function handler(
     }
 
     console.log('[STEP4] Function completing, returning success response');
+    console.log('[STEP4] Total elapsed time:', (Date.now() - startTime) / 1000, 'seconds');
+    
+    // Clear timeout warnings
+    clearTimeout(timeout9s);
+    clearTimeout(timeout50s);
+    
     res.status(200).json({ 
       success: true, 
       message: 'Report generation complete',
