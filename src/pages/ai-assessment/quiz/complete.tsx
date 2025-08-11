@@ -117,81 +117,12 @@ const CompletePage = () => {
       }
       
       setPageState('success');
-      
-      // Start polling for report completion
-      startReportPolling(data.reportId, initialData.userInfo);
 
     } catch (error) {
       console.error('Failed to submit quiz:', error);
       setError(error instanceof Error ? error.message : 'Failed to submit quiz');
       setPageState('error');
     }
-  };
-
-  // Poll for report completion and send email when ready
-  const startReportPolling = (reportId: string, userInfo: any) => {
-    const maxAttempts = 60; // 5 minutes max (60 * 5 seconds)
-    let attempts = 0;
-    
-    const pollInterval = setInterval(async () => {
-      attempts++;
-      
-      try {
-        // Check report status
-        const statusResponse = await fetch('/api/reports/status', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ reportId }),
-        });
-        
-        if (!statusResponse.ok) {
-          console.error('Failed to check report status');
-          if (attempts >= maxAttempts) {
-            clearInterval(pollInterval);
-          }
-          return;
-        }
-        
-        const statusData = await statusResponse.json();
-        console.log('Report status:', statusData.status);
-        
-        // If report is complete, send the email
-        if (statusData.status === 'completed' && !statusData.emailSent) {
-          console.log('Report complete, sending email...');
-          clearInterval(pollInterval);
-          
-          // Send report ready email
-          const emailResponse = await fetch('/api/reports/send-report-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              reportId,
-              userEmail: userInfo?.email || '',
-              firstName: userInfo?.firstName || '',
-              lastName: userInfo?.lastName || '',
-              company: userInfo?.company || ''
-            }),
-          });
-          
-          if (emailResponse.ok) {
-            console.log('Report email sent successfully');
-          } else {
-            console.error('Failed to send report email');
-          }
-        }
-        
-        // Stop polling after max attempts
-        if (attempts >= maxAttempts) {
-          console.log('Max polling attempts reached');
-          clearInterval(pollInterval);
-        }
-      } catch (error) {
-        console.error('Error polling for report:', error);
-        if (attempts >= maxAttempts) {
-          clearInterval(pollInterval);
-        }
-      }
-    }, 5000); // Poll every 5 seconds
   };
 
   // Render based on page state, not Redux

@@ -12,11 +12,11 @@ export const EMAIL_CONFIG = {
     fallback: 'deployAI <hello@deployai.studio>'
   },
   
-  // Email subjects
+  // Email subjects - less promotional for better deliverability
   subjects: {
-    confirmation: 'Processing Your AI Readiness Assessment',
+    confirmation: 'Assessment Received - Processing Your Results',
     reportReady: (company?: string) => 
-      `Your AI Implementation Report is Ready${company ? ` - ${company}` : ''}`
+      `Assessment Report Ready${company ? ` - ${company}` : ''}`
   },
   
   // Timing expectations

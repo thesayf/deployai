@@ -253,7 +253,68 @@ export async function executeStep4Generate({
     }
 
     console.log('[PIPELINE-STEP4] Report saved successfully');
-    console.log('[PIPELINE-STEP4] Report generation complete - email will be sent from frontend');
+    
+    // Fetch user data for email
+    const { data: reportWithUser, error: fetchError } = await supabase
+      .from('ai_reports')
+      .select(`
+        access_token,
+        quiz_responses!inner(
+          user_email,
+          user_first_name,
+          user_last_name,
+          user_company
+        )
+      `)
+      .eq('id', reportId)
+      .single();
+
+    if (fetchError || !reportWithUser) {
+      console.error('[PIPELINE-STEP4] Failed to fetch report for email:', fetchError);
+      // Don't fail the pipeline if we can't send email
+      return { success: true };
+    }
+
+    // Extract user data
+    const userData = Array.isArray(reportWithUser.quiz_responses) 
+      ? reportWithUser.quiz_responses[0] 
+      : reportWithUser.quiz_responses;
+
+    if (!userData?.user_email) {
+      console.error('[PIPELINE-STEP4] No email found for report');
+      return { success: true };
+    }
+
+    // Call the email API endpoint from the backend
+    console.log('[PIPELINE-STEP4] Calling email API endpoint for:', userData.user_email);
+    
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://deployai.studio';
+      const emailResponse = await fetch(`${baseUrl}/api/reports/send-report-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          reportId,
+          userEmail: userData.user_email,
+          firstName: userData.user_first_name || '',
+          lastName: userData.user_last_name || '',
+          company: userData.user_company || ''
+        }),
+      });
+
+      if (emailResponse.ok) {
+        const result = await emailResponse.json();
+        console.log('[PIPELINE-STEP4] Email sent successfully via API:', result.emailId);
+      } else {
+        const errorText = await emailResponse.text();
+        console.error('[PIPELINE-STEP4] Email API failed:', emailResponse.status, errorText);
+      }
+    } catch (error) {
+      console.error('[PIPELINE-STEP4] Error calling email API:', error);
+      // Don't fail the pipeline if email fails
+    }
 
     return { success: true };
   } catch (error) {

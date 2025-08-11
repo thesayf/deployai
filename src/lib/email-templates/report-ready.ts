@@ -7,93 +7,57 @@ export interface ReportEmailData {
 }
 
 export function generateReportReadyEmail(data: ReportEmailData): string {
+  // Optimized for better deliverability - simpler HTML, less promotional language
   return `
     <!DOCTYPE html>
     <html>
     <head>
       <meta charset="utf-8">
-      <title>Your AI Business Readiness Report is Ready!</title>
-      <style>
-        body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; margin: 0; padding: 0; }
-        .container { max-width: 600px; margin: 0 auto; }
-        .header { background: linear-gradient(135deg, #457B9D 0%, #3a6a89 100%); padding: 40px 30px; text-align: center; color: white; }
-        .content { padding: 30px; background: #f9f9f9; }
-        .score-display { background: white; padding: 30px; text-align: center; border-radius: 8px; margin: 20px 0; }
-        .score-circle { width: 120px; height: 120px; margin: 0 auto 20px; border: 3px solid #457B9D; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: white; }
-        .footer { padding: 30px; background: #1a1a1a; color: white; text-align: center; }
-        .button { display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #457B9D 0%, #3a6a89 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; }
-        .button-secondary { display: inline-block; padding: 12px 30px; border: 2px solid #457B9D; color: #457B9D; text-decoration: none; border-radius: 6px; font-weight: bold; }
-        ul { text-align: left; max-width: 400px; margin: 0 auto; }
-        .report-preview { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
-      </style>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Your Assessment Report - ${data.company || 'Analysis Complete'}</title>
     </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1>Your AI Implementation Report is Ready!</h1>
-          <p style="font-size: 18px; margin: 0;">Personalized AI strategy for ${data.company || 'your organization'}</p>
+    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 20px;">
+      <div style="max-width: 600px; margin: 0 auto; background: white;">
+        
+        <div style="border-bottom: 3px solid #457B9D; padding-bottom: 20px; margin-bottom: 30px;">
+          <h1 style="color: #333; font-size: 24px; margin: 0;">Assessment Report Ready</h1>
+          <p style="color: #666; margin: 5px 0;">AI Readiness Analysis for ${data.company || 'your organization'}</p>
         </div>
         
-        <div class="content">
-          <div class="score-display">
-            <div style="text-align: center;">
-              <div style="font-size: 48px; margin-bottom: 10px;">✅</div>
-              <h2 style="color: #333; margin: 0;">Analysis Complete</h2>
-              <p style="color: #666; font-size: 16px; margin-top: 10px;">
-                ${data.industry ? `Customized for the ${data.industry} industry` : 'Your personalized report is ready'}
-              </p>
-            </div>
-          </div>
+        <div style="padding: 0 20px;">
+          <p>Hi ${data.firstName},</p>
           
-          <div class="report-preview">
-            <h3>Your Complete Report Includes:</h3>
-            <ul>
-              <li>Industry-specific AI opportunities tailored to your business</li>
-              <li>Personalized implementation roadmap with timelines</li>
-              <li>Technology recommendations based on your needs</li>
-              <li>ROI projections and cost-benefit analysis</li>
-              <li>Competitive advantage strategies</li>
-              <li>Risk assessment and mitigation plans</li>
-              <li>Next steps and quick wins</li>
+          <p>Thank you for completing the AI readiness assessment. Your personalized analysis report has been generated and is ready for review.</p>
+          
+          <div style="background: #f8f9fa; padding: 20px; margin: 20px 0; border-left: 4px solid #457B9D;">
+            <strong>Report Contents:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+              <li>Current state analysis</li>
+              <li>Industry-specific opportunities</li>
+              <li>Implementation roadmap</li>
+              <li>Technology recommendations</li>
+              <li>Investment projections</li>
+              <li>Risk assessment</li>
+              <li>Next steps</li>
             </ul>
           </div>
           
-          <div style="text-align: center; margin: 30px 0;">
-            <a href="${data.reportUrl}" class="button" style="color: white;">
-              VIEW YOUR COMPLETE REPORT
-            </a>
-          </div>
+          <p>Access your report here:</p>
+          <p><a href="${data.reportUrl}" style="color: #457B9D;">View Assessment Report</a></p>
           
-          <p style="text-align: center; color: #666; font-size: 14px;">
-            This report is available for 30 days.<br>
-            <a href="${data.reportUrl}" style="color: #457B9D;">Bookmark this link</a> for future reference.
-          </p>
+          <p style="color: #666; font-size: 14px;">This report will be available for 30 days. We recommend downloading or bookmarking it for future reference.</p>
           
-          <div style="background: #f0f5ff; padding: 20px; border-radius: 8px; margin-top: 30px;">
-            <h3 style="margin-top: 0;">What's Next?</h3>
-            <p>Your report provides a comprehensive roadmap for AI implementation. Here are your immediate next steps:</p>
-            <ol style="text-align: left;">
-              <li>Review your personalized recommendations</li>
-              <li>Identify quick wins you can implement immediately</li>
-              <li>Share the report with your team for alignment</li>
-              <li>Schedule a consultation to discuss implementation</li>
-            </ol>
-          </div>
+          <p>If you have any questions about your report, please don't hesitate to reach out.</p>
+          
+          <p>Best regards,<br>
+          The deployAI Team</p>
         </div>
         
-        <div class="footer">
-          <h3>Ready to Transform Your Business with AI?</h3>
-          <p>Our team specializes in implementing the exact solutions recommended in your report.</p>
-          <div style="margin: 20px 0;">
-            <a href="https://deployai.studio/contact" class="button-secondary" style="color: #457B9D;">
-              Schedule a Free Consultation
-            </a>
-          </div>
-          <p style="margin-top: 30px; font-size: 14px; opacity: 0.8;">
-            © ${new Date().getFullYear()} deployAI Studio. All rights reserved.<br>
-            <a href="https://deployai.studio" style="color: #457B9D;">deployai.studio</a>
-          </p>
+        <div style="border-top: 1px solid #e0e0e0; margin-top: 40px; padding-top: 20px; text-align: center; color: #999; font-size: 12px;">
+          <p>deployAI Studio | AI Implementation Consulting<br>
+          This is an automated message. Please do not reply directly to this email.</p>
         </div>
+        
       </div>
     </body>
     </html>
