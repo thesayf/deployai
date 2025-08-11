@@ -153,7 +153,7 @@ export async function executeStep3Curation({
     const { error: updateError } = await supabase
       .from('ai_reports')
       .update({
-        stage3_solution_curation: solutionCuration,
+        stage3_tool_selection: solutionCuration,
         report_status: 'stage3_complete',
         updated_at: new Date().toISOString()
       })
@@ -241,7 +241,7 @@ export async function executeStep4Generate({
     const { error: updateError } = await supabase
       .from('ai_reports')
       .update({
-        stage4_final_report: finalReport,
+        stage4_report_content: finalReport,
         report_status: 'completed',
         completed_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
