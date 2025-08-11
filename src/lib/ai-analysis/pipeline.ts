@@ -69,7 +69,7 @@ export async function executeStep2Research({
       .from('ai_reports')
       .update({
         stage2_tool_research: toolResearch,
-        report_status: 'researching',
+        report_status: 'stage2_complete',
         updated_at: new Date().toISOString()
       })
       .eq('id', reportId);
@@ -154,7 +154,7 @@ export async function executeStep3Curation({
       .from('ai_reports')
       .update({
         stage3_solution_curation: solutionCuration,
-        report_status: 'curating',
+        report_status: 'stage3_complete',
         updated_at: new Date().toISOString()
       })
       .eq('id', reportId);
