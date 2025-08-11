@@ -243,7 +243,7 @@ export async function executeStep4Generate({
       .update({
         stage4_report_content: finalReport,
         report_status: 'completed',
-        completed_at: new Date().toISOString(),
+        report_generated_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       })
       .eq('id', reportId);
