@@ -131,10 +131,34 @@ export default async function handler(
     }
 
     // Report is now created with 'pending' status
-    // The cron job will pick it up and process it
-    // No need to trigger anything here - just return immediately
     console.log('[SUBMIT] Report created with status: pending');
-    console.log('[SUBMIT] Report will be processed by cron job');
+    
+    // Trigger immediate processing instead of waiting for cron
+    console.log('[SUBMIT] Triggering immediate report processing...');
+    
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${process.env.PORT || 3000}`;
+      const processResponse = await fetch(`${baseUrl}/api/ai-analysis/process-pipeline`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.INTERNAL_API_KEY || '',
+        },
+        body: JSON.stringify({ 
+          reportId: report.id 
+        }),
+      });
+      
+      if (!processResponse.ok) {
+        console.error('[SUBMIT] Failed to trigger processing:', await processResponse.text());
+        // Don't fail the request - cron will pick it up as backup
+      } else {
+        console.log('[SUBMIT] Processing triggered successfully');
+      }
+    } catch (error) {
+      console.error('[SUBMIT] Error triggering processing:', error);
+      // Don't fail the request - cron will pick it up as backup
+    }
 
     res.status(200).json({
       success: true,

@@ -23,10 +23,14 @@ export default async function handler(
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Verify internal API key for security
+  // Verify internal API key for security (skip in development for local calls)
   const apiKey = req.headers['x-api-key'];
-  if (apiKey !== process.env.INTERNAL_API_KEY) {
-    return res.status(401).json({ error: 'Unauthorized' });
+  const isLocalCall = req.headers.host?.includes('localhost') || req.headers.host?.includes('127.0.0.1');
+  
+  if (process.env.NODE_ENV === 'production' || !isLocalCall) {
+    if (apiKey !== process.env.INTERNAL_API_KEY) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
   }
 
   const { reportId, force = false } = req.body as ProcessRequest;
