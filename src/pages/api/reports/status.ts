@@ -5,11 +5,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== 'GET') {
+  // Accept both GET and POST
+  if (req.method !== 'GET' && req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { reportId } = req.query;
+  // Get reportId from query params (GET) or body (POST)
+  const reportId = req.method === 'GET' 
+    ? req.query.reportId 
+    : req.body?.reportId;
 
   if (!reportId || typeof reportId !== 'string') {
     return res.status(400).json({ error: 'Report ID is required' });
@@ -18,7 +22,7 @@ export default async function handler(
   try {
     const { data, error } = await supabase
       .from('ai_reports')
-      .select('id, report_status, error_message, created_at, updated_at')
+      .select('id, report_status, error_message, email_sent_at, created_at, updated_at')
       .eq('id', reportId)
       .single();
 
@@ -54,6 +58,7 @@ export default async function handler(
       status: data.report_status,
       progress,
       message: statusMessage,
+      emailSent: !!data.email_sent_at,
       createdAt: data.created_at,
       updatedAt: data.updated_at
     });

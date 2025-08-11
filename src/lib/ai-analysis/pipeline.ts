@@ -9,12 +9,10 @@ import { generateStep2Prompt } from '@/prompts/step2-tool-research';
 import { generateStep3Prompt } from '@/prompts/step3-tool-curation';
 import { generateStep4Prompt } from '@/prompts/step4-report-generation';
 import { cleanAndParseJSON } from '@/utils/clean-json';
-import { sendReportReadyEmail } from '@/lib/email/email-service';
 import { AIProviderFactory } from '@/lib/ai-providers/provider-factory';
 import type { 
   ProblemAnalysis, 
-  ToolResearch, 
-  CuratedTools,
+  ToolResearch,
   FinalReport 
 } from '@/types/ai-analysis-new';
 
@@ -255,61 +253,7 @@ export async function executeStep4Generate({
     }
 
     console.log('[PIPELINE-STEP4] Report saved successfully');
-
-    // Fetch report with user data for email
-    const { data: reportWithUser, error: fetchError } = await supabase
-      .from('ai_reports')
-      .select(`
-        access_token,
-        quiz_responses!inner(
-          user_email,
-          user_first_name,
-          user_last_name,
-          user_company
-        )
-      `)
-      .eq('id', reportId)
-      .single();
-
-    if (fetchError || !reportWithUser) {
-      console.error('[PIPELINE-STEP4] Failed to fetch report for email:', fetchError);
-      throw new Error('Failed to fetch report data for email');
-    }
-
-    // Extract user data
-    const userData = Array.isArray(reportWithUser.quiz_responses) 
-      ? reportWithUser.quiz_responses[0] 
-      : reportWithUser.quiz_responses;
-
-    if (!userData?.user_email) {
-      console.error('[PIPELINE-STEP4] No email found for report');
-      throw new Error('No email address found for report');
-    }
-
-    // Send report ready email
-    console.log('[PIPELINE-STEP4] Sending report email to:', userData.user_email);
-    
-    const emailResult = await sendReportReadyEmail({
-      reportId,
-      userEmail: userData.user_email,
-      firstName: userData.user_first_name || 'there',
-      lastName: userData.user_last_name || '',
-      company: userData.user_company,
-      accessToken: reportWithUser.access_token
-    });
-
-    if (!emailResult.success) {
-      console.error('[PIPELINE-STEP4] Failed to send email:', emailResult.error);
-      // Don't throw - report is complete even if email fails
-    } else {
-      console.log('[PIPELINE-STEP4] Email sent successfully');
-      
-      // Update email sent timestamp
-      await supabase
-        .from('ai_reports')
-        .update({ email_sent_at: new Date().toISOString() })
-        .eq('id', reportId);
-    }
+    console.log('[PIPELINE-STEP4] Report generation complete - email will be sent from frontend');
 
     return { success: true };
   } catch (error) {
