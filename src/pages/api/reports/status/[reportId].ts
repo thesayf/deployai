@@ -81,7 +81,7 @@ export default async function handler(
     }
 
     // Prepare response
-    const response = {
+    const response: any = {
       reportId: report.id,
       status: report.report_status,
       currentStage,
