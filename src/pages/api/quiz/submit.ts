@@ -133,33 +133,76 @@ export default async function handler(
     // Report is now created with 'pending' status
     console.log('[SUBMIT] Report created with status: pending');
     
-    // Trigger immediate processing instead of waiting for cron
-    console.log('[SUBMIT] Triggering immediate report processing...');
+    // Update status to 'processing' immediately
+    const { error: statusUpdateError } = await supabase
+      .from('ai_reports')
+      .update({ 
+        report_status: 'processing',
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', report.id);
     
+    if (statusUpdateError) {
+      console.error('[SUBMIT] Failed to update status to processing:', statusUpdateError);
+    } else {
+      console.log('[SUBMIT] Updated report status to processing');
+    }
+    
+    // Send confirmation email immediately
+    console.log('[SUBMIT] Sending confirmation email...');
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${process.env.PORT || 3000}`;
-      const processResponse = await fetch(`${baseUrl}/api/ai-analysis/process-pipeline`, {
+      const emailResponse = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${process.env.PORT || 3000}`}/api/quiz/send-confirmation`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': process.env.INTERNAL_API_KEY || '',
-        },
-        body: JSON.stringify({ 
-          reportId: report.id 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          quizId: quizId,
+          reportId: report.id,
+          userEmail: updatedQuiz.user_email || '',
+          firstName: updatedQuiz.user_first_name || '',
+          lastName: updatedQuiz.user_last_name || '',
+          company: updatedQuiz.user_company || ''
         }),
       });
       
-      if (!processResponse.ok) {
-        console.error('[SUBMIT] Failed to trigger processing:', await processResponse.text());
-        // Don't fail the request - cron will pick it up as backup
+      if (!emailResponse.ok) {
+        console.error('[SUBMIT] Failed to send confirmation email:', await emailResponse.text());
       } else {
-        console.log('[SUBMIT] Processing triggered successfully');
+        console.log('[SUBMIT] Confirmation email sent successfully');
       }
-    } catch (error) {
-      console.error('[SUBMIT] Error triggering processing:', error);
-      // Don't fail the request - cron will pick it up as backup
+    } catch (emailError) {
+      console.error('[SUBMIT] Error sending confirmation email:', emailError);
+      // Don't fail the whole process if email fails
     }
+    
+    // Trigger processing in background (fire-and-forget)
+    console.log('[SUBMIT] Triggering background report processing...');
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${process.env.PORT || 3000}`;
+    
+    // Fire-and-forget: Don't await this
+    fetch(`${baseUrl}/api/ai-analysis/process-pipeline`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.INTERNAL_API_KEY || '',
+      },
+      body: JSON.stringify({ 
+        reportId: report.id 
+      }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        return response.text().then(text => {
+          console.error('[SUBMIT] Background processing failed:', text);
+        });
+      }
+      console.log('[SUBMIT] Background processing started successfully');
+    })
+    .catch(error => {
+      console.error('[SUBMIT] Error starting background processing:', error);
+      // Cron will pick it up as backup
+    });
 
+    // Return immediately - don't wait for processing
     res.status(200).json({
       success: true,
       reportId: report.id,

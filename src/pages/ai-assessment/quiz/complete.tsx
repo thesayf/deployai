@@ -97,25 +97,8 @@ const CompletePage = () => {
       // This prevents stale data if user closes the page
       dispatch(resetQuiz());
       
-      // Send confirmation email
-      try {
-        await fetch('/api/quiz/send-confirmation', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            quizId: initialData.quizId,
-            reportId: data.reportId,
-            userEmail: initialData.userInfo?.email || '',
-            firstName: initialData.userInfo?.firstName || '',
-            lastName: initialData.userInfo?.lastName || '',
-            company: initialData.userInfo?.company || ''
-          }),
-        });
-      } catch (emailError) {
-        console.error('Failed to send confirmation email:', emailError);
-        // Don't fail the whole process if email fails
-      }
-      
+      // Confirmation email is now sent from the submit endpoint
+      // So we can immediately show success
       setPageState('success');
 
     } catch (error) {
