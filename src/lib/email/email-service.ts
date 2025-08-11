@@ -186,9 +186,9 @@ export async function sendReportReadyEmail({
       reportUrl
     });
 
-    // Send email
+    // Send email - using 'assessment' sender which is verified and working
     const { data, error } = await resend.emails.send({
-      from: getEmailSender('reports'),
+      from: getEmailSender('assessment'),  // Changed to use assessment@ which is verified
       to: [userEmail],
       subject: EMAIL_CONFIG.subjects.reportReady(company),
       html: emailHtml,
