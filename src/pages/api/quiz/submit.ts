@@ -91,9 +91,11 @@ export default async function handler(
       console.log(`[SUBMIT] Existing report status: ${existingReport.report_status}`);
       report = existingReport;
       
-      // Only trigger analysis if the report hasn't started processing yet
-      if (existingReport.report_status === 'generating') {
-        console.log('Report is already being generated, skipping duplicate trigger');
+      // Only return if report is already being processed or completed
+      if (existingReport.report_status === 'processing' || 
+          existingReport.report_status === 'completed' ||
+          existingReport.report_status === 'generating') {  // Keep for backward compatibility
+        console.log(`Report is already ${existingReport.report_status}, skipping duplicate trigger`);
         return res.status(200).json({
           success: true,
           reportId: existingReport.id,
