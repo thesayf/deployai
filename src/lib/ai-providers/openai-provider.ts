@@ -21,46 +21,68 @@ export class OpenAIProvider extends AIProvider {
   }
 
   async generateCompletion(options: AICompletionOptions): Promise<AIResponse> {
-    console.log(`[OpenAI-${this.config.model}] Generating completion`);
+    console.log(`[OpenAI-${this.config.model}] ===== GENERATE COMPLETION CALLED =====`);
     console.log(`[OpenAI-${this.config.model}] Prompt length: ${options.prompt.length}`);
     console.log(`[OpenAI-${this.config.model}] Reasoning effort: ${options.reasoning_effort || 'default'}`);
     console.log(`[OpenAI-${this.config.model}] Verbosity: ${options.verbosity || 'default'}`);
+    console.log(`[OpenAI-${this.config.model}] Temperature: ${options.temperature}`);
 
     try {
-      // Build request parameters
+      console.log(`[OpenAI-${this.config.model}] Building request parameters...`);
+      // Build request parameters according to OpenAI Responses API
       const params: any = {
         model: this.config.model || 'gpt-5-mini',
         input: options.prompt,
+        text: {
+          verbosity: options.verbosity || 'medium',
+        },
+        reasoning: {
+          effort: options.reasoning_effort || 'minimal',
+        },
       };
-
-      // Add optional parameters if they exist
-      if (options.reasoning_effort) {
-        params.reasoning = { effort: options.reasoning_effort };
-      }
-      if (options.verbosity) {
-        params.text = { verbosity: options.verbosity };
-      }
-      if (options.maxTokens) {
-        params.max_tokens = options.maxTokens;
-      }
+      // Note: Responses API doesn't support max_tokens parameter
+      
+      console.log(`[OpenAI-${this.config.model}] About to call OpenAI API...`);
+      console.log(`[OpenAI-${this.config.model}] Request params:`, {
+        model: params.model,
+        inputLength: params.input?.length,
+        reasoning: params.reasoning,
+        text: params.text
+      });
 
       const response = await (this.client as any).responses.create(params);
 
+      console.log(`[OpenAI-${this.config.model}] API call successful!`);
+      console.log(`[OpenAI-${this.config.model}] Raw response structure:`, {
+        hasOutputText: !!response.output_text,
+        hasOutput: !!response.output,
+        outputIsArray: Array.isArray(response.output),
+        outputLength: response.output?.length,
+        responseKeys: Object.keys(response || {}),
+      });
+
       // Extract text content from response
+      // GPT-5 returns content in response.output_text directly
       let content = '';
       if (response.output_text) {
         content = response.output_text;
+        console.log(`[OpenAI-${this.config.model}] Using output_text directly`);
       } else if (response.output && Array.isArray(response.output)) {
-        // Handle structured output format
+        // Fallback: Handle structured output format (for future compatibility)
+        console.log(`[OpenAI-${this.config.model}] Processing output array of length:`, response.output.length);
         for (const item of response.output) {
-          if (item.content) {
+          if (item.type === 'message' && item.content && Array.isArray(item.content)) {
             for (const contentItem of item.content) {
-              if (contentItem.text) {
+              if (contentItem.type === 'output_text' && contentItem.text) {
                 content += contentItem.text;
+                console.log(`[OpenAI-${this.config.model}] Found text in message content`);
               }
             }
           }
         }
+      } else {
+        console.log(`[OpenAI-${this.config.model}] WARNING: No recognized output format!`);
+        console.log(`[OpenAI-${this.config.model}] Full response:`, JSON.stringify(response, null, 2).substring(0, 500));
       }
 
       console.log(`[OpenAI-${this.config.model}] Response received, length: ${content.length}`);
@@ -81,45 +103,76 @@ export class OpenAIProvider extends AIProvider {
   }
 
   async generateWithTools(options: AICompletionOptions): Promise<AIResponse> {
-    console.log(`[OpenAI-${this.config.model}] Generating with tools`);
-    console.log(`[OpenAI-${this.config.model}] Tools:`, options.tools?.map(t => t.type).join(', '));
+    console.log(`[OpenAI-${this.config.model}] ===== GENERATE WITH TOOLS CALLED =====`);
+    console.log(`[OpenAI-${this.config.model}] Tools:`, JSON.stringify(options.tools, null, 2));
+    console.log(`[OpenAI-${this.config.model}] Reasoning effort:`, options.reasoning_effort);
+    console.log(`[OpenAI-${this.config.model}] Verbosity:`, options.verbosity);
 
     try {
-      // Build request parameters
+      console.log(`[OpenAI-${this.config.model}] Building request parameters for tools...`);
+      // Build request parameters according to OpenAI Responses API
       const params: any = {
         model: this.config.model || 'gpt-5-mini',
         input: options.prompt,
         tools: options.tools || [],
+        text: {
+          verbosity: options.verbosity || 'medium',
+        },
+        reasoning: {
+          effort: options.reasoning_effort || 'minimal',
+        },
       };
+      // Note: Responses API doesn't support max_tokens parameter
+      
+      console.log(`[OpenAI-${this.config.model}] About to call OpenAI API with tools...`);
+      console.log(`[OpenAI-${this.config.model}] Request params:`, {
+        model: params.model,
+        inputLength: params.input?.length,
+        reasoning: params.reasoning,
+        text: params.text,
+        tools: params.tools
+      });
 
-      // Add optional parameters if they exist
-      if (options.reasoning_effort) {
-        params.reasoning = { effort: options.reasoning_effort };
-      }
-      if (options.verbosity) {
-        params.text = { verbosity: options.verbosity };
-      }
-      if (options.maxTokens) {
-        params.max_tokens = options.maxTokens;
-      }
+      // Add a timeout wrapper (60 seconds for web search)
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('OpenAI API call timed out after 60 seconds')), 60000)
+      );
+      
+      const apiCallPromise = (this.client as any).responses.create(params);
+      
+      console.log(`[OpenAI-${this.config.model}] Calling API (60s timeout for web search)...`);
+      const response = await Promise.race([apiCallPromise, timeoutPromise]);
 
-      const response = await (this.client as any).responses.create(params);
+      console.log(`[OpenAI-${this.config.model}] Raw response structure (with tools):`, {
+        hasOutputText: !!response.output_text,
+        hasOutput: !!response.output,
+        outputIsArray: Array.isArray(response.output),
+        outputLength: response.output?.length,
+        responseKeys: Object.keys(response || {}),
+      });
 
       // Extract text content from response
+      // GPT-5 returns content in response.output_text directly (even with tools)
       let content = '';
       if (response.output_text) {
         content = response.output_text;
+        console.log(`[OpenAI-${this.config.model}] Using output_text directly (with tools)`);
       } else if (response.output && Array.isArray(response.output)) {
-        // Handle structured output format with tool results
+        // Fallback: Handle structured output format (for future compatibility)
+        console.log(`[OpenAI-${this.config.model}] Processing output array (with tools), length:`, response.output.length);
         for (const item of response.output) {
-          if (item.content) {
+          if (item.type === 'message' && item.content && Array.isArray(item.content)) {
             for (const contentItem of item.content) {
-              if (contentItem.text) {
+              if (contentItem.type === 'output_text' && contentItem.text) {
                 content += contentItem.text;
+                console.log(`[OpenAI-${this.config.model}] Found text in message content (with tools)`);
               }
             }
           }
         }
+      } else {
+        console.log(`[OpenAI-${this.config.model}] WARNING: No recognized output format (with tools)!`);
+        console.log(`[OpenAI-${this.config.model}] Full response:`, JSON.stringify(response, null, 2).substring(0, 500));
       }
 
       console.log(`[OpenAI-${this.config.model}] Response with tools received, length: ${content.length}`);

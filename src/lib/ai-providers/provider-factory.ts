@@ -67,6 +67,14 @@ export class AIProviderFactory {
   static getStepConfig(step: 1 | 2 | 3 | 4): StepConfig {
     const provider = (process.env.AI_PROVIDER as ProviderType) || 'openai';
     
+    // Step 2 ALWAYS uses Claude 4 Sonnet for web search, regardless of AI_PROVIDER setting
+    if (step === 2) {
+      return {
+        provider: 'anthropic',
+        model: 'claude-sonnet-4-20250514', // Claude 4 Sonnet with built-in web search
+      };
+    }
+    
     if (provider === 'openai') {
       switch (step) {
         case 1:
@@ -74,13 +82,6 @@ export class AIProviderFactory {
             provider: 'openai',
             model: 'gpt-5-mini',
             reasoning_effort: (process.env.GPT5_REASONING_EFFORT_STEP1 as any) || 'minimal',
-            verbosity: (process.env.GPT5_VERBOSITY as any) || 'medium',
-          };
-        case 2:
-          return {
-            provider: 'openai',
-            model: 'gpt-5-mini',
-            reasoning_effort: (process.env.GPT5_REASONING_EFFORT_STEP2 as any) || 'minimal',
             verbosity: (process.env.GPT5_VERBOSITY as any) || 'medium',
           };
         case 3:
@@ -105,11 +106,6 @@ export class AIProviderFactory {
           return {
             provider: 'anthropic',
             model: 'claude-sonnet-4-20250514',
-          };
-        case 2:
-          return {
-            provider: 'anthropic',
-            model: 'claude-sonnet-4-20250514', // With web search
           };
         case 3:
           return {

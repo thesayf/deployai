@@ -43,24 +43,19 @@ export async function executeStep2Research({
     
     console.log(`[PIPELINE-STEP2] Using provider: ${provider.getName()}`);
     console.log(`[PIPELINE-STEP2] Model: ${stepConfig.model}`);
+    console.log(`[PIPELINE-STEP2] Step config:`, JSON.stringify(stepConfig));
+    console.log(`[PIPELINE-STEP2] ENV reasoning effort for step 2:`, process.env.GPT5_REASONING_EFFORT_STEP2);
     
     const prompt = generateStep2Prompt(problemAnalysis);
     console.log('[PIPELINE-STEP2] Generated prompt length:', prompt.length);
 
-    // Use web search for Step 2 if using OpenAI
-    const response = stepConfig.provider === 'openai' 
-      ? await provider.generateWithTools({
-          prompt,
-          maxTokens: 15000,
-          reasoning_effort: stepConfig.reasoning_effort,
-          verbosity: stepConfig.verbosity,
-          tools: [{ type: 'web_search' }],
-        })
-      : await provider.generateWithTools({
-          prompt,
-          maxTokens: 15000,
-          tools: [{ type: 'web_search' }], // Will use Claude's web search if available
-        });
+    // Step 2 now uses Claude 4 Sonnet with built-in web search
+    console.log('[PIPELINE-STEP2] Using Claude 4 Sonnet for web search');
+    const response = await provider.generateWithTools({
+      prompt,
+      maxTokens: 15000, // Claude needs maxTokens
+      tools: [{ type: 'web_search' }], // Claude's web search tool
+    });
 
     const toolResearch = cleanAndParseJSON(response.content) as ToolResearch;
     console.log('[PIPELINE-STEP2] Parsed research - Solutions count:', toolResearch.recommendedSolutions?.length);
@@ -134,13 +129,18 @@ export async function executeStep3Curation({
     const prompt = generateStep3Prompt(problemAnalysis, toolResearch);
     console.log('[PIPELINE-STEP3] Generated prompt length:', prompt.length);
 
-    const response = await provider.generateCompletion({
-      prompt,
-      maxTokens: 4000,
-      temperature: 0.7,
-      reasoning_effort: stepConfig.reasoning_effort,
-      verbosity: stepConfig.verbosity,
-    });
+    const response = stepConfig.provider === 'openai'
+      ? await provider.generateCompletion({
+          prompt,
+          temperature: 0.7,
+          reasoning_effort: stepConfig.reasoning_effort,
+          verbosity: stepConfig.verbosity,
+        })
+      : await provider.generateCompletion({
+          prompt,
+          maxTokens: 4000, // Claude still needs maxTokens
+          temperature: 0.7,
+        });
 
     const solutionCuration = cleanAndParseJSON(response.content) as CuratedTools;
     console.log('[PIPELINE-STEP3] Parsed solutions count:', solutionCuration.selectedTools?.length);
@@ -217,13 +217,18 @@ export async function executeStep4Generate({
     const prompt = generateStep4Prompt(problemAnalysis, solutionCuration);
     console.log('[PIPELINE-STEP4] Generated prompt length:', prompt.length);
 
-    const response = await provider.generateCompletion({
-      prompt,
-      maxTokens: 8000,
-      temperature: 0.7,
-      reasoning_effort: stepConfig.reasoning_effort,
-      verbosity: stepConfig.verbosity, // High verbosity for comprehensive report
-    });
+    const response = stepConfig.provider === 'openai'
+      ? await provider.generateCompletion({
+          prompt,
+          temperature: 0.7,
+          reasoning_effort: stepConfig.reasoning_effort,
+          verbosity: stepConfig.verbosity, // High verbosity for comprehensive report
+        })
+      : await provider.generateCompletion({
+          prompt,
+          maxTokens: 8000, // Claude still needs maxTokens
+          temperature: 0.7,
+        });
 
     const finalReport = cleanAndParseJSON(response.content) as FinalReport;
     console.log('[PIPELINE-STEP4] Report generated successfully');

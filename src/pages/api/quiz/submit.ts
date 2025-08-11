@@ -130,9 +130,14 @@ export default async function handler(
 
     // Only trigger AI report generation if it's a new report or hasn't started processing
     if (!existingReport || existingReport.report_status === 'pending') {
+      console.log('[SUBMIT] Triggering Step 1 analysis...');
+      console.log('[SUBMIT] Report status:', existingReport?.report_status || 'new');
+      
       // Trigger AI report generation asynchronously (Step 1 first)
       // We'll return immediately and process in the background
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
+      console.log('[SUBMIT] Using base URL:', baseUrl);
+      console.log('[SUBMIT] Step 1 endpoint:', `${baseUrl}/api/ai-analysis/step1-analyze`);
       
       fetch(`${baseUrl}/api/ai-analysis/step1-analyze`, {
         method: 'POST',
@@ -144,11 +149,19 @@ export default async function handler(
           quizResponseId: quizId,
           reportId: report.id,
         }),
-      }).catch(error => {
-        console.error('Failed to trigger step 1 analysis:', error);
+      })
+      .then(response => {
+        console.log('[SUBMIT] Step 1 trigger response status:', response.status);
+        return response.json();
+      })
+      .then(data => {
+        console.log('[SUBMIT] Step 1 trigger response:', data);
+      })
+      .catch(error => {
+        console.error('[SUBMIT] Failed to trigger step 1 analysis:', error);
       });
     } else {
-      console.log(`Report ${report.id} already processing or completed, skipping trigger`);
+      console.log(`[SUBMIT] Report ${report.id} already processing or completed (status: ${existingReport?.report_status}), skipping trigger`);
     }
 
     res.status(200).json({

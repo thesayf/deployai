@@ -13,18 +13,26 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log('[STEP1-HANDLER] ========== STEP 1 ANALYSIS STARTED ==========');
+  console.log('[STEP1-HANDLER] Method:', req.method);
+  console.log('[STEP1-HANDLER] Body:', JSON.stringify(req.body));
+  
   if (req.method !== 'POST') {
+    console.log('[STEP1-HANDLER] ERROR: Wrong method');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   // Verify internal API key for security
   const apiKey = req.headers['x-api-key'];
   if (apiKey !== process.env.INTERNAL_API_KEY) {
+    console.log('[STEP1-HANDLER] ERROR: Unauthorized');
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
   try {
     const { quizResponseId, reportId } = req.body as AnalyzeRequest;
+    console.log('[STEP1-HANDLER] Quiz Response ID:', quizResponseId);
+    console.log('[STEP1-HANDLER] Report ID:', reportId);
 
     const supabase = supabaseAdmin();
 
@@ -55,26 +63,53 @@ export default async function handler(
     console.log('Found existing report:', existingReport);
 
     // Get provider configuration for Step 1
+    console.log('[STEP1-PROVIDER] Getting provider configuration...');
     const stepConfig = AIProviderFactory.getStepConfig(1);
-    const provider = AIProviderFactory.getProvider(stepConfig.provider, stepConfig.model);
+    console.log('[STEP1-PROVIDER] Step config:', JSON.stringify(stepConfig));
     
-    console.log(`[STEP1] Using provider: ${provider.getName()}`);
-    console.log(`[STEP1] Model: ${stepConfig.model}`);
+    const provider = AIProviderFactory.getProvider(stepConfig.provider, stepConfig.model);
+    console.log(`[STEP1-PROVIDER] Provider created: ${provider.getName()}`);
+    console.log(`[STEP1-PROVIDER] Model: ${stepConfig.model}`);
 
     // Generate prompt with company name
     const prompt = generateStep1Prompt(quizData.responses, quizData.user_company);
+    console.log('[STEP1-PROMPT] Prompt generated, length:', prompt.length);
+    console.log('[STEP1-PROMPT] First 200 chars:', prompt.substring(0, 200));
 
     // Call AI provider
-    const response = await provider.generateCompletion({
-      prompt,
-      maxTokens: 1500,
-      temperature: 0.2,
-      reasoning_effort: stepConfig.reasoning_effort,
-      verbosity: stepConfig.verbosity,
-    });
+    console.log('[STEP1-AI] About to call AI provider...');
+    console.log('[STEP1-AI] Provider type:', stepConfig.provider);
+    
+    let response;
+    try {
+      if (stepConfig.provider === 'openai') {
+        console.log('[STEP1-AI] Calling OpenAI with reasoning_effort:', stepConfig.reasoning_effort);
+        response = await provider.generateCompletion({
+          prompt,
+          temperature: 0.2,
+          reasoning_effort: stepConfig.reasoning_effort,
+          verbosity: stepConfig.verbosity,
+        });
+      } else {
+        console.log('[STEP1-AI] Calling Claude');
+        response = await provider.generateCompletion({
+          prompt,
+          maxTokens: 1500, // Claude still needs maxTokens
+          temperature: 0.2,
+        });
+      }
+      console.log('[STEP1-AI] AI call completed successfully');
+    } catch (aiError) {
+      console.error('[STEP1-AI] ERROR calling AI provider:', aiError);
+      throw aiError;
+    }
 
     // Extract JSON from response
     const content = response.content;
+    console.log('[STEP1-RESPONSE] Content type:', typeof content);
+    console.log('[STEP1-RESPONSE] Content length:', content?.length || 0);
+    console.log('[STEP1-RESPONSE] Content preview:', content?.substring(0, 200) || 'NO CONTENT');
+    
     let problemAnalysis;
     
     if (response.usage) {
@@ -83,7 +118,7 @@ export default async function handler(
     
     try {
       problemAnalysis = cleanAndParseJSON(content);
-      console.log('Step 1 - Successfully parsed problem analysis');
+      console.log('[STEP1-PARSE] Successfully parsed problem analysis');
       console.log('Problem analysis keys:', Object.keys(problemAnalysis));
       console.log('Problem analysis sample:', JSON.stringify(problemAnalysis).substring(0, 200));
     } catch (parseError) {
@@ -100,6 +135,10 @@ export default async function handler(
     console.log('Full problemAnalysis:', JSON.stringify(problemAnalysis, null, 2));
 
     // Update report with Step 1 analysis
+    console.log('[STEP1-DB] About to update report:', reportId);
+    console.log('[STEP1-DB] Update payload - status: stage1_complete');
+    console.log('[STEP1-DB] Update payload - has problemAnalysis:', !!problemAnalysis);
+    
     const { data: updatedReport, error: updateError } = await supabase
       .from('ai_reports')
       .update({
@@ -112,21 +151,32 @@ export default async function handler(
       .single();
 
     if (updateError) {
-      console.error('Error updating report:', updateError);
-      console.error('Update error details:', JSON.stringify(updateError, null, 2));
+      console.error('[STEP1-DB] Error updating report:', updateError);
+      console.error('[STEP1-DB] Update error details:', JSON.stringify(updateError, null, 2));
       throw updateError;
     }
 
     // Verify the update worked
-    console.log('Update successful, returned data:', updatedReport);
-    console.log('Saved stage1_problem_analysis:', updatedReport?.stage1_problem_analysis ? 'Data exists' : 'No data');
+    console.log('[STEP1-DB] Update response - report_status:', updatedReport?.report_status);
+    console.log('[STEP1-DB] Update response - has stage1_problem_analysis:', !!updatedReport?.stage1_problem_analysis);
     
-    if (!updatedReport?.stage1_problem_analysis) {
-      console.error('WARNING: Data was not saved to database!');
-      console.error('Attempted to save:', problemAnalysis);
+    // Double-check by fetching the report again
+    const { data: verifyReport, error: verifyError } = await supabase
+      .from('ai_reports')
+      .select('id, report_status, stage1_problem_analysis')
+      .eq('id', reportId)
+      .single();
+    
+    console.log('[STEP1-DB-VERIFY] Fetched report status:', verifyReport?.report_status);
+    console.log('[STEP1-DB-VERIFY] Has stage1_problem_analysis:', !!verifyReport?.stage1_problem_analysis);
+    
+    if (verifyReport?.report_status !== 'stage1_complete') {
+      console.error('[STEP1-DB-VERIFY] WARNING: Status not updated correctly!');
+      console.error('[STEP1-DB-VERIFY] Expected: stage1_complete, Got:', verifyReport?.report_status);
+      throw new Error('Failed to update report status to stage1_complete');
     }
 
-    // Trigger Step 2 using the pipeline module
+    // Only trigger Step 2 if Step 1 succeeded
     console.log('[STEP1->STEP2] Starting Step 2 via pipeline');
     console.log('[STEP1->STEP2] Report ID:', reportId);
     console.log('[STEP1->STEP2] Quiz Response ID:', quizResponseId);
@@ -152,13 +202,19 @@ export default async function handler(
       });
     });
 
+    console.log('[STEP1-HANDLER] Sending success response');
     res.status(200).json({ 
       success: true, 
       message: 'Step 1 analysis complete'
     });
+    console.log('[STEP1-HANDLER] ========== STEP 1 COMPLETED SUCCESSFULLY ==========');
 
   } catch (error) {
-    console.error('Error in step 1 analysis:', error);
+    console.error('[STEP1-HANDLER] ========== STEP 1 FAILED ==========');
+    console.error('[STEP1-HANDLER] Error type:', error?.constructor?.name);
+    console.error('[STEP1-HANDLER] Error message:', error instanceof Error ? error.message : 'Unknown error');
+    console.error('[STEP1-HANDLER] Full error:', error);
+    
     res.status(500).json({ 
       error: 'Failed to analyze problems',
       details: error instanceof Error ? error.message : 'Unknown error'
