@@ -162,8 +162,10 @@ CONTEXTUAL TRANSFORMATION RULES:
    - Always quantify pain using their actual numbers from problemEvidence
 
 2. SOLUTION POSITIONING:
-   - NEVER mention tool brands (Zapier, Intercom, etc.)
-   - Use verboseName from curatedTools as-is (already generic)
+   - NEVER mention tool brands (Zapier, Intercom, TenantCloud, etc.)
+   - NEVER use "internalToolName" or "internalVendor" fields - those are for internal use only
+   - Use ONLY "verboseName" from curatedTools (already generic and client-safe)
+   - Do NOT reference "toolName" if it contains a real product name
    - Add context: "This integrates seamlessly with your [current systems they mentioned]"
    - Frame benefits in their business terms, not generic tech terms
 

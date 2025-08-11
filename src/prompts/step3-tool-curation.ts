@@ -1,4 +1,4 @@
-import { ProblemAnalysis, ToolResearch } from '@/types/ai-analysis-new';
+wimport { ProblemAnalysis, ToolResearch } from '@/types/ai-analysis-new';
 
 export function generateStep3Prompt(problemAnalysis: ProblemAnalysis, toolResearch: ToolResearch): string {
   return `You are a senior AI implementation consultant. Based on the problem analysis and tool research, select the 3 most appropriate AI tools for this business and determine the optimal starting point.
@@ -30,6 +30,14 @@ CRITICAL INSTRUCTIONS:
 4. Map each tool to the specific problems it solves
 5. Calculate total annual opportunity from all problems
 
+TOOL NAME HANDLING - EXTREMELY IMPORTANT:
+- Store REAL tool names in: "internalToolName" and "internalVendor" (for database/team reference)
+- Create GENERIC descriptions in: "verboseName" (for client-facing report)
+  * Example: Instead of "TenantCloud", use "Comprehensive Property Management Platform with Document Automation"
+  * Example: Instead of "LeadSimple", use "Property Management CRM and Process Automation Platform"
+- For "toolName" and "vendor": Use generic labels like "Solution 1", "Leading Provider"
+- NEVER expose actual product brands in client-facing fields
+
 OUTPUT FORMAT (return only valid JSON):
 {
   "executiveSummary": {
@@ -47,10 +55,12 @@ OUTPUT FORMAT (return only valid JSON):
   "selectedTools": [
     {
       "priority": 1,
-      "toolName": "Specific Tool Name",
-      "vendor": "Company Name",
+      "toolName": "Specific Tool Name (INTERNAL USE - store real name for database)",
+      "vendor": "Company Name (INTERNAL USE - store real vendor)",
       "category": "AI Tool Category",
-      "verboseName": "Descriptive name from research",
+      "verboseName": "Generic descriptive name WITHOUT brand (CLIENT-FACING - e.g., 'Comprehensive Property Management Platform')",
+      "internalToolName": "Real tool name for your reference (e.g., TenantCloud)",
+      "internalVendor": "Real vendor name for your reference",
       "problemSolved": "Specific problem from original analysis",
       "directImpact": [
         "Which specific problem it addresses",
