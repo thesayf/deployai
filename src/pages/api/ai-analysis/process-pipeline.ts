@@ -134,7 +134,10 @@ export default async function handler(
       const content = response.content[0].type === 'text' ? response.content[0].text : '';
       problemAnalysis = cleanAndParseJSON(content);
 
-      await supabase
+      // Log for debugging
+      console.log('[PIPELINE] Stage 1 JSON size:', JSON.stringify(problemAnalysis).length, 'bytes');
+
+      const { error: updateError } = await supabase
         .from('ai_reports')
         .update({ 
           stage1_problem_analysis: problemAnalysis,
@@ -142,7 +145,12 @@ export default async function handler(
         })
         .eq('id', reportId);
 
-      console.log('[PIPELINE] Stage 1 complete');
+      if (updateError) {
+        console.error('[PIPELINE] Failed to save Stage 1 to database:', updateError);
+        throw new Error(`Failed to save Stage 1: ${updateError.message}`);
+      }
+
+      console.log('[PIPELINE] Stage 1 complete and saved');
     }
 
     // STAGE 2: Tool Research
@@ -160,7 +168,9 @@ export default async function handler(
       const content = response.content[0].type === 'text' ? response.content[0].text : '';
       toolResearch = cleanAndParseJSON(content);
 
-      await supabase
+      console.log('[PIPELINE] Stage 2 JSON size:', JSON.stringify(toolResearch).length, 'bytes');
+
+      const { error: updateError } = await supabase
         .from('ai_reports')
         .update({ 
           stage2_tool_research: toolResearch,
@@ -168,7 +178,12 @@ export default async function handler(
         })
         .eq('id', reportId);
 
-      console.log('[PIPELINE] Stage 2 complete');
+      if (updateError) {
+        console.error('[PIPELINE] Failed to save Stage 2 to database:', updateError);
+        throw new Error(`Failed to save Stage 2: ${updateError.message}`);
+      }
+
+      console.log('[PIPELINE] Stage 2 complete and saved');
     }
 
     // STAGE 3: Curated Tools
@@ -186,11 +201,9 @@ export default async function handler(
       const content = response.content[0].type === 'text' ? response.content[0].text : '';
       curatedTools = cleanAndParseJSON(content);
 
-      // TODO: Fix Stage 3 data not saving to database
-      // Issue: This update silently fails - no error handling like other stages
-      // The complex nested JSON structure may be causing the save to fail
-      // Need to add: error handling, data validation, size checking, and fallback to simplified structure
-      await supabase
+      console.log('[PIPELINE] Stage 3 JSON size:', JSON.stringify(curatedTools).length, 'bytes');
+
+      const { error: updateError } = await supabase
         .from('ai_reports')
         .update({ 
           stage3_curated_tools: curatedTools,
@@ -198,7 +211,12 @@ export default async function handler(
         })
         .eq('id', reportId);
 
-      console.log('[PIPELINE] Stage 3 complete');
+      if (updateError) {
+        console.error('[PIPELINE] Failed to save Stage 3 to database:', updateError);
+        throw new Error(`Failed to save Stage 3: ${updateError.message}`);
+      }
+
+      console.log('[PIPELINE] Stage 3 complete and saved');
     }
 
     // STAGE 4: Final Report Generation
@@ -243,8 +261,10 @@ export default async function handler(
 
       finalReport = cleanAndParseJSON(content);
 
+      console.log('[PIPELINE] Stage 4 JSON size:', JSON.stringify(finalReport).length, 'bytes');
+
       // Update report with final content and mark as completed
-      await supabase
+      const { error: updateError } = await supabase
         .from('ai_reports')
         .update({ 
           stage4_report_content: finalReport,
@@ -253,7 +273,12 @@ export default async function handler(
         })
         .eq('id', reportId);
 
-      console.log('[PIPELINE] Stage 4 complete');
+      if (updateError) {
+        console.error('[PIPELINE] Failed to save Stage 4 to database:', updateError);
+        throw new Error(`Failed to save Stage 4: ${updateError.message}`);
+      }
+
+      console.log('[PIPELINE] Stage 4 complete and saved');
     }
 
     // Send report ready email (only if not already sent)

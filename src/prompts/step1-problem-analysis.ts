@@ -59,17 +59,14 @@ Now identify their 3 BIGGEST, MOST EXPENSIVE problems. Be SPECIFIC. If they're a
 OUTPUT FORMAT (return only valid JSON):
 {
   "businessContext": {
-    "companyName": "${companyName}",
-    "industry": "${responses.industry}",
-    "companySize": "${responses.companySize}", 
-    "monthlyBudget": "${responses.monthlyBudget}",
-    "urgency": "${responses.timeline}",
-    "techCapability": "${responses.teamCapability}",
+    "companyName": "${companyName || 'Your Organization'}",
+    "industry": "${responses.industry || 'not specified'}",
+    "companySize": "${responses.companySize || 'not specified'}", 
+    "monthlyBudget": "${responses.monthlyBudget || 'not specified'}",
+    "urgency": "${responses.timeline || 'not specified'}",
+    "techCapability": "${responses.teamCapability || 'not specified'}",
     "currentSystems": ${JSON.stringify(responses.currentSystems || [])},
-    "integrationNeeds": "${responses.integrationChallenges}",
-    "aiExperience": "${responses.aiExperience}",
-    "businessObjectives": "Based on their responses, infer their main business goals",
-    "decisionAuthority": "${responses.decisionAuthority}"
+    "businessObjectives": "Based on their responses, infer their main business goals"
   },
   "topOpportunities": [
     {
