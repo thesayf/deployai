@@ -178,14 +178,24 @@ export default async function handler(
     console.log('[SUBMIT] Triggering workflow processing...');
     
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${process.env.PORT || 3000}`;
+      // Ensure we have a full URL with protocol
+      let baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${process.env.PORT || 3000}`;
+      
+      // Add protocol if missing
+      if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
+        // In production, use https by default
+        baseUrl = `https://${baseUrl}`;
+      }
       
       // Import workflow client
       const { triggerWorkflow } = await import('@/lib/workflow/client');
       
+      const workflowUrl = `${baseUrl}/api/workflow/process-pipeline`;
+      console.log('[SUBMIT] Workflow URL:', workflowUrl);
+      
       // Wait max 2 seconds for workflow to start, then return to show animation
       const triggerPromise = triggerWorkflow(
-        `${baseUrl}/api/workflow/process-pipeline`,
+        workflowUrl,
         { reportId: report.id },
         `report-${report.id}` // Unique workflow run ID
       );

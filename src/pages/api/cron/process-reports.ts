@@ -83,7 +83,15 @@ export default async function handler(
       try {
         // Trigger workflow for the report
         const { triggerWorkflow } = await import('@/lib/workflow/client');
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
+        
+        // Ensure we have a full URL with protocol
+        let baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
+        
+        // Add protocol if missing
+        if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
+          // In production, use https by default
+          baseUrl = `https://${baseUrl}`;
+        }
         
         const workflowResult = await triggerWorkflow(
           `${baseUrl}/api/workflow/process-pipeline`,
