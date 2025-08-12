@@ -31,8 +31,8 @@ export default async function handler(
         updated_at,
         email_sent_at,
         stage1_problem_analysis,
-        stage2_curated_tools,
-        stage3_recommended_solutions,
+        stage2_tool_research,
+        stage3_tool_selection,
         stage4_report_content
       `)
       .eq('id', reportId)
@@ -51,13 +51,13 @@ export default async function handler(
       progress = 25;
       currentStage = 'analyzing';
     }
-    if (report.stage2_curated_tools) {
+    if (report.stage2_tool_research) {
       progress = 50;
-      currentStage = 'curating';
+      currentStage = 'researching';
     }
-    if (report.stage3_recommended_solutions) {
+    if (report.stage3_tool_selection) {
       progress = 75;
-      currentStage = 'recommending';
+      currentStage = 'curating';
     }
     if (report.stage4_report_content) {
       progress = 90;

@@ -1,0 +1,234 @@
+
+> clean@0.1.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use, trying 3001 instead.
+ ⚠ Port 3001 is in use, trying 3002 instead.
+  ▲ Next.js 14.2.1
+  - Local:        http://localhost:3002
+  - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 1677ms
+ ✓ Compiled /api/quiz/start in 254ms (75 modules)
+ POST /api/quiz/start 200 in 818ms
+ ✓ Compiled /api/quiz/submit in 41ms (78 modules)
+[SUBMIT] Checking for existing report for quiz 2a5eba3a-c6b3-489c-82ef-1bc1e4255a85...
+[SUBMIT] No existing report found, creating new report for quiz 2a5eba3a-c6b3-489c-82ef-1bc1e4255a85...
+[SUBMIT] NEW REPORT CREATED: 471f5119-1f5a-4f0d-b30e-de64afb25bd2 for quiz 2a5eba3a-c6b3-489c-82ef-1bc1e4255a85
+[SUBMIT] Report created with status: pending
+[SUBMIT] Updated report status to generating
+[SUBMIT] Sending confirmation email...
+[SUBMIT] Confirmation email sent successfully
+[SUBMIT] Triggering background report processing...
+ POST /api/quiz/submit 200 in 1614ms
+ ✓ Compiled /api/ai-analysis/process-pipeline in 138ms (97 modules)
+[PIPELINE] Starting processing for report: 471f5119-1f5a-4f0d-b30e-de64afb25bd2
+[PIPELINE] Force reprocess: false
+[PIPELINE] Current report status: generating
+[PIPELINE] Quiz response ID: 2a5eba3a-c6b3-489c-82ef-1bc1e4255a85
+[PIPELINE] Stage 2: Researching tools...
+[PIPELINE] Step 2 config: {"provider":"anthropic","model":"claude-sonnet-4-20250514"}
+[PIPELINE] Step 2 provider: anthropic, model: claude-sonnet-4-20250514
+[PIPELINE] Using Claude for Stage 2 (web search)
+[Anthropic-claude-sonnet-4-20250514] Generating completion
+[Anthropic-claude-sonnet-4-20250514] Prompt length: 7620
+[Anthropic-claude-sonnet-4-20250514] Response received, length: 20793
+[PIPELINE] Stage 2 JSON size: 15608 bytes
+[PIPELINE] Stage 2 complete and saved
+[PIPELINE] Stage 3: Curating tools...
+[PIPELINE] Step 3 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"medium","verbosity":"medium"}
+[PIPELINE] Step 3 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 3
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 33330
+[OpenAI-gpt-5-mini] Reasoning effort: medium
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 33330,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'medium' }
+}
+[SUBMIT] Background processing failed: {"error":"Pipeline processing failed","details":"Failed to save Stage 3: Could not find the 'stage3_curated_tools' column of 'ai_reports' in the schema cache"}
+ POST /api/ai-analysis/process-pipeline 200 in 120140ms
+[OpenAI-gpt-5-mini] API call successful!
+[OpenAI-gpt-5-mini] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5-mini] Using output_text directly
+[OpenAI-gpt-5-mini] Response received, length: 23555
+[PIPELINE] Stage 3 JSON size: 19195 bytes
+[PIPELINE] Failed to save Stage 3 to database: {
+  code: 'PGRST204',
+  details: null,
+  hint: null,
+  message: "Could not find the 'stage3_curated_tools' column of 'ai_reports' in the schema cache"
+}
+[PIPELINE] Critical error: Error: Failed to save Stage 3: Could not find the 'stage3_curated_tools' column of 'ai_reports' in the schema cache
+    at handler (webpack-internal:///(api)/./src/pages/api/ai-analysis/process-pipeline.ts:205:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async K (/Users/rudihinds/code/deployai/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:2871)
+    at async U.render (/Users/rudihinds/code/deployai/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:3955)
+    at async DevServer.runApi (/Users/rudihinds/code/deployai/node_modules/next/dist/server/next-server.js:600:9)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/rudihinds/code/deployai/node_modules/next/dist/server/next-server.js:269:37)
+    at async DevServer.handleRequestImpl (/Users/rudihinds/code/deployai/node_modules/next/dist/server/base-server.js:811:17)
+    at async /Users/rudihinds/code/deployai/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/rudihinds/code/deployai/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/rudihinds/code/deployai/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/rudihinds/code/deployai/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/rudihinds/code/deployai/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async requestHandlerImpl (/Users/rudihinds/code/deployai/node_modules/next/dist/server/lib/router-server.js:377:13)
+    at async Server.requestListener (/Users/rudihinds/code/deployai/node_modules/next/dist/server/lib/start-server.js:141:13)
+ ✓ Compiled /api/ai-analysis/check-columns in 63ms (75 modules)
+ GET /api/ai-analysis/check-columns 200 in 594ms
+ ✓ Compiled /api/ai-analysis/process-pipeline in 49ms (92 modules)
+[PIPELINE] Starting processing for report: 471f5119-1f5a-4f0d-b30e-de64afb25bd2
+[PIPELINE] Force reprocess: false
+[PIPELINE] Current report status: failed
+[PIPELINE] Quiz response ID: 2a5eba3a-c6b3-489c-82ef-1bc1e4255a85
+[PIPELINE] Stage 3: Curating tools...
+[PIPELINE] Step 3 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"medium","verbosity":"medium"}
+[PIPELINE] Step 3 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 3
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 33330
+[OpenAI-gpt-5-mini] Reasoning effort: medium
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 33330,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'medium' }
+}
+[OpenAI-gpt-5-mini] API call successful!
+[OpenAI-gpt-5-mini] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5-mini] Using output_text directly
+[OpenAI-gpt-5-mini] Response received, length: 22735
+[PIPELINE] Stage 3 JSON size: 18385 bytes
+[PIPELINE] Stage 3 complete and saved
+[PIPELINE] Stage 4: Generating final report...
+[PIPELINE] Using GPT-5 full for final report
+[OpenAI-gpt-5] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5] Prompt length: 37046
+[OpenAI-gpt-5] Reasoning effort: medium
+[OpenAI-gpt-5] Verbosity: high
+[OpenAI-gpt-5] Temperature: 0.3
+[OpenAI-gpt-5] Building request parameters...
+[OpenAI-gpt-5] About to call OpenAI API...
+[OpenAI-gpt-5] Request params: {
+  model: 'gpt-5',
+  inputLength: 37046,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'high' }
+}
+[OpenAI-gpt-5] API call successful!
+[OpenAI-gpt-5] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5] Using output_text directly
+[OpenAI-gpt-5] Response received, length: 11630
+[PIPELINE] Stage 4 JSON size: 10135 bytes
+[PIPELINE] Stage 4 complete and saved
+[PIPELINE] Sending report ready email...
+[REPORT-EMAIL] Sending report ready email
+[REPORT-EMAIL] Report ID: 471f5119-1f5a-4f0d-b30e-de64afb25bd2
+[REPORT-EMAIL] User email: pipelinetest@example.com
+[REPORT-EMAIL] Report URL: http://localhost:3000/report/view/15c46a57-08bf-44e3-a3c0-1193089d4caf
+[EMAIL] Using assessment sender: AI Assessment <assessment@deployai.studio>
+[REPORT-EMAIL] Email sent successfully!
+[REPORT-EMAIL] Email ID: af767670-777e-4c0e-8833-e77bba35219d
+[PIPELINE] Email sent successfully: af767670-777e-4c0e-8833-e77bba35219d
+[PIPELINE] Processing complete in 165.556 seconds
+ POST /api/ai-analysis/process-pipeline 200 in 165618ms
+ ✓ Compiled /api/reports/status/[reportId] in 50ms (75 modules)
+[STATUS] Checking status for report: 471f5119-1f5a-4f0d-b30e-de64afb25bd2
+[STATUS] Report not found: {
+  code: '42703',
+  details: null,
+  hint: null,
+  message: 'column ai_reports.stage3_curated_tools does not exist'
+}
+ GET /api/reports/status/471f5119-1f5a-4f0d-b30e-de64afb25bd2 404 in 425ms
+ ✓ Compiled in 39ms (75 modules)
+ ✓ Compiled in 36ms (75 modules)
+[STATUS] Checking status for report: 471f5119-1f5a-4f0d-b30e-de64afb25bd2
+[STATUS] Returning status: completed Progress: 100
+ GET /api/reports/status/471f5119-1f5a-4f0d-b30e-de64afb25bd2 200 in 485ms
+ ○ Compiling /report/view/[token] ...
+ ✓ Compiled /report/view/[token] in 1531ms (444 modules)
+ ✓ Compiled in 171ms (444 modules)
+ GET /report/view/15c46a57-08bf-44e3-a3c0-1193089d4caf 200 in 1823ms
+ GET /report/view/15c46a57-08bf-44e3-a3c0-1193089d4caf 200 in 12ms
+ ✓ Compiled /_error in 124ms (446 modules)
+ GET /api/reports/15c46a57-08bf-44e3-a3c0-1193089d4caf 404 in 144ms
+ GET /api/reports/get/15c46a57-08bf-44e3-a3c0-1193089d4caf 404 in 5ms
+ GET /report/view/15c46a57-08bf-44e3-a3c0-1193089d4caf 200 in 32ms

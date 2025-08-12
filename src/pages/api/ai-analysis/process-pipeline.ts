@@ -106,7 +106,7 @@ export default async function handler(
 
     let problemAnalysis: ProblemAnalysis | null = report.stage1_problem_analysis;
     let toolResearch: ToolResearch | null = report.stage2_tool_research;
-    let curatedTools: CuratedTools | null = report.stage3_curated_tools;
+    let curatedTools: CuratedTools | null = report.stage3_tool_selection;
     let finalReport: any = report.stage4_report_content;
 
     // STAGE 1: Problem Analysis
@@ -243,7 +243,7 @@ export default async function handler(
       const { error: updateError } = await supabase
         .from('ai_reports')
         .update({ 
-          stage3_curated_tools: curatedTools,
+          stage3_tool_selection: curatedTools,
           updated_at: new Date().toISOString()
         })
         .eq('id', reportId);
