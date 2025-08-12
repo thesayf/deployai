@@ -1,11 +1,21 @@
 import quizData from '@/data/quiz-questions.json';
 import { QuizQuestion } from '@/types/quiz';
 
+// Debug: Log the number of questions loaded
+if (typeof window !== 'undefined') {
+  console.log('[Quiz] Loaded questions from JSON:', quizData.questions.length);
+  console.log('[Quiz] Question IDs:', quizData.questions.map(q => `${q.questionNumber}: ${q.id}`));
+}
+
 /**
  * Get question by step number
  */
 export function getQuestionByStep(step: number): QuizQuestion | undefined {
-  return quizData.questions.find(q => q.questionNumber === step) as QuizQuestion | undefined;
+  const question = quizData.questions.find(q => q.questionNumber === step) as QuizQuestion | undefined;
+  if (typeof window !== 'undefined') {
+    console.log(`[Quiz] Getting question for step ${step}:`, question ? question.id : 'NOT FOUND');
+  }
+  return question;
 }
 
 /**

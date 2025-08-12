@@ -42,6 +42,20 @@ const QuizStep = () => {
   const currentAnswer = currentQuestion 
     ? (responses as any)[currentQuestion.id]
     : undefined;
+  
+  // Debug logging
+  useEffect(() => {
+    if (currentQuestion) {
+      console.log(`[QuizStep] Step ${currentStep} - Question:`, {
+        id: currentQuestion.id,
+        title: currentQuestion.title,
+        type: currentQuestion.type,
+        currentAnswer
+      });
+    } else {
+      console.log(`[QuizStep] Step ${currentStep} - NO QUESTION FOUND!`);
+    }
+  }, [currentStep, currentQuestion, currentAnswer]);
 
   useEffect(() => {
     // Redirect to landing if no user info or quiz ID

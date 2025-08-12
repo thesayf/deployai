@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Quiz Cache</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        button {
+            background: #457B9D;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #356180;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clear Quiz Cache</h1>
+    <p>Use this page to clear any cached quiz data from your browser.</p>
+    
+    <button onclick="clearAll()">Clear All Cache</button>
+    <button onclick="viewStorage()">View Current Storage</button>
+    
+    <div id="status" class="status"></div>
+    
+    <script>
+        function clearAll() {
+            // Clear localStorage
+            const quizState = localStorage.getItem('quizState');
+            localStorage.clear();
+            
+            // Clear sessionStorage
+            sessionStorage.clear();
+            
+            // Display status
+            const status = document.getElementById('status');
+            status.className = 'status success';
+            status.innerHTML = `
+                <h3>Cache Cleared Successfully!</h3>
+                <p>✅ localStorage cleared</p>
+                <p>✅ sessionStorage cleared</p>
+                <p>Previous quiz state: ${quizState ? 'Found and removed' : 'None found'}</p>
+                <p><strong>Now navigate to the quiz to test with fresh data.</strong></p>
+            `;
+        }
+        
+        function viewStorage() {
+            const quizState = localStorage.getItem('quizState');
+            const status = document.getElementById('status');
+            
+            if (quizState) {
+                try {
+                    const parsed = JSON.parse(quizState);
+                    status.className = 'status';
+                    status.innerHTML = `
+                        <h3>Current Quiz State in localStorage:</h3>
+                        <pre>${JSON.stringify(parsed, null, 2)}</pre>
+                    `;
+                } catch (e) {
+                    status.innerHTML = `<p>Error parsing quiz state: ${e.message}</p>`;
+                }
+            } else {
+                status.className = 'status';
+                status.innerHTML = '<p>No quiz state found in localStorage.</p>';
+            }
+        }
+        
+        // Show current state on load
+        window.onload = viewStorage;
+    </script>
+</body>
+</html>
