@@ -30,6 +30,11 @@ const AIAssessmentLanding = () => {
       // Reset any existing quiz state to ensure clean start
       dispatch(resetQuiz());
       
+      // Also clear localStorage directly as a safeguard
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('quizState');
+      }
+      
       // Call the start quiz API
       const response = await fetch('/api/quiz/start', {
         method: 'POST',

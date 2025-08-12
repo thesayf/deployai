@@ -133,19 +133,19 @@ export default async function handler(
     // Report is now created with 'pending' status
     console.log('[SUBMIT] Report created with status: pending');
     
-    // Update status to 'processing' immediately
+    // Update status to 'generating' immediately (database constraint doesn't allow 'processing')
     const { error: statusUpdateError } = await supabase
       .from('ai_reports')
       .update({ 
-        report_status: 'processing',
+        report_status: 'generating',
         updated_at: new Date().toISOString()
       })
       .eq('id', report.id);
     
     if (statusUpdateError) {
-      console.error('[SUBMIT] Failed to update status to processing:', statusUpdateError);
+      console.error('[SUBMIT] Failed to update status to generating:', statusUpdateError);
     } else {
-      console.log('[SUBMIT] Updated report status to processing');
+      console.log('[SUBMIT] Updated report status to generating');
     }
     
     // Send confirmation email immediately

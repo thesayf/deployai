@@ -68,7 +68,7 @@ const QuizStep = () => {
     // Sync URL step with Redux state
     if (step && typeof step === 'string') {
       const stepNumber = parseInt(step, 10);
-      if (!isNaN(stepNumber) && stepNumber >= 1 && stepNumber <= 17) {
+      if (!isNaN(stepNumber) && stepNumber >= 1 && stepNumber <= 14) {
         if (stepNumber !== currentStep) {
           dispatch(setCurrentStep(stepNumber));
         }
@@ -124,7 +124,7 @@ const QuizStep = () => {
     setValidationError(undefined);
     
     // Auto-advance for single-select questions
-    if (currentQuestion.type === 'single-select' && currentStep < 17) {
+    if (currentQuestion.type === 'single-select' && currentStep < 14) {
       if (isChangingAnswer) {
         // Small delay to show visual feedback when changing answer
         setTimeout(() => {
@@ -157,7 +157,7 @@ const QuizStep = () => {
       await saveProgress(currentQuestion.id, currentAnswer);
     }
     
-    if (currentStep === 17) {
+    if (currentStep === 14) {
       // Last question - go to complete page
       router.push('/ai-assessment/quiz/complete');
     } else {
@@ -204,15 +204,15 @@ const QuizStep = () => {
   const progress = calculateProgress(currentStep);
   const timeRemaining = estimateCompletionTime(currentStep);
 
-  // Check if current answer is valid
-  const isCurrentAnswerValid = currentQuestion && currentAnswer !== undefined && currentAnswer !== null
+  // Check if current answer is valid (or if question is optional)
+  const isCurrentAnswerValid = currentQuestion 
     ? validateResponse(currentQuestion.id, currentAnswer).valid
     : false;
 
   return (
     <>
       <Head>
-        <title>Question {currentStep} of 17 | AI Readiness Assessment</title>
+        <title>Question {currentStep} of 14 | AI Readiness Assessment</title>
       </Head>
 
       <main className="h-screen bg-white flex flex-col overflow-hidden">
@@ -240,7 +240,7 @@ const QuizStep = () => {
                 onNext={handleNext}
                 onPrevious={handlePrevious}
                 isFirst={currentStep === 1}
-                isLast={currentStep === 17}
+                isLast={currentStep === 14}
                 isValid={isCurrentAnswerValid}
                 validationError={validationError}
               />

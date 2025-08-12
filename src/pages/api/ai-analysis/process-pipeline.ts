@@ -123,7 +123,7 @@ export default async function handler(
     if (!problemAnalysis || force) {
       console.log('[PIPELINE] Stage 1: Analyzing problems...');
       
-      const prompt = generateStep1Prompt(quizData.responses);
+      const prompt = generateStep1Prompt(quizData.responses, quizData.user_company);
       const response = await anthropic.messages.create({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 5000,
@@ -186,6 +186,10 @@ export default async function handler(
       const content = response.content[0].type === 'text' ? response.content[0].text : '';
       curatedTools = cleanAndParseJSON(content);
 
+      // TODO: Fix Stage 3 data not saving to database
+      // Issue: This update silently fails - no error handling like other stages
+      // The complex nested JSON structure may be causing the save to fail
+      // Need to add: error handling, data validation, size checking, and fallback to simplified structure
       await supabase
         .from('ai_reports')
         .update({ 

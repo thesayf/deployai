@@ -139,7 +139,19 @@ const quizSlice = createSlice({
       if (typeof window !== 'undefined') {
         localStorage.removeItem('quizState');
       }
-      return initialState;
+      // Return a fresh initial state without loading from localStorage
+      return {
+        userInfo: null,
+        quizId: null,
+        currentStep: 1,
+        responses: {},
+        isModalOpen: false,
+        isSubmitting: false,
+        processingStage: null,
+        reportId: null,
+        reportContent: null,
+        error: null,
+      };
     },
     
     // Clear progress (but keep user info)

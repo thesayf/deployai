@@ -9,21 +9,30 @@ export function generateStep1Prompt(responses: QuizResponseData, companyName?: s
   const quizJson = {
     companyName: companyName || 'Your Organization',
     industry: responses.industry || 'not specified',
+    companySize: responses.companySize || 'not specified',
+    monthlyBudget: responses.monthlyBudget || 'not specified',
+    timeline: responses.timeline || 'not specified',
+    // New fields
+    efficiencyRating: responses.efficiencyRating || 'not specified',
+    repetitiveTasks: responses.repetitiveTasks || [],
+    customerExperienceIssues: responses.customerExperienceIssues || [],
+    moneyLeaks: responses.moneyLeaks || [],
+    growthBottlenecks: responses.growthBottlenecks || [],
+    currentSystems: responses.currentSystems || [],
+    desiredOutcome: responses.desiredOutcome || [],
+    pastAttempts: responses.pastAttempts || [],
+    teamCapability: responses.teamCapability || 'not specified',
+    additionalContext: responses.additionalContext || 'none provided',
+    // Old fields (may be undefined)
     customerCommunication: responses.customerCommunication || 'not specified',
     revenueOptimization: responses.revenueOptimization || 'not specified',
     dataDecisionMaking: responses.dataDecisionMaking || 'not specified',
-    repetitiveTasks: responses.repetitiveTasks || [],
     qualityConsistency: responses.qualityConsistency || 'not specified',
     responseSpeed: responses.responseSpeed || 'not specified',
     businessObjectives: responses.businessObjectives || [],
     costImpact: responses.costImpact || 'not specified',
-    currentSystems: responses.currentSystems || [],
     integrationChallenges: responses.integrationChallenges || 'not specified',
-    teamCapability: responses.teamCapability || 'not specified',
     aiExperience: responses.aiExperience || 'not specified',
-    companySize: responses.companySize || 'not specified',
-    monthlyBudget: responses.monthlyBudget || 'not specified',
-    timeline: responses.timeline || 'not specified',
     decisionAuthority: responses.decisionAuthority || 'not specified'
   };
 
@@ -36,14 +45,14 @@ YOUR TASK:
 Read their responses carefully. What are they ACTUALLY struggling with? Don't give me generic problems like "workflow automation" or "customer service." 
 
 Based on what they told us:
-- They said customer communication is: "${responses.customerCommunication}"
-- They're losing money because: "${responses.revenueOptimization}"
-- Their data problems are: "${responses.dataDecisionMaking}"
+- Business efficiency rating: "${responses.efficiencyRating || 'not specified'}"
 - They waste time on: ${JSON.stringify(responses.repetitiveTasks || [])}
-- Quality issues: "${responses.qualityConsistency}"
-- Response speed: "${responses.responseSpeed}"
+- Customer service issues: ${JSON.stringify(responses.customerExperienceIssues || [])}
+- Where they're losing money: ${JSON.stringify(responses.moneyLeaks || [])}
+- Growth bottlenecks: ${JSON.stringify(responses.growthBottlenecks || [])}
 - They use these systems: ${JSON.stringify(responses.currentSystems || [])}
-- Integration challenges: "${responses.integrationChallenges}"
+- Desired outcomes: ${JSON.stringify(responses.desiredOutcome || [])}
+- Past implementation obstacles: ${JSON.stringify(responses.pastAttempts || [])}
 
 Now identify their 3 BIGGEST, MOST EXPENSIVE problems. Be SPECIFIC. If they're a dental clinic struggling with appointment reminders, say "Dental clinic staff spending 2 hours daily calling patients for appointment reminders" NOT "customer communication challenges."
 

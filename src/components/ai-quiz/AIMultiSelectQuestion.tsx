@@ -39,6 +39,13 @@ export const AIMultiSelectQuestion: React.FC<MultiSelectQuestionProps> = ({
       };
     }
   }, [question.options]);
+
+  // Reset scroll position when question changes
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [question.id]);
   const handleOptionToggle = (optionValue: string) => {
     if (value.includes(optionValue)) {
       // Remove the option

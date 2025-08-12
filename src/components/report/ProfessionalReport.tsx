@@ -1,6 +1,22 @@
 import React from 'react';
 import { ReportData } from './types';
 
+// Utility function to properly capitalize company names
+const capitalizeCompanyName = (name: string): string => {
+  if (!name || name === 'Your Organization') return name;
+  
+  // Split by spaces and capitalize each word
+  return name.split(' ').map(word => {
+    // Handle special cases (acronyms, etc.)
+    if (word.toUpperCase() === word && word.length > 1) {
+      // Already all caps (likely an acronym), keep it
+      return word;
+    }
+    // Capitalize first letter, lowercase the rest
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }).join(' ');
+};
+
 interface ProfessionalReportProps {
   data: ReportData;
   companyName?: string;
@@ -19,6 +35,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
   onScheduleConsultation
 }) => {
   const reportId = Math.random().toString(36).substr(2, 9).toUpperCase();
+  const displayCompanyName = capitalizeCompanyName(companyName);
   
   // Parse readiness level - handle both new and old formats
   let readinessStatus = '';
@@ -50,7 +67,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
           </h1>
           
           <div className="text-sm text-gray-600 mb-8">
-            <p>Prepared for: {companyName}</p>
+            <p>Prepared for: {displayCompanyName}</p>
             <p>Date: {generatedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
             <p>Assessment ID: {reportId}</p>
           </div>
@@ -275,7 +292,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-3xl font-black text-black uppercase">AI Readiness Assessment</h1>
-              <p className="text-gray-600 mt-2">Prepared for: {companyName}</p>
+              <p className="text-gray-600 mt-2">Prepared for: {displayCompanyName}</p>
               <p className="text-sm text-gray-500">
                 {generatedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} • 
                 ID: {reportId}
@@ -531,7 +548,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-4xl font-black text-black uppercase">AI Readiness Assessment</h1>
-              <p className="text-gray-600 mt-2">Prepared for: {companyName}</p>
+              <p className="text-gray-600 mt-2">Prepared for: {displayCompanyName}</p>
               <p className="text-sm text-gray-500">
                 {generatedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} • 
                 Report ID: {reportId}

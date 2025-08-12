@@ -41,29 +41,32 @@ export interface UserInfo {
 
 // Quiz Response Data
 export interface QuizResponseData {
-  // Business Context
-  industry?: string;
+  // Existing fields that map to new questions
+  industry?: string;              // q1
+  efficiencyRating?: string;      // q2
+  companySize?: string;           // q3
+  repetitiveTasks?: string[];     // q4
+  customerExperienceIssues?: string[]; // q5
+  moneyLeaks?: string[];          // q6
+  growthBottlenecks?: string[];   // q7
+  currentSystems?: string[];      // q8
+  desiredOutcome?: string[];     // q9
+  pastAttempts?: string[];        // q10
+  teamCapability?: string;        // q11
+  monthlyBudget?: string;         // q12
+  timeline?: string;              // q13
+  additionalContext?: string;     // q14
+  
+  // Old fields (will be undefined, kept for backward compatibility)
   customerCommunication?: string;
   revenueOptimization?: string;
   dataDecisionMaking?: string;
-  
-  // Operations
-  repetitiveTasks?: string[];
   qualityConsistency?: string;
   responseSpeed?: string;
   businessObjectives?: string[];
-  
-  // Financial & Systems
   costImpact?: string;
-  currentSystems?: string[];
   integrationChallenges?: string;
-  
-  // Team & Implementation
-  teamCapability?: string;
   aiExperience?: string;
-  companySize?: string;
-  monthlyBudget?: string;
-  timeline?: string;
   decisionAuthority?: string;
 }
 

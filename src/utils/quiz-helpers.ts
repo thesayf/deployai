@@ -18,14 +18,14 @@ export function getQuestionById(id: string): QuizQuestion | undefined {
 /**
  * Calculate progress percentage
  */
-export function calculateProgress(currentStep: number, totalSteps: number = 17): number {
+export function calculateProgress(currentStep: number, totalSteps: number = 14): number {
   return Math.round((currentStep / totalSteps) * 100);
 }
 
 /**
  * Estimate completion time based on current progress
  */
-export function estimateCompletionTime(currentStep: number, totalSteps: number = 17): string {
+export function estimateCompletionTime(currentStep: number, totalSteps: number = 14): string {
   const remainingSteps = totalSteps - currentStep;
   const avgTimePerQuestion = 20; // seconds
   const totalSeconds = remainingSteps * avgTimePerQuestion;
@@ -51,6 +51,11 @@ export function validateResponse(questionId: string, response: any): { valid: bo
   // Check if required
   if (question.required && (response === undefined || response === null || response === '')) {
     return { valid: false, error: 'This field is required' };
+  }
+  
+  // If not required and empty, it's valid
+  if (!question.required && (response === undefined || response === null || response === '')) {
+    return { valid: true };
   }
 
   // Type-specific validation

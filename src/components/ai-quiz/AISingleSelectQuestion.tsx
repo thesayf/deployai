@@ -40,6 +40,13 @@ export const AISingleSelectQuestion: React.FC<SingleSelectQuestionProps> = ({
     }
   }, [question.options]);
 
+  // Reset scroll position when question changes
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [question.id]);
+
   return (
     <div className="h-full flex flex-col overflow-hidden">
       {/* Scrollable container for options */}

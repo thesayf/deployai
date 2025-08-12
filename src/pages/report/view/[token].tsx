@@ -16,7 +16,6 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
   const [report, setReport] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [variant, setVariant] = useState<'executive' | 'narrative' | 'datasheet'>('executive');
 
   useEffect(() => {
     if (accessToken) {
@@ -34,7 +33,8 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
           stage4_report_content,
           report_status,
           email_sent_at,
-          access_count
+          access_count,
+          company_name
         `)
         .eq('access_token', accessToken)
         .single();
@@ -56,7 +56,6 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
       }
 
       setReport(data);
-      setVariant('executive');
 
       // Update access count (fire and forget)
       // Note: access_count and report_accessed_at columns may not exist yet
@@ -128,50 +127,15 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
   return (
     <>
       <Head>
-        <title>AI Readiness Report - Your Organization</title>
+        <title>AI Readiness Report - {report?.company_name || 'Your Organization'}</title>
         <meta name="description" content="Your personalized AI readiness assessment and implementation roadmap" />
         <meta name="robots" content="noindex, nofollow" />
       </Head>
 
-      {/* Variant Selector */}
+      {/* Print Header */}
       <div className="bg-white border-b-3 border-black sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <span className="font-semibold">Report Format:</span>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setVariant('executive')}
-                  className={`px-4 py-2 font-medium border-2 border-black transition-all ${
-                    variant === 'executive' 
-                      ? 'bg-black text-white' 
-                      : 'bg-white text-black hover:shadow-hard'
-                  }`}
-                >
-                  Executive
-                </button>
-                <button
-                  onClick={() => setVariant('narrative')}
-                  className={`px-4 py-2 font-medium border-2 border-black transition-all ${
-                    variant === 'narrative' 
-                      ? 'bg-black text-white' 
-                      : 'bg-white text-black hover:shadow-hard'
-                  }`}
-                >
-                  Narrative
-                </button>
-                <button
-                  onClick={() => setVariant('datasheet')}
-                  className={`px-4 py-2 font-medium border-2 border-black transition-all ${
-                    variant === 'datasheet' 
-                      ? 'bg-black text-white' 
-                      : 'bg-white text-black hover:shadow-hard'
-                  }`}
-                >
-                  Data Sheet
-                </button>
-              </div>
-            </div>
+          <div className="flex items-center justify-end">
             <button
               onClick={() => window.print()}
               className="px-6 py-2 bg-white text-black font-medium border-2 border-black hover:shadow-hard transition-all"
@@ -185,9 +149,9 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
       {/* Report Content */}
       <ProfessionalReport
         data={report.stage4_report_content as unknown as ReportData}
-        companyName={'Your Organization'}
+        companyName={report.company_name || 'Your Organization'}
         generatedDate={report.email_sent_at ? new Date(report.email_sent_at) : new Date()}
-        variant={variant}
+        variant="executive"
         onScheduleConsultation={() => {
           window.open('https://calendly.com/deployai-consultation', '_blank');
         }}

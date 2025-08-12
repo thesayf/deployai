@@ -97,6 +97,11 @@ const CompletePage = () => {
       // This prevents stale data if user closes the page
       dispatch(resetQuiz());
       
+      // Also clear localStorage directly as a safeguard
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('quizState');
+      }
+      
       // Confirmation email is now sent from the submit endpoint
       // So we can immediately show success
       setPageState('success');
