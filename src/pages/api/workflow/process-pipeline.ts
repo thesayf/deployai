@@ -14,35 +14,8 @@ interface WorkflowPayload {
   force?: boolean;
 }
 
-// For production, we need to help Upstash determine the workflow URL
-// This shouldn't be necessary according to docs, but fixes the error
-const getWorkflowUrl = () => {
-  // Check for explicit workflow URL first
-  if (process.env.UPSTASH_WORKFLOW_URL) {
-    return process.env.UPSTASH_WORKFLOW_URL;
-  }
-  
-  // Use app URL if available
-  if (process.env.NEXT_PUBLIC_APP_URL) {
-    let url = process.env.NEXT_PUBLIC_APP_URL;
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      url = `https://${url}`;
-    }
-    return `${url}/api/workflow/process-pipeline`;
-  }
-  
-  // Use Vercel URL
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}/api/workflow/process-pipeline`;
-  }
-  
-  // Local development fallback
-  return undefined; // Let Upstash handle it for local dev
-};
-
-const workflowUrl = getWorkflowUrl();
-console.log('[Workflow Init] Workflow URL:', workflowUrl || 'auto-detect');
-
+// According to Upstash docs: In production, the workflow infers URL automatically
+// Only set baseUrl for local development with ngrok
 const { POST } = serve<WorkflowPayload>(
   async (context) => {
     const { reportId, force = false } = context.requestPayload;
@@ -367,8 +340,10 @@ const { POST } = serve<WorkflowPayload>(
     };
   },
   {
-    // Provide the URL if we have it (fixes production error)
-    ...(workflowUrl ? { url: workflowUrl } : {}),
+    // Only set baseUrl in development when using ngrok
+    ...(process.env.NODE_ENV === "development" && process.env.UPSTASH_WORKFLOW_URL ? {
+      baseUrl: process.env.UPSTASH_WORKFLOW_URL
+    } : {}),
     // Optional: Add failure handling
     failureFunction: async ({ context, failStatus, failResponse }) => {
       console.error('[Workflow] Pipeline failed:', failStatus, failResponse);
