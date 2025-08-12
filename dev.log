@@ -237,3 +237,6 @@
  ✓ Compiled in 170ms (297 modules)
  ✓ Compiled in 229ms (297 modules)
  ✓ Compiled in 263ms (297 modules)
+ ✓ Compiled in 282ms (297 modules)
+ ✓ Compiled /api/quiz/submit in 61ms (148 modules)
+ POST /api/quiz/submit 400 in 70ms

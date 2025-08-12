@@ -179,18 +179,25 @@ export default async function handler(
     
     try {
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${process.env.PORT || 3000}`;
-      const processResponse = await fetch(`${baseUrl}/api/ai-analysis/process-pipeline`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': process.env.INTERNAL_API_KEY || '',
-        },
-        body: JSON.stringify({ 
-          reportId: report.id 
-        }),
-      });
       
-      if (!processResponse.ok) {
+      // Wait max 2 seconds for pipeline to start, then return to show animation
+      const processResponse = await Promise.race([
+        fetch(`${baseUrl}/api/ai-analysis/process-pipeline`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': process.env.INTERNAL_API_KEY || '',
+          },
+          body: JSON.stringify({ 
+            reportId: report.id 
+          }),
+        }),
+        new Promise(resolve => setTimeout(() => resolve({ timeout: true }), 2000))
+      ]) as any;
+      
+      if (processResponse.timeout) {
+        console.log('[SUBMIT] Pipeline trigger initiated (timeout reached, processing continues in background)');
+      } else if (!processResponse.ok) {
         console.error('[SUBMIT] Failed to trigger processing:', await processResponse.text());
         // Don't fail the request - cron will pick it up as backup
       } else {
