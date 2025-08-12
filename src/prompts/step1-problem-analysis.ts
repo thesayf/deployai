@@ -45,7 +45,7 @@ YOUR TASK:
 Read their responses carefully. What are they ACTUALLY struggling with? Don't give me generic problems like "workflow automation" or "customer service." 
 
 Based on what they told us:
-- Business efficiency rating: "${responses.efficiencyRating || 'not specified'}"
+- Business efficiency rating: ${JSON.stringify(responses.efficiencyRating || 'not specified')}
 - They waste time on: ${JSON.stringify(responses.repetitiveTasks || [])}
 - Customer service issues: ${JSON.stringify(responses.customerExperienceIssues || [])}
 - Where they're losing money: ${JSON.stringify(responses.moneyLeaks || [])}
@@ -59,12 +59,12 @@ Now identify their 3 BIGGEST, MOST EXPENSIVE problems. Be SPECIFIC. If they're a
 OUTPUT FORMAT (return only valid JSON):
 {
   "businessContext": {
-    "companyName": "${companyName || 'Your Organization'}",
-    "industry": "${responses.industry || 'not specified'}",
-    "companySize": "${responses.companySize || 'not specified'}", 
-    "monthlyBudget": "${responses.monthlyBudget || 'not specified'}",
-    "urgency": "${responses.timeline || 'not specified'}",
-    "techCapability": "${responses.teamCapability || 'not specified'}",
+    "companyName": ${JSON.stringify(companyName || 'Your Organization')},
+    "industry": ${JSON.stringify(responses.industry || 'not specified')},
+    "companySize": ${JSON.stringify(responses.companySize || 'not specified')}, 
+    "monthlyBudget": ${JSON.stringify(responses.monthlyBudget || 'not specified')},
+    "urgency": ${JSON.stringify(responses.timeline || 'not specified')},
+    "techCapability": ${JSON.stringify(responses.teamCapability || 'not specified')},
     "currentSystems": ${JSON.stringify(responses.currentSystems || [])},
     "businessObjectives": "Based on their responses, infer their main business goals"
   },
