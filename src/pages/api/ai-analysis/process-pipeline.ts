@@ -100,14 +100,8 @@ export default async function handler(
     // Determine which model to use for final report
     const writeUpModel = process.env.WRITE_UP_MODEL || 'claude-4';
 
-    // Update status to processing
-    await supabase
-      .from('ai_reports')
-      .update({ 
-        report_status: 'processing',
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', reportId);
+    // Note: Not updating status to 'processing' as it's not allowed by DB constraint
+    // Status remains as 'generating' during pipeline execution
 
     let problemAnalysis: ProblemAnalysis | null = report.stage1_problem_analysis;
     let toolResearch: ToolResearch | null = report.stage2_tool_research;
@@ -311,19 +305,38 @@ export default async function handler(
 
       console.log('[PIPELINE] Stage 4 JSON size:', JSON.stringify(finalReport).length, 'bytes');
 
-      // Update report with final content and mark as completed
-      const { error: updateError } = await supabase
+      // First, update the report content
+      const { error: contentError } = await supabase
         .from('ai_reports')
         .update({ 
           stage4_report_content: finalReport,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', reportId);
+
+      if (contentError) {
+        console.error('[PIPELINE] Failed to save Stage 4 content to database:', contentError);
+        throw new Error(`Failed to save Stage 4 content: ${contentError.message}`);
+      }
+
+      console.log('[PIPELINE] Stage 4 content saved successfully');
+
+      // Then update the status separately
+      const { error: statusError } = await supabase
+        .from('ai_reports')
+        .update({ 
           report_status: 'completed',
           updated_at: new Date().toISOString()
         })
         .eq('id', reportId);
 
-      if (updateError) {
-        console.error('[PIPELINE] Failed to save Stage 4 to database:', updateError);
-        throw new Error(`Failed to save Stage 4: ${updateError.message}`);
+      if (statusError) {
+        console.error('[PIPELINE] Failed to update status to completed:', statusError);
+        console.error('[PIPELINE] Error details:', statusError.message);
+        // Don't throw - content is saved, we can still send the email
+        console.log('[PIPELINE] WARNING: Report content saved but status not updated to completed');
+      } else {
+        console.log('[PIPELINE] Report status updated to completed');
       }
 
       console.log('[PIPELINE] Stage 4 complete and saved');
