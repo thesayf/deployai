@@ -6,9 +6,8 @@ import { generateStep2Prompt } from '@/prompts/step2-tool-research';
 import { generateStep3Prompt } from '@/prompts/step3-tool-curation';
 import { generateStep4Prompt } from '@/prompts/step4-report-generation';
 import { cleanAndParseJSON } from '@/utils/clean-json';
-import Anthropic from '@anthropic-ai/sdk';
-import OpenAI from 'openai';
 import { ProblemAnalysis, ToolResearch, CuratedTools } from '@/types/ai-analysis-new';
+import { AIProviderFactory } from '@/lib/ai-providers/provider-factory';
 
 interface ProcessRequest {
   reportId: string;
@@ -93,15 +92,6 @@ export default async function handler(
       });
     }
 
-    // Initialize AI clients
-    const anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY!,
-    });
-    
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY!,
-    });
-
     // Determine which model to use for final report
     const writeUpModel = process.env.WRITE_UP_MODEL || 'claude-4';
 
@@ -123,15 +113,34 @@ export default async function handler(
     if (!problemAnalysis || force) {
       console.log('[PIPELINE] Stage 1: Analyzing problems...');
       
+      // Get provider configuration for Step 1
+      const step1Config = AIProviderFactory.getStepConfig(1);
+      console.log('[PIPELINE] Step 1 config:', JSON.stringify(step1Config));
+      
+      const step1Provider = AIProviderFactory.getProvider(step1Config.provider, step1Config.model);
+      console.log(`[PIPELINE] Step 1 provider: ${step1Provider.getName()}, model: ${step1Config.model}`);
+      
       const prompt = generateStep1Prompt(quizData.responses, quizData.user_company);
-      const response = await anthropic.messages.create({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 5000,
-        temperature: 0.3,
-        messages: [{ role: 'user', content: prompt }]
-      });
+      
+      let response;
+      if (step1Config.provider === 'openai') {
+        console.log('[PIPELINE] Using GPT-5 mini for Stage 1');
+        response = await step1Provider.generateCompletion({
+          prompt,
+          temperature: 0.3,
+          reasoning_effort: step1Config.reasoning_effort,
+          verbosity: step1Config.verbosity,
+        });
+      } else {
+        console.log('[PIPELINE] Using Claude for Stage 1');
+        response = await step1Provider.generateCompletion({
+          prompt,
+          maxTokens: 5000,
+          temperature: 0.3,
+        });
+      }
 
-      const content = response.content[0].type === 'text' ? response.content[0].text : '';
+      const content = response.content;
       problemAnalysis = cleanAndParseJSON(content);
 
       // Log for debugging
@@ -157,15 +166,24 @@ export default async function handler(
     if (!toolResearch || force) {
       console.log('[PIPELINE] Stage 2: Researching tools...');
       
+      // Get provider configuration for Step 2 (always Claude for web search)
+      const step2Config = AIProviderFactory.getStepConfig(2);
+      console.log('[PIPELINE] Step 2 config:', JSON.stringify(step2Config));
+      
+      const step2Provider = AIProviderFactory.getProvider(step2Config.provider, step2Config.model);
+      console.log(`[PIPELINE] Step 2 provider: ${step2Provider.getName()}, model: ${step2Config.model}`);
+      
       const prompt = generateStep2Prompt(problemAnalysis!);
-      const response = await anthropic.messages.create({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 15000,
+      
+      // Step 2 always uses Claude (as defined in factory)
+      console.log('[PIPELINE] Using Claude for Stage 2 (web search)');
+      const response = await step2Provider.generateCompletion({
+        prompt,
+        maxTokens: 15000,
         temperature: 0.4,
-        messages: [{ role: 'user', content: prompt }]
       });
 
-      const content = response.content[0].type === 'text' ? response.content[0].text : '';
+      const content = response.content;
       toolResearch = cleanAndParseJSON(content);
 
       console.log('[PIPELINE] Stage 2 JSON size:', JSON.stringify(toolResearch).length, 'bytes');
@@ -190,15 +208,34 @@ export default async function handler(
     if (!curatedTools || force) {
       console.log('[PIPELINE] Stage 3: Curating tools...');
       
+      // Get provider configuration for Step 3
+      const step3Config = AIProviderFactory.getStepConfig(3);
+      console.log('[PIPELINE] Step 3 config:', JSON.stringify(step3Config));
+      
+      const step3Provider = AIProviderFactory.getProvider(step3Config.provider, step3Config.model);
+      console.log(`[PIPELINE] Step 3 provider: ${step3Provider.getName()}, model: ${step3Config.model}`);
+      
       const prompt = generateStep3Prompt(problemAnalysis!, toolResearch!);
-      const response = await anthropic.messages.create({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 12000,
-        temperature: 0.3,
-        messages: [{ role: 'user', content: prompt }]
-      });
+      
+      let response;
+      if (step3Config.provider === 'openai') {
+        console.log('[PIPELINE] Using GPT-5 mini for Stage 3');
+        response = await step3Provider.generateCompletion({
+          prompt,
+          temperature: 0.3,
+          reasoning_effort: step3Config.reasoning_effort,
+          verbosity: step3Config.verbosity,
+        });
+      } else {
+        console.log('[PIPELINE] Using Claude for Stage 3');
+        response = await step3Provider.generateCompletion({
+          prompt,
+          maxTokens: 12000,
+          temperature: 0.3,
+        });
+      }
 
-      const content = response.content[0].type === 'text' ? response.content[0].text : '';
+      const content = response.content;
       curatedTools = cleanAndParseJSON(content);
 
       console.log('[PIPELINE] Stage 3 JSON size:', JSON.stringify(curatedTools).length, 'bytes');
@@ -227,36 +264,42 @@ export default async function handler(
       let content = '';
 
       if (writeUpModel === 'gpt-5') {
-        console.log('[PIPELINE] Using GPT-5 for final report');
-        const response = await openai.chat.completions.create({
-          model: 'gpt-5',
-          messages: [
-            {
-              role: 'system',
-              content: 'You are an AI business consultant creating professional reports. You must return only valid JSON without any explanations or markdown. The output must be a JSON object.'
-            },
-            {
-              role: 'user',
-              content: prompt
-            }
-          ],
-          max_completion_tokens: 25000,
-          response_format: { type: "json_object" },
-          reasoning_effort: "medium",
-          verbosity: "medium"
-        } as any);
-
-        content = response.choices[0].message.content || '';
-      } else {
-        console.log('[PIPELINE] Using Claude for final report');
-        const response = await anthropic.messages.create({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 15000,
+        console.log('[PIPELINE] Using GPT-5 full for final report');
+        // Use GPT-5 full model directly (not mini)
+        const gpt5Provider = AIProviderFactory.getProvider('openai', 'gpt-5');
+        const response = await gpt5Provider.generateCompletion({
+          prompt,
           temperature: 0.3,
-          messages: [{ role: 'user', content: prompt }]
+          reasoning_effort: 'medium',
+          verbosity: 'high',
         });
-
-        content = response.content[0].type === 'text' ? response.content[0].text : '';
+        content = response.content;
+      } else {
+        // Get provider configuration for Step 4
+        const step4Config = AIProviderFactory.getStepConfig(4);
+        console.log('[PIPELINE] Step 4 config:', JSON.stringify(step4Config));
+        
+        const step4Provider = AIProviderFactory.getProvider(step4Config.provider, step4Config.model);
+        console.log(`[PIPELINE] Step 4 provider: ${step4Provider.getName()}, model: ${step4Config.model}`);
+        
+        if (step4Config.provider === 'openai') {
+          console.log('[PIPELINE] Using GPT-5 mini for final report');
+          const response = await step4Provider.generateCompletion({
+            prompt,
+            temperature: 0.3,
+            reasoning_effort: step4Config.reasoning_effort,
+            verbosity: step4Config.verbosity,
+          });
+          content = response.content;
+        } else {
+          console.log('[PIPELINE] Using Claude for final report');
+          const response = await step4Provider.generateCompletion({
+            prompt,
+            maxTokens: 15000,
+            temperature: 0.3,
+          });
+          content = response.content;
+        }
       }
 
       finalReport = cleanAndParseJSON(content);
