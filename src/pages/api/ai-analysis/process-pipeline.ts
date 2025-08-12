@@ -27,7 +27,12 @@ export default async function handler(
   const isLocalCall = req.headers.host?.includes('localhost') || req.headers.host?.includes('127.0.0.1');
   
   if (process.env.NODE_ENV === 'production' || !isLocalCall) {
+    if (!process.env.INTERNAL_API_KEY) {
+      console.error('[PIPELINE] INTERNAL_API_KEY not set in environment');
+      return res.status(500).json({ error: 'Server configuration error: INTERNAL_API_KEY not set' });
+    }
     if (apiKey !== process.env.INTERNAL_API_KEY) {
+      console.error('[PIPELINE] Invalid API key provided:', apiKey ? 'key provided but incorrect' : 'no key provided');
       return res.status(401).json({ error: 'Unauthorized' });
     }
   }

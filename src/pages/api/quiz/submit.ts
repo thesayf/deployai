@@ -177,28 +177,39 @@ export default async function handler(
     // Trigger processing in background (fire-and-forget)
     console.log('[SUBMIT] Triggering background report processing...');
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${process.env.PORT || 3000}`;
+    console.log('[SUBMIT] Using base URL for pipeline:', baseUrl);
+    console.log('[SUBMIT] Report ID to process:', report.id);
     
     // Fire-and-forget: Don't await this
-    fetch(`${baseUrl}/api/ai-analysis/process-pipeline`, {
+    const pipelineUrl = `${baseUrl}/api/ai-analysis/process-pipeline`;
+    console.log('[SUBMIT] Pipeline URL:', pipelineUrl);
+    
+    const apiKey = process.env.INTERNAL_API_KEY || '';
+    console.log('[SUBMIT] Using API key:', apiKey ? 'key is set' : 'NO KEY SET - this will fail in production!');
+    
+    fetch(pipelineUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.INTERNAL_API_KEY || '',
+        'x-api-key': apiKey,
       },
       body: JSON.stringify({ 
         reportId: report.id 
       }),
     })
     .then(response => {
+      console.log('[SUBMIT] Pipeline response status:', response.status);
       if (!response.ok) {
         return response.text().then(text => {
           console.error('[SUBMIT] Background processing failed:', text);
+          console.error('[SUBMIT] Response status:', response.status);
         });
       }
       console.log('[SUBMIT] Background processing started successfully');
     })
     .catch(error => {
       console.error('[SUBMIT] Error starting background processing:', error);
+      console.error('[SUBMIT] Error details:', error.message);
       // Cron will pick it up as backup
     });
 

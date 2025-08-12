@@ -232,3 +232,7 @@
  GET /api/reports/15c46a57-08bf-44e3-a3c0-1193089d4caf 404 in 144ms
  GET /api/reports/get/15c46a57-08bf-44e3-a3c0-1193089d4caf 404 in 5ms
  GET /report/view/15c46a57-08bf-44e3-a3c0-1193089d4caf 200 in 32ms
+ ✓ Compiled in 309ms (297 modules)
+ ✓ Compiled in 191ms (297 modules)
+ ✓ Compiled in 170ms (297 modules)
+ ✓ Compiled in 229ms (297 modules)
