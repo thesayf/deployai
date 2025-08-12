@@ -14,7 +14,7 @@ interface WorkflowPayload {
   force?: boolean;
 }
 
-export const { POST } = serve<WorkflowPayload>(
+const { POST } = serve<WorkflowPayload>(
   async (context) => {
     const { reportId, force = false } = context.requestPayload;
     const startTime = Date.now();
@@ -333,3 +333,6 @@ export const { POST } = serve<WorkflowPayload>(
     }
   }
 );
+
+// Next.js Pages Router requires a default export
+export default POST;
