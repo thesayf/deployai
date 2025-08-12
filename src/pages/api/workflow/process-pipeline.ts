@@ -78,7 +78,30 @@ const { POST } = serve<WorkflowPayload>(
     }
 
     const { report, quizData } = reportData;
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3002';
+    
+    // Get the base URL from the workflow context or environment
+    // The workflow needs the full URL with protocol for API calls
+    let baseUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+    
+    // If no URL is set, try to use Vercel URL
+    if (!baseUrl && process.env.VERCEL_URL) {
+      baseUrl = `https://${process.env.VERCEL_URL}`;
+    }
+    
+    // Fallback to localhost for development
+    if (!baseUrl) {
+      baseUrl = 'http://localhost:3002';
+    }
+    
+    // Ensure protocol is included
+    if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
+      // In production, use https by default
+      baseUrl = `https://${baseUrl}`;
+    }
+    
+    console.log('[Workflow] Base URL for API calls:', baseUrl);
+    console.log('[Workflow] Environment check - NEXT_PUBLIC_APP_URL:', process.env.NEXT_PUBLIC_APP_URL);
+    console.log('[Workflow] Environment check - VERCEL_URL:', process.env.VERCEL_URL);
 
     // Stage 1: Problem Analysis (long AI operation via context.call)
     let problemAnalysis: ProblemAnalysis | null = report.stage1_problem_analysis;
