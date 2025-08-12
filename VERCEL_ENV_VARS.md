@@ -2,19 +2,21 @@
 
 ## Critical for Upstash Workflow
 
-Based on research, the workflow should auto-detect URLs in production, but if you're getting the error "Workflow URL should start with 'http://' or 'https://'" you may need to set:
+Due to a known issue with Upstash auto-detection on Vercel, you MUST set the UPSTASH_WORKFLOW_URL environment variable:
 
-### Option 1: Use NEXT_PUBLIC_APP_URL (Recommended)
+### Required: UPSTASH_WORKFLOW_URL
 ```
-NEXT_PUBLIC_APP_URL=https://deployai.co
+UPSTASH_WORKFLOW_URL=https://deployai.studio
 ```
 (Replace with your actual domain - MUST include https://)
 
-### Option 2: If still getting errors, try UPSTASH_WORKFLOW_URL
+Set this to your BASE URL only (not the full workflow endpoint path). The workflow will use this as the base URL for all API calls.
+
+### Optional Fallback: NEXT_PUBLIC_APP_URL
 ```
-UPSTASH_WORKFLOW_URL=https://deployai.co/api/workflow/process-pipeline
+NEXT_PUBLIC_APP_URL=https://deployai.studio
 ```
-Note: This should NOT be needed in production according to Upstash docs, but may help if auto-detection fails.
+This serves as a fallback if UPSTASH_WORKFLOW_URL is not set.
 
 ## QStash Configuration (Required)
 ```

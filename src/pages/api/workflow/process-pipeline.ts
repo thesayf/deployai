@@ -14,8 +14,40 @@ interface WorkflowPayload {
   force?: boolean;
 }
 
-// According to Upstash docs: In production, the workflow infers URL automatically
-// Only set baseUrl for local development with ngrok
+// Upstash should auto-detect in production, but it's failing on Vercel
+// We need to explicitly provide the URL as a workaround
+const getBaseUrl = () => {
+  // UPSTASH_WORKFLOW_URL takes priority - this is the fix for Vercel deployment
+  // User should set this to their base URL (e.g., https://deployai.studio) in Vercel env vars
+  if (process.env.UPSTASH_WORKFLOW_URL) {
+    console.log('[Workflow] Using UPSTASH_WORKFLOW_URL:', process.env.UPSTASH_WORKFLOW_URL);
+    return process.env.UPSTASH_WORKFLOW_URL;
+  }
+  
+  // Fallback to NEXT_PUBLIC_APP_URL
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    let url = process.env.NEXT_PUBLIC_APP_URL;
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      url = `https://${url}`;
+    }
+    console.log('[Workflow] Using NEXT_PUBLIC_APP_URL:', url);
+    return url;
+  }
+  
+  // Try Vercel URL
+  if (process.env.VERCEL_URL) {
+    const url = `https://${process.env.VERCEL_URL}`;
+    console.log('[Workflow] Using VERCEL_URL:', url);
+    return url;
+  }
+  
+  console.log('[Workflow] No base URL found, hoping for auto-detection');
+  return undefined;
+};
+
+const baseUrl = getBaseUrl();
+console.log('[Workflow Init] Base URL:', baseUrl || 'auto-detect');
+
 const { POST } = serve<WorkflowPayload>(
   async (context) => {
     const { reportId, force = false } = context.requestPayload;
@@ -340,10 +372,8 @@ const { POST } = serve<WorkflowPayload>(
     };
   },
   {
-    // Only set baseUrl in development when using ngrok
-    ...(process.env.NODE_ENV === "development" && process.env.UPSTASH_WORKFLOW_URL ? {
-      baseUrl: process.env.UPSTASH_WORKFLOW_URL
-    } : {}),
+    // Provide baseUrl explicitly since auto-detection is failing on Vercel
+    ...(baseUrl ? { baseUrl } : {}),
     // Optional: Add failure handling
     failureFunction: async ({ context, failStatus, failResponse }) => {
       console.error('[Workflow] Pipeline failed:', failStatus, failResponse);

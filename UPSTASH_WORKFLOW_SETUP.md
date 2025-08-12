@@ -4,17 +4,18 @@
 
 Add these to your Vercel environment variables:
 
-### 1. NEXT_PUBLIC_APP_URL
+### 1. UPSTASH_WORKFLOW_URL (REQUIRED)
 ```
-NEXT_PUBLIC_APP_URL=https://deployai.co
+UPSTASH_WORKFLOW_URL=https://deployai.studio
 ```
 (Replace with your actual domain - MUST include https://)
+**Important:** Set this to your BASE URL only, not the full workflow endpoint path.
 
-### 2. UPSTASH_WORKFLOW_URL (if needed)
+### 2. NEXT_PUBLIC_APP_URL (Optional fallback)
 ```
-UPSTASH_WORKFLOW_URL=https://deployai.co/api/workflow/process-pipeline
+NEXT_PUBLIC_APP_URL=https://deployai.studio
 ```
-(Full URL to your workflow endpoint)
+(Used as fallback if UPSTASH_WORKFLOW_URL is not set)
 
 ### 3. QSTASH_URL
 ```
