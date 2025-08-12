@@ -68,7 +68,7 @@ const QuizStep = () => {
     // Sync URL step with Redux state
     if (step && typeof step === 'string') {
       const stepNumber = parseInt(step, 10);
-      if (!isNaN(stepNumber) && stepNumber >= 1 && stepNumber <= 14) {
+      if (!isNaN(stepNumber) && stepNumber >= 1 && stepNumber <= 13) {
         if (stepNumber !== currentStep) {
           dispatch(setCurrentStep(stepNumber));
         }
@@ -124,7 +124,7 @@ const QuizStep = () => {
     setValidationError(undefined);
     
     // Auto-advance for single-select questions
-    if (currentQuestion.type === 'single-select' && currentStep < 14) {
+    if (currentQuestion.type === 'single-select' && currentStep < 13) {
       if (isChangingAnswer) {
         // Small delay to show visual feedback when changing answer
         setTimeout(() => {
@@ -157,7 +157,7 @@ const QuizStep = () => {
       await saveProgress(currentQuestion.id, currentAnswer);
     }
     
-    if (currentStep === 14) {
+    if (currentStep === 13) {
       // Last question - go to complete page
       router.push('/ai-assessment/quiz/complete');
     } else {
@@ -212,7 +212,7 @@ const QuizStep = () => {
   return (
     <>
       <Head>
-        <title>Question {currentStep} of 14 | AI Readiness Assessment</title>
+        <title>Question {currentStep} of 13 | AI Readiness Assessment</title>
       </Head>
 
       <main className="h-screen bg-white flex flex-col overflow-hidden">
@@ -240,7 +240,7 @@ const QuizStep = () => {
                 onNext={handleNext}
                 onPrevious={handlePrevious}
                 isFirst={currentStep === 1}
-                isLast={currentStep === 14}
+                isLast={currentStep === 13}
                 isValid={isCurrentAnswerValid}
                 validationError={validationError}
               />

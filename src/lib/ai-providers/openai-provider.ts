@@ -50,7 +50,21 @@ export class OpenAIProvider extends AIProvider {
         text: params.text
       });
 
-      const response = await (this.client as any).responses.create(params);
+      // Add a timeout wrapper (adjust based on model and reasoning effort)
+      let timeoutMs = 90000; // Default 90 seconds
+      if (this.config.model === 'gpt-5') {
+        timeoutMs = 180000; // 3 minutes for gpt-5 full
+      } else if (options.reasoning_effort === 'medium' || options.reasoning_effort === 'high') {
+        timeoutMs = 150000; // 2.5 minutes for medium/high reasoning
+      }
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error(`OpenAI API call timed out after ${timeoutMs/1000} seconds`)), timeoutMs)
+      );
+      
+      const apiCallPromise = (this.client as any).responses.create(params);
+      
+      console.log(`[OpenAI-${this.config.model}] Calling API (${timeoutMs/1000}s timeout)...`);
+      const response = await Promise.race([apiCallPromise, timeoutPromise]);
 
       console.log(`[OpenAI-${this.config.model}] API call successful!`);
       console.log(`[OpenAI-${this.config.model}] Raw response structure:`, {

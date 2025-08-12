@@ -18,14 +18,14 @@ export function getQuestionById(id: string): QuizQuestion | undefined {
 /**
  * Calculate progress percentage
  */
-export function calculateProgress(currentStep: number, totalSteps: number = 14): number {
+export function calculateProgress(currentStep: number, totalSteps: number = 13): number {
   return Math.round((currentStep / totalSteps) * 100);
 }
 
 /**
  * Estimate completion time based on current progress
  */
-export function estimateCompletionTime(currentStep: number, totalSteps: number = 14): string {
+export function estimateCompletionTime(currentStep: number, totalSteps: number = 13): string {
   const remainingSteps = totalSteps - currentStep;
   const avgTimePerQuestion = 20; // seconds
   const totalSeconds = remainingSteps * avgTimePerQuestion;

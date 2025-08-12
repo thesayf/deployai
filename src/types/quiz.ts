@@ -41,21 +41,32 @@ export interface UserInfo {
 
 // Quiz Response Data
 export interface QuizResponseData {
-  // Existing fields that map to new questions
+  // Core questions (unchanged)
   industry?: string;              // q1
   efficiencyRating?: string;      // q2
   companySize?: string;           // q3
   repetitiveTasks?: string[];     // q4
-  customerExperienceIssues?: string[]; // q5
-  moneyLeaks?: string[];          // q6
-  growthBottlenecks?: string[];   // q7
-  currentSystems?: string[];      // q8
-  desiredOutcome?: string[];     // q9
-  pastAttempts?: string[];        // q10
-  teamCapability?: string;        // q11
-  monthlyBudget?: string;         // q12
-  timeline?: string;              // q13
-  additionalContext?: string;     // q14
+  
+  // NEW quantification questions
+  weeklyTimeBreakdown?: string;   // q5 - NEW: textarea for time quantification
+  businessChallenges?: string[];  // q6 - NEW: merged operational challenges
+  monthlyCostBreakdown?: string;  // q7 - NEW: textarea for cost quantification
+  
+  // Modified question
+  currentSystems?: string;        // q8 - CHANGED: now single-select (was array)
+  
+  // Renumbered questions
+  moneyLeaks?: string[];          // q9 (was q6)
+  desiredOutcome?: string[];     // q10 (was q9)
+  teamCapability?: string;        // q11 (was q11 - same position)
+  monthlyBudget?: string;         // q12 (was q12 - same position)
+  timeline?: string;              // q13 (was q13 - same position)
+  
+  // REMOVED questions (kept for backward compatibility)
+  customerExperienceIssues?: string[]; // REMOVED (was q5)
+  growthBottlenecks?: string[];   // REMOVED (was q7)
+  pastAttempts?: string[];        // REMOVED (was q10)
+  additionalContext?: string;     // REMOVED (was q14)
   
   // Old fields (will be undefined, kept for backward compatibility)
   customerCommunication?: string;

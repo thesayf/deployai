@@ -53,31 +53,31 @@
           "value": "solo",
           "label": "Solo business (just me)",
           "size": "solo",
-          "revenue_hint": "< \u00a3250k"
+          "revenue_hint": "< £250k"
         },
         {
           "value": "micro",
           "label": "2-10 employees",
           "size": "micro",
-          "revenue_hint": "\u00a3250k - \u00a31M"
+          "revenue_hint": "£250k - £1M"
         },
         {
           "value": "small",
           "label": "11-50 employees",
           "size": "small",
-          "revenue_hint": "\u00a31M - \u00a310M"
+          "revenue_hint": "£1M - £10M"
         },
         {
           "value": "medium",
           "label": "51-200 employees",
           "size": "medium",
-          "revenue_hint": "\u00a310M - \u00a350M"
+          "revenue_hint": "£10M - £50M"
         },
         {
           "value": "large",
           "label": "200+ employees",
           "size": "large",
-          "revenue_hint": "\u00a350M+"
+          "revenue_hint": "£50M+"
         }
       ]
     },
@@ -173,49 +173,110 @@
       ]
     },
     {
-      "id": "customerExperienceIssues",
+      "id": "weeklyTimeBreakdown",
       "questionNumber": 5,
-      "title": "What customer service challenges do you face?",
-      "subtitle": "Select all that apply",
+      "title": "How much time does your team spend weekly on these common business tasks?",
+      "subtitle": "Estimate hours per week - write '0' or 'none' for tasks you don't do",
+      "type": "textarea",
+      "required": true,
+      "maxLength": 400,
+      "placeholder": "e.g., 'Data entry between systems: 6 hours/week. Creating invoices: 3 hours/week. Writing proposals: 4 hours/week. Customer service emails: 8 hours/week. None for inventory tracking.' Include who typically does each task if helpful.",
+      "aiCategory": "time-quantification"
+    },
+    {
+      "id": "businessChallenges",
+      "questionNumber": 6,
+      "title": "What are your biggest operational challenges?",
+      "subtitle": "Select all that apply - think about what's limiting growth or creating customer issues",
       "type": "multi-select",
       "required": true,
       "minSelections": 1,
       "options": [
         {
-          "value": "no-major-issues",
-          "label": "No major issues - customers are happy",
-          "aiCategory": "optimization"
-        },
-        {
           "value": "slow-responses",
-          "label": "We're too slow to respond to inquiries",
-          "aiCategory": "response-automation"
-        },
-        {
-          "value": "repetitive-questions",
-          "label": "We answer the same questions over and over",
-          "aiCategory": "chatbot-faq"
+          "label": "Too slow responding to customers",
+          "aiCategory": "customer-service"
         },
         {
           "value": "inconsistent-service",
-          "label": "Service quality varies depending on who helps",
+          "label": "Service quality varies by staff member",
           "aiCategory": "standardization"
         },
         {
           "value": "cant-track-issues",
-          "label": "We lose track of customer issues and requests",
+          "label": "Lose track of customer requests",
           "aiCategory": "crm-automation"
         },
         {
-          "value": "overwhelmed-volume",
-          "label": "Too many customers, not enough time",
-          "aiCategory": "scaling-support"
+          "value": "too-much-manual-work",
+          "label": "Too much manual work - can't scale",
+          "aiCategory": "automation-critical"
+        },
+        {
+          "value": "operational-chaos",
+          "label": "Operations get chaotic when busy",
+          "aiCategory": "process-automation"
+        },
+        {
+          "value": "cant-track-performance",
+          "label": "Can't track what's working",
+          "aiCategory": "analytics"
+        },
+        {
+          "value": "quality-suffers",
+          "label": "Quality suffers under pressure",
+          "aiCategory": "quality-systems"
+        },
+        {
+          "value": "no-major-challenges",
+          "label": "No major operational challenges",
+          "aiCategory": "optimization"
+        }
+      ]
+    },
+    {
+      "id": "monthlyCostBreakdown",
+      "questionNumber": 7,
+      "title": "What do these common problems cost your business monthly?",
+      "subtitle": "Estimate monthly impact - write '0' or 'not applicable' for issues you don't face",
+      "type": "textarea",
+      "required": true,
+      "maxLength": 400,
+      "placeholder": "e.g., 'Manual errors: ~£500/month in corrections. Missed sales opportunities: 2-3 potential clients worth £1,000 each. Pricing issues: probably undercharging by 10%. Inventory waste: £200/month. No major scheduling problems.' Be specific where possible.",
+      "aiCategory": "cost-quantification"
+    },
+    {
+      "id": "currentSystems",
+      "questionNumber": 8,
+      "title": "How do you currently manage your business?",
+      "type": "single-select",
+      "required": true,
+      "options": [
+        {
+          "value": "mostly-manual",
+          "label": "Mostly spreadsheets, email, and manual processes",
+          "integration": "minimal"
+        },
+        {
+          "value": "some-tools",
+          "label": "Some business software but lots of manual work",
+          "integration": "basic"
+        },
+        {
+          "value": "integrated-systems",
+          "label": "Good systems that mostly work together",
+          "integration": "good"
+        },
+        {
+          "value": "advanced-setup",
+          "label": "Advanced, integrated business systems",
+          "integration": "advanced"
         }
       ]
     },
     {
       "id": "moneyLeaks",
-      "questionNumber": 6,
+      "questionNumber": 9,
       "title": "Where do you think you're losing money?",
       "subtitle": "Select all that apply",
       "type": "multi-select",
@@ -275,115 +336,8 @@
       ]
     },
     {
-      "id": "growthBottlenecks",
-      "questionNumber": 7,
-      "title": "What's preventing your business from growing faster?",
-      "subtitle": "Select all that apply",
-      "type": "multi-select",
-      "required": true,
-      "minSelections": 1,
-      "options": [
-        {
-          "value": "too-much-manual-work",
-          "label": "Too much manual work - can't scale",
-          "aiCategory": "automation-critical"
-        },
-        {
-          "value": "cant-track-performance",
-          "label": "Can't track what's working",
-          "aiCategory": "analytics"
-        },
-        {
-          "value": "poor-customer-experience",
-          "label": "Customer experience isn't consistent",
-          "aiCategory": "customer-experience"
-        },
-        {
-          "value": "marketing-ineffective",
-          "label": "Marketing isn't bringing in enough customers",
-          "aiCategory": "marketing-optimization"
-        },
-        {
-          "value": "operational-chaos",
-          "label": "Operations become chaotic when busy",
-          "aiCategory": "process-automation"
-        },
-        {
-          "value": "quality-control",
-          "label": "Quality suffers when we're busy",
-          "aiCategory": "quality-systems"
-        },
-        {
-          "value": "financial-management",
-          "label": "Hard to manage cash flow and finances",
-          "aiCategory": "financial-automation"
-        },
-        {
-          "value": "no-major-bottlenecks",
-          "label": "No major bottlenecks right now",
-          "aiCategory": "optimization"
-        }
-      ]
-    },
-    {
-      "id": "currentSystems",
-      "questionNumber": 8,
-      "title": "What tools do you currently use to run your business?",
-      "subtitle": "Select all that apply",
-      "type": "multi-select",
-      "required": true,
-      "minSelections": 1,
-      "options": [
-        {
-          "value": "spreadsheets",
-          "label": "Spreadsheets (Excel, Google Sheets)",
-          "integration": "basic"
-        },
-        {
-          "value": "accounting-software",
-          "label": "Accounting software (QuickBooks, Xero)",
-          "integration": "good"
-        },
-        {
-          "value": "crm-system",
-          "label": "Customer management system (CRM)",
-          "integration": "good"
-        },
-        {
-          "value": "ecommerce-platform",
-          "label": "Online store (Shopify, WooCommerce)",
-          "integration": "good"
-        },
-        {
-          "value": "email-marketing",
-          "label": "Email marketing tools",
-          "integration": "good"
-        },
-        {
-          "value": "scheduling-tools",
-          "label": "Scheduling and calendar tools",
-          "integration": "basic"
-        },
-        {
-          "value": "project-management",
-          "label": "Project management tools",
-          "integration": "good"
-        },
-        {
-          "value": "social-media-tools",
-          "label": "Social media management tools",
-          "integration": "basic"
-        },
-        {
-          "value": "basic-tools-only",
-          "label": "Just email, phone, and basic software",
-          "integration": "minimal"
-        }
-      ]
-    },
-    {
       "id": "desiredOutcome",
-      "questionNumber": 9,
+      "questionNumber": 10,
       "title": "What's your ideal vision for your business operations?",
       "subtitle": "Choose your top 2 priorities",
       "type": "multi-select",
@@ -420,47 +374,6 @@
           "value": "work-life-balance",
           "label": "Work fewer hours while growing revenue",
           "outcome": "efficiency"
-        }
-      ]
-    },
-    {
-      "id": "pastAttempts",
-      "questionNumber": 10,
-      "title": "What's stopped you from solving these problems before?",
-      "subtitle": "Select all that apply",
-      "type": "multi-select",
-      "required": true,
-      "minSelections": 1,
-      "options": [
-        {
-          "value": "too-complex",
-          "label": "Solutions were too complex for our team",
-          "obstacle": "complexity"
-        },
-        {
-          "value": "too-expensive",
-          "label": "Costs seemed too high for uncertain ROI",
-          "obstacle": "cost-concern"
-        },
-        {
-          "value": "no-time",
-          "label": "Too busy to research and implement",
-          "obstacle": "time-constraint"
-        },
-        {
-          "value": "bad-experience",
-          "label": "Tried tools before that didn't work out",
-          "obstacle": "past-failure"
-        },
-        {
-          "value": "integration-issues",
-          "label": "Couldn't get tools to work with existing systems",
-          "obstacle": "technical"
-        },
-        {
-          "value": "first-time",
-          "label": "This is our first time exploring AI solutions",
-          "obstacle": "new-to-ai"
         }
       ]
     },
@@ -570,16 +483,6 @@
           "timeline": "research"
         }
       ]
-    },
-    {
-      "id": "additionalContext",
-      "questionNumber": 14,
-      "title": "Is there anything else about your business challenges we should know?",
-      "subtitle": "Optional - any specific constraints, goals, or context that would help us give better recommendations",
-      "type": "textarea",
-      "required": false,
-      "maxLength": 500,
-      "placeholder": "e.g., Industry-specific regulations, upcoming projects, team constraints, previous experiences..."
     }
   ]
 }

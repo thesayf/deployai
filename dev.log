@@ -402,3 +402,1677 @@
 [REPORT-EMAIL] Email ID: fe3dc775-6fda-4ecb-ad2b-88bf5e398e0f
 [PIPELINE] Email sent successfully: fe3dc775-6fda-4ecb-ad2b-88bf5e398e0f
 [PIPELINE] Processing complete in 296.534 seconds
+ ✓ Compiled in 147ms (132 modules)
+ ✓ Compiled in 199ms (297 modules)
+ ✓ Compiled in 131ms (297 modules)
+ ✓ Compiled in 152ms (297 modules)
+ ✓ Compiled in 132ms (297 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/Users/rudihinds/code/deployai/.next/cache/webpack/server-development/9.pack.gz_' -> '/Users/rudihinds/code/deployai/.next/cache/webpack/server-development/9.pack.gz'
+ ✓ Compiled /api/quiz/start in 116ms (147 modules)
+ POST /api/quiz/start 200 in 363ms
+ ✓ Compiled /api/quiz/submit in 21ms (150 modules)
+[SUBMIT] Checking for existing report for quiz a8375be2-19e0-4b6b-8e51-fff06f65bec9...
+[SUBMIT] No existing report found, creating new report for quiz a8375be2-19e0-4b6b-8e51-fff06f65bec9...
+[SUBMIT] NEW REPORT CREATED: 0d3a1113-e115-4f1f-a815-ae701c70e49e for quiz a8375be2-19e0-4b6b-8e51-fff06f65bec9
+[SUBMIT] Report created with status: pending
+[SUBMIT] Updated report status to generating
+[SUBMIT] Sending confirmation email...
+[SUBMIT] Failed to send confirmation email: <!DOCTYPE html><html lang="en"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96"/><link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg"/><link rel="shortcut icon" href="/favicon/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png"/><meta name="apple-mobile-web-app-title" content="DeployAI"/><link rel="manifest" href="/favicon/site.webmanifest"/><script>
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PC9LS95N');
+            </script><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async=""></script><script>
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1019454986626890');
+              fbq('track', 'PageView');
+            </script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1019454986626890&amp;ev=PageView&amp;noscript=1" alt=""/></noscript><script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-17293548285"></script><script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17293548285');
+            </script><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js"></script><script src="/_next/static/chunks/webpack.js" defer=""></script><script src="/_next/static/chunks/main.js" defer=""></script><script src="/_next/static/chunks/pages/_app.js" defer=""></script><script src="/_next/static/chunks/pages/_error.js" defer=""></script><script src="/_next/static/development/_buildManifest.js" defer=""></script><script src="/_next/static/development/_ssgManifest.js" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body class="bg-white text-zinc-950"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PC9LS95N" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"err":{"name":"TypeError","source":"server","message":"__webpack_require__.a is not a function","stack":"TypeError: __webpack_require__.a is not a function\n    at eval (webpack-internal:///(api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fquiz%2Fsend-confirmation\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fquiz%2Fsend-confirmation.ts\u0026middlewareConfigBase64=e30%3D!:1:21)\n    at (api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fquiz%2Fsend-confirmation\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fquiz%2Fsend-confirmation.ts\u0026middlewareConfigBase64=e30%3D! (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:52:1)\n    at __webpack_require__ (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:33:42)\n    at __webpack_exec__ (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:122:39)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:123:83\n    at __webpack_require__.X (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:116:21)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:123:47\n    at Object.\u003canonymous\u003e (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:126:3)\n    at Module._compile (node:internal/modules/cjs/loader:1469:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)\n    at Module.load (node:internal/modules/cjs/loader:1288:32)\n    at Module._load (node:internal/modules/cjs/loader:1104:12)\n    at Module.require (node:internal/modules/cjs/loader:1311:19)\n    at mod.require (/Users/rudihinds/code/deployai/node_modules/next/dist/server/require-hook.js:65:28)\n    at require (node:internal/modules/helpers:179:18)"},"gip":true,"scriptLoader":[]}</script></body></html>
+[SUBMIT] Triggering immediate report processing...
+[SUBMIT] Failed to trigger processing: <!DOCTYPE html><html lang="en"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96"/><link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg"/><link rel="shortcut icon" href="/favicon/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png"/><meta name="apple-mobile-web-app-title" content="DeployAI"/><link rel="manifest" href="/favicon/site.webmanifest"/><script>
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PC9LS95N');
+            </script><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async=""></script><script>
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1019454986626890');
+              fbq('track', 'PageView');
+            </script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1019454986626890&amp;ev=PageView&amp;noscript=1" alt=""/></noscript><script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-17293548285"></script><script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17293548285');
+            </script><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js"></script><script src="/_next/static/chunks/webpack.js" defer=""></script><script src="/_next/static/chunks/main.js" defer=""></script><script src="/_next/static/chunks/pages/_app.js" defer=""></script><script src="/_next/static/chunks/pages/_error.js" defer=""></script><script src="/_next/static/development/_buildManifest.js" defer=""></script><script src="/_next/static/development/_ssgManifest.js" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body class="bg-white text-zinc-950"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PC9LS95N" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"err":{"name":"TypeError","source":"server","message":"__webpack_require__.a is not a function","stack":"TypeError: __webpack_require__.a is not a function\n    at eval (webpack-internal:///(api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fai-analysis%2Fprocess-pipeline\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fai-analysis%2Fprocess-pipeline.ts\u0026middlewareConfigBase64=e30%3D!:1:21)\n    at (api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fai-analysis%2Fprocess-pipeline\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fai-analysis%2Fprocess-pipeline.ts\u0026middlewareConfigBase64=e30%3D! (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:72:1)\n    at __webpack_require__ (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:33:42)\n    at __webpack_exec__ (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:232:39)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:233:83\n    at __webpack_require__.X (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:116:21)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:233:47\n    at Object.\u003canonymous\u003e (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:236:3)\n    at Module._compile (node:internal/modules/cjs/loader:1469:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)\n    at Module.load (node:internal/modules/cjs/loader:1288:32)\n    at Module._load (node:internal/modules/cjs/loader:1104:12)\n    at Module.require (node:internal/modules/cjs/loader:1311:19)\n    at mod.require (/Users/rudihinds/code/deployai/node_modules/next/dist/server/require-hook.js:65:28)\n    at require (node:internal/modules/helpers:179:18)"},"gip":true,"scriptLoader":[]}</script></body></html>
+ POST /api/quiz/submit 200 in 980ms
+ ✓ Compiled /api/reports/status/[reportId] in 70ms (152 modules)
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 249ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 228ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 228ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 113ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 240ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 152ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 211ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 215ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 414ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 184ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 244ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 235ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 216ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 119ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 237ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 187ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 193ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 223ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 206ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 225ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 116ms
+[STATUS] Checking status for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/0d3a1113-e115-4f1f-a815-ae701c70e49e 200 in 225ms
+ ✓ Compiled /api/ai-analysis/process-pipeline in 116ms (166 modules)
+[PIPELINE] Starting processing for report: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[PIPELINE] Force reprocess: true
+[PIPELINE] Current report status: generating
+[PIPELINE] Quiz response ID: a8375be2-19e0-4b6b-8e51-fff06f65bec9
+[PIPELINE] Stage 1: Analyzing problems...
+[PIPELINE] Step 1 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"minimal","verbosity":"medium"}
+[PIPELINE] Step 1 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 1
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 6229
+[OpenAI-gpt-5-mini] Reasoning effort: minimal
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 6229,
+  reasoning: { effort: 'minimal' },
+  text: { verbosity: 'medium' }
+}
+[OpenAI-gpt-5-mini] API call successful!
+[OpenAI-gpt-5-mini] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5-mini] Using output_text directly
+[OpenAI-gpt-5-mini] Response received, length: 5343
+[PIPELINE] Stage 1 JSON size: 4923 bytes
+[PIPELINE] Stage 1 complete and saved
+[PIPELINE] Stage 2: Researching tools...
+[PIPELINE] Step 2 config: {"provider":"anthropic","model":"claude-sonnet-4-20250514"}
+[PIPELINE] Step 2 provider: anthropic, model: claude-sonnet-4-20250514
+[PIPELINE] Using Claude for Stage 2 (web search)
+[Anthropic-claude-sonnet-4-20250514] Generating completion
+[Anthropic-claude-sonnet-4-20250514] Prompt length: 7384
+[Anthropic-claude-sonnet-4-20250514] Response received, length: 13510
+[PIPELINE] Stage 2 JSON size: 10318 bytes
+[PIPELINE] Stage 2 complete and saved
+[PIPELINE] Stage 3: Curating tools...
+[PIPELINE] Step 3 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"medium","verbosity":"medium"}
+[PIPELINE] Step 3 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 3
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 26694
+[OpenAI-gpt-5-mini] Reasoning effort: medium
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 26694,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'medium' }
+}
+ POST /api/ai-analysis/process-pipeline 200 in 120491ms
+[OpenAI-gpt-5-mini] API call successful!
+[OpenAI-gpt-5-mini] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5-mini] Using output_text directly
+[OpenAI-gpt-5-mini] Response received, length: 18873
+[PIPELINE] Stage 3 JSON size: 15570 bytes
+[PIPELINE] Stage 3 complete and saved
+[PIPELINE] Stage 4: Generating final report...
+[PIPELINE] Using GPT-5 full for final report
+[OpenAI-gpt-5] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5] Prompt length: 33824
+[OpenAI-gpt-5] Reasoning effort: medium
+[OpenAI-gpt-5] Verbosity: high
+[OpenAI-gpt-5] Temperature: 0.3
+[OpenAI-gpt-5] Building request parameters...
+[OpenAI-gpt-5] About to call OpenAI API...
+[OpenAI-gpt-5] Request params: {
+  model: 'gpt-5',
+  inputLength: 33824,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'high' }
+}
+ ✓ Compiled /api/quiz/start in 38ms (147 modules)
+ POST /api/quiz/start 200 in 311ms
+ ✓ Compiled /api/quiz/submit in 19ms (150 modules)
+[SUBMIT] Checking for existing report for quiz 206eca98-1991-4fa8-9987-66253f92fe8a...
+[SUBMIT] No existing report found, creating new report for quiz 206eca98-1991-4fa8-9987-66253f92fe8a...
+[SUBMIT] NEW REPORT CREATED: ac27f5b4-c92a-44b3-981e-9c4cf4695216 for quiz 206eca98-1991-4fa8-9987-66253f92fe8a
+[SUBMIT] Report created with status: pending
+[SUBMIT] Updated report status to generating
+[SUBMIT] Sending confirmation email...
+[SUBMIT] Failed to send confirmation email: <!DOCTYPE html><html lang="en"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96"/><link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg"/><link rel="shortcut icon" href="/favicon/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png"/><meta name="apple-mobile-web-app-title" content="DeployAI"/><link rel="manifest" href="/favicon/site.webmanifest"/><script>
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PC9LS95N');
+            </script><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async=""></script><script>
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1019454986626890');
+              fbq('track', 'PageView');
+            </script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1019454986626890&amp;ev=PageView&amp;noscript=1" alt=""/></noscript><script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-17293548285"></script><script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17293548285');
+            </script><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js"></script><script src="/_next/static/chunks/webpack.js" defer=""></script><script src="/_next/static/chunks/main.js" defer=""></script><script src="/_next/static/chunks/pages/_app.js" defer=""></script><script src="/_next/static/chunks/pages/_error.js" defer=""></script><script src="/_next/static/development/_buildManifest.js" defer=""></script><script src="/_next/static/development/_ssgManifest.js" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body class="bg-white text-zinc-950"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PC9LS95N" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"err":{"name":"TypeError","source":"server","message":"__webpack_require__.a is not a function","stack":"TypeError: __webpack_require__.a is not a function\n    at eval (webpack-internal:///(api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fquiz%2Fsend-confirmation\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fquiz%2Fsend-confirmation.ts\u0026middlewareConfigBase64=e30%3D!:1:21)\n    at (api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fquiz%2Fsend-confirmation\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fquiz%2Fsend-confirmation.ts\u0026middlewareConfigBase64=e30%3D! (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:52:1)\n    at __webpack_require__ (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:33:42)\n    at __webpack_exec__ (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:122:39)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:123:83\n    at __webpack_require__.X (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:116:21)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:123:47\n    at Object.\u003canonymous\u003e (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:126:3)\n    at Module._compile (node:internal/modules/cjs/loader:1469:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)\n    at Module.load (node:internal/modules/cjs/loader:1288:32)\n    at Module._load (node:internal/modules/cjs/loader:1104:12)\n    at Module.require (node:internal/modules/cjs/loader:1311:19)\n    at mod.require (/Users/rudihinds/code/deployai/node_modules/next/dist/server/require-hook.js:65:28)\n    at require (node:internal/modules/helpers:179:18)"},"gip":true,"scriptLoader":[]}</script></body></html>
+[SUBMIT] Triggering immediate report processing...
+[SUBMIT] Failed to trigger processing: <!DOCTYPE html><html lang="en"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96"/><link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg"/><link rel="shortcut icon" href="/favicon/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png"/><meta name="apple-mobile-web-app-title" content="DeployAI"/><link rel="manifest" href="/favicon/site.webmanifest"/><script>
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PC9LS95N');
+            </script><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async=""></script><script>
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1019454986626890');
+              fbq('track', 'PageView');
+            </script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1019454986626890&amp;ev=PageView&amp;noscript=1" alt=""/></noscript><script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-17293548285"></script><script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17293548285');
+            </script><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js"></script><script src="/_next/static/chunks/webpack.js" defer=""></script><script src="/_next/static/chunks/main.js" defer=""></script><script src="/_next/static/chunks/pages/_app.js" defer=""></script><script src="/_next/static/chunks/pages/_error.js" defer=""></script><script src="/_next/static/development/_buildManifest.js" defer=""></script><script src="/_next/static/development/_ssgManifest.js" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body class="bg-white text-zinc-950"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PC9LS95N" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"err":{"name":"TypeError","source":"server","message":"__webpack_require__.a is not a function","stack":"TypeError: __webpack_require__.a is not a function\n    at eval (webpack-internal:///(api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fai-analysis%2Fprocess-pipeline\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fai-analysis%2Fprocess-pipeline.ts\u0026middlewareConfigBase64=e30%3D!:1:21)\n    at (api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fai-analysis%2Fprocess-pipeline\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fai-analysis%2Fprocess-pipeline.ts\u0026middlewareConfigBase64=e30%3D! (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:72:1)\n    at __webpack_require__ (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:33:42)\n    at __webpack_exec__ (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:232:39)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:233:83\n    at __webpack_require__.X (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:116:21)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:233:47\n    at Object.\u003canonymous\u003e (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:236:3)\n    at Module._compile (node:internal/modules/cjs/loader:1469:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)\n    at Module.load (node:internal/modules/cjs/loader:1288:32)\n    at Module._load (node:internal/modules/cjs/loader:1104:12)\n    at Module.require (node:internal/modules/cjs/loader:1311:19)\n    at mod.require (/Users/rudihinds/code/deployai/node_modules/next/dist/server/require-hook.js:65:28)\n    at require (node:internal/modules/helpers:179:18)"},"gip":true,"scriptLoader":[]}</script></body></html>
+ POST /api/quiz/submit 200 in 590ms
+ ✓ Compiled /api/reports/status/[reportId] in 33ms (152 modules)
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 242ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 193ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 128ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 216ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 199ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 191ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 165ms
+[OpenAI-gpt-5] API call successful!
+[OpenAI-gpt-5] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5] Using output_text directly
+[OpenAI-gpt-5] Response received, length: 9923
+[PIPELINE] Stage 4 JSON size: 8806 bytes
+[PIPELINE] Stage 4 content saved successfully
+[PIPELINE] Report status updated to completed
+[PIPELINE] Stage 4 complete and saved
+[PIPELINE] Sending report ready email...
+[REPORT-EMAIL] Sending report ready email
+[REPORT-EMAIL] Report ID: 0d3a1113-e115-4f1f-a815-ae701c70e49e
+[REPORT-EMAIL] User email: test@deployai.test
+[REPORT-EMAIL] Report URL: http://localhost:3000/report/view/d0bb83ea-f048-4b7a-97b4-c0ffb993aebd
+[EMAIL] Using assessment sender: AI Assessment <assessment@deployai.studio>
+[REPORT-EMAIL] Email sent successfully!
+[REPORT-EMAIL] Email ID: 02d44784-6ff4-4848-9d05-c072461abdb5
+[PIPELINE] Email sent successfully: 02d44784-6ff4-4848-9d05-c072461abdb5
+[PIPELINE] Processing complete in 225.734 seconds
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 166ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 113ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 166ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 213ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 227ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 223ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 225ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 132ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 366ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 205ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 201ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 111ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 194ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 124ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 144ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 163ms
+[STATUS] Checking status for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/ac27f5b4-c92a-44b3-981e-9c4cf4695216 200 in 116ms
+ ✓ Compiled /api/ai-analysis/process-pipeline in 37ms (166 modules)
+[PIPELINE] Starting processing for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[PIPELINE] Force reprocess: false
+[PIPELINE] Current report status: generating
+[PIPELINE] Quiz response ID: 206eca98-1991-4fa8-9987-66253f92fe8a
+[PIPELINE] Stage 1: Analyzing problems...
+[PIPELINE] Step 1 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"minimal","verbosity":"medium"}
+[PIPELINE] Step 1 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 1
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 6229
+[OpenAI-gpt-5-mini] Reasoning effort: minimal
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 6229,
+  reasoning: { effort: 'minimal' },
+  text: { verbosity: 'medium' }
+}
+[OpenAI-gpt-5-mini] API call successful!
+[OpenAI-gpt-5-mini] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5-mini] Using output_text directly
+[OpenAI-gpt-5-mini] Response received, length: 6668
+[PIPELINE] Stage 1 JSON size: 6239 bytes
+[PIPELINE] Stage 1 complete and saved
+[PIPELINE] Stage 2: Researching tools...
+[PIPELINE] Step 2 config: {"provider":"anthropic","model":"claude-sonnet-4-20250514"}
+[PIPELINE] Step 2 provider: anthropic, model: claude-sonnet-4-20250514
+[PIPELINE] Using Claude for Stage 2 (web search)
+[Anthropic-claude-sonnet-4-20250514] Generating completion
+[Anthropic-claude-sonnet-4-20250514] Prompt length: 7251
+[Anthropic-claude-sonnet-4-20250514] Response received, length: 19426
+[PIPELINE] Stage 2 JSON size: 14876 bytes
+[PIPELINE] Stage 2 complete and saved
+[PIPELINE] Stage 3: Curating tools...
+[PIPELINE] Step 3 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"medium","verbosity":"medium"}
+[PIPELINE] Step 3 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 3
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 34137
+[OpenAI-gpt-5-mini] Reasoning effort: medium
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 34137,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'medium' }
+}
+ POST /api/ai-analysis/process-pipeline 200 in 120078ms
+ ✓ Compiled in 206ms (297 modules)
+[PIPELINE] Starting processing for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[PIPELINE] Force reprocess: false
+[PIPELINE] Current report status: generating
+[PIPELINE] Quiz response ID: 206eca98-1991-4fa8-9987-66253f92fe8a
+[PIPELINE] Stage 3: Curating tools...
+[PIPELINE] Step 3 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"medium","verbosity":"medium"}
+[PIPELINE] Step 3 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 3
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 34137
+[OpenAI-gpt-5-mini] Reasoning effort: medium
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 34137,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'medium' }
+}
+ POST /api/ai-analysis/process-pipeline 200 in 9981ms
+[OpenAI-gpt-5-mini] API call successful!
+[OpenAI-gpt-5-mini] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5-mini] Using output_text directly
+[OpenAI-gpt-5-mini] Response received, length: 20972
+[PIPELINE] Stage 3 JSON size: 16979 bytes
+[PIPELINE] Stage 3 complete and saved
+[PIPELINE] Stage 4: Generating final report...
+[PIPELINE] Using GPT-5 full for final report
+[OpenAI-gpt-5] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5] Prompt length: 37271
+[OpenAI-gpt-5] Reasoning effort: medium
+[OpenAI-gpt-5] Verbosity: high
+[OpenAI-gpt-5] Temperature: 0.3
+[OpenAI-gpt-5] Building request parameters...
+[OpenAI-gpt-5] About to call OpenAI API...
+[OpenAI-gpt-5] Request params: {
+  model: 'gpt-5',
+  inputLength: 37271,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'high' }
+}
+[PIPELINE] Starting processing for report: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[PIPELINE] Force reprocess: false
+[PIPELINE] Current report status: generating
+[PIPELINE] Quiz response ID: 206eca98-1991-4fa8-9987-66253f92fe8a
+[PIPELINE] Stage 4: Generating final report...
+[PIPELINE] Using GPT-5 full for final report
+[OpenAI-gpt-5] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5] Prompt length: 37271
+[OpenAI-gpt-5] Reasoning effort: medium
+[OpenAI-gpt-5] Verbosity: high
+[OpenAI-gpt-5] Temperature: 0.3
+[OpenAI-gpt-5] Building request parameters...
+[OpenAI-gpt-5] About to call OpenAI API...
+[OpenAI-gpt-5] Request params: {
+  model: 'gpt-5',
+  inputLength: 37271,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'high' }
+}
+ POST /api/ai-analysis/process-pipeline 200 in 5005ms
+[OpenAI-gpt-5-mini] API call successful!
+[OpenAI-gpt-5-mini] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5-mini] Using output_text directly
+[OpenAI-gpt-5-mini] Response received, length: 22875
+[PIPELINE] Stage 3 JSON size: 18784 bytes
+[PIPELINE] Stage 3 complete and saved
+[PIPELINE] Stage 4: Generating final report...
+[PIPELINE] Using GPT-5 full for final report
+[OpenAI-gpt-5] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5] Prompt length: 39176
+[OpenAI-gpt-5] Reasoning effort: medium
+[OpenAI-gpt-5] Verbosity: high
+[OpenAI-gpt-5] Temperature: 0.3
+[OpenAI-gpt-5] Building request parameters...
+[OpenAI-gpt-5] About to call OpenAI API...
+[OpenAI-gpt-5] Request params: {
+  model: 'gpt-5',
+  inputLength: 39176,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'high' }
+}
+ ✓ Compiled in 81ms (164 modules)
+[OpenAI-gpt-5] API call successful!
+[OpenAI-gpt-5] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5] Using output_text directly
+[OpenAI-gpt-5] Response received, length: 10005
+[PIPELINE] Stage 4 JSON size: 8804 bytes
+[PIPELINE] Stage 4 content saved successfully
+[PIPELINE] Report status updated to completed
+[PIPELINE] Stage 4 complete and saved
+[PIPELINE] Sending report ready email...
+[REPORT-EMAIL] Sending report ready email
+[REPORT-EMAIL] Report ID: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[REPORT-EMAIL] User email: test@deployai.test
+[REPORT-EMAIL] Report URL: http://localhost:3000/report/view/c77ad39f-72c8-4c57-824a-8f60aba56c9d
+[EMAIL] Using assessment sender: AI Assessment <assessment@deployai.studio>
+[REPORT-EMAIL] Email sent successfully!
+[REPORT-EMAIL] Email ID: 817a468e-fe04-415e-ba86-819165b6d023
+[PIPELINE] Email sent successfully: 817a468e-fe04-415e-ba86-819165b6d023
+[PIPELINE] Processing complete in 284.727 seconds
+ ✓ Compiled /api/quiz/start in 27ms (147 modules)
+ POST /api/quiz/start 200 in 167ms
+ ✓ Compiled /api/quiz/submit in 16ms (150 modules)
+[SUBMIT] Checking for existing report for quiz ec961ee8-1893-49e8-b9a3-22d1e59d6fa7...
+[SUBMIT] No existing report found, creating new report for quiz ec961ee8-1893-49e8-b9a3-22d1e59d6fa7...
+[SUBMIT] NEW REPORT CREATED: d9bb2108-a3e1-4319-9236-f245c1ba0c66 for quiz ec961ee8-1893-49e8-b9a3-22d1e59d6fa7
+[SUBMIT] Report created with status: pending
+[SUBMIT] Updated report status to generating
+[SUBMIT] Sending confirmation email...
+[SUBMIT] Failed to send confirmation email: <!DOCTYPE html><html lang="en"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96"/><link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg"/><link rel="shortcut icon" href="/favicon/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png"/><meta name="apple-mobile-web-app-title" content="DeployAI"/><link rel="manifest" href="/favicon/site.webmanifest"/><script>
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PC9LS95N');
+            </script><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async=""></script><script>
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1019454986626890');
+              fbq('track', 'PageView');
+            </script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1019454986626890&amp;ev=PageView&amp;noscript=1" alt=""/></noscript><script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-17293548285"></script><script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17293548285');
+            </script><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js"></script><script src="/_next/static/chunks/webpack.js" defer=""></script><script src="/_next/static/chunks/main.js" defer=""></script><script src="/_next/static/chunks/pages/_app.js" defer=""></script><script src="/_next/static/chunks/pages/_error.js" defer=""></script><script src="/_next/static/development/_buildManifest.js" defer=""></script><script src="/_next/static/development/_ssgManifest.js" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body class="bg-white text-zinc-950"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PC9LS95N" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"err":{"name":"TypeError","source":"server","message":"__webpack_require__.a is not a function","stack":"TypeError: __webpack_require__.a is not a function\n    at eval (webpack-internal:///(api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fquiz%2Fsend-confirmation\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fquiz%2Fsend-confirmation.ts\u0026middlewareConfigBase64=e30%3D!:1:21)\n    at (api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fquiz%2Fsend-confirmation\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fquiz%2Fsend-confirmation.ts\u0026middlewareConfigBase64=e30%3D! (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:52:1)\n    at __webpack_require__ (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:33:42)\n    at __webpack_exec__ (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:122:39)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:123:83\n    at __webpack_require__.X (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:116:21)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:123:47\n    at Object.\u003canonymous\u003e (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:126:3)\n    at Module._compile (node:internal/modules/cjs/loader:1469:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)\n    at Module.load (node:internal/modules/cjs/loader:1288:32)\n    at Module._load (node:internal/modules/cjs/loader:1104:12)\n    at Module.require (node:internal/modules/cjs/loader:1311:19)\n    at mod.require (/Users/rudihinds/code/deployai/node_modules/next/dist/server/require-hook.js:65:28)\n    at require (node:internal/modules/helpers:179:18)"},"gip":true,"scriptLoader":[]}</script></body></html>
+[SUBMIT] Triggering immediate report processing...
+[SUBMIT] Failed to trigger processing: <!DOCTYPE html><html lang="en"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96"/><link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg"/><link rel="shortcut icon" href="/favicon/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png"/><meta name="apple-mobile-web-app-title" content="DeployAI"/><link rel="manifest" href="/favicon/site.webmanifest"/><script>
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PC9LS95N');
+            </script><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async=""></script><script>
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1019454986626890');
+              fbq('track', 'PageView');
+            </script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1019454986626890&amp;ev=PageView&amp;noscript=1" alt=""/></noscript><script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-17293548285"></script><script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17293548285');
+            </script><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js"></script><script src="/_next/static/chunks/webpack.js" defer=""></script><script src="/_next/static/chunks/main.js" defer=""></script><script src="/_next/static/chunks/pages/_app.js" defer=""></script><script src="/_next/static/chunks/pages/_error.js" defer=""></script><script src="/_next/static/development/_buildManifest.js" defer=""></script><script src="/_next/static/development/_ssgManifest.js" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body class="bg-white text-zinc-950"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PC9LS95N" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"err":{"name":"TypeError","source":"server","message":"__webpack_require__.a is not a function","stack":"TypeError: __webpack_require__.a is not a function\n    at eval (webpack-internal:///(api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fai-analysis%2Fprocess-pipeline\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fai-analysis%2Fprocess-pipeline.ts\u0026middlewareConfigBase64=e30%3D!:1:21)\n    at (api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fai-analysis%2Fprocess-pipeline\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fai-analysis%2Fprocess-pipeline.ts\u0026middlewareConfigBase64=e30%3D! (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:72:1)\n    at __webpack_require__ (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:33:42)\n    at __webpack_exec__ (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:232:39)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:233:83\n    at __webpack_require__.X (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:116:21)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:233:47\n    at Object.\u003canonymous\u003e (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:236:3)\n    at Module._compile (node:internal/modules/cjs/loader:1469:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)\n    at Module.load (node:internal/modules/cjs/loader:1288:32)\n    at Module._load (node:internal/modules/cjs/loader:1104:12)\n    at Module.require (node:internal/modules/cjs/loader:1311:19)\n    at mod.require (/Users/rudihinds/code/deployai/node_modules/next/dist/server/require-hook.js:65:28)\n    at require (node:internal/modules/helpers:179:18)"},"gip":true,"scriptLoader":[]}</script></body></html>
+ POST /api/quiz/submit 200 in 892ms
+ ✓ Compiled /api/reports/status/[reportId] in 20ms (152 modules)
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 148ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 122ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 208ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 247ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 230ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 252ms
+[OpenAI-gpt-5] API call successful!
+[OpenAI-gpt-5] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5] Using output_text directly
+[OpenAI-gpt-5] Response received, length: 10659
+[PIPELINE] Stage 4 JSON size: 9416 bytes
+[PIPELINE] Stage 4 content saved successfully
+[PIPELINE] Report status updated to completed
+[PIPELINE] Stage 4 complete and saved
+[PIPELINE] Sending report ready email...
+[REPORT-EMAIL] Sending report ready email
+[REPORT-EMAIL] Report ID: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[REPORT-EMAIL] User email: test@deployai.test
+[REPORT-EMAIL] Report URL: http://localhost:3000/report/view/c77ad39f-72c8-4c57-824a-8f60aba56c9d
+[EMAIL] Using assessment sender: AI Assessment <assessment@deployai.studio>
+[REPORT-EMAIL] Email sent successfully!
+[REPORT-EMAIL] Email ID: 3a60f000-c77f-4763-8549-baba7c06d793
+[PIPELINE] Email sent successfully: 3a60f000-c77f-4763-8549-baba7c06d793
+[PIPELINE] Processing complete in 173.377 seconds
+[OpenAI-gpt-5] API call successful!
+[OpenAI-gpt-5] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5] Using output_text directly
+[OpenAI-gpt-5] Response received, length: 9893
+[PIPELINE] Stage 4 JSON size: 8692 bytes
+[PIPELINE] Stage 4 content saved successfully
+[PIPELINE] Report status updated to completed
+[PIPELINE] Stage 4 complete and saved
+[PIPELINE] Sending report ready email...
+[REPORT-EMAIL] Sending report ready email
+[REPORT-EMAIL] Report ID: ac27f5b4-c92a-44b3-981e-9c4cf4695216
+[REPORT-EMAIL] User email: test@deployai.test
+[REPORT-EMAIL] Report URL: http://localhost:3000/report/view/c77ad39f-72c8-4c57-824a-8f60aba56c9d
+[EMAIL] Using assessment sender: AI Assessment <assessment@deployai.studio>
+[REPORT-EMAIL] Email sent successfully!
+[REPORT-EMAIL] Email ID: 8065a2f2-406e-4304-b1fe-2c826b45a0f7
+[PIPELINE] Email sent successfully: 8065a2f2-406e-4304-b1fe-2c826b45a0f7
+[PIPELINE] Processing complete in 109.305 seconds
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 177ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 198ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 140ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 122ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 175ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 132ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 178ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 132ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 233ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 123ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 201ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 141ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 148ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 150ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 356ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 128ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 193ms
+ ✓ Compiled /api/ai-analysis/process-pipeline in 25ms (166 modules)
+[PIPELINE] Starting processing for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[PIPELINE] Force reprocess: false
+[PIPELINE] Current report status: generating
+[PIPELINE] Quiz response ID: ec961ee8-1893-49e8-b9a3-22d1e59d6fa7
+[PIPELINE] Stage 1: Analyzing problems...
+[PIPELINE] Step 1 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"minimal","verbosity":"medium"}
+[PIPELINE] Step 1 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 1
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 6229
+[OpenAI-gpt-5-mini] Reasoning effort: minimal
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 6229,
+  reasoning: { effort: 'minimal' },
+  text: { verbosity: 'medium' }
+}
+[OpenAI-gpt-5-mini] Calling API (90s timeout)...
+[OpenAI-gpt-5-mini] API call successful!
+[OpenAI-gpt-5-mini] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5-mini] Using output_text directly
+[OpenAI-gpt-5-mini] Response received, length: 5725
+[PIPELINE] Stage 1 JSON size: 5296 bytes
+[PIPELINE] Stage 1 complete and saved
+[PIPELINE] Stage 2: Researching tools...
+[PIPELINE] Step 2 config: {"provider":"anthropic","model":"claude-sonnet-4-20250514"}
+[PIPELINE] Step 2 provider: anthropic, model: claude-sonnet-4-20250514
+[PIPELINE] Using Claude for Stage 2 (web search)
+[Anthropic-claude-sonnet-4-20250514] Generating completion
+[Anthropic-claude-sonnet-4-20250514] Prompt length: 7253
+[Anthropic-claude-sonnet-4-20250514] Response received, length: 18761
+[PIPELINE] Stage 2 JSON size: 14004 bytes
+[PIPELINE] Stage 2 complete and saved
+[PIPELINE] Stage 3: Curating tools...
+[PIPELINE] Step 3 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"medium","verbosity":"medium"}
+[PIPELINE] Step 3 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 3
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 32469
+[OpenAI-gpt-5-mini] Reasoning effort: medium
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 32469,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'medium' }
+}
+[OpenAI-gpt-5-mini] Calling API (90s timeout)...
+ POST /api/ai-analysis/process-pipeline 200 in 120092ms
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 50
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 346ms
+[OpenAI-gpt-5-mini] API call successful!
+[OpenAI-gpt-5-mini] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5-mini] Using output_text directly
+[OpenAI-gpt-5-mini] Response received, length: 23263
+[PIPELINE] Stage 3 JSON size: 19003 bytes
+[PIPELINE] Stage 3 complete and saved
+[PIPELINE] Stage 4: Generating final report...
+[PIPELINE] Using GPT-5 full for final report
+[OpenAI-gpt-5] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5] Prompt length: 38569
+[OpenAI-gpt-5] Reasoning effort: medium
+[OpenAI-gpt-5] Verbosity: high
+[OpenAI-gpt-5] Temperature: 0.3
+[OpenAI-gpt-5] Building request parameters...
+[OpenAI-gpt-5] About to call OpenAI API...
+[OpenAI-gpt-5] Request params: {
+  model: 'gpt-5',
+  inputLength: 38569,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'high' }
+}
+[OpenAI-gpt-5] Calling API (120s timeout)...
+[STATUS] Checking status for report: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[STATUS] Returning status: generating Progress: 75
+ GET /api/reports/status/d9bb2108-a3e1-4319-9236-f245c1ba0c66 200 in 286ms
+ ✓ Compiled /api/quiz/start in 42ms (149 modules)
+ POST /api/quiz/start 200 in 290ms
+ ✓ Compiled /api/quiz/submit in 22ms (152 modules)
+[SUBMIT] Checking for existing report for quiz 874dcdd6-9300-49fe-a78b-dc9471ad5552...
+[SUBMIT] No existing report found, creating new report for quiz 874dcdd6-9300-49fe-a78b-dc9471ad5552...
+[SUBMIT] NEW REPORT CREATED: 312eca1f-8b39-4c46-9585-43a8998b01fd for quiz 874dcdd6-9300-49fe-a78b-dc9471ad5552
+[SUBMIT] Report created with status: pending
+[SUBMIT] Updated report status to generating
+[SUBMIT] Sending confirmation email...
+[SUBMIT] Failed to send confirmation email: <!DOCTYPE html><html lang="en"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96"/><link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg"/><link rel="shortcut icon" href="/favicon/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png"/><meta name="apple-mobile-web-app-title" content="DeployAI"/><link rel="manifest" href="/favicon/site.webmanifest"/><script>
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PC9LS95N');
+            </script><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async=""></script><script>
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1019454986626890');
+              fbq('track', 'PageView');
+            </script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1019454986626890&amp;ev=PageView&amp;noscript=1" alt=""/></noscript><script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-17293548285"></script><script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17293548285');
+            </script><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js"></script><script src="/_next/static/chunks/webpack.js" defer=""></script><script src="/_next/static/chunks/main.js" defer=""></script><script src="/_next/static/chunks/pages/_app.js" defer=""></script><script src="/_next/static/chunks/pages/_error.js" defer=""></script><script src="/_next/static/development/_buildManifest.js" defer=""></script><script src="/_next/static/development/_ssgManifest.js" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body class="bg-white text-zinc-950"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PC9LS95N" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"err":{"name":"TypeError","source":"server","message":"__webpack_require__.a is not a function","stack":"TypeError: __webpack_require__.a is not a function\n    at eval (webpack-internal:///(api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fquiz%2Fsend-confirmation\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fquiz%2Fsend-confirmation.ts\u0026middlewareConfigBase64=e30%3D!:1:21)\n    at (api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fquiz%2Fsend-confirmation\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fquiz%2Fsend-confirmation.ts\u0026middlewareConfigBase64=e30%3D! (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:52:1)\n    at __webpack_require__ (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:33:42)\n    at __webpack_exec__ (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:122:39)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:123:83\n    at __webpack_require__.X (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:116:21)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:123:47\n    at Object.\u003canonymous\u003e (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:126:3)\n    at Module._compile (node:internal/modules/cjs/loader:1469:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)\n    at Module.load (node:internal/modules/cjs/loader:1288:32)\n    at Module._load (node:internal/modules/cjs/loader:1104:12)\n    at Module.require (node:internal/modules/cjs/loader:1311:19)\n    at mod.require (/Users/rudihinds/code/deployai/node_modules/next/dist/server/require-hook.js:65:28)\n    at require (node:internal/modules/helpers:179:18)"},"gip":true,"scriptLoader":[]}</script></body></html>
+[SUBMIT] Triggering immediate report processing...
+[SUBMIT] Failed to trigger processing: <!DOCTYPE html><html lang="en"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96"/><link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg"/><link rel="shortcut icon" href="/favicon/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png"/><meta name="apple-mobile-web-app-title" content="DeployAI"/><link rel="manifest" href="/favicon/site.webmanifest"/><script>
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PC9LS95N');
+            </script><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async=""></script><script>
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1019454986626890');
+              fbq('track', 'PageView');
+            </script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1019454986626890&amp;ev=PageView&amp;noscript=1" alt=""/></noscript><script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-17293548285"></script><script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17293548285');
+            </script><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js"></script><script src="/_next/static/chunks/webpack.js" defer=""></script><script src="/_next/static/chunks/main.js" defer=""></script><script src="/_next/static/chunks/pages/_app.js" defer=""></script><script src="/_next/static/chunks/pages/_error.js" defer=""></script><script src="/_next/static/development/_buildManifest.js" defer=""></script><script src="/_next/static/development/_ssgManifest.js" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body class="bg-white text-zinc-950"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PC9LS95N" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"err":{"name":"TypeError","source":"server","message":"__webpack_require__.a is not a function","stack":"TypeError: __webpack_require__.a is not a function\n    at eval (webpack-internal:///(api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fai-analysis%2Fprocess-pipeline\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fai-analysis%2Fprocess-pipeline.ts\u0026middlewareConfigBase64=e30%3D!:1:21)\n    at (api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fai-analysis%2Fprocess-pipeline\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fai-analysis%2Fprocess-pipeline.ts\u0026middlewareConfigBase64=e30%3D! (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:72:1)\n    at __webpack_require__ (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:33:42)\n    at __webpack_exec__ (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:232:39)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:233:83\n    at __webpack_require__.X (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:116:21)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:233:47\n    at Object.\u003canonymous\u003e (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:236:3)\n    at Module._compile (node:internal/modules/cjs/loader:1469:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)\n    at Module.load (node:internal/modules/cjs/loader:1288:32)\n    at Module._load (node:internal/modules/cjs/loader:1104:12)\n    at Module.require (node:internal/modules/cjs/loader:1311:19)\n    at mod.require (/Users/rudihinds/code/deployai/node_modules/next/dist/server/require-hook.js:65:28)\n    at require (node:internal/modules/helpers:179:18)"},"gip":true,"scriptLoader":[]}</script></body></html>
+ POST /api/quiz/submit 200 in 574ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 84ms
+[OpenAI-gpt-5] API call successful!
+[OpenAI-gpt-5] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5] Using output_text directly
+[OpenAI-gpt-5] Response received, length: 10107
+[PIPELINE] Stage 4 JSON size: 8780 bytes
+[PIPELINE] Stage 4 content saved successfully
+[PIPELINE] Report status updated to completed
+[PIPELINE] Stage 4 complete and saved
+[PIPELINE] Sending report ready email...
+[REPORT-EMAIL] Sending report ready email
+[REPORT-EMAIL] Report ID: d9bb2108-a3e1-4319-9236-f245c1ba0c66
+[REPORT-EMAIL] User email: test@deployai.test
+[REPORT-EMAIL] Report URL: http://localhost:3000/report/view/7876ade7-f468-4725-9c98-c07bdf20c2a0
+[EMAIL] Using assessment sender: AI Assessment <assessment@deployai.studio>
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 79ms
+[REPORT-EMAIL] Email sent successfully!
+[REPORT-EMAIL] Email ID: 899bd2e1-0962-42d0-820a-e89f41acce7c
+[PIPELINE] Email sent successfully: 899bd2e1-0962-42d0-820a-e89f41acce7c
+[PIPELINE] Processing complete in 263.175 seconds
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 82ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 109ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 111ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 94ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 90ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 100ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 167ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 84ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 90ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 87ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 87ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 88ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 99ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 105ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 110ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 99ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 121ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 80ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 109ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 78ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 87ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 86ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 83ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 98ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 83ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 81ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 90ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 92ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 182ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 84ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 89ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 91ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 82ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 94ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 94ms
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 92ms
+ ✓ Compiled /api/ai-analysis/process-pipeline in 34ms (166 modules)
+[PIPELINE] Starting processing for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[PIPELINE] Force reprocess: false
+[PIPELINE] Current report status: generating
+[PIPELINE] Quiz response ID: 874dcdd6-9300-49fe-a78b-dc9471ad5552
+[PIPELINE] Stage 1: Analyzing problems...
+[PIPELINE] Step 1 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"minimal","verbosity":"medium"}
+[PIPELINE] Step 1 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 1
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 5891
+[OpenAI-gpt-5-mini] Reasoning effort: minimal
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 5891,
+  reasoning: { effort: 'minimal' },
+  text: { verbosity: 'medium' }
+}
+[OpenAI-gpt-5-mini] Calling API (90s timeout)...
+ POST /api/ai-analysis/process-pipeline 200 in 10005ms
+[OpenAI-gpt-5-mini] API call successful!
+[OpenAI-gpt-5-mini] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5-mini] Using output_text directly
+[OpenAI-gpt-5-mini] Response received, length: 6466
+[PIPELINE] Stage 1 JSON size: 6037 bytes
+[PIPELINE] Stage 1 complete and saved
+[PIPELINE] Stage 2: Researching tools...
+[PIPELINE] Step 2 config: {"provider":"anthropic","model":"claude-sonnet-4-20250514"}
+[PIPELINE] Step 2 provider: anthropic, model: claude-sonnet-4-20250514
+[PIPELINE] Using Claude for Stage 2 (web search)
+[Anthropic-claude-sonnet-4-20250514] Generating completion
+[Anthropic-claude-sonnet-4-20250514] Prompt length: 7597
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 218ms
+[Anthropic-claude-sonnet-4-20250514] Response received, length: 14936
+[PIPELINE] Stage 2 JSON size: 11288 bytes
+[PIPELINE] Stage 2 complete and saved
+[PIPELINE] Stage 3: Curating tools...
+[PIPELINE] Step 3 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"medium","verbosity":"medium"}
+[PIPELINE] Step 3 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 3
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 29349
+[OpenAI-gpt-5-mini] Reasoning effort: medium
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 29349,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'medium' }
+}
+[OpenAI-gpt-5-mini] Calling API (90s timeout)...
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: generating Progress: 50
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 247ms
+[OpenAI-gpt-5-mini] Error: Error: OpenAI API call timed out after 90 seconds
+    at Timeout.eval [as _onTimeout] (webpack-internal:///(api)/./src/lib/ai-providers/openai-provider.ts:54:83)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+[PIPELINE] Critical error: Error: OpenAI API call timed out after 90 seconds
+    at Timeout.eval [as _onTimeout] (webpack-internal:///(api)/./src/lib/ai-providers/openai-provider.ts:54:83)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+[STATUS] Checking status for report: 312eca1f-8b39-4c46-9585-43a8998b01fd
+[STATUS] Returning status: failed Progress: 50
+ GET /api/reports/status/312eca1f-8b39-4c46-9585-43a8998b01fd 200 in 201ms
+ ✓ Compiled in 53ms (147 modules)
+ ✓ Compiled /api/quiz/start in 29ms (147 modules)
+ POST /api/quiz/start 200 in 406ms
+ ✓ Compiled /api/quiz/submit in 19ms (150 modules)
+[SUBMIT] Checking for existing report for quiz d1321f5a-8c98-4c01-aa16-74d052dc1c70...
+[SUBMIT] No existing report found, creating new report for quiz d1321f5a-8c98-4c01-aa16-74d052dc1c70...
+[SUBMIT] NEW REPORT CREATED: 91658c4d-5aae-4f90-bc07-1bb3d69c865e for quiz d1321f5a-8c98-4c01-aa16-74d052dc1c70
+[SUBMIT] Report created with status: pending
+[SUBMIT] Updated report status to generating
+[SUBMIT] Sending confirmation email...
+[SUBMIT] Failed to send confirmation email: <!DOCTYPE html><html lang="en"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96"/><link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg"/><link rel="shortcut icon" href="/favicon/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png"/><meta name="apple-mobile-web-app-title" content="DeployAI"/><link rel="manifest" href="/favicon/site.webmanifest"/><script>
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PC9LS95N');
+            </script><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async=""></script><script>
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1019454986626890');
+              fbq('track', 'PageView');
+            </script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1019454986626890&amp;ev=PageView&amp;noscript=1" alt=""/></noscript><script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-17293548285"></script><script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17293548285');
+            </script><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js"></script><script src="/_next/static/chunks/webpack.js" defer=""></script><script src="/_next/static/chunks/main.js" defer=""></script><script src="/_next/static/chunks/pages/_app.js" defer=""></script><script src="/_next/static/chunks/pages/_error.js" defer=""></script><script src="/_next/static/development/_buildManifest.js" defer=""></script><script src="/_next/static/development/_ssgManifest.js" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body class="bg-white text-zinc-950"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PC9LS95N" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"err":{"name":"TypeError","source":"server","message":"__webpack_require__.a is not a function","stack":"TypeError: __webpack_require__.a is not a function\n    at eval (webpack-internal:///(api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fquiz%2Fsend-confirmation\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fquiz%2Fsend-confirmation.ts\u0026middlewareConfigBase64=e30%3D!:1:21)\n    at (api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fquiz%2Fsend-confirmation\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fquiz%2Fsend-confirmation.ts\u0026middlewareConfigBase64=e30%3D! (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:52:1)\n    at __webpack_require__ (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:33:42)\n    at __webpack_exec__ (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:122:39)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:123:83\n    at __webpack_require__.X (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:116:21)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:123:47\n    at Object.\u003canonymous\u003e (/Users/rudihinds/code/deployai/.next/server/pages/api/quiz/send-confirmation.js:126:3)\n    at Module._compile (node:internal/modules/cjs/loader:1469:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)\n    at Module.load (node:internal/modules/cjs/loader:1288:32)\n    at Module._load (node:internal/modules/cjs/loader:1104:12)\n    at Module.require (node:internal/modules/cjs/loader:1311:19)\n    at mod.require (/Users/rudihinds/code/deployai/node_modules/next/dist/server/require-hook.js:65:28)\n    at require (node:internal/modules/helpers:179:18)"},"gip":true,"scriptLoader":[]}</script></body></html>
+[SUBMIT] Triggering immediate report processing...
+[SUBMIT] Failed to trigger processing: <!DOCTYPE html><html lang="en"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96"/><link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg"/><link rel="shortcut icon" href="/favicon/favicon.ico"/><link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png"/><meta name="apple-mobile-web-app-title" content="DeployAI"/><link rel="manifest" href="/favicon/site.webmanifest"/><script>
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PC9LS95N');
+            </script><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async=""></script><script>
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1019454986626890');
+              fbq('track', 'PageView');
+            </script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1019454986626890&amp;ev=PageView&amp;noscript=1" alt=""/></noscript><script async="" src="https://www.googletagmanager.com/gtag/js?id=AW-17293548285"></script><script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17293548285');
+            </script><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js"></script><script src="/_next/static/chunks/webpack.js" defer=""></script><script src="/_next/static/chunks/main.js" defer=""></script><script src="/_next/static/chunks/pages/_app.js" defer=""></script><script src="/_next/static/chunks/pages/_error.js" defer=""></script><script src="/_next/static/development/_buildManifest.js" defer=""></script><script src="/_next/static/development/_ssgManifest.js" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body class="bg-white text-zinc-950"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PC9LS95N" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","isFallback":false,"err":{"name":"TypeError","source":"server","message":"__webpack_require__.a is not a function","stack":"TypeError: __webpack_require__.a is not a function\n    at eval (webpack-internal:///(api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fai-analysis%2Fprocess-pipeline\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fai-analysis%2Fprocess-pipeline.ts\u0026middlewareConfigBase64=e30%3D!:1:21)\n    at (api)/./node_modules/next/dist/build/webpack/loaders/next-route-loader/index.js?kind=PAGES_API\u0026page=%2Fapi%2Fai-analysis%2Fprocess-pipeline\u0026preferredRegion=\u0026absolutePagePath=.%2Fsrc%2Fpages%2Fapi%2Fai-analysis%2Fprocess-pipeline.ts\u0026middlewareConfigBase64=e30%3D! (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:72:1)\n    at __webpack_require__ (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:33:42)\n    at __webpack_exec__ (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:232:39)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:233:83\n    at __webpack_require__.X (/Users/rudihinds/code/deployai/.next/server/webpack-api-runtime.js:116:21)\n    at /Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:233:47\n    at Object.\u003canonymous\u003e (/Users/rudihinds/code/deployai/.next/server/pages/api/ai-analysis/process-pipeline.js:236:3)\n    at Module._compile (node:internal/modules/cjs/loader:1469:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)\n    at Module.load (node:internal/modules/cjs/loader:1288:32)\n    at Module._load (node:internal/modules/cjs/loader:1104:12)\n    at Module.require (node:internal/modules/cjs/loader:1311:19)\n    at mod.require (/Users/rudihinds/code/deployai/node_modules/next/dist/server/require-hook.js:65:28)\n    at require (node:internal/modules/helpers:179:18)"},"gip":true,"scriptLoader":[]}</script></body></html>
+ POST /api/quiz/submit 200 in 1047ms
+ ✓ Compiled /api/ai-analysis/process-pipeline in 63ms (169 modules)
+[PIPELINE] Starting processing for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[PIPELINE] Force reprocess: false
+[PIPELINE] Current report status: generating
+[PIPELINE] Quiz response ID: d1321f5a-8c98-4c01-aa16-74d052dc1c70
+[PIPELINE] Stage 1: Analyzing problems...
+[PIPELINE] Step 1 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"minimal","verbosity":"medium"}
+[PIPELINE] Step 1 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 1
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 5078
+[OpenAI-gpt-5-mini] Reasoning effort: minimal
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 5078,
+  reasoning: { effort: 'minimal' },
+  text: { verbosity: 'medium' }
+}
+[OpenAI-gpt-5-mini] Calling API (90s timeout)...
+ ✓ Compiled /api/reports/status/[reportId] in 31ms (171 modules)
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 250ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 99ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 95ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 209ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 189ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 0
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 174ms
+[OpenAI-gpt-5-mini] API call successful!
+[OpenAI-gpt-5-mini] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5-mini] Using output_text directly
+[OpenAI-gpt-5-mini] Response received, length: 5853
+[PIPELINE] Stage 1 JSON size: 5451 bytes
+[PIPELINE] Stage 1 complete and saved
+[PIPELINE] Stage 2: Researching tools...
+[PIPELINE] Step 2 config: {"provider":"anthropic","model":"claude-sonnet-4-20250514"}
+[PIPELINE] Step 2 provider: anthropic, model: claude-sonnet-4-20250514
+[PIPELINE] Using Claude for Stage 2 (web search)
+[Anthropic-claude-sonnet-4-20250514] Generating completion
+[Anthropic-claude-sonnet-4-20250514] Prompt length: 7169
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 187ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 160ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 130ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 233ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 211ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 94ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 116ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 80ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 94ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 101ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 104ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 93ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 91ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 101ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 152ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 308ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 254ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 131ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 115ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 141ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 25
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 169ms
+[Anthropic-claude-sonnet-4-20250514] Response received, length: 20085
+[PIPELINE] Stage 2 JSON size: 14895 bytes
+[PIPELINE] Stage 2 complete and saved
+[PIPELINE] Stage 3: Curating tools...
+[PIPELINE] Step 3 config: {"provider":"openai","model":"gpt-5-mini","reasoning_effort":"medium","verbosity":"medium"}
+[PIPELINE] Step 3 provider: openai, model: gpt-5-mini
+[PIPELINE] Using GPT-5 mini for Stage 3
+[OpenAI-gpt-5-mini] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5-mini] Prompt length: 34035
+[OpenAI-gpt-5-mini] Reasoning effort: medium
+[OpenAI-gpt-5-mini] Verbosity: medium
+[OpenAI-gpt-5-mini] Temperature: 0.3
+[OpenAI-gpt-5-mini] Building request parameters...
+[OpenAI-gpt-5-mini] About to call OpenAI API...
+[OpenAI-gpt-5-mini] Request params: {
+  model: 'gpt-5-mini',
+  inputLength: 34035,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'medium' }
+}
+[OpenAI-gpt-5-mini] Calling API (150s timeout)...
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 50
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 107ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 50
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 215ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 50
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 128ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 50
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 144ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 50
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 123ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 50
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 140ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 50
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 124ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 50
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 95ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 50
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 86ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 50
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 102ms
+ POST /api/ai-analysis/process-pipeline 200 in 118588ms
+[OpenAI-gpt-5-mini] API call successful!
+[OpenAI-gpt-5-mini] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5-mini] Using output_text directly
+[OpenAI-gpt-5-mini] Response received, length: 23402
+[PIPELINE] Stage 3 JSON size: 18788 bytes
+[PIPELINE] Stage 3 complete and saved
+[PIPELINE] Stage 4: Generating final report...
+[PIPELINE] Using GPT-5 full for final report
+[OpenAI-gpt-5] ===== GENERATE COMPLETION CALLED =====
+[OpenAI-gpt-5] Prompt length: 38759
+[OpenAI-gpt-5] Reasoning effort: medium
+[OpenAI-gpt-5] Verbosity: high
+[OpenAI-gpt-5] Temperature: 0.3
+[OpenAI-gpt-5] Building request parameters...
+[OpenAI-gpt-5] About to call OpenAI API...
+[OpenAI-gpt-5] Request params: {
+  model: 'gpt-5',
+  inputLength: 38759,
+  reasoning: { effort: 'medium' },
+  text: { verbosity: 'high' }
+}
+[OpenAI-gpt-5] Calling API (180s timeout)...
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 75
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 229ms
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: generating Progress: 75
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 313ms
+[OpenAI-gpt-5] API call successful!
+[OpenAI-gpt-5] Raw response structure: {
+  hasOutputText: true,
+  hasOutput: true,
+  outputIsArray: true,
+  outputLength: 2,
+  responseKeys: [
+    'id',                  'object',
+    'created_at',          'status',
+    'background',          'error',
+    'incomplete_details',  'instructions',
+    'max_output_tokens',   'max_tool_calls',
+    'model',               'output',
+    'parallel_tool_calls', 'previous_response_id',
+    'prompt_cache_key',    'reasoning',
+    'safety_identifier',   'service_tier',
+    'store',               'temperature',
+    'text',                'tool_choice',
+    'tools',               'top_logprobs',
+    'top_p',               'truncation',
+    'usage',               'user',
+    'metadata',            'output_text'
+  ]
+}
+[OpenAI-gpt-5] Using output_text directly
+[OpenAI-gpt-5] Response received, length: 10596
+[PIPELINE] Stage 4 JSON size: 9101 bytes
+[PIPELINE] Stage 4 content saved successfully
+[PIPELINE] Report status updated to completed
+[PIPELINE] Stage 4 complete and saved
+[PIPELINE] Sending report ready email...
+[REPORT-EMAIL] Sending report ready email
+[REPORT-EMAIL] Report ID: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[REPORT-EMAIL] User email: final-test-1755016131862@deployai.test
+[REPORT-EMAIL] Report URL: http://localhost:3000/report/view/538100d9-6183-4dc2-9054-52d8ec912afe
+[EMAIL] Using assessment sender: AI Assessment <assessment@deployai.studio>
+[REPORT-EMAIL] Email sent successfully!
+[REPORT-EMAIL] Email ID: 0145f944-bbed-4040-8cc6-7c8f0be43d8d
+[PIPELINE] Email sent successfully: 0145f944-bbed-4040-8cc6-7c8f0be43d8d
+[PIPELINE] Processing complete in 363.469 seconds
+[STATUS] Checking status for report: 91658c4d-5aae-4f90-bc07-1bb3d69c865e
+[STATUS] Returning status: completed Progress: 100
+ GET /api/reports/status/91658c4d-5aae-4f90-bc07-1bb3d69c865e 200 in 291ms
+   Reload env: .env.local
+ ✓ Compiled in 180ms (429 modules)
+ GET /report/view/15c46a57-08bf-44e3-a3c0-1193089d4caf 200 in 54ms
+ ✓ Compiled /_error in 83ms (431 modules)
+ GET /_next/static/webpack/f191aeba93624c89.webpack.hot-update.json 404 in 97ms
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /report/view/15c46a57-08bf-44e3-a3c0-1193089d4caf 200 in 15ms
+ ✓ Compiled in 77ms (431 modules)
+   Reload env: .env.local
+ ✓ Compiled in 92ms (431 modules)
+ GET /report/view/15c46a57-08bf-44e3-a3c0-1193089d4caf 200 in 45ms
+ ✓ Compiled in 254ms (297 modules)
+ ✓ Compiled in 133ms (297 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename '/Users/rudihinds/code/deployai/.next/cache/webpack/server-development/0.pack.gz_' -> '/Users/rudihinds/code/deployai/.next/cache/webpack/server-development/0.pack.gz'
+ ✓ Compiled in 161ms (297 modules)
+ ✓ Compiled in 143ms (297 modules)
+ ✓ Compiled in 171ms (297 modules)
+ ✓ Compiled in 182ms (297 modules)
+ ✓ Compiled in 150ms (297 modules)
+ ✓ Compiled in 228ms (297 modules)
+ ✓ Compiled in 238ms (297 modules)
+[?25h

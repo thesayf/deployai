@@ -81,28 +81,25 @@ export default async function handler(
       }
       
       try {
-        // Call the unified pipeline processor
+        // Trigger workflow for the report
+        const { triggerWorkflow } = await import('@/lib/workflow/client');
         const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `https://${req.headers.host}`;
-        const response = await fetch(`${baseUrl}/api/ai-analysis/process-pipeline`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': process.env.INTERNAL_API_KEY || '',
-          },
-          body: JSON.stringify({
+        
+        const workflowResult = await triggerWorkflow(
+          `${baseUrl}/api/workflow/process-pipeline`,
+          {
             reportId: report.id,
             force: isStuck // Force reprocess if stuck
-          }),
-        });
-
-        const result = await response.json();
+          },
+          `report-${report.id}` // Unique workflow run ID
+        );
         
-        if (response.ok) {
-          console.log(`[CRON] Successfully processed report ${report.id}`);
-          results.push({ reportId: report.id, success: true });
+        if (workflowResult.workflowRunId) {
+          console.log(`[CRON] Successfully triggered workflow for report ${report.id}: ${workflowResult.workflowRunId}`);
+          results.push({ reportId: report.id, success: true, workflowRunId: workflowResult.workflowRunId });
         } else {
-          console.error(`[CRON] Failed to process report ${report.id}:`, result.error);
-          results.push({ reportId: report.id, success: false, error: result.error });
+          console.error(`[CRON] Failed to trigger workflow for report ${report.id}`);
+          results.push({ reportId: report.id, success: false, error: 'Failed to trigger workflow' });
         }
       } catch (error) {
         console.error(`[CRON] Exception processing report ${report.id}:`, error);

@@ -174,34 +174,34 @@ export default async function handler(
       // Don't fail the whole process if email fails
     }
     
-    // Trigger immediate processing (must await in serverless)
-    console.log('[SUBMIT] Triggering immediate report processing...');
+    // Trigger workflow processing (via Upstash Workflow for long-running operations)
+    console.log('[SUBMIT] Triggering workflow processing...');
     
     try {
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${process.env.PORT || 3000}`;
       
-      // Wait max 2 seconds for pipeline to start, then return to show animation
+      // Import workflow client
+      const { triggerWorkflow } = await import('@/lib/workflow/client');
+      
+      // Wait max 2 seconds for workflow to start, then return to show animation
+      const triggerPromise = triggerWorkflow(
+        `${baseUrl}/api/workflow/process-pipeline`,
+        { reportId: report.id },
+        `report-${report.id}` // Unique workflow run ID
+      );
+      
       const processResponse = await Promise.race([
-        fetch(`${baseUrl}/api/ai-analysis/process-pipeline`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': process.env.INTERNAL_API_KEY || '',
-          },
-          body: JSON.stringify({ 
-            reportId: report.id 
-          }),
-        }),
+        triggerPromise,
         new Promise(resolve => setTimeout(() => resolve({ timeout: true }), 2000))
       ]) as any;
       
       if (processResponse.timeout) {
-        console.log('[SUBMIT] Pipeline trigger initiated (timeout reached, processing continues in background)');
-      } else if (!processResponse.ok) {
-        console.error('[SUBMIT] Failed to trigger processing:', await processResponse.text());
-        // Don't fail the request - cron will pick it up as backup
+        console.log('[SUBMIT] Workflow trigger initiated (timeout reached, processing continues in background)');
+      } else if (processResponse.workflowRunId) {
+        console.log('[SUBMIT] Workflow triggered successfully:', processResponse.workflowRunId);
       } else {
-        console.log('[SUBMIT] Processing triggered successfully');
+        console.error('[SUBMIT] Failed to trigger workflow');
+        // Don't fail the request - cron will pick it up as backup
       }
     } catch (error) {
       console.error('[SUBMIT] Error triggering processing:', error);
