@@ -31,17 +31,20 @@ export default async function handler(
     let progress = 0;
     let currentStage = 'initializing';
     
+    // Type guard for status properties
+    const workflowStatus = status as any;
+    
     // Parse the workflow logs to determine progress
-    if (status.state === 'RUN_SUCCESS') {
+    if (workflowStatus.state === 'RUN_SUCCESS') {
       progress = 100;
       currentStage = 'completed';
-    } else if (status.state === 'RUN_FAILED') {
+    } else if (workflowStatus.state === 'RUN_FAILED') {
       currentStage = 'failed';
-    } else if (status.state === 'RUN_CANCELED') {
+    } else if (workflowStatus.state === 'RUN_CANCELED') {
       currentStage = 'canceled';
     } else {
       // Check steps to determine progress
-      const steps = status.steps || [];
+      const steps = workflowStatus.steps || [];
       const totalStages = 4; // 4 AI stages
       const completedStages = steps.filter((s: any) => 
         s.name?.includes('stage') && s.state === 'STEP_SUCCESS'
@@ -62,14 +65,14 @@ export default async function handler(
 
     res.status(200).json({
       success: true,
-      status: status.state === 'RUN_SUCCESS' ? 'completed' : 
-              status.state === 'RUN_FAILED' ? 'failed' : 
-              status.state === 'RUN_CANCELED' ? 'canceled' : 'processing',
+      status: workflowStatus.state === 'RUN_SUCCESS' ? 'completed' : 
+              workflowStatus.state === 'RUN_FAILED' ? 'failed' : 
+              workflowStatus.state === 'RUN_CANCELED' ? 'canceled' : 'processing',
       currentStage,
       progress,
-      workflowState: status.state,
-      createdAt: status.createdAt,
-      updatedAt: status.updatedAt
+      workflowState: workflowStatus.state,
+      createdAt: workflowStatus.createdAt,
+      updatedAt: workflowStatus.updatedAt
     });
 
   } catch (error) {

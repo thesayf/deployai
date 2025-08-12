@@ -61,7 +61,7 @@ export async function getWorkflowStatus(workflowRunId: string) {
  */
 export async function cancelWorkflow(workflowRunId: string) {
   try {
-    await workflowClient.cancel({ workflowRunId });
+    await workflowClient.cancel({ ids: workflowRunId });
     console.log(`[Workflow] Cancelled: ${workflowRunId}`);
     return true;
   } catch (error) {
