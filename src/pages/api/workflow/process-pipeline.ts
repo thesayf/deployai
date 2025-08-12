@@ -4,7 +4,7 @@
  * This allows long-running operations beyond Vercel's 10-second limit
  */
 
-import { serve } from "@upstash/workflow/nextjs";
+import { servePagesRouter } from "@upstash/workflow/nextjs";
 import { supabaseAdmin } from '@/lib/supabase';
 import { sendReportReadyEmail } from '@/lib/email/email-service';
 import { ProblemAnalysis, ToolResearch, CuratedTools } from '@/types/ai-analysis-new';
@@ -48,7 +48,7 @@ const getBaseUrl = () => {
 const baseUrl = getBaseUrl();
 console.log('[Workflow Init] Base URL:', baseUrl || 'auto-detect');
 
-const { POST } = serve<WorkflowPayload>(
+const { handler } = servePagesRouter<WorkflowPayload>(
   async (context) => {
     const { reportId, force = false } = context.requestPayload;
     const startTime = Date.now();
@@ -394,4 +394,4 @@ const { POST } = serve<WorkflowPayload>(
 );
 
 // Next.js Pages Router requires a default export
-export default POST;
+export default handler;
