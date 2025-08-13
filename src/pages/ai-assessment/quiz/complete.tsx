@@ -337,19 +337,21 @@ const CompletePage = () => {
       // Calculate progress within current stage (0 to 1, capped at 0.99)
       const stageProgress = Math.min(elapsed / stageDuration, 0.99);
       
-      // Map to actual percentage range for this stage
-      const ranges: Record<number, [number, number]> = {
-        1: [0, 25],
-        2: [lastJumpProgressRef.current || 25, 50],
-        3: [lastJumpProgressRef.current || 50, 75],
-        4: [lastJumpProgressRef.current || 75, 100]
-      };
+      // Determine the range for animation
+      let min, max;
+      if (currentStage === 1) {
+        min = 0;
+        max = 25;
+      } else {
+        // For stages 2-4, start from the jump point or default
+        min = lastJumpProgressRef.current || (currentStage === 2 ? 25 : currentStage === 3 ? 50 : 75);
+        max = currentStage === 2 ? 50 : currentStage === 3 ? 75 : 100;
+      }
       
-      const [min, max] = ranges[currentStage];
       const targetProgress = min + (max - min) * stageProgress;
       
-      // Only animate up to actual progress (if stage completed early)
-      displayProgressRef.current = Math.min(targetProgress, actualProgressRef.current || targetProgress);
+      // Always use the higher of calculated progress or actual progress
+      displayProgressRef.current = Math.max(targetProgress, actualProgressRef.current);
       
       // Update UI with rounded percentage
       setPipelineProgress(Math.round(displayProgressRef.current));
