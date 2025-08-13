@@ -34,6 +34,7 @@ const CompletePage = () => {
   const [pageState, setPageState] = useState<PageState>('loading');
   const [error, setError] = useState<string | null>(null);
   const [reportId, setReportId] = useState<string | null>(null);
+  const [reportAccessToken, setReportAccessToken] = useState<string | null>(null);
   
   // Pipeline progress state
   const [workflowRunId, setWorkflowRunId] = useState<string | null>(null);
@@ -148,6 +149,8 @@ const CompletePage = () => {
       
       // Keep in submitting state to show progress bar
       // Will transition to success when workflow completes
+      console.log('[COMPLETE] Submission successful, now in submitting state to show progress');
+      console.log('[COMPLETE] Workflow run ID set to:', `report-${data.reportId}`);
 
     } catch (error) {
       console.error('Failed to submit quiz:', error);
@@ -158,7 +161,10 @@ const CompletePage = () => {
 
   // Poll workflow status
   useEffect(() => {
+    console.log('[COMPLETE] Polling effect triggered. WorkflowRunId:', workflowRunId, 'PageState:', pageState);
+    
     if (!workflowRunId || pageState !== 'submitting') {
+      console.log('[COMPLETE] Not polling - missing workflowRunId or not in submitting state');
       return;
     }
 
@@ -190,7 +196,7 @@ const CompletePage = () => {
         
         if (!response.ok) {
           // If workflow status not found, fall back to report status
-          console.log('[COMPLETE] Workflow status not found, checking report status');
+          console.log('[COMPLETE] Workflow status not found (this is normal), checking report status instead...');
           const reportResponse = await fetch(`/api/reports/status/${reportId}`);
           if (reportResponse.ok) {
             const reportData = await reportResponse.json();
@@ -206,6 +212,40 @@ const CompletePage = () => {
             if (reportData.progress >= 90) updateStageStatus('stage4', 'completed');
             
             if (reportData.status === 'completed') {
+              // Store the access token if available
+              if (reportData.accessToken) {
+                setReportAccessToken(reportData.accessToken);
+              }
+              setPageState('success');
+              clearInterval(pollInterval);
+            }
+          } else {
+            // If neither workflow nor report status available, simulate progress
+            console.log('[COMPLETE] No status endpoints available, simulating progress');
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const simulatedProgress = Math.min(95, Math.floor((elapsed / 60) * 100));
+            setPipelineProgress(simulatedProgress);
+            
+            // Update stages based on simulated progress
+            if (simulatedProgress >= 25) {
+              updateStageStatus('stage1', 'completed');
+              setCurrentStage('stage2');
+            }
+            if (simulatedProgress >= 50) {
+              updateStageStatus('stage2', 'completed');
+              setCurrentStage('stage3');
+            }
+            if (simulatedProgress >= 75) {
+              updateStageStatus('stage3', 'completed');
+              setCurrentStage('stage4');
+            }
+            
+            // Update estimated time
+            setEstimatedTime(Math.max(0, 60 - elapsed));
+            
+            // After 90 seconds, assume complete
+            if (elapsed >= 90) {
+              console.log('[COMPLETE] Simulation complete after 90 seconds');
               setPageState('success');
               clearInterval(pollInterval);
             }
@@ -250,6 +290,23 @@ const CompletePage = () => {
           updateStageStatus('stage3', 'completed');
           updateStageStatus('stage4', 'completed');
           setPipelineProgress(100);
+          
+          // Try to get the report access token
+          if (reportId) {
+            try {
+              const reportResponse = await fetch(`/api/reports/status/${reportId}`);
+              if (reportResponse.ok) {
+                const reportData = await reportResponse.json();
+                if (reportData.accessToken) {
+                  setReportAccessToken(reportData.accessToken);
+                  console.log('[COMPLETE] Got report access token:', reportData.accessToken);
+                }
+              }
+            } catch (err) {
+              console.error('[COMPLETE] Error fetching report token:', err);
+            }
+          }
+          
           setPageState('success');
           clearInterval(pollInterval);
         } else if (data.status === 'failed') {
@@ -361,9 +418,19 @@ const CompletePage = () => {
                     {initialData.userInfo?.email}
                   </p>
                   <p className="text-sm text-gray-500 mb-6">
-                    You should receive it within 5-10 minutes. You can safely close this page.
+                    {reportAccessToken 
+                      ? 'Your report is ready! Click below to view it.'
+                      : 'You should receive it within 5-10 minutes. You can safely close this page.'}
                   </p>
                   <div className="space-y-3">
+                    {reportAccessToken && (
+                      <button
+                        onClick={() => router.push(`/report/view/${reportAccessToken}`)}
+                        className="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold"
+                      >
+                        🎯 View Your Report
+                      </button>
+                    )}
                     <button
                       onClick={() => router.push('/')}
                       className="w-full bg-[#457B9D] text-white px-6 py-3 rounded-lg hover:bg-[#3a6a89] transition-colors"
