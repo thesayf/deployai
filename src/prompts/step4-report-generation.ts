@@ -3,7 +3,7 @@ import { ProblemAnalysis, CuratedTools } from '@/types/ai-analysis-new';
 export function generateStep4Prompt(problemAnalysis: ProblemAnalysis, clientSolution: any): string {
   const companyName = problemAnalysis.businessContext.companyName || 'Your organization';
   
-  return `You are creating a persuasive AI readiness report. Your job is to transform raw data into a compelling narrative that feels personalized to ${companyName} in the ${problemAnalysis.businessContext.industry} industry.
+  return `You are creating a persuasive AI readiness report. Your job is to transform solution data into compelling executive communication that feels personalized to ${companyName} in the ${problemAnalysis.businessContext.industry} industry.
 
 IMPORTANT: You MUST include ALL solutions from clientSolution.implementedSolutions in the report. If there are 3 solutions, the report MUST have 3 solution entries. Each solution addresses specific problems - include them all.
 
@@ -19,12 +19,66 @@ RAW DATA TO TRANSFORM:
 Problems Identified: ${JSON.stringify(problemAnalysis.topOpportunities, null, 2)}
 Our Solutions: ${JSON.stringify(clientSolution, null, 2)}
 
+EXECUTIVE COMMUNICATION RULES:
+- Write for busy decision-makers who scan first, read second
+- Lead with clear outcomes, not technical features
+- Use round, memorable numbers ($15,000 not $14,847)
+- Write conversationally: "You'll save 20 hours per week" not "20-hour weekly time reduction achieved"
+- Explain complex ideas simply: "This pays for itself in 4 months" not "ROI trajectory indicates 4-month amortization"
+- Use active voice and confident language
+- Avoid jargon: write "customer service software" not "CX automation suite"
+
+NUMBER PRESENTATION RULES:
+- Round all figures to executive-friendly numbers
+- Present time in simple terms: "15 hours per week" not "≈86 hours/month" 
+- Show ROI simply: "300% return in year one" not "≈358% return on investment (net gains over first-year investment)"
+- Avoid formula language: use "saves $5,000 monthly on labor costs" not "$5,000/month labor cost reduction"
+- Present ranges naturally: "2-3 months payback" not "payback period: 2.3 months"
+- Use specific context: "saves $8,000 monthly on staff time" not "delivers $8,000 monthly savings"
+
+WRITING QUALITY STANDARDS:
+- Each problem description should be a clear, urgent business story
+- Solutions should read like confident consulting recommendations  
+- ROI explanations should be simple and credible
+- Case studies should feel relevant and achievable
+- Next steps should feel actionable and specific
+- Vary your language - don't repeat the same phrases
+
+BUSINESS WRITING APPROACH:
+1. PROBLEMS: Write as urgent business stories using their industry language
+2. SOLUTIONS: Write as confident recommendations focusing on outcomes
+3. NUMBERS: Present simply and credibly, avoiding complex ranges
+4. PROOF: Make case studies relatable to their business type
+5. NEXT STEPS: Write as clear, actionable business advice
+
+WRITING PATTERNS (Use variety, don't repeat):
+Problems:
+- "At [Company], [specific situation] is costing [clear impact]"
+- "[Company] is losing [amount] because [specific issue]"
+- "Your team spends [time] on [task] when they could be [better activity]"
+
+Solutions:
+- "We'll implement [simple description] that [clear outcome]"
+- "Our system automatically [action] so your team can [focus on what]"
+- "This solution [eliminates/reduces/improves] [specific problem]"
+
+ROI Presentation:
+- "This investment pays for itself in [X] months, then delivers [Y] annually"
+- "You'll see [specific improvement] within [timeframe]"
+- "Expect [percentage] improvement in [metric] starting [when]"
+
+Proof Examples (Vary these):
+- "A similar [industry/size] company saw [specific result]"
+- "Another [business type] we worked with achieved [outcome]"  
+- "One of our [industry] clients improved [metric] by [amount]"
+- "A comparable business increased [result] after implementation"
+
 YOUR TRANSFORMATION TASK:
-1. Extract all numerical data, metrics, and proven results from clientSolution
+1. Synthesize numerical data into executive-friendly insights
 2. Rewrite everything in language appropriate for their industry
 3. Make problems feel urgent using their actual pain points
 4. Position DeployAI's solutions as transformative (but stay truthful to data)
-5. Use ALL proven results but make them relatable to their business size/type
+5. Transform proven results into relatable business examples
 6. Create a narrative arc: current pain → what we'll implement → clear next step
 7. MANDATORY: Include ALL solutions from clientSolution.implementedSolutions
 8. MANDATORY: Include projectedOutcomes for ALL solutions
@@ -34,164 +88,94 @@ OUTPUT FORMAT (return only valid JSON):
 {
   "executiveSummary": {
     "readinessLevel": "Assess as High/Medium/Low based on: Do they have modern systems? AI experience? Clear objectives? Budget allocated?",
-    "estimatedAnnualOpportunity": "Take clientSolution.executiveSummary.estimatedAnnualOpportunity exactly",
-    "immediateROI": "Take clientSolution.totalInvestmentSummary.netROI exactly"
+    "estimatedAnnualOpportunity": "Write the annual opportunity from clientSolution.executiveSummary.estimatedAnnualOpportunity in natural language",
+    "immediateROI": "Write the ROI from clientSolution.totalInvestmentSummary.netROI in simple, credible terms"
   },
   
   "keyProblems": [
     {
-      "problem": "Transform problemAnalysis.topOpportunities[0] into urgent headline for ${companyName}. Example: If problem is 'slow customer response', write 'At ${companyName}, customers are waiting 24+ hours while competitors respond instantly'",
-      "currentCost": "Extract numbers from problemEvidence. Make it hurt. '$5,000/month in lost sales' or '15 hours/week of manual work at ${companyName}'",
-      "potentialGain": "Use actual metrics from clientSolution.implementedSolutions that solve this. '90% faster response times' or '$60,000 annual savings for ${companyName}'"
+      "problem": "Transform problemAnalysis.topOpportunities[0] into urgent business headline for ${companyName}. Example: 'At ${companyName}, customers wait 24+ hours for responses while competitors reply instantly'",
+      "currentCost": "Synthesize the financial impact from problem evidence. Make it specific and painful. Examples: 'Costs $5,000 monthly in lost sales' or 'Burns 15 hours weekly of manager time'",
+      "potentialGain": "Describe improvement using metrics from the matching solution in natural language. Examples: 'Cut response time to under 2 hours' or 'Free up 12 hours weekly for growth activities'"
     },
     {
-      "problem": "Make problem 2 feel like ${companyName} is falling behind competitors",
-      "currentCost": "Quantify the pain specifically for ${companyName}'s industry size and type",
-      "potentialGain": "Pull real improvement numbers from the matching solution in clientSolution"
+      "problem": "Make problem 2 feel like ${companyName} is falling behind competitors in their industry",
+      "currentCost": "Quantify the pain specifically for ${companyName}'s industry and size in relatable terms",
+      "potentialGain": "Describe real improvement from the matching solution using business-friendly language"
     },
     {
       "problem": "Frame problem 3 as missed opportunity or growing risk for ${companyName}",
-      "currentCost": "Use industry-appropriate metrics (revenue loss, compliance risk, efficiency gap) that ${companyName} faces",
-      "potentialGain": "Use proven results from clientSolution to show what's possible for ${companyName}"
+      "currentCost": "Use industry-appropriate metrics that ${companyName} faces, written naturally",
+      "potentialGain": "Describe proven results from the solution in achievable, credible terms"
     }
   ],
   
   "recommendedSolutions": [
-    // CREATE ONE ENTRY FOR EACH SOLUTION IN clientSolution.implementedSolutions
-    // Example for solution 0:
+    // CREATE ONE ENTRY FOR EACH SOLUTION - synthesize from clientSolution.implementedSolutions
     {
-      "solutionName": "Use clientSolution.implementedSolutions[0].solutionName exactly",
+      "solutionName": "Write the solution name from clientSolution in natural business language",
       "directImpact": [
-        "Use clientSolution.implementedSolutions[0].howItSolvesYourProblem"
+        "Synthesize how this solves their problem from clientSolution howItSolvesYourProblem in conversational terms"
       ],
       "primaryBenefits": [
-        "Copy clientSolution.implementedSolutions[0].capabilities[0] exactly",
-        "Copy clientSolution.implementedSolutions[0].capabilities[1] exactly",
-        "Copy clientSolution.implementedSolutions[0].capabilities[2] exactly"
+        "Rewrite the capabilities from clientSolution in outcome-focused language",
+        "Transform technical features into business benefits",
+        "Focus on what they'll achieve, not what the system does"
       ],
-      "description": "Use clientSolution.implementedSolutions[0].whatWeImplement and emphasize DeployAI's role",
+      "description": "Synthesize whatWeImplement into confident consulting language emphasizing DeployAI's role and business outcomes",
       "realWorldProof": [
         {
-          "caseStudy": "Rewrite clientSolution.implementedSolutions[0].businessCase.provenResults[0] to be relatable",
-          "metric": "Use exact metric from provenResults[0].metric"
+          "caseStudy": "Transform proven results from clientSolution into relatable business story for their industry/size",
+          "metric": "Present the metric in simple, credible terms"
         },
         {
-          "caseStudy": "Transform second proven result if available",
-          "metric": "Exact metric from provenResults[1].metric"
+          "caseStudy": "Use different language pattern for variety - avoid repeating same structure",
+          "metric": "Round numbers and present naturally"
         }
       ],
-      "implementationTime": "Use clientSolution.implementedSolutions[0].ourImplementation.timeframe"
-    },
-    // Example for solution 1:
-    {
-      "solutionName": "Use clientSolution.implementedSolutions[1].solutionName exactly",
-      "directImpact": ["From clientSolution.implementedSolutions[1].howItSolvesYourProblem"],
-      "primaryBenefits": ["Copy all 3 from clientSolution.implementedSolutions[1].capabilities"],
-      "description": "Use clientSolution.implementedSolutions[1].whatWeImplement",
-      "realWorldProof": [
-        {
-          "caseStudy": "From clientSolution.implementedSolutions[1].businessCase.provenResults[0]",
-          "metric": "Exact metric"
-        }
-      ],
-      "implementationTime": "From clientSolution.implementedSolutions[1].ourImplementation.timeframe"
-    },
-    // Example for solution 2:
-    {
-      "solutionName": "Use clientSolution.implementedSolutions[2].solutionName exactly",
-      "directImpact": ["From clientSolution.implementedSolutions[2].howItSolvesYourProblem"],
-      "primaryBenefits": ["Copy all 3 from clientSolution.implementedSolutions[2].capabilities"],
-      "description": "Use clientSolution.implementedSolutions[2].whatWeImplement",
-      "realWorldProof": [
-        {
-          "caseStudy": "From clientSolution.implementedSolutions[2].businessCase.provenResults[0]",
-          "metric": "Exact metric"
-        }
-      ],
-      "implementationTime": "From clientSolution.implementedSolutions[2].ourImplementation.timeframe"
+      "implementationTime": "Present timeframe from clientSolution in business-friendly terms"
     }
+    // Continue pattern for each solution in clientSolution.implementedSolutions
   ],
   
   "projectedOutcomes": [
     // CREATE ONE ENTRY FOR EACH SOLUTION'S PRIMARY SUCCESS METRIC
     {
-      "solution": "Use clientSolution.implementedSolutions[0].solutionName",
-      "metric": "Pull from clientSolution.implementedSolutions[0].successMetrics[0].metric",
-      "current": "Use clientSolution.implementedSolutions[0].successMetrics[0].currentState",
-      "projected": "Use clientSolution.implementedSolutions[0].successMetrics[0].targetState",
-      "improvementPercentage": "Calculate from current vs projected"
-    },
-    {
-      "solution": "Use clientSolution.implementedSolutions[1].solutionName",
-      "metric": "Pull from clientSolution.implementedSolutions[1].successMetrics[0].metric",
-      "current": "Use clientSolution.implementedSolutions[1].successMetrics[0].currentState",
-      "projected": "Use clientSolution.implementedSolutions[1].successMetrics[0].targetState",
-      "improvementPercentage": "Calculate from current vs projected"
-    },
-    {
-      "solution": "Use clientSolution.implementedSolutions[2].solutionName",
-      "metric": "Pull from clientSolution.implementedSolutions[2].successMetrics[0].metric",
-      "current": "Use clientSolution.implementedSolutions[2].successMetrics[0].currentState",
-      "projected": "Use clientSolution.implementedSolutions[2].successMetrics[0].targetState",
-      "improvementPercentage": "Calculate from current vs projected"
+      "solution": "Solution name in natural language",
+      "metric": "Business metric they care about",
+      "current": "Where they are now in simple terms",
+      "projected": "Where they'll be in achievable terms", 
+      "improvementPercentage": "Simple percentage improvement"
     }
+    // Continue for each solution
   ],
   
   "whereToStart": {
-    "recommendation": "Use clientSolution.ourRecommendation.firstPhase but phrase conversationally",
-    "targetBottleneck": "Use clientSolution.ourRecommendation.immediateBottleneck",
-    "immediateImpact": "Use clientSolution.ourRecommendation.expectedImpact",
-    "timelineEstimate": "Use clientSolution.ourRecommendation.timeToValue",
-    "expectedROI": "Use clientSolution.ourRecommendation.expectedROI",
+    "recommendation": "Synthesize clientSolution.ourRecommendation.firstPhase into conversational recommendation",
+    "targetBottleneck": "Describe the urgent problem this addresses in ${companyName}'s terms",
+    "immediateImpact": "Describe what they'll see immediately in specific, credible terms",
+    "timelineEstimate": "Present timeToValue in business-friendly language",
+    "expectedROI": "Synthesize ROI expectation into simple, credible terms",
     "implementationNote": "Our senior engineers handle all technical complexity"
   },
   
   "callToAction": {
     "primaryCTA": "Schedule Your Free Consultation",
-    "secondaryCTA": "Retake the Assessment",
-    "urgencyMessage": "Create urgency based on their timeline (${problemAnalysis.businessContext.urgency}) and industry trends"
+    "secondaryCTA": "Retake the Assessment", 
+    "urgencyMessage": "Create appropriate urgency based on their timeline (${problemAnalysis.businessContext.urgency}) and business impact, avoiding pushy language"
   }
 }
 
-CONTEXTUAL TRANSFORMATION RULES:
+FINAL QUALITY CHECK:
+- Read each section aloud - does it sound like a trusted business advisor?
+- Remove any technical jargon or awkward phrasing
+- Ensure numbers tell a clear, credible story
+- Verify the language matches their industry and business size
+- Check that urgency feels appropriate, not manipulative
+- Confirm all solutions from clientSolution.implementedSolutions are included
+- Ensure variety in language patterns and proof examples
 
-1. PROBLEM FRAMING:
-   - Transform generic problems into industry-specific pain points
-   - If they're in healthcare: frame in terms of patient outcomes, compliance, efficiency
-   - If they're in retail: frame as customer experience, inventory, sales optimization
-   - If they're in manufacturing: frame as quality, downtime, supply chain
-   - Always quantify pain using their actual numbers from problemEvidence
-
-2. SOLUTION POSITIONING:
-   - NEVER mention tool brands (Zapier, Intercom, TenantCloud, etc.)
-   - NEVER use any fields from "internalReference" - those are for internal use only
-   - Use ONLY fields from "clientSolution" which are already client-safe
-   - Present everything as DeployAI's expertise and implementation
-   - Add context: "This integrates seamlessly with your [current systems they mentioned]"
-   - Frame benefits in their business terms, not generic tech terms
-
-3. CASE STUDY ADAPTATION:
-   - Keep ALL case studies from clientSolution (don't skip any)
-   - Transform company descriptions to match their profile:
-     * If case study is "500 employee company" but they have 50, rewrite as "growing company in your industry"
-     * If case study is different industry, emphasize the similar challenge not the industry
-   - Keep exact metrics (75% improvement, $200K saved) but contextualize
-
-4. URGENCY CREATION:
-   - Use their stated timeline urgency
-   - Reference their business objectives
-   - If they said "ASAP" emphasize competitive pressure
-   - If they said "This quarter" emphasize Q4 planning
-   - Connect to industry trends they'd recognize
-
-5. DATA EXTRACTION RULES:
-   - estimatedAnnualOpportunity: Pull EXACTLY from clientSolution.executiveSummary
-   - ROI numbers: Pull EXACTLY from clientSolution.totalInvestmentSummary
-   - Success metrics: Pull EXACTLY from clientSolution.implementedSolutions[x].successMetrics
-   - Case study metrics: Keep EXACT numbers, just reframe the context
-   - whereToStart: Use EXACT recommendation from clientSolution.ourRecommendation
-
-Remember: You're translating technical data into THEIR business language while keeping all numbers accurate.
+Remember: You're translating technical data into THEIR business language while keeping all numbers accurate and credible.
 
 CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }`;
 }
