@@ -93,15 +93,30 @@ const { handler } = servePagesRouter<WorkflowPayload>(
 
       console.log('[Workflow] Report fetched, status:', report.report_status);
       
+      // Check if already being processed (duplicate prevention)
+      if (report.report_status === 'processing' && !force) {
+        console.log('[Workflow] Report already being processed, skipping duplicate');
+        return { alreadyProcessing: true };
+      }
+      
       // Check if already completed and not forcing
       if (report.report_status === 'completed' && !force) {
         console.log('[Workflow] Report already completed, skipping');
         return { alreadyCompleted: true, report, quizData };
       }
 
-      return { alreadyCompleted: false, report, quizData };
+      return { alreadyCompleted: false, alreadyProcessing: false, report, quizData };
     });
 
+    // Exit early if already processing (duplicate prevention)
+    if (reportData.alreadyProcessing) {
+      return { 
+        success: true, 
+        message: 'Report already being processed',
+        status: 'processing'
+      };
+    }
+    
     // Exit early if already completed
     if (reportData.alreadyCompleted) {
       return { 
@@ -112,6 +127,24 @@ const { handler } = servePagesRouter<WorkflowPayload>(
     }
 
     const { report, quizData } = reportData;
+    
+    // Set status to processing to prevent concurrent runs
+    await context.run("set-processing", async () => {
+      const supabase = supabaseAdmin();
+      const { error } = await supabase
+        .from('ai_reports')
+        .update({ 
+          report_status: 'processing',
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', reportId);
+      
+      if (error) {
+        console.error('[Workflow] Failed to set processing status:', error);
+      } else {
+        console.log('[Workflow] Set report status to processing');
+      }
+    });
     
     // Get the base URL from the workflow context or environment
     // The workflow needs the full URL with protocol for API calls

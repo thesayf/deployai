@@ -93,7 +93,6 @@ const CompletePage = () => {
     // If we have quiz data in Redux, submit it
     if (quizId && userInfo && !hasSubmittedRef.current) {
       console.log('[COMPLETE] Found quiz data in Redux, submitting...');
-      hasSubmittedRef.current = true;
       submitQuiz();
       return;
     }
@@ -113,12 +112,20 @@ const CompletePage = () => {
   }, [urlReportId, quizId, userInfo]); // Dependencies for data sources
 
   const submitQuiz = async () => {
+    // Prevent double submission
+    if (hasSubmittedRef.current) {
+      console.log('[COMPLETE] Already submitted, ignoring duplicate call');
+      return;
+    }
+    
     console.log(`[COMPLETE] Starting quiz submission for quiz ID: ${quizId}`);
     console.log('[COMPLETE] Quiz data:', {
       quizId: quizId,
       hasResponses: !!responses,
       hasUserInfo: !!userInfo,
     });
+    
+    hasSubmittedRef.current = true;
     
     // Already in submitting state from initial state
     setError(null);
@@ -169,6 +176,8 @@ const CompletePage = () => {
       console.error('Failed to submit quiz:', error);
       setError(error instanceof Error ? error.message : 'Failed to submit quiz');
       setPageState('error');
+      // Reset flag to allow retry
+      hasSubmittedRef.current = false;
     }
   };
 
