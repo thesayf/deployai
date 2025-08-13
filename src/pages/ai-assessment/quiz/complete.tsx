@@ -10,6 +10,7 @@ import {
   setSubmitting
 } from '@/store/slices/quizSlice';
 import { CompleteAnimation } from '@/components/quiz/CompleteAnimation';
+import { PipelineProgress, StageInfo } from '@/components/quiz/PipelineProgress';
 import { SubmitQuizRequest } from '@/types/quiz';
 
 type PageState = 'loading' | 'submitting' | 'success' | 'error';
@@ -33,6 +34,46 @@ const CompletePage = () => {
   const [pageState, setPageState] = useState<PageState>('loading');
   const [error, setError] = useState<string | null>(null);
   const [reportId, setReportId] = useState<string | null>(null);
+  
+  // Pipeline progress state
+  const [workflowRunId, setWorkflowRunId] = useState<string | null>(null);
+  const [pipelineProgress, setPipelineProgress] = useState(0);
+  const [currentStage, setCurrentStage] = useState<string>('initializing');
+  const [estimatedTime, setEstimatedTime] = useState<number>(60);
+  const [stageDetails, setStageDetails] = useState<StageInfo[]>([
+    {
+      id: 'stage1',
+      name: 'Problem Analysis',
+      description: 'Analyzing your business context and identifying key opportunities...',
+      progress: 25,
+      status: 'pending',
+      icon: '📊'
+    },
+    {
+      id: 'stage2',
+      name: 'Tool Research',
+      description: 'Researching AI tools that match your specific needs...',
+      progress: 50,
+      status: 'pending',
+      icon: '🔍'
+    },
+    {
+      id: 'stage3',
+      name: 'Solution Curation',
+      description: 'Curating personalized solutions with ROI calculations...',
+      progress: 75,
+      status: 'pending',
+      icon: '🎯'
+    },
+    {
+      id: 'stage4',
+      name: 'Report Generation',
+      description: 'Generating your executive-ready implementation report...',
+      progress: 100,
+      status: 'pending',
+      icon: '📝'
+    }
+  ]);
   
   // Use a ref to track if submission has already started
   // This prevents double submission in React StrictMode
@@ -93,6 +134,9 @@ const CompletePage = () => {
 
       setReportId(data.reportId);
       
+      // Set the workflow run ID for polling
+      setWorkflowRunId(`report-${data.reportId}`);
+      
       // IMMEDIATELY clear Redux after successful submission
       // This prevents stale data if user closes the page
       dispatch(resetQuiz());
@@ -102,9 +146,8 @@ const CompletePage = () => {
         localStorage.removeItem('quizState');
       }
       
-      // Confirmation email is now sent from the submit endpoint
-      // So we can immediately show success
-      setPageState('success');
+      // Keep in submitting state to show progress bar
+      // Will transition to success when workflow completes
 
     } catch (error) {
       console.error('Failed to submit quiz:', error);
@@ -112,6 +155,135 @@ const CompletePage = () => {
       setPageState('error');
     }
   };
+
+  // Poll workflow status
+  useEffect(() => {
+    if (!workflowRunId || pageState !== 'submitting') {
+      return;
+    }
+
+    console.log('[COMPLETE] Starting workflow polling for:', workflowRunId);
+    
+    let pollInterval: NodeJS.Timeout;
+    let pollCount = 0;
+    const maxPolls = 60; // 2 minutes max (60 * 2 seconds)
+    const startTime = Date.now();
+
+    const updateStageStatus = (stageId: string, status: 'pending' | 'active' | 'completed') => {
+      setStageDetails(prev => prev.map(stage => {
+        if (stage.id === stageId) {
+          return { ...stage, status };
+        }
+        // Mark previous stages as completed when a later stage is active
+        const stageIndex = prev.findIndex(s => s.id === stageId);
+        const currentIndex = prev.findIndex(s => s.id === stage.id);
+        if (status === 'active' && currentIndex < stageIndex) {
+          return { ...stage, status: 'completed' };
+        }
+        return stage;
+      }));
+    };
+
+    const checkWorkflowStatus = async () => {
+      try {
+        const response = await fetch(`/api/workflow/status/${workflowRunId}`);
+        
+        if (!response.ok) {
+          // If workflow status not found, fall back to report status
+          console.log('[COMPLETE] Workflow status not found, checking report status');
+          const reportResponse = await fetch(`/api/reports/status/${reportId}`);
+          if (reportResponse.ok) {
+            const reportData = await reportResponse.json();
+            
+            // Update progress based on report stages
+            setPipelineProgress(reportData.progress || 0);
+            setCurrentStage(reportData.currentStage || 'stage1');
+            
+            // Update stage statuses based on report progress
+            if (reportData.progress >= 25) updateStageStatus('stage1', 'completed');
+            if (reportData.progress >= 50) updateStageStatus('stage2', 'completed');
+            if (reportData.progress >= 75) updateStageStatus('stage3', 'completed');
+            if (reportData.progress >= 90) updateStageStatus('stage4', 'completed');
+            
+            if (reportData.status === 'completed') {
+              setPageState('success');
+              clearInterval(pollInterval);
+            }
+          }
+          return;
+        }
+
+        const data = await response.json();
+        console.log('[COMPLETE] Workflow status:', data);
+
+        // Update progress and stage
+        setPipelineProgress(data.progress || 0);
+        setCurrentStage(data.currentStage || 'initializing');
+        
+        // Update estimated time
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const estimatedTotal = 75; // 75 seconds average
+        setEstimatedTime(Math.max(0, estimatedTotal - elapsed));
+
+        // Update stage statuses
+        if (data.currentStage === 'stage1') {
+          updateStageStatus('stage1', 'active');
+        } else if (data.currentStage === 'stage2') {
+          updateStageStatus('stage1', 'completed');
+          updateStageStatus('stage2', 'active');
+        } else if (data.currentStage === 'stage3') {
+          updateStageStatus('stage1', 'completed');
+          updateStageStatus('stage2', 'completed');
+          updateStageStatus('stage3', 'active');
+        } else if (data.currentStage === 'stage4') {
+          updateStageStatus('stage1', 'completed');
+          updateStageStatus('stage2', 'completed');
+          updateStageStatus('stage3', 'completed');
+          updateStageStatus('stage4', 'active');
+        }
+
+        // Check if completed
+        if (data.status === 'completed' || data.progress >= 100) {
+          console.log('[COMPLETE] Workflow completed!');
+          updateStageStatus('stage1', 'completed');
+          updateStageStatus('stage2', 'completed');
+          updateStageStatus('stage3', 'completed');
+          updateStageStatus('stage4', 'completed');
+          setPipelineProgress(100);
+          setPageState('success');
+          clearInterval(pollInterval);
+        } else if (data.status === 'failed') {
+          console.error('[COMPLETE] Workflow failed');
+          setError('Report generation failed. Please try again.');
+          setPageState('error');
+          clearInterval(pollInterval);
+        }
+
+        pollCount++;
+        if (pollCount >= maxPolls) {
+          console.log('[COMPLETE] Polling timeout, report should arrive via email');
+          // Still mark as success since processing continues in background
+          setPageState('success');
+          clearInterval(pollInterval);
+        }
+      } catch (err) {
+        console.error('[COMPLETE] Error checking workflow status:', err);
+        // Continue polling despite errors
+      }
+    };
+
+    // Initial check
+    checkWorkflowStatus();
+
+    // Poll every 2 seconds
+    pollInterval = setInterval(checkWorkflowStatus, 2000);
+
+    return () => {
+      if (pollInterval) {
+        clearInterval(pollInterval);
+      }
+    };
+  }, [workflowRunId, reportId, pageState]);
 
   // Render based on page state, not Redux
   if (pageState === 'loading') {
@@ -132,20 +304,24 @@ const CompletePage = () => {
 
         {/* Main content area */}
         <div className="flex-1 flex items-center justify-center px-4">
-          <div className="w-full max-w-md">
+          <div className={`w-full ${pageState === 'submitting' ? 'max-w-3xl' : 'max-w-md'}`}>
             <div className="bg-white border border-gray-300 rounded-lg p-8 text-center">
               
               {pageState === 'submitting' && (
                 <>
-                  <div className="w-16 h-16 mx-auto mb-6">
-                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#457B9D]"></div>
-                  </div>
-                  <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                    Processing your assessment...
+                  <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+                    Creating Your AI Implementation Report
                   </h2>
-                  <p className="text-gray-600">
-                    Please wait while we submit your responses.
+                  <p className="text-gray-600 mb-8">
+                    Our AI is analyzing your responses and building personalized recommendations
                   </p>
+                  
+                  <PipelineProgress
+                    progress={pipelineProgress}
+                    currentStage={currentStage}
+                    stages={stageDetails}
+                    estimatedTime={estimatedTime}
+                  />
                 </>
               )}
               
