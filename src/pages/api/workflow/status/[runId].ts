@@ -56,59 +56,97 @@ export default async function handler(
       // Check steps to determine progress
       const steps = workflowStatus.steps || [];
       
-      // Look for specific stage steps
+      // Look for specific stage steps - the save-stageX steps indicate completion
       const stage1Complete = steps.some((s: any) => 
-        (s.name === 'stage1-analysis' || s.name === 'save-stage1') && s.state === 'STEP_SUCCESS'
+        s.name === 'save-stage1' && s.state === 'STEP_SUCCESS'
       );
       const stage2Complete = steps.some((s: any) => 
-        (s.name === 'stage2-research' || s.name === 'save-stage2') && s.state === 'STEP_SUCCESS'
+        s.name === 'save-stage2' && s.state === 'STEP_SUCCESS'
       );
       const stage3Complete = steps.some((s: any) => 
-        (s.name === 'stage3-curation' || s.name === 'save-stage3') && s.state === 'STEP_SUCCESS'
+        s.name === 'save-stage3' && s.state === 'STEP_SUCCESS'
       );
       const stage4Complete = steps.some((s: any) => 
-        (s.name === 'stage4-generation' || s.name === 'save-stage4') && s.state === 'STEP_SUCCESS'
+        s.name === 'save-stage4' && s.state === 'STEP_SUCCESS'
       );
       
-      // Update stage details
+      // Check for running stages
+      const stage1Running = steps.some((s: any) => 
+        s.name === 'save-stage1' && s.state === 'STEP_RUNNING'
+      );
+      const stage2Running = steps.some((s: any) => 
+        s.name === 'save-stage2' && s.state === 'STEP_RUNNING'
+      );
+      const stage3Running = steps.some((s: any) => 
+        s.name === 'save-stage3' && s.state === 'STEP_RUNNING'
+      );
+      const stage4Running = steps.some((s: any) => 
+        s.name === 'save-stage4' && s.state === 'STEP_RUNNING'
+      );
+      
+      // Update stage details based on completion status
+      // Stage 1
       if (stage1Complete) {
         stageDetails.stage1.completed = true;
-        progress = 25;
-        currentStage = 'stage2';
-        stageDetails.stage2.active = true;
-      } else if (steps.some((s: any) => s.name === 'stage1-analysis' && s.state === 'STEP_RUNNING')) {
-        currentStage = 'stage1';
+      } else if (stage1Running || (!stage1Complete && !stage2Complete && !stage3Complete && !stage4Complete)) {
+        // Stage 1 is active if running or if nothing is complete yet
         stageDetails.stage1.active = true;
-        progress = 10;
+        currentStage = 'stage1';
       }
       
+      // Stage 2
       if (stage2Complete) {
+        stageDetails.stage1.completed = true; // Ensure stage 1 is marked complete
         stageDetails.stage2.completed = true;
-        progress = 50;
-        currentStage = 'stage3';
-        stageDetails.stage3.active = true;
-      } else if (stage1Complete && steps.some((s: any) => s.name === 'stage2-research' && s.state === 'STEP_RUNNING')) {
+      } else if (stage2Running || (stage1Complete && !stage2Complete)) {
+        stageDetails.stage1.completed = true;
         stageDetails.stage2.active = true;
-        progress = 35;
+        currentStage = 'stage2';
       }
       
+      // Stage 3
       if (stage3Complete) {
+        stageDetails.stage1.completed = true;
+        stageDetails.stage2.completed = true;
         stageDetails.stage3.completed = true;
-        progress = 75;
-        currentStage = 'stage4';
-        stageDetails.stage4.active = true;
-      } else if (stage2Complete && steps.some((s: any) => s.name === 'stage3-curation' && s.state === 'STEP_RUNNING')) {
+      } else if (stage3Running || (stage2Complete && !stage3Complete)) {
+        stageDetails.stage1.completed = true;
+        stageDetails.stage2.completed = true;
         stageDetails.stage3.active = true;
-        progress = 60;
+        currentStage = 'stage3';
       }
       
+      // Stage 4
       if (stage4Complete) {
+        stageDetails.stage1.completed = true;
+        stageDetails.stage2.completed = true;
+        stageDetails.stage3.completed = true;
         stageDetails.stage4.completed = true;
-        progress = 90;
         currentStage = 'finalizing';
-      } else if (stage3Complete && steps.some((s: any) => s.name === 'stage4-generation' && s.state === 'STEP_RUNNING')) {
+      } else if (stage4Running || (stage3Complete && !stage4Complete)) {
+        stageDetails.stage1.completed = true;
+        stageDetails.stage2.completed = true;
+        stageDetails.stage3.completed = true;
         stageDetails.stage4.active = true;
-        progress = 85;
+        currentStage = 'stage4';
+      }
+      
+      // Calculate progress based on completed stages
+      if (stage4Complete) {
+        progress = 90;
+      } else if (stage3Complete) {
+        progress = 75;
+      } else if (stage2Complete) {
+        progress = 50;
+      } else if (stage1Complete) {
+        progress = 25;
+      } else {
+        // Check if any stages are in progress
+        if (stage4Running) progress = 80;
+        else if (stage3Running) progress = 60;
+        else if (stage2Running) progress = 35;
+        else if (stage1Running) progress = 15;
+        else progress = 5; // Just started
       }
       
       // If no specific stages found, estimate based on step count

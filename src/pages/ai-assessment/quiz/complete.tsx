@@ -304,21 +304,56 @@ const CompletePage = () => {
         const estimatedTotal = 75; // 75 seconds average
         setEstimatedTime(Math.max(0, estimatedTotal - elapsed));
 
-        // Update stage statuses
-        if (data.currentStage === 'stage1') {
-          updateStageStatus('stage1', 'active');
-        } else if (data.currentStage === 'stage2') {
-          updateStageStatus('stage1', 'completed');
-          updateStageStatus('stage2', 'active');
-        } else if (data.currentStage === 'stage3') {
-          updateStageStatus('stage1', 'completed');
-          updateStageStatus('stage2', 'completed');
-          updateStageStatus('stage3', 'active');
-        } else if (data.currentStage === 'stage4') {
-          updateStageStatus('stage1', 'completed');
-          updateStageStatus('stage2', 'completed');
-          updateStageStatus('stage3', 'completed');
-          updateStageStatus('stage4', 'active');
+        // Update stage statuses using the stageDetails from API
+        if (data.stageDetails) {
+          // Reset all stages first
+          ['stage1', 'stage2', 'stage3', 'stage4'].forEach(stageId => {
+            updateStageStatus(stageId, 'pending');
+          });
+          
+          // Update each stage based on API data
+          Object.keys(data.stageDetails).forEach(stageKey => {
+            const stage = data.stageDetails[stageKey];
+            if (stage.completed) {
+              updateStageStatus(stageKey, 'completed');
+            } else if (stage.active) {
+              updateStageStatus(stageKey, 'active');
+            }
+          });
+          
+          // Update the description based on current stage
+          const stageDescriptions: Record<string, string> = {
+            stage1: 'Analyzing your business context and identifying key opportunities...',
+            stage2: 'Researching AI tools that match your specific needs...',
+            stage3: 'Curating personalized solutions with ROI calculations...',
+            stage4: 'Generating your executive-ready implementation report...'
+          };
+          
+          if (data.currentStage && stageDescriptions[data.currentStage]) {
+            setStageDetails(prev => prev.map(stage => {
+              if (stage.id === data.currentStage) {
+                return { ...stage, description: stageDescriptions[data.currentStage] };
+              }
+              return stage;
+            }));
+          }
+        } else {
+          // Fallback to simple stage logic if no stageDetails
+          if (data.currentStage === 'stage1') {
+            updateStageStatus('stage1', 'active');
+          } else if (data.currentStage === 'stage2') {
+            updateStageStatus('stage1', 'completed');
+            updateStageStatus('stage2', 'active');
+          } else if (data.currentStage === 'stage3') {
+            updateStageStatus('stage1', 'completed');
+            updateStageStatus('stage2', 'completed');
+            updateStageStatus('stage3', 'active');
+          } else if (data.currentStage === 'stage4') {
+            updateStageStatus('stage1', 'completed');
+            updateStageStatus('stage2', 'completed');
+            updateStageStatus('stage3', 'completed');
+            updateStageStatus('stage4', 'active');
+          }
         }
 
         // Check if completed
