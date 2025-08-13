@@ -82,7 +82,7 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({
         </div>
         {/* Progress percentage */}
         <div className="absolute -top-6 transition-all duration-700" style={{ left: `${Math.min(progress, 95)}%` }}>
-          <span className="text-xs font-bold text-gray-700">{progress}%</span>
+          <span className="text-xs font-bold text-gray-700">{Math.round(progress)}%</span>
         </div>
       </div>
       

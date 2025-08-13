@@ -188,18 +188,25 @@ const CompletePage = () => {
   const displayProgressRef = useRef(0);
   const lastJumpProgressRef = useRef(0);
 
-  // Poll database for real progress
+  // Start animation and poll database for real progress
   useEffect(() => {
-    if (pageState !== 'submitting' || !reportIdRef.current) {
+    if (pageState !== 'submitting') {
       return;
     }
 
-    console.log('[COMPLETE] Starting database polling for report:', reportIdRef.current);
+    console.log('[COMPLETE] Starting animation...');
+    console.log('[COMPLETE] Report ID for polling:', reportIdRef.current || 'none yet');
     
     let pollInterval: NodeJS.Timeout;
 
-    // Check database for actual field population
+    // Check database for actual field population (only if we have a reportId)
     const checkDatabaseProgress = async () => {
+      // Skip if no reportId yet
+      if (!reportIdRef.current) {
+        console.log('[COMPLETE] No reportId yet, skipping database check');
+        return;
+      }
+      
       try {
         const response = await fetch(`/api/reports/status/${reportIdRef.current}`);
         if (!response.ok) {
@@ -268,6 +275,9 @@ const CompletePage = () => {
           actualProgressRef.current = targetProgress;
           currentStageRef.current = newStage;
           lastJumpProgressRef.current = targetProgress;
+          
+          // Animation will continue naturally since it checks actualProgressRef
+          console.log('[COMPLETE] Stage jump detected, new target:', targetProgress);
         }
 
         // Check if fully complete
@@ -341,8 +351,8 @@ const CompletePage = () => {
       // Only animate up to actual progress (if stage completed early)
       displayProgressRef.current = Math.min(targetProgress, actualProgressRef.current || targetProgress);
       
-      // Update UI
-      setPipelineProgress(displayProgressRef.current);
+      // Update UI with rounded percentage
+      setPipelineProgress(Math.round(displayProgressRef.current));
       
       // Update estimated time remaining
       const totalRemaining = Object.entries(STAGE_DURATIONS)
