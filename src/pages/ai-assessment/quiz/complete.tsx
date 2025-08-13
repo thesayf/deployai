@@ -79,6 +79,7 @@ const CompletePage = () => {
   // Use a ref to track if submission has already started
   // This prevents double submission in React StrictMode
   const hasSubmittedRef = useRef(false);
+  const reportIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     console.log('[COMPLETE] useEffect triggered');
@@ -134,6 +135,7 @@ const CompletePage = () => {
       }
 
       setReportId(data.reportId);
+      reportIdRef.current = data.reportId; // Store in ref for polling
       
       // Set the workflow run ID for polling
       setWorkflowRunId(`report-${data.reportId}`);
@@ -192,63 +194,84 @@ const CompletePage = () => {
 
     const checkWorkflowStatus = async () => {
       try {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        
+        // For first 5 seconds, just show initial progress animation
+        // This ensures user sees the progress bar even if report completes quickly
+        if (elapsed < 5) {
+          const initialProgress = Math.min(15, elapsed * 3);
+          setPipelineProgress(initialProgress);
+          updateStageStatus('stage1', 'active');
+          setCurrentStage('stage1');
+          setEstimatedTime(Math.max(0, 60 - elapsed));
+          return;
+        }
+        
         const response = await fetch(`/api/workflow/status/${workflowRunId}`);
         
         if (!response.ok) {
-          // If workflow status not found, fall back to report status
-          console.log('[COMPLETE] Workflow status not found (this is normal), checking report status instead...');
-          const reportResponse = await fetch(`/api/reports/status/${reportId}`);
-          if (reportResponse.ok) {
-            const reportData = await reportResponse.json();
-            
-            // Update progress based on report stages
-            setPipelineProgress(reportData.progress || 0);
-            setCurrentStage(reportData.currentStage || 'stage1');
-            
-            // Update stage statuses based on report progress
-            if (reportData.progress >= 25) updateStageStatus('stage1', 'completed');
-            if (reportData.progress >= 50) updateStageStatus('stage2', 'completed');
-            if (reportData.progress >= 75) updateStageStatus('stage3', 'completed');
-            if (reportData.progress >= 90) updateStageStatus('stage4', 'completed');
-            
-            if (reportData.status === 'completed') {
-              // Store the access token if available
-              if (reportData.accessToken) {
-                setReportAccessToken(reportData.accessToken);
+          // If workflow status not found, simulate realistic progress
+          // Don't check report completion status to avoid skipping animation
+          console.log('[COMPLETE] Workflow status not found (this is normal), simulating progress...');
+          
+          // Simulate progress based on elapsed time (60-90 seconds total)
+          const simulatedProgress = Math.min(95, Math.floor((elapsed / 75) * 100));
+          setPipelineProgress(simulatedProgress);
+          
+          // Update stages based on simulated progress
+          if (simulatedProgress >= 25) {
+            updateStageStatus('stage1', 'completed');
+            updateStageStatus('stage2', 'active');
+            setCurrentStage('stage2');
+          }
+          if (simulatedProgress >= 50) {
+            updateStageStatus('stage2', 'completed');
+            updateStageStatus('stage3', 'active');
+            setCurrentStage('stage3');
+          }
+          if (simulatedProgress >= 75) {
+            updateStageStatus('stage3', 'completed');
+            updateStageStatus('stage4', 'active');
+            setCurrentStage('stage4');
+          }
+          
+          // Update estimated time
+          setEstimatedTime(Math.max(0, 75 - elapsed));
+          
+          // After 60 seconds, start checking if report is actually complete
+          if (elapsed >= 60 && reportIdRef.current) {
+            const reportResponse = await fetch(`/api/reports/status/${reportIdRef.current}`);
+            if (reportResponse.ok) {
+              const reportData = await reportResponse.json();
+              
+              if (reportData.status === 'completed') {
+                // Animate to 100% first
+                setPipelineProgress(100);
+                updateStageStatus('stage4', 'completed');
+                
+                // Store the access token if available
+                if (reportData.accessToken) {
+                  setReportAccessToken(reportData.accessToken);
+                }
+                
+                // Wait a moment for the 100% animation to show
+                setTimeout(() => {
+                  setPageState('success');
+                }, 1000);
+                clearInterval(pollInterval);
               }
+            }
+          }
+          
+          // Hard timeout after 120 seconds
+          if (elapsed >= 120) {
+            console.log('[COMPLETE] Timeout reached, assuming complete');
+            setPipelineProgress(100);
+            updateStageStatus('stage4', 'completed');
+            setTimeout(() => {
               setPageState('success');
-              clearInterval(pollInterval);
-            }
-          } else {
-            // If neither workflow nor report status available, simulate progress
-            console.log('[COMPLETE] No status endpoints available, simulating progress');
-            const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            const simulatedProgress = Math.min(95, Math.floor((elapsed / 60) * 100));
-            setPipelineProgress(simulatedProgress);
-            
-            // Update stages based on simulated progress
-            if (simulatedProgress >= 25) {
-              updateStageStatus('stage1', 'completed');
-              setCurrentStage('stage2');
-            }
-            if (simulatedProgress >= 50) {
-              updateStageStatus('stage2', 'completed');
-              setCurrentStage('stage3');
-            }
-            if (simulatedProgress >= 75) {
-              updateStageStatus('stage3', 'completed');
-              setCurrentStage('stage4');
-            }
-            
-            // Update estimated time
-            setEstimatedTime(Math.max(0, 60 - elapsed));
-            
-            // After 90 seconds, assume complete
-            if (elapsed >= 90) {
-              console.log('[COMPLETE] Simulation complete after 90 seconds');
-              setPageState('success');
-              clearInterval(pollInterval);
-            }
+            }, 1000);
+            clearInterval(pollInterval);
           }
           return;
         }
@@ -261,7 +284,6 @@ const CompletePage = () => {
         setCurrentStage(data.currentStage || 'initializing');
         
         // Update estimated time
-        const elapsed = Math.floor((Date.now() - startTime) / 1000);
         const estimatedTotal = 75; // 75 seconds average
         setEstimatedTime(Math.max(0, estimatedTotal - elapsed));
 
@@ -292,9 +314,9 @@ const CompletePage = () => {
           setPipelineProgress(100);
           
           // Try to get the report access token
-          if (reportId) {
+          if (reportIdRef.current) {
             try {
-              const reportResponse = await fetch(`/api/reports/status/${reportId}`);
+              const reportResponse = await fetch(`/api/reports/status/${reportIdRef.current}`);
               if (reportResponse.ok) {
                 const reportData = await reportResponse.json();
                 if (reportData.accessToken) {
@@ -340,7 +362,7 @@ const CompletePage = () => {
         clearInterval(pollInterval);
       }
     };
-  }, [workflowRunId, reportId, pageState]);
+  }, [workflowRunId, pageState]); // Removed reportId to prevent effect re-running when it's set
 
   // Render based on page state, not Redux
   if (pageState === 'loading') {
