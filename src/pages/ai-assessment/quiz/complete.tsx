@@ -272,10 +272,22 @@ const CompletePage = () => {
 
         // Check if fully complete
         if (data.completed) {
+          // Store the access token
+          if (data.accessToken) {
+            setReportAccessToken(data.accessToken);
+          }
+          
           setTimeout(() => {
             setPageState('success');
             if (animationRef.current) {
               cancelAnimationFrame(animationRef.current);
+            }
+            
+            // Auto-redirect to report after showing success screen
+            if (data.accessToken) {
+              setTimeout(() => {
+                router.push(`/report/view/${data.accessToken}`);
+              }, 3000); // Show success screen for 3 seconds then redirect
             }
           }, 1000); // Wait 1 second for 100% animation to show
           clearInterval(pollInterval);
@@ -431,38 +443,19 @@ const CompletePage = () => {
                   <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                     Complete!
                   </h2>
-                  <p className="text-gray-600 mb-2">
+                  <p className="text-gray-600 mb-6">
                     Your AI readiness report has been generated
                   </p>
-                  <p className="font-semibold text-gray-800 mb-4">
-                    {userInfo?.email || 'your email address'}
-                  </p>
-                  <p className="text-sm text-gray-500 mb-6">
-                    {reportAccessToken 
-                      ? 'Your report is ready! Click below to view it.'
-                      : 'You should receive it within 5-10 minutes. You can safely close this page.'}
-                  </p>
-                  <div className="space-y-3">
-                    {reportAccessToken && (
-                      <button
-                        onClick={() => router.push(`/report/view/${reportAccessToken}`)}
-                        className="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold"
-                      >
-                        🎯 View Your Report
-                      </button>
-                    )}
-                    <button
-                      onClick={() => router.push('/')}
-                      className="w-full bg-[#457B9D] text-white px-6 py-3 rounded-lg hover:bg-[#3a6a89] transition-colors"
-                    >
-                      Return to Homepage
-                    </button>
-                    <button
-                      onClick={() => router.push('/ai-assessment')}
-                      className="w-full bg-white text-[#457B9D] border border-[#457B9D] px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                      Take Another Assessment
-                    </button>
+                  
+                  {/* Loading indicator */}
+                  <div className="flex flex-col items-center space-y-4">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#457B9D]"></div>
+                    <p className="text-lg font-medium text-gray-700">
+                      Loading your report...
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      You will be redirected automatically
+                    </p>
                   </div>
                 </>
               )}
