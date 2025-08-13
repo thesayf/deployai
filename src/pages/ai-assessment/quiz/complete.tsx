@@ -38,40 +38,68 @@ const CompletePage = () => {
   const [pipelineProgress, setPipelineProgress] = useState(0);
   const [currentStage, setCurrentStage] = useState<string>('initializing');
   const [estimatedTime, setEstimatedTime] = useState<number>(60);
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+  
+  // Get capitalized business name
+  const businessName = userInfo?.company 
+    ? userInfo.company.split(' ').map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      ).join(' ')
+    : 'Your Business';
+  
   const [stageDetails, setStageDetails] = useState<StageInfo[]>([
     {
       id: 'stage1',
-      name: 'Problem Analysis',
-      description: 'Analyzing your business context and identifying key opportunities...',
+      name: 'Requirements',
+      description: 'Understanding Your Requirements',
       progress: 25,
       status: 'pending',
-      icon: '📊'
+      icon: '1'
     },
     {
       id: 'stage2',
-      name: 'Tool Research',
-      description: 'Researching AI tools that match your specific needs...',
+      name: 'Solutions',
+      description: 'Exploring Strategic Solutions',
       progress: 50,
       status: 'pending',
-      icon: '🔍'
+      icon: '2'
     },
     {
       id: 'stage3',
-      name: 'Solution Curation',
-      description: 'Curating personalized solutions with ROI calculations...',
+      name: 'Evaluation',
+      description: 'Evaluating Optimal Approaches',
       progress: 75,
       status: 'pending',
-      icon: '🎯'
+      icon: '3'
     },
     {
       id: 'stage4',
-      name: 'Report Generation',
-      description: 'Generating your executive-ready implementation report...',
+      name: 'Roadmap',
+      description: 'Finalizing Your Strategic Roadmap',
       progress: 100,
       status: 'pending',
-      icon: '📝'
+      icon: '4'
     }
   ]);
+  
+  // Inspirational quotes from business leaders
+  const INSPIRATIONAL_QUOTES = [
+    { text: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
+    { text: "The biggest risk is not taking any risk.", author: "Mark Zuckerberg" },
+    { text: "Growth and comfort do not coexist.", author: "Ginni Rometty, IBM" },
+    { text: "The best way to predict the future is to invent it.", author: "Alan Kay" },
+    { text: "The only way to win is to learn faster than everyone else.", author: "Eric Ries" },
+    { text: "Be customer-obsessed, not tech-obsessed.", author: "Jeff Bezos" },
+    { text: "The heart and soul of a company is creativity and innovation.", author: "Robert Iger, Disney" },
+    { text: "Digital transformation is a fundamental reality for businesses today.", author: "Warren Buffett" },
+    { text: "In today's era of volatility, agility is the only sustainable advantage.", author: "Jack Welch" },
+    { text: "When you innovate, be prepared for everyone telling you you're nuts.", author: "Larry Ellison" },
+    { text: "Failure is an option here. If things are not failing, you are not innovating enough.", author: "Elon Musk" },
+    { text: "Dream big and know how to translate dreams into reality.", author: "Jack Ma" },
+    { text: "There is no alternative to digital transformation. Those that don't adapt will fail.", author: "Jeff Bezos" },
+    { text: "Sometimes when you innovate, you make mistakes. It is best to admit them quickly.", author: "Steve Jobs" },
+    { text: "It's not the strongest that survives, but the most adaptable to change.", author: "Charles Darwin" }
+  ];
   
   // Use refs to track state
   const hasSubmittedRef = useRef(false);
@@ -188,6 +216,28 @@ const CompletePage = () => {
     stage3: 140,  // 140 seconds (2:20) for 50-75% - added 1 minute
     stage4: 140   // 140 seconds (2:20) for 75-100% - added 1 minute
   };
+  
+  // Update stage 2 description with business name
+  useEffect(() => {
+    if (businessName && businessName !== 'Your Business') {
+      setStageDetails(prev => prev.map(stage => 
+        stage.id === 'stage2' 
+          ? { ...stage, description: `Exploring Strategic Solutions for ${businessName}` }
+          : stage
+      ));
+    }
+  }, [businessName]);
+  
+  // Rotate through inspirational quotes
+  useEffect(() => {
+    if (pageState !== 'submitting') return;
+    
+    const interval = setInterval(() => {
+      setCurrentQuoteIndex((prev) => (prev + 1) % INSPIRATIONAL_QUOTES.length);
+    }, 7000); // Change quote every 7 seconds
+    
+    return () => clearInterval(interval);
+  }, [pageState]);
 
   // Animation state refs
   const animationRef = useRef<number>();
@@ -431,6 +481,7 @@ const CompletePage = () => {
                     currentStage={currentStage}
                     stages={stageDetails}
                     estimatedTime={estimatedTime}
+                    currentQuote={INSPIRATIONAL_QUOTES[currentQuoteIndex]}
                   />
                 </>
               )}

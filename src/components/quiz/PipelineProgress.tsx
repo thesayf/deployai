@@ -14,6 +14,7 @@ interface PipelineProgressProps {
   currentStage: string;
   stages: StageInfo[];
   estimatedTime?: number;
+  currentQuote?: { text: string; author: string };
 }
 
 const StageIndicator: React.FC<{ stage: StageInfo; isActive: boolean }> = ({ stage, isActive }) => {
@@ -33,7 +34,7 @@ const StageIndicator: React.FC<{ stage: StageInfo; isActive: boolean }> = ({ sta
   return (
     <div className="flex flex-col items-center flex-1">
       <div className={`
-        w-12 h-12 rounded-full border-3 flex items-center justify-center mb-2
+        w-12 h-12 rounded-full border-3 flex items-center justify-center
         transition-all duration-500 ${getStatusColor()}
         ${isActive ? 'scale-110' : ''}
       `}>
@@ -44,12 +45,9 @@ const StageIndicator: React.FC<{ stage: StageInfo; isActive: boolean }> = ({ sta
         ) : stage.status === 'active' ? (
           <div className="w-5 h-5 bg-white rounded-full animate-ping" />
         ) : (
-          <span className="text-xl">{stage.icon}</span>
+          <span className="text-lg font-bold text-gray-600">{stage.icon}</span>
         )}
       </div>
-      <p className={`text-xs text-center ${isActive ? 'font-bold text-gray-900' : 'text-gray-600'}`}>
-        {stage.name}
-      </p>
     </div>
   );
 };
@@ -58,15 +56,23 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({
   progress,
   currentStage,
   stages,
-  estimatedTime
+  estimatedTime,
+  currentQuote
 }) => {
   return (
     <div className="w-full">
-      {/* Stage description */}
-      <div className="mb-6 text-center">
-        <p className="text-gray-600 text-sm">
-          {stages.find(s => s.id === currentStage)?.description || 'Initializing pipeline...'}
-        </p>
+      {/* Inspirational quote with fade effect */}
+      <div className="mb-8 text-center min-h-[60px] flex flex-col justify-center">
+        {currentQuote ? (
+          <div className="transition-opacity duration-500">
+            <p className="text-gray-700 text-lg italic mb-2">"{currentQuote.text}"</p>
+            <p className="text-gray-500 text-sm">— {currentQuote.author}</p>
+          </div>
+        ) : (
+          <p className="text-gray-600 text-sm">
+            {stages.find(s => s.id === currentStage)?.description || 'Initializing pipeline...'}
+          </p>
+        )}
       </div>
 
       {/* Main progress bar */}
@@ -94,43 +100,6 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({
             stage={stage} 
             isActive={currentStage === stage.id}
           />
-        ))}
-      </div>
-
-      {/* Detailed progress steps */}
-      <div className="space-y-2 text-sm">
-        {stages.map((stage, index) => (
-          <div 
-            key={stage.id}
-            className={`flex items-center space-x-3 transition-all duration-300 ${
-              stage.status === 'completed' ? 'opacity-100' : 
-              stage.status === 'active' ? 'opacity-100' : 'opacity-50'
-            }`}
-          >
-            <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
-              stage.status === 'completed' ? 'bg-green-500' :
-              stage.status === 'active' ? 'bg-[#457B9D] animate-pulse' :
-              'bg-gray-300'
-            }`}>
-              {stage.status === 'completed' && (
-                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                </svg>
-              )}
-              {stage.status === 'active' && (
-                <div className="w-2 h-2 bg-white rounded-full" />
-              )}
-            </div>
-            <span className={stage.status === 'active' ? 'font-semibold' : ''}>
-              Stage {index + 1}: {stage.name}
-            </span>
-            {stage.status === 'completed' && (
-              <span className="text-green-600 text-xs">✓ Complete</span>
-            )}
-            {stage.status === 'active' && (
-              <span className="text-[#457B9D] text-xs animate-pulse">Processing...</span>
-            )}
-          </div>
         ))}
       </div>
 
