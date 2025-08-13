@@ -135,13 +135,19 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({
       </div>
 
       {/* Estimated time */}
-      {estimatedTime && estimatedTime > 0 && (
-        <div className="mt-6 text-center">
+      <div className="mt-6 text-center">
+        {estimatedTime !== undefined && estimatedTime > 0 ? (
           <p className="text-sm text-gray-500">
-            Estimated time remaining: <span className="font-semibold">{Math.ceil(estimatedTime)} seconds</span>
+            Estimated time remaining: <span className="font-semibold">
+              {Math.floor(estimatedTime / 60)}:{String(Math.ceil(estimatedTime % 60)).padStart(2, '0')}
+            </span>
           </p>
-        </div>
-      )}
+        ) : (
+          <p className="text-sm text-gray-600 animate-pulse">
+            Adding finishing touches, please wait...
+          </p>
+        )}
+      </div>
     </div>
   );
 };

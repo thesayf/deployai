@@ -183,10 +183,10 @@ const CompletePage = () => {
 
   // Stage duration estimates (in seconds) - overestimated for better UX
   const STAGE_DURATIONS = {
-    stage1: 45,  // 45 seconds for 0-25%
-    stage2: 90,  // 90 seconds for 25-50%
-    stage3: 80,  // 80 seconds for 50-75%
-    stage4: 80   // 80 seconds for 75-100%
+    stage1: 45,   // 45 seconds for 0-25%
+    stage2: 90,   // 90 seconds for 25-50%
+    stage3: 140,  // 140 seconds (2:20) for 50-75% - added 1 minute
+    stage4: 140   // 140 seconds (2:20) for 75-100% - added 1 minute
   };
 
   // Animation state refs
