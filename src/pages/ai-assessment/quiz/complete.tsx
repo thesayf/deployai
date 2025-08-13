@@ -172,281 +172,197 @@ const CompletePage = () => {
     }
   };
 
-  // Poll workflow status
+  // Stage duration estimates (in seconds) - overestimated for better UX
+  const STAGE_DURATIONS = {
+    stage1: 45,  // 45 seconds for 0-25%
+    stage2: 90,  // 90 seconds for 25-50%
+    stage3: 80,  // 80 seconds for 50-75%
+    stage4: 80   // 80 seconds for 75-100%
+  };
+
+  // Animation state refs
+  const animationRef = useRef<number>();
+  const currentStageRef = useRef(1);
+  const stageStartTimeRef = useRef(Date.now());
+  const actualProgressRef = useRef(0);
+  const displayProgressRef = useRef(0);
+  const lastJumpProgressRef = useRef(0);
+
+  // Poll database for real progress
   useEffect(() => {
-    console.log('[COMPLETE] Polling effect triggered. WorkflowRunId:', workflowRunId, 'PageState:', pageState);
-    
-    // Always poll when in submitting state, even without workflowRunId (will simulate)
-    if (pageState !== 'submitting') {
-      console.log('[COMPLETE] Not polling - not in submitting state');
+    if (pageState !== 'submitting' || !reportIdRef.current) {
       return;
     }
 
-    console.log('[COMPLETE] Starting workflow polling for:', workflowRunId);
+    console.log('[COMPLETE] Starting database polling for report:', reportIdRef.current);
     
     let pollInterval: NodeJS.Timeout;
-    let pollCount = 0;
-    const maxPolls = 60; // 2 minutes max (60 * 2 seconds)
-    const startTime = Date.now();
 
-    const updateStageStatus = (stageId: string, status: 'pending' | 'active' | 'completed') => {
-      setStageDetails(prev => prev.map(stage => {
-        if (stage.id === stageId) {
+    // Check database for actual field population
+    const checkDatabaseProgress = async () => {
+      try {
+        const response = await fetch(`/api/reports/status/${reportIdRef.current}`);
+        if (!response.ok) {
+          console.log('[COMPLETE] Failed to get report status');
+          return;
+        }
+
+        const data = await response.json();
+        console.log('[COMPLETE] Database status:', {
+          stage1: data.stage1_populated,
+          stage2: data.stage2_populated,
+          stage3: data.stage3_populated,
+          stage4: data.stage4_populated,
+          completed: data.completed
+        });
+
+        // Update stage indicators based on field population
+        let targetProgress = 0;
+        let newStage = currentStageRef.current;
+
+        if (data.stage4_populated || data.completed) {
+          targetProgress = 100;
+          newStage = 5; // Completed
+          updateStageIndicators(4, 'completed');
+          
+          // Store access token if available
+          if (data.accessToken) {
+            setReportAccessToken(data.accessToken);
+          }
+        } else if (data.stage3_populated) {
+          // Jump to 75% + random 0-4%
+          if (currentStageRef.current < 4) {
+            targetProgress = 75 + Math.random() * 4;
+            newStage = 4;
+            stageStartTimeRef.current = Date.now();
+            updateStageIndicators(3, 'completed');
+            updateStageIndicators(4, 'active');
+          }
+        } else if (data.stage2_populated) {
+          // Jump to 50% + random 0-4%
+          if (currentStageRef.current < 3) {
+            targetProgress = 50 + Math.random() * 4;
+            newStage = 3;
+            stageStartTimeRef.current = Date.now();
+            updateStageIndicators(2, 'completed');
+            updateStageIndicators(3, 'active');
+          }
+        } else if (data.stage1_populated) {
+          // Jump to 25% + random 0-4%
+          if (currentStageRef.current < 2) {
+            targetProgress = 25 + Math.random() * 4;
+            newStage = 2;
+            stageStartTimeRef.current = Date.now();
+            updateStageIndicators(1, 'completed');
+            updateStageIndicators(2, 'active');
+          }
+        } else {
+          // Stage 1 still in progress
+          if (currentStageRef.current === 1) {
+            updateStageIndicators(1, 'active');
+          }
+        }
+
+        // Update actual progress if we found a new stage completion
+        if (targetProgress > actualProgressRef.current) {
+          actualProgressRef.current = targetProgress;
+          currentStageRef.current = newStage;
+          lastJumpProgressRef.current = targetProgress;
+        }
+
+        // Check if fully complete
+        if (data.completed) {
+          setTimeout(() => {
+            setPageState('success');
+            if (animationRef.current) {
+              cancelAnimationFrame(animationRef.current);
+            }
+          }, 1000); // Wait 1 second for 100% animation to show
+          clearInterval(pollInterval);
+        }
+      } catch (err) {
+        console.error('[COMPLETE] Error checking database:', err);
+      }
+    };
+
+    // Update stage visual indicators
+    const updateStageIndicators = (stageNum: number, status: 'pending' | 'active' | 'completed') => {
+      setStageDetails(prev => prev.map((stage, index) => {
+        if (index + 1 === stageNum) {
           return { ...stage, status };
         }
-        // Mark previous stages as completed when a later stage is active
-        const stageIndex = prev.findIndex(s => s.id === stageId);
-        const currentIndex = prev.findIndex(s => s.id === stage.id);
-        if (status === 'active' && currentIndex < stageIndex) {
+        // Mark previous stages as completed
+        if (index + 1 < stageNum && status === 'completed') {
           return { ...stage, status: 'completed' };
         }
         return stage;
       }));
     };
 
-    const checkWorkflowStatus = async () => {
-      try {
-        const elapsed = Math.floor((Date.now() - startTime) / 1000);
-        
-        // For first 5 seconds, just show initial progress animation
-        // This ensures user sees the progress bar even if report completes quickly
-        if (elapsed < 5) {
-          const initialProgress = Math.min(15, elapsed * 3);
-          setPipelineProgress(initialProgress);
-          updateStageStatus('stage1', 'active');
-          setCurrentStage('stage1');
-          setEstimatedTime(Math.max(0, 60 - elapsed));
-          return;
-        }
-        
-        // If no workflowRunId, skip to simulation
-        if (!workflowRunId) {
-          throw new Error('No workflow ID, simulating progress');
-        }
-        
-        const response = await fetch(`/api/workflow/status/${workflowRunId}`);
-        
-        if (!response.ok) {
-          // If workflow status not found, simulate realistic progress
-          // Don't check report completion status to avoid skipping animation
-          console.log('[COMPLETE] Workflow status not found (this is normal), simulating progress...');
-          
-          // Simulate progress based on elapsed time (60-90 seconds total)
-          const simulatedProgress = Math.min(95, Math.floor((elapsed / 75) * 100));
-          setPipelineProgress(simulatedProgress);
-          
-          // Update stages based on simulated progress
-          if (simulatedProgress >= 25) {
-            updateStageStatus('stage1', 'completed');
-            updateStageStatus('stage2', 'active');
-            setCurrentStage('stage2');
-          }
-          if (simulatedProgress >= 50) {
-            updateStageStatus('stage2', 'completed');
-            updateStageStatus('stage3', 'active');
-            setCurrentStage('stage3');
-          }
-          if (simulatedProgress >= 75) {
-            updateStageStatus('stage3', 'completed');
-            updateStageStatus('stage4', 'active');
-            setCurrentStage('stage4');
-          }
-          
-          // Update estimated time
-          setEstimatedTime(Math.max(0, 75 - elapsed));
-          
-          // After 60 seconds, start checking if report is actually complete
-          if (elapsed >= 60 && reportIdRef.current) {
-            const reportResponse = await fetch(`/api/reports/status/${reportIdRef.current}`);
-            if (reportResponse.ok) {
-              const reportData = await reportResponse.json();
-              
-              if (reportData.status === 'completed') {
-                // Animate to 100% first
-                setPipelineProgress(100);
-                updateStageStatus('stage4', 'completed');
-                
-                // Store the access token if available
-                if (reportData.accessToken) {
-                  setReportAccessToken(reportData.accessToken);
-                }
-                
-                // Wait a moment for the 100% animation to show
-                setTimeout(() => {
-                  setPageState('success');
-                }, 1000);
-                clearInterval(pollInterval);
-              }
-            }
-          }
-          
-          // Hard timeout after 120 seconds
-          if (elapsed >= 120) {
-            console.log('[COMPLETE] Timeout reached, assuming complete');
-            setPipelineProgress(100);
-            updateStageStatus('stage4', 'completed');
-            setTimeout(() => {
-              setPageState('success');
-            }, 1000);
-            clearInterval(pollInterval);
-          }
-          return;
-        }
-
-        const data = await response.json();
-        console.log('[COMPLETE] Workflow status:', data);
-
-        // Update progress and stage
-        setPipelineProgress(data.progress || 0);
-        setCurrentStage(data.currentStage || 'initializing');
-        
-        // Update estimated time
-        const estimatedTotal = 75; // 75 seconds average
-        setEstimatedTime(Math.max(0, estimatedTotal - elapsed));
-
-        // Update stage statuses using the stageDetails from API
-        if (data.stageDetails) {
-          // Reset all stages first
-          ['stage1', 'stage2', 'stage3', 'stage4'].forEach(stageId => {
-            updateStageStatus(stageId, 'pending');
-          });
-          
-          // Update each stage based on API data
-          Object.keys(data.stageDetails).forEach(stageKey => {
-            const stage = data.stageDetails[stageKey];
-            if (stage.completed) {
-              updateStageStatus(stageKey, 'completed');
-            } else if (stage.active) {
-              updateStageStatus(stageKey, 'active');
-            }
-          });
-          
-          // Update the description based on current stage
-          const stageDescriptions: Record<string, string> = {
-            stage1: 'Analyzing your business context and identifying key opportunities...',
-            stage2: 'Researching AI tools that match your specific needs...',
-            stage3: 'Curating personalized solutions with ROI calculations...',
-            stage4: 'Generating your executive-ready implementation report...'
-          };
-          
-          if (data.currentStage && stageDescriptions[data.currentStage]) {
-            setStageDetails(prev => prev.map(stage => {
-              if (stage.id === data.currentStage) {
-                return { ...stage, description: stageDescriptions[data.currentStage] };
-              }
-              return stage;
-            }));
-          }
-        } else {
-          // Fallback to simple stage logic if no stageDetails
-          if (data.currentStage === 'stage1') {
-            updateStageStatus('stage1', 'active');
-          } else if (data.currentStage === 'stage2') {
-            updateStageStatus('stage1', 'completed');
-            updateStageStatus('stage2', 'active');
-          } else if (data.currentStage === 'stage3') {
-            updateStageStatus('stage1', 'completed');
-            updateStageStatus('stage2', 'completed');
-            updateStageStatus('stage3', 'active');
-          } else if (data.currentStage === 'stage4') {
-            updateStageStatus('stage1', 'completed');
-            updateStageStatus('stage2', 'completed');
-            updateStageStatus('stage3', 'completed');
-            updateStageStatus('stage4', 'active');
-          }
-        }
-
-        // Check if completed
-        if (data.status === 'completed' || data.progress >= 100) {
-          console.log('[COMPLETE] Workflow completed!');
-          updateStageStatus('stage1', 'completed');
-          updateStageStatus('stage2', 'completed');
-          updateStageStatus('stage3', 'completed');
-          updateStageStatus('stage4', 'completed');
-          setPipelineProgress(100);
-          
-          // Try to get the report access token
-          if (reportIdRef.current) {
-            try {
-              const reportResponse = await fetch(`/api/reports/status/${reportIdRef.current}`);
-              if (reportResponse.ok) {
-                const reportData = await reportResponse.json();
-                if (reportData.accessToken) {
-                  setReportAccessToken(reportData.accessToken);
-                  console.log('[COMPLETE] Got report access token:', reportData.accessToken);
-                }
-              }
-            } catch (err) {
-              console.error('[COMPLETE] Error fetching report token:', err);
-            }
-          }
-          
-          setPageState('success');
-          clearInterval(pollInterval);
-        } else if (data.status === 'failed') {
-          console.error('[COMPLETE] Workflow failed');
-          setError('Report generation failed. Please try again.');
-          setPageState('error');
-          clearInterval(pollInterval);
-        }
-
-        pollCount++;
-        if (pollCount >= maxPolls) {
-          console.log('[COMPLETE] Polling timeout, report should arrive via email');
-          // Still mark as success since processing continues in background
-          setPageState('success');
-          clearInterval(pollInterval);
-        }
-      } catch (err) {
-        console.log('[COMPLETE] Workflow check error, falling back to simulation:', err);
-        
-        // Simulate progress when no workflow status available
-        const elapsed = Math.floor((Date.now() - startTime) / 1000);
-        const simulatedProgress = Math.min(95, Math.floor((elapsed / 75) * 100));
-        setPipelineProgress(simulatedProgress);
-        
-        // Update stages based on simulated progress
-        if (simulatedProgress >= 25) {
-          updateStageStatus('stage1', 'completed');
-          updateStageStatus('stage2', 'active');
-          setCurrentStage('stage2');
-        }
-        if (simulatedProgress >= 50) {
-          updateStageStatus('stage2', 'completed');
-          updateStageStatus('stage3', 'active');
-          setCurrentStage('stage3');
-        }
-        if (simulatedProgress >= 75) {
-          updateStageStatus('stage3', 'completed');
-          updateStageStatus('stage4', 'active');
-          setCurrentStage('stage4');
-        }
-        
-        // After 90 seconds, complete
-        if (elapsed >= 90) {
-          console.log('[COMPLETE] Simulation complete after 90 seconds');
-          setPipelineProgress(100);
-          updateStageStatus('stage4', 'completed');
-          setTimeout(() => {
-            setPageState('success');
-          }, 1000);
-          clearInterval(pollInterval);
-        }
+    // Smooth animation function
+    const animateProgress = () => {
+      const currentStage = currentStageRef.current;
+      if (currentStage > 4) {
+        // Already complete
+        setPipelineProgress(100);
+        return;
       }
+
+      // Calculate elapsed time in current stage
+      const elapsed = (Date.now() - stageStartTimeRef.current) / 1000;
+      const stageDuration = STAGE_DURATIONS[`stage${currentStage}` as keyof typeof STAGE_DURATIONS];
+      
+      // Calculate progress within current stage (0 to 1, capped at 0.99)
+      const stageProgress = Math.min(elapsed / stageDuration, 0.99);
+      
+      // Map to actual percentage range for this stage
+      const ranges: Record<number, [number, number]> = {
+        1: [0, 25],
+        2: [lastJumpProgressRef.current || 25, 50],
+        3: [lastJumpProgressRef.current || 50, 75],
+        4: [lastJumpProgressRef.current || 75, 100]
+      };
+      
+      const [min, max] = ranges[currentStage];
+      const targetProgress = min + (max - min) * stageProgress;
+      
+      // Only animate up to actual progress (if stage completed early)
+      displayProgressRef.current = Math.min(targetProgress, actualProgressRef.current || targetProgress);
+      
+      // Update UI
+      setPipelineProgress(displayProgressRef.current);
+      
+      // Update estimated time remaining
+      const totalRemaining = Object.entries(STAGE_DURATIONS)
+        .slice(currentStage - 1)
+        .reduce((sum, [_, duration]) => sum + duration, 0);
+      const currentStageRemaining = Math.max(0, stageDuration - elapsed);
+      setEstimatedTime(Math.floor(currentStageRemaining + (totalRemaining - stageDuration)));
+      
+      // Continue animation
+      animationRef.current = requestAnimationFrame(animateProgress);
     };
 
-    // Initial check
-    checkWorkflowStatus();
-
-    // Poll every 2 seconds
-    pollInterval = setInterval(checkWorkflowStatus, 2000);
+    // Initial stage setup
+    updateStageIndicators(1, 'active');
+    setCurrentStage('stage1');
+    
+    // Start animation
+    animateProgress();
+    
+    // Check database immediately, then every 2 seconds
+    checkDatabaseProgress();
+    pollInterval = setInterval(checkDatabaseProgress, 2000);
 
     return () => {
       if (pollInterval) {
         clearInterval(pollInterval);
       }
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
-  }, [workflowRunId, pageState]); // Removed reportId to prevent effect re-running when it's set
+  }, [pageState]);
 
   // Always render the page content
   // No loading state needed since we start with animation

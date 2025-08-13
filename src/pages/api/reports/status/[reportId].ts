@@ -43,52 +43,35 @@ export default async function handler(
       return res.status(404).json({ error: 'Report not found' });
     }
 
-    // Determine progress based on completed stages
-    let progress = 0;
-    let currentStage = 'pending';
+    // Check which stages have actual data (not just exist but have content)
+    const stage1_populated = !!report.stage1_problem_analysis && 
+                            Object.keys(report.stage1_problem_analysis).length > 0;
+    const stage2_populated = !!report.stage2_tool_research && 
+                            Object.keys(report.stage2_tool_research).length > 0;
+    const stage3_populated = !!report.stage3_tool_selection && 
+                            Object.keys(report.stage3_tool_selection).length > 0;
+    const stage4_populated = !!report.stage4_report_content && 
+                            Object.keys(report.stage4_report_content).length > 0;
     
-    if (report.stage1_problem_analysis) {
-      progress = 25;
-      currentStage = 'analyzing';
-    }
-    if (report.stage2_tool_research) {
-      progress = 50;
-      currentStage = 'researching';
-    }
-    if (report.stage3_tool_selection) {
-      progress = 75;
-      currentStage = 'curating';
-    }
-    if (report.stage4_report_content) {
-      progress = 90;
-      currentStage = 'finalizing';
-    }
-    if (report.report_status === 'completed') {
-      progress = 100;
-      currentStage = 'completed';
-    }
-
-    // Calculate estimated time remaining
-    let estimatedTimeRemaining = null;
-    if (report.report_status === 'pending' || report.report_status === 'processing') {
-      const elapsedSeconds = report.updated_at 
-        ? Math.floor((Date.now() - new Date(report.updated_at).getTime()) / 1000)
-        : 0;
-      
-      // Estimate 60-90 seconds total processing time
-      const estimatedTotalTime = 75; // Average of 60-90 seconds
-      estimatedTimeRemaining = Math.max(0, estimatedTotalTime - elapsedSeconds);
-    }
-
-    // Prepare response
+    // Prepare response with field presence data
     const response: any = {
       reportId: report.id,
       status: report.report_status,
-      currentStage,
-      progress,
+      
+      // Field presence - this is what the frontend will use for real progress
+      stage1_populated,
+      stage2_populated,
+      stage3_populated,
+      stage4_populated,
+      
+      // Completion status
+      completed: report.report_status === 'completed',
+      
+      // Access token for viewing report
       accessToken: report.access_token,
+      
+      // Additional metadata
       emailSent: !!report.email_sent_at,
-      estimatedTimeRemaining,
       createdAt: report.created_at,
       updatedAt: report.updated_at,
     };
