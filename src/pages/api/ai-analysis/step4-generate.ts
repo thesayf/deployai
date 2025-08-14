@@ -139,6 +139,32 @@ export default async function handler(
       console.log('[STEP4] SUCCESS - Parsed final report');
       console.log('[STEP4] Final report structure:', Object.keys(finalReport));
       console.log('[STEP4] Recommendations count:', finalReport.recommendedSolutions?.length);
+      
+      // Validate and clean readiness level
+      if (finalReport.executiveSummary?.readinessLevel) {
+        const validLevels = ['High', 'Medium', 'Low'];
+        const rawLevel = finalReport.executiveSummary.readinessLevel;
+        
+        // If AI returns more than just the word, extract it
+        const cleanLevel = rawLevel.split(/[\s—-]/)[0].trim();
+        
+        if (validLevels.includes(cleanLevel)) {
+          // If there was extra text, move it to explanation if not already present
+          if (rawLevel.length > cleanLevel.length && !finalReport.executiveSummary.readinessExplanation) {
+            const explanation = rawLevel.substring(cleanLevel.length).replace(/^[\s—-]+/, '').trim();
+            if (explanation) {
+              finalReport.executiveSummary.readinessExplanation = explanation;
+            }
+          }
+          finalReport.executiveSummary.readinessLevel = cleanLevel;
+          console.log('[STEP4] Readiness level validated:', cleanLevel);
+        } else {
+          // Default to Medium if invalid
+          console.warn('[STEP4] Invalid readiness level received:', rawLevel, '- defaulting to Medium');
+          finalReport.executiveSummary.readinessLevel = 'Medium';
+          finalReport.executiveSummary.readinessExplanation = 'Assessment requires further review';
+        }
+      }
     } catch (parseError) {
       console.error('[STEP4] ERROR - Failed to parse AI response');
       console.error('[STEP4] Parse error:', parseError instanceof Error ? parseError.message : parseError);

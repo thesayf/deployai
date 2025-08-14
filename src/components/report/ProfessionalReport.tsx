@@ -45,9 +45,24 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
     // Legacy format
     [readinessStatus, readinessExplanation] = data.actionPlan.readinessLevel.split(' - ');
   } else if (data.executiveSummary?.readinessLevel) {
-    // New format - readiness level is just a string like "High" or "Medium"
-    readinessStatus = data.executiveSummary.readinessLevel;
-    readinessExplanation = ''; // New format doesn't have explanation in readiness level
+    // New format - clean the level if needed (for backward compatibility)
+    const rawLevel = data.executiveSummary.readinessLevel;
+    
+    // Check if it's already clean (just High/Medium/Low)
+    if (['High', 'Medium', 'Low'].includes(rawLevel)) {
+      readinessStatus = rawLevel;
+      readinessExplanation = data.executiveSummary.readinessExplanation || '';
+    } else {
+      // Old data might have long text - extract the level
+      const parts = rawLevel.split(/[\s—-]/);
+      readinessStatus = parts[0];
+      // If there's no separate explanation field, extract it from the level
+      if (!data.executiveSummary.readinessExplanation && parts.length > 1) {
+        readinessExplanation = rawLevel.substring(parts[0].length).replace(/^[\s—-]+/, '').trim();
+      } else {
+        readinessExplanation = data.executiveSummary.readinessExplanation || '';
+      }
+    }
   }
 
   const handleConsultation = () => {
@@ -301,7 +316,14 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
             <div className="text-left sm:text-right">
               <div className="mb-2 sm:mb-4">
                 <p className="text-xs sm:text-sm text-gray-600 mb-1">Readiness Level</p>
-                <p className="text-2xl sm:text-3xl md:text-4xl font-black text-black">{data.executiveSummary.readinessLevel}</p>
+                <p className="text-2xl sm:text-3xl md:text-4xl font-black text-black">
+                  {readinessStatus || data.executiveSummary.readinessLevel}
+                </p>
+                {(readinessExplanation || data.executiveSummary.readinessExplanation) && (
+                  <p className="text-xs sm:text-sm text-gray-500 mt-1 max-w-xs">
+                    {readinessExplanation || data.executiveSummary.readinessExplanation}
+                  </p>
+                )}
               </div>
               <div className="flex sm:block gap-4 sm:gap-0 sm:space-y-2">
                 <div>

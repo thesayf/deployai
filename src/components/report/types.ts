@@ -17,7 +17,8 @@ export interface ReportData {
 
 // New interfaces for improved report structure
 export interface ExecutiveSummary {
-  readinessLevel: string; // "High" / "Medium" / "Low"
+  readinessLevel: 'High' | 'Medium' | 'Low'; // Strict enum - single word only
+  readinessExplanation?: string; // Optional brief explanation of readiness assessment
   estimatedAnnualOpportunity: string; // "$XXX,XXX"
   immediateROI: string; // "XXX%"
 }

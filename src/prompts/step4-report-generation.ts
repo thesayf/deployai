@@ -87,7 +87,8 @@ YOUR TRANSFORMATION TASK:
 OUTPUT FORMAT (return only valid JSON):
 {
   "executiveSummary": {
-    "readinessLevel": "Assess as High/Medium/Low based on: Do they have modern systems? AI experience? Clear objectives? Budget allocated?",
+    "readinessLevel": "MUST be EXACTLY one word: 'High', 'Medium', or 'Low'. NO additional text, NO explanation, NO hyphens, JUST the single word.",
+    "readinessExplanation": "One brief sentence explaining the readiness assessment based on: modern systems? AI experience? Clear objectives? Budget allocated? Example: 'Strong digital infrastructure with clear objectives but limited AI experience'",
     "estimatedAnnualOpportunity": "Write the annual opportunity from clientSolution.executiveSummary.estimatedAnnualOpportunity in natural language",
     "immediateROI": "Write the ROI from clientSolution.totalInvestmentSummary.netROI in simple, credible terms"
   },
