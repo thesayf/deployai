@@ -89,19 +89,19 @@ const AIAssessmentLanding = () => {
       </Head>
 
       {/* Logo Header */}
-      <div className="bg-[#212121] py-8">
+      <div className="bg-[#212121] py-4 md:py-6">
         <div className="container mx-auto px-6 flex justify-center">
           <Image
             src="/logo.png"
             alt="deployAI studio"
             width={220}
             height={80}
-            className="h-16 w-auto brightness-0 invert"
+            className="h-10 md:h-12 w-auto brightness-0 invert"
           />
         </div>
       </div>
 
-      <main className="bg-[#212121] min-h-screen">
+      <main className="bg-[#212121]">
         <AssessmentLanding />
         
         {/* Methodology Credibility */}
