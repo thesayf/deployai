@@ -85,10 +85,10 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Loading your personalized AI report...</p>
+          <Loader2 className="w-10 h-10 sm:w-12 sm:h-12 animate-spin mx-auto mb-3 sm:mb-4" />
+          <p className="text-sm sm:text-base text-gray-600">Loading your personalized AI report...</p>
         </div>
       </div>
     );
@@ -96,21 +96,21 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white border-3 border-black p-8 shadow-hard max-w-md text-center">
-          <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-          <h2 className="text-xl font-bold mb-2">Unable to Load Report</h2>
-          <p className="text-gray-600 mb-6">{error}</p>
-          <div className="space-y-3">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <div className="bg-white border-2 sm:border-3 border-black p-6 sm:p-8 shadow-hard max-w-md w-full text-center">
+          <AlertCircle className="w-10 h-10 sm:w-12 sm:h-12 text-red-500 mx-auto mb-3 sm:mb-4" />
+          <h2 className="text-lg sm:text-xl font-bold mb-2">Unable to Load Report</h2>
+          <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">{error}</p>
+          <div className="space-y-2 sm:space-y-3">
             <button
               onClick={() => router.push('/')}
-              className="w-full px-6 py-3 bg-black text-white font-bold uppercase hover:shadow-hard-lg transition-shadow"
+              className="w-full px-4 sm:px-6 py-2.5 sm:py-3 bg-black text-white text-sm sm:text-base font-bold uppercase hover:shadow-hard-lg transition-shadow"
             >
               Go to Homepage
             </button>
             <button
               onClick={() => router.push('/ai-assessment')}
-              className="w-full px-6 py-3 bg-white text-black font-bold uppercase border-3 border-black hover:shadow-hard-lg transition-shadow"
+              className="w-full px-4 sm:px-6 py-2.5 sm:py-3 bg-white text-black text-sm sm:text-base font-bold uppercase border-2 sm:border-3 border-black hover:shadow-hard-lg transition-shadow"
             >
               Take Assessment
             </button>
@@ -132,13 +132,13 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
         <meta name="robots" content="noindex, nofollow" />
       </Head>
 
-      {/* Print Header */}
-      <div className="bg-white border-b-3 border-black sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+      {/* Print Header - Hidden on mobile */}
+      <div className="hidden sm:block bg-white border-b-2 sm:border-b-3 border-black sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-3 sm:py-4">
           <div className="flex items-center justify-end">
             <button
               onClick={() => window.print()}
-              className="px-6 py-2 bg-white text-black font-medium border-2 border-black hover:shadow-hard transition-all"
+              className="px-4 sm:px-6 py-2 bg-white text-black text-sm sm:text-base font-medium border-2 border-black hover:shadow-hard transition-all"
             >
               Print Report
             </button>
@@ -158,22 +158,22 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
       />
 
       {/* Footer CTA */}
-      <div className="bg-gray-900 text-white py-12">
+      <div className="bg-gray-900 text-white py-8 sm:py-10 md:py-12">
         <div className="container mx-auto px-4 text-center">
-          <h3 className="text-2xl font-bold mb-4">Ready to Implement These Solutions?</h3>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+          <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Ready to Implement These Solutions?</h3>
+          <p className="text-sm sm:text-base text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto">
             Our team of AI experts is ready to help you transform these recommendations into reality.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <button
               onClick={() => window.open('https://calendly.com/deployai-consultation', '_blank')}
-              className="px-8 py-3 bg-white text-black font-bold uppercase border-3 border-white hover:shadow-hard-lg transition-shadow"
+              className="px-6 sm:px-8 py-2.5 sm:py-3 bg-white text-black text-sm sm:text-base font-bold uppercase border-2 sm:border-3 border-white hover:shadow-hard-lg transition-shadow"
             >
               Schedule Free Consultation
             </button>
             <button
               onClick={() => router.push('/ai-assessment')}
-              className="px-8 py-3 bg-transparent text-white font-bold uppercase border-3 border-white hover:bg-white hover:text-black transition-all"
+              className="px-6 sm:px-8 py-2.5 sm:py-3 bg-transparent text-white text-sm sm:text-base font-bold uppercase border-2 sm:border-3 border-white hover:bg-white hover:text-black transition-all"
             >
               Take Another Assessment
             </button>
