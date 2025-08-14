@@ -414,10 +414,11 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
         </section>
 
         {/* Projected Business Outcomes Section */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-black text-black uppercase mb-8">Projected Business Outcomes</h2>
+        <section className="mb-8 md:mb-12">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-black uppercase mb-4 sm:mb-6 md:mb-8">Projected Business Outcomes</h2>
           
-          <div className="p-8 bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+          {/* Desktop Table View - Hidden on Mobile */}
+          <div className="hidden sm:block p-4 sm:p-6 md:p-8 bg-white border-2 sm:border-3 md:border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
             <table className="w-full">
               <thead>
                 <tr className="border-b-4 border-black">
