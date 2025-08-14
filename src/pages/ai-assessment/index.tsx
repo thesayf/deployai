@@ -89,7 +89,7 @@ const AIAssessmentLanding = () => {
       </Head>
 
       {/* Logo Header */}
-      <div className="bg-[#212121] py-4 md:py-6">
+      <div className="bg-[#212121] pt-6 pb-4 md:py-6">
         <div className="container mx-auto px-6 flex justify-center">
           <Image
             src="/logo.png"

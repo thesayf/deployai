@@ -36,20 +36,20 @@ interface AssessmentLandingProps {
 // Assessment categories
 const categories = [
   {
-    title: "Strategic Alignment & Business Impact",
-    description: "Identify your highest-value AI opportunities based on strategic priorities"
+    title: "Market Position & Competition",
+    description: "Where you stand versus competitors using AI right now"
   },
   {
-    title: "Data Maturity & Infrastructure",
-    description: "Evaluate data quality, accessibility, and technical readiness for AI"
+    title: "Revenue Opportunities",
+    description: "Which AI tools can increase your profits within 90 days"
   },
   {
-    title: "Operational Efficiency & Process Automation",
-    description: "Uncover friction points and repetitive tasks prime for AI transformation"
+    title: "Operational Bottlenecks",
+    description: "Tasks that AI can automate to save you time and money immediately"
   },
   {
-    title: "Organizational Readiness & Change Capacity",
-    description: "Assess cultural factors and resources critical for successful AI adoption"
+    title: "Implementation Readiness",
+    description: "What you need to start using AI successfully tomorrow"
   }
 ];
 
@@ -70,7 +70,7 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
     <>
       {/* Hero Section */}
       <SectionWrapper variant="dark" spacing="none">
-        <div className="md:min-h-screen md:flex md:items-center py-8 md:py-8">
+        <div className="py-12 pt-6 md:min-h-[90vh] md:flex md:items-center md:py-0">
           <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center px-6 w-full">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -87,6 +87,10 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
               Answer 17 questions to find out where you're falling behind.
             </h2>
             
+            <p className="text-sm md:text-base text-gray-300 font-semibold mb-3">
+              This assessment will help you measure and improve:
+            </p>
+            
             <div className="space-y-3 mb-5 md:mb-6">
               <div className="flex items-start">
                 <svg className="w-4 h-4 md:w-5 md:h-5 mr-2 mt-0.5 text-[#FF6B35] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -102,8 +106,8 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 <div className="text-sm md:text-base">
-                  <span className="font-bold text-white block md:inline">Competitive Threats:</span>
-                  <span className="text-gray-300 block md:inline md:ml-1">Which competitors are using AI to steal your customers</span>
+                  <span className="font-bold text-white block md:inline">Your Competitive Blind Spots:</span>
+                  <span className="text-gray-300 block md:inline md:ml-1">See what AI strategies your direct competitors are implementing that you're missing</span>
                 </div>
               </div>
               <div className="flex items-start">
@@ -117,56 +121,28 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
               </div>
             </div>
             
-            <div className="space-y-3 md:space-y-4">
-              <Button 
-                size="large" 
-                intent="cta"
-                onClick={handleStartAssessment}
-                className="transform hover:scale-105 transition-all w-full text-sm md:text-base"
-              >
-                START YOUR FREE AI ASSESSMENT
-              </Button>
-              <div className="grid grid-cols-2 gap-2 md:gap-3 text-xs md:text-sm text-gray-400">
-                <div className="flex items-center">
-                  <svg className="w-3 h-3 md:w-4 md:h-4 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  17 questions
-                </div>
-                <div className="flex items-center">
-                  <svg className="w-3 h-3 md:w-4 md:h-4 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  &lt; 6 minutes
-                </div>
-                <div className="flex items-center">
-                  <svg className="w-3 h-3 md:w-4 md:h-4 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  Instant results
-                </div>
-                <div className="flex items-center">
-                  <svg className="w-3 h-3 md:w-4 md:h-4 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  750+ leaders
-                </div>
-              </div>
-            </div>
+            <Button 
+              size="large" 
+              intent="cta"
+              onClick={handleStartAssessment}
+              className="transform hover:scale-105 transition-all w-full text-sm md:text-base"
+            >
+              START YOUR FREE AI ASSESSMENT
+            </Button>
           </motion.div>
           
-            <motion.div 
-              className="relative hidden lg:block"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <img 
-                src="/images/ai-blueprint.png" 
-                alt="AI Strategy Blueprint - Your Custom Implementation Roadmap"
-                className="w-full h-auto max-w-md mx-auto"
-              />
-            </motion.div>
+          <motion.div 
+            className="relative hidden lg:block"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <img 
+              src="/images/ai-blueprint.png" 
+              alt="AI Strategy Blueprint - Your Custom Implementation Roadmap"
+              className="w-full h-auto max-w-md mx-auto"
+            />
+          </motion.div>
           </div>
         </div>
       </SectionWrapper>
@@ -244,14 +220,14 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">The 4-Pillar AI Readiness Framework</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">What We Actually Measure</h2>
           <h3 className="text-xl text-gray-700 text-center mb-12">
-            Validated across 100+ enterprise AI transformations.
+            17 strategic questions that reveal your AI opportunity gaps.
           </h3>
           
           <p className="text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            Our multi-dimensional scoring system benchmarks your organization against industry leaders, 
-            revealing precisely where AI can deliver the highest ROI for your business.
+            We analyze your business across 4 critical areas to show you exactly where 
+            competitors are gaining advantage and where you can strike back fast.
           </p>
           
           <div className="grid md:grid-cols-2 gap-6">
@@ -363,81 +339,6 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
                 </div>
               </div>
             </div>
-          </div>
-        </motion.div>
-      </SectionWrapper>
-
-      {/* Testimonials Section */}
-      <SectionWrapper variant="concrete" spacing="large">
-        <motion.div 
-          className="max-w-5xl mx-auto"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">What Leaders Say About The Assessment</h2>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            <motion.div 
-              className="bg-white p-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-            >
-              <div className="flex gap-1 mb-3">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-yellow-500">★</span>
-                ))}
-              </div>
-              <p className="text-gray-700 mb-4">
-                "The assessment pinpointed exactly where we were behind competitors. 
-                The 90-day roadmap was so detailed, we started implementing it the next day."
-              </p>
-              <p className="font-bold">Michael Torres</p>
-              <p className="text-sm text-gray-600">CEO, Retail Chain</p>
-            </motion.div>
-            
-            <motion.div 
-              className="bg-white p-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-            >
-              <div className="flex gap-1 mb-3">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-yellow-500">★</span>
-                ))}
-              </div>
-              <p className="text-gray-700 mb-4">
-                "Skeptical at first, but the questions were surprisingly sophisticated. 
-                The report identified our data silos as the #1 blocker - exactly right."
-              </p>
-              <p className="font-bold">Jessica Park</p>
-              <p className="text-sm text-gray-600">CTO, FinTech Startup</p>
-            </motion.div>
-            
-            <motion.div 
-              className="bg-white p-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.3 }}
-            >
-              <div className="flex gap-1 mb-3">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-yellow-500">★</span>
-                ))}
-              </div>
-              <p className="text-gray-700 mb-4">
-                "Used this to justify our AI budget to the board. The competitive analysis 
-                section was particularly compelling. Got approval within a week."
-              </p>
-              <p className="font-bold">David Kumar</p>
-              <p className="text-sm text-gray-600">VP Operations, Healthcare</p>
-            </motion.div>
           </div>
         </motion.div>
       </SectionWrapper>
