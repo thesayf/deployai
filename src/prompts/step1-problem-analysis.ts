@@ -1,4 +1,5 @@
 import { QuizResponseData } from '@/types/quiz';
+import quizData from '@/data/quiz-questions.json';
 
 export function generateStep1Prompt(responses: QuizResponseData, companyName?: string | null): string {
   // Handle missing or incomplete responses
@@ -6,9 +7,75 @@ export function generateStep1Prompt(responses: QuizResponseData, companyName?: s
     throw new Error('Quiz responses are empty or missing');
   }
 
-  // Parse quantification data from new textarea questions
-  const weeklyTimeBreakdown = responses.weeklyTimeBreakdown || '';
-  const monthlyCostBreakdown = responses.monthlyCostBreakdown || '';
+  // Parse quantification data - handle both text and JSON formats
+  let weeklyTimeBreakdown = '';
+  let monthlyCostBreakdown = '';
+  
+  // Handle weeklyTimeBreakdown - could be string or JSON object
+  if (typeof responses.weeklyTimeBreakdown === 'object' && responses.weeklyTimeBreakdown !== null) {
+    // Convert JSON metrics to readable text
+    const timeData = responses.weeklyTimeBreakdown as Record<string, string>;
+    const timeItems: string[] = [];
+    
+    for (const [taskId, timeRange] of Object.entries(timeData)) {
+      if (taskId === '_notes') continue; // Skip notes field
+      if (!timeRange || timeRange === 'none') continue;
+      
+      // Get task label from quiz data
+      const task = quizData.questions
+        .find(q => q.id === 'repetitiveTasks')
+        ?.options?.find(opt => opt.value === taskId);
+      const taskLabel = task?.label || taskId;
+      
+      // Convert range to specific hours for calculation
+      let hours = '0';
+      switch(timeRange) {
+        case '<2hr': hours = '2 hours'; break;
+        case '2-5hr': hours = '4 hours'; break;
+        case '5-10hr': hours = '8 hours'; break;
+        case '10+hr': hours = '12 hours'; break;
+        default: hours = timeRange;
+      }
+      
+      timeItems.push(`${taskLabel}: ${hours}/week`);
+    }
+    
+    if (timeData._notes) {
+      timeItems.push(`Additional context: ${timeData._notes}`);
+    }
+    
+    weeklyTimeBreakdown = timeItems.join('. ') || 'No time data provided';
+  } else {
+    weeklyTimeBreakdown = responses.weeklyTimeBreakdown || '';
+  }
+  
+  // Handle monthlyCostBreakdown - could be string or JSON object
+  if (typeof responses.monthlyCostBreakdown === 'object' && responses.monthlyCostBreakdown !== null) {
+    // Convert JSON metrics to readable text
+    const costData = responses.monthlyCostBreakdown as Record<string, string>;
+    const costItems: string[] = [];
+    
+    for (const [problemId, costRange] of Object.entries(costData)) {
+      if (problemId === '_notes') continue; // Skip notes field
+      if (!costRange || costRange === '$0') continue;
+      
+      // Get problem label from quiz data
+      const problem = quizData.questions
+        .find(q => q.id === 'businessChallenges')
+        ?.options?.find(opt => opt.value === problemId);
+      const problemLabel = problem?.label || problemId;
+      
+      costItems.push(`${problemLabel}: ${costRange}/month`);
+    }
+    
+    if (costData._notes) {
+      costItems.push(`Additional context: ${costData._notes}`);
+    }
+    
+    monthlyCostBreakdown = costItems.join('. ') || 'No cost data provided';
+  } else {
+    monthlyCostBreakdown = responses.monthlyCostBreakdown || '';
+  }
   
   const quizJson = {
     companyName: companyName || 'Your Organization',

@@ -6,6 +6,7 @@ import { AISingleSelectQuestion } from './AISingleSelectQuestion';
 import { AIMultiSelectQuestion } from './AIMultiSelectQuestion';
 import { AITextInputQuestion } from './AITextInputQuestion';
 import { AITextAreaQuestion } from './AITextAreaQuestion';
+import { AIMetricsQuestion } from './AIMetricsQuestion';
 import quizData from '@/data/quiz-questions.json';
 
 interface AIQuestionCardProps {
@@ -74,6 +75,43 @@ export const AIQuestionCard: React.FC<AIQuestionCardProps> = ({
   };
 
   const renderQuestionInput = () => {
+    // Use metrics component for time and cost breakdown questions
+    if (question.id === 'weeklyTimeBreakdown' && allResponses.repetitiveTasks) {
+      return (
+        <AIMetricsQuestion
+          question={question}
+          value={currentAnswer || {}}
+          onChange={onAnswer}
+          error={validationError}
+          previousSelections={allResponses.repetitiveTasks || []}
+          questionType="time"
+        />
+      );
+    }
+    
+    if (question.id === 'monthlyCostBreakdown') {
+      // Combine selections from businessChallenges and moneyLeaks
+      const selections: string[] = [];
+      if (allResponses.businessChallenges) {
+        selections.push(...allResponses.businessChallenges);
+      }
+      // Note: moneyLeaks comes after this question (Q9), so won't be available yet
+      // We'll only use businessChallenges for now
+      
+      if (selections.length > 0) {
+        return (
+          <AIMetricsQuestion
+            question={question}
+            value={currentAnswer || {}}
+            onChange={onAnswer}
+            error={validationError}
+            previousSelections={selections}
+            questionType="cost"
+          />
+        );
+      }
+    }
+
     switch (question.type) {
       case 'single-select':
         return (
