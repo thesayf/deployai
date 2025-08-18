@@ -39,6 +39,12 @@ export default async function handler(
     
     // Generate the prompt
     const prompt = generateStep3Prompt(problemAnalysis, toolResearch);
+    console.log(`[AI Step 3] Prompt size: ${prompt.length} characters (approx ${Math.ceil(prompt.length / 4)} tokens)`);
+    
+    // Log if this is a large prompt that will trigger extended timeout
+    if (prompt.length > 30000) {
+      console.log(`[AI Step 3] Large prompt detected - will use extended 5-minute timeout for processing`);
+    }
     
     // Generate completion based on provider type
     let response;
