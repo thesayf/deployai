@@ -13,19 +13,23 @@ interface MetricsQuestionProps {
 }
 
 const TIME_RANGES = [
-  { value: 'none', label: 'None', displayLabel: '0' },
-  { value: '<2hr', label: '<2hr', displayLabel: '<2 hrs' },
-  { value: '2-5hr', label: '2-5hr', displayLabel: '2-5 hrs' },
-  { value: '5-10hr', label: '5-10hr', displayLabel: '5-10 hrs' },
-  { value: '10+hr', label: '10+hr', displayLabel: '10+ hrs' },
+  { value: 'none', label: 'None', displayLabel: 'None' },
+  { value: '<0.25fte', label: '<0.25 FTE', displayLabel: '<0.25 FTE' },
+  { value: '0.25-1fte', label: '0.25-1 FTE', displayLabel: '0.25-1 FTE' },
+  { value: '1-3fte', label: '1-3 FTE', displayLabel: '1-3 FTE' },
+  { value: '3-10fte', label: '3-10 FTE', displayLabel: '3-10 FTE' },
+  { value: '10-25fte', label: '10-25 FTE', displayLabel: '10-25 FTE' },
+  { value: '25+fte', label: '25+ FTE', displayLabel: '25+ FTE' },
 ];
 
 const COST_RANGES = [
   { value: '$0', label: '$0', displayLabel: '$0' },
-  { value: '<$500', label: '<$500', displayLabel: '<$500' },
-  { value: '$500-2k', label: '$500-2k', displayLabel: '$500-2K' },
-  { value: '$2k-5k', label: '$2k-5k', displayLabel: '$2K-5K' },
-  { value: '$5k+', label: '$5k+', displayLabel: '$5K+' },
+  { value: '<$2k', label: '<$2k', displayLabel: '<$2K' },
+  { value: '$2-10k', label: '$2-10k', displayLabel: '$2-10K' },
+  { value: '$10-50k', label: '$10-50k', displayLabel: '$10-50K' },
+  { value: '$50-200k', label: '$50-200k', displayLabel: '$50-200K' },
+  { value: '$200-500k', label: '$200-500k', displayLabel: '$200-500K' },
+  { value: '$500k+', label: '$500k+', displayLabel: '$500K+' },
 ];
 
 export const AIMetricsQuestion: React.FC<MetricsQuestionProps> = ({
@@ -99,13 +103,14 @@ export const AIMetricsQuestion: React.FC<MetricsQuestionProps> = ({
         )}
       </div>
 
-      {/* Subtitle */}
+      {/* Subtitle with FTE explanation */}
       <div className="mb-4">
-        {question.subtitle && (
-          <p className="text-xs sm:text-sm text-gray-600 leading-relaxed italic text-center">
-            {question.subtitle}
-          </p>
-        )}
+        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed italic text-center">
+          {questionType === 'time' 
+            ? 'FTE = Full-Time Equivalent (1 FTE = 40 hrs/week). Think total team hours across all staff.'
+            : 'Estimate monthly impact including direct costs, lost opportunities, and inefficiencies.'
+          }
+        </p>
       </div>
 
       {/* Metrics selection grid */}
@@ -120,8 +125,8 @@ export const AIMetricsQuestion: React.FC<MetricsQuestionProps> = ({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.05 }}
-              className={`border-2 border-black p-3 bg-white ${
-                selectedValue ? 'shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]' : ''
+              className={`border border-gray-200 rounded-lg p-3 bg-white ${
+                selectedValue ? 'shadow-md border-blue-400' : 'shadow-sm'
               }`}
             >
               <div className="mb-2">
@@ -137,10 +142,10 @@ export const AIMetricsQuestion: React.FC<MetricsQuestionProps> = ({
                     onClick={() => handleRangeSelect(selectionId, range.value)}
                     className={`
                       px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium
-                      border-2 border-black transition-all
+                      border rounded transition-all
                       ${selectedValue === range.value
-                        ? 'bg-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
-                        : 'bg-white text-black hover:bg-gray-100'
+                        ? 'bg-gray-800 text-white border-gray-800'
+                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50 hover:border-gray-400'
                       }
                     `}
                   >
@@ -164,7 +169,7 @@ export const AIMetricsQuestion: React.FC<MetricsQuestionProps> = ({
           placeholder="Any additional details about these estimates..."
           maxLength={200}
           rows={2}
-          className="w-full px-3 py-2 text-sm border-2 border-gray-300 focus:border-black outline-none resize-none"
+          className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:border-gray-500 focus:outline-none resize-none"
         />
       </div>
 

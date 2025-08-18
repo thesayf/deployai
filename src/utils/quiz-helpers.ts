@@ -85,12 +85,22 @@ export function validateResponse(questionId: string, response: any): { valid: bo
     case 'textarea':
       // Handle both string (legacy) and object (metrics) formats
       if (questionId === 'weeklyTimeBreakdown' || questionId === 'monthlyCostBreakdown') {
-        // Metrics questions - accept object with at least one selection (excluding _notes)
+        // Metrics questions - require ALL items to be quantified
         if (typeof response === 'object' && response !== null) {
-          const hasSelections = Object.keys(response).some(key => key !== '_notes' && response[key] && response[key] !== 'none' && response[key] !== '$0');
-          if (!hasSelections) {
-            return { valid: false, error: 'Please quantify at least one item' };
+          // Get all keys except _notes
+          const itemKeys = Object.keys(response).filter(key => key !== '_notes');
+          
+          // If no items at all, it's invalid
+          if (itemKeys.length === 0) {
+            return { valid: false, error: 'Please quantify your selected items' };
           }
+          
+          // Check if ALL items have been quantified (not just set to 'none' or '$0')
+          const unquantifiedItems = itemKeys.filter(key => !response[key] || response[key] === '');
+          if (unquantifiedItems.length > 0) {
+            return { valid: false, error: `Please quantify all ${unquantifiedItems.length} selected items` };
+          }
+          
           return { valid: true };
         } else if (typeof response === 'string') {
           // Legacy text format - still valid

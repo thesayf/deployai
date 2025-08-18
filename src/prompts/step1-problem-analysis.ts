@@ -27,13 +27,16 @@ export function generateStep1Prompt(responses: QuizResponseData, companyName?: s
         ?.options?.find(opt => opt.value === taskId);
       const taskLabel = task?.label || taskId;
       
-      // Convert range to specific hours for calculation
+      // Convert FTE range to specific hours for calculation
       let hours = '0';
       switch(timeRange) {
-        case '<2hr': hours = '2 hours'; break;
-        case '2-5hr': hours = '4 hours'; break;
-        case '5-10hr': hours = '8 hours'; break;
-        case '10+hr': hours = '12 hours'; break;
+        case 'none': hours = '0 hours'; break;
+        case '<0.25fte': hours = '8 hours'; break; // 0.2 FTE estimate
+        case '0.25-1fte': hours = '25 hours'; break; // 0.6 FTE mid-point
+        case '1-3fte': hours = '80 hours'; break; // 2 FTE mid-point
+        case '3-10fte': hours = '260 hours'; break; // 6.5 FTE mid-point
+        case '10-25fte': hours = '700 hours'; break; // 17.5 FTE mid-point
+        case '25+fte': hours = '1200 hours'; break; // 30 FTE estimate
         default: hours = timeRange;
       }
       
@@ -65,7 +68,20 @@ export function generateStep1Prompt(responses: QuizResponseData, companyName?: s
         ?.options?.find(opt => opt.value === problemId);
       const problemLabel = problem?.label || problemId;
       
-      costItems.push(`${problemLabel}: ${costRange}/month`);
+      // Convert cost range to specific value for calculations
+      let costValue = costRange;
+      switch(costRange) {
+        case '$0': costValue = '$0'; break;
+        case '<$2k': costValue = '$1,500'; break;
+        case '$2-10k': costValue = '$6,000'; break;
+        case '$10-50k': costValue = '$30,000'; break;
+        case '$50-200k': costValue = '$125,000'; break;
+        case '$200-500k': costValue = '$350,000'; break;
+        case '$500k+': costValue = '$750,000'; break;
+        default: costValue = costRange;
+      }
+      
+      costItems.push(`${problemLabel}: ${costValue}/month`);
     }
     
     if (costData._notes) {
