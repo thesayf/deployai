@@ -49,10 +49,6 @@ const AdminDashboard = () => {
     checkAuthAndFetchData();
   }, []);
 
-  useEffect(() => {
-    console.log('[ADMIN] Assessments state updated:', assessments.length, 'items');
-  }, [assessments]);
-
   const checkAuthAndFetchData = async () => {
     try {
       // Check if authenticated
@@ -83,17 +79,11 @@ const AdminDashboard = () => {
       setSurveys(surveysData.surveys);
 
       // Assessments might fail if table doesn't exist yet, but don't break the page
-      console.log('[ADMIN] Assessments response status:', assessmentsResponse.status);
       if (assessmentsResponse.ok) {
         const assessmentsData = await assessmentsResponse.json();
-        console.log('[ADMIN] Assessments data received:', assessmentsData);
-        console.log('[ADMIN] Assessments array:', assessmentsData.assessments);
-        console.log('[ADMIN] Setting assessments, count:', assessmentsData.assessments?.length);
         setAssessments(assessmentsData.assessments || []);
       } else {
-        console.error('[ADMIN] Failed to fetch assessments:', assessmentsResponse.status);
-        const errorText = await assessmentsResponse.text();
-        console.error('[ADMIN] Error response:', errorText);
+        console.error('Failed to fetch assessments:', assessmentsResponse.status);
       }
     } catch (err) {
       setError('Failed to load surveys');

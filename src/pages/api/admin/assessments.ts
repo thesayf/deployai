@@ -1,33 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
-import * as cookie from 'cookie';
+import { checkAdminAuth } from '@/lib/auth';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log('[ASSESSMENTS API] Handler called, method:', req.method);
-  console.log('[ASSESSMENTS API] Headers:', req.headers);
-  console.log('[ASSESSMENTS API] Raw cookie header:', req.headers.cookie);
-  
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Check authentication using same cookie auth as MVP admin
-  const cookies = cookie.parse(req.headers.cookie || '');
-  const isAuthenticated = cookies.adminAuth === 'true';
-  
-  console.log('[ASSESSMENTS API] Parsed cookies:', cookies);
-  console.log('[ASSESSMENTS API] Auth check:', { isAuthenticated, adminAuth: cookies.adminAuth });
-
-  if (!isAuthenticated) {
+  // Check authentication using JWT token (same as surveys endpoint)
+  if (!checkAdminAuth(req)) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
   try {
     const supabase = supabaseAdmin();
-    console.log('[ASSESSMENTS API] Supabase client created');
 
     // Fetch AI assessments with user data
     const { data: assessments, error } = await supabase
@@ -50,12 +39,6 @@ export default async function handler(
         )
       `)
       .order('created_at', { ascending: false });
-
-    console.log('[ASSESSMENTS API] Query result:', { 
-      assessmentsCount: assessments?.length || 0, 
-      error,
-      firstAssessment: assessments?.[0]
-    });
 
     if (error) {
       console.error('[ASSESSMENTS API] Error fetching assessments:', error);
