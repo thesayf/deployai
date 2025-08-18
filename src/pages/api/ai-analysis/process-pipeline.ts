@@ -259,7 +259,9 @@ export default async function handler(
     if (!finalReport || force) {
       console.log('[PIPELINE] Stage 4: Generating final report...');
       
-      const prompt = generateStep4Prompt(problemAnalysis!, curatedTools!);
+      // Extract clientSolution from curatedTools structure
+      const clientSolution = (curatedTools as any)?.clientSolution || curatedTools;
+      const prompt = generateStep4Prompt(problemAnalysis!, clientSolution!);
       let content = '';
 
       if (writeUpModel === 'gpt-5') {

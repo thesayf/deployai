@@ -31,8 +31,10 @@ export default async function handler(
 
     console.log('[AI Step 4] Starting report generation...');
     
-    // Generate the prompt
-    const prompt = generateStep4Prompt(problemAnalysis, curatedTools);
+    // Generate the prompt - extract clientSolution from curatedTools
+    // curatedTools has structure: { internalReference: {...}, clientSolution: {...} }
+    const clientSolution = (curatedTools as any).clientSolution || curatedTools;
+    const prompt = generateStep4Prompt(problemAnalysis, clientSolution);
     
     // Determine which model to use for final report
     const modelChoice = writeUpModel || process.env.WRITE_UP_MODEL || 'claude-4';
