@@ -49,6 +49,10 @@ const AdminDashboard = () => {
     checkAuthAndFetchData();
   }, []);
 
+  useEffect(() => {
+    console.log('[ADMIN] Assessments state updated:', assessments.length, 'items');
+  }, [assessments]);
+
   const checkAuthAndFetchData = async () => {
     try {
       // Check if authenticated
@@ -79,12 +83,17 @@ const AdminDashboard = () => {
       setSurveys(surveysData.surveys);
 
       // Assessments might fail if table doesn't exist yet, but don't break the page
+      console.log('[ADMIN] Assessments response status:', assessmentsResponse.status);
       if (assessmentsResponse.ok) {
         const assessmentsData = await assessmentsResponse.json();
         console.log('[ADMIN] Assessments data received:', assessmentsData);
-        setAssessments(assessmentsData.assessments);
+        console.log('[ADMIN] Assessments array:', assessmentsData.assessments);
+        console.log('[ADMIN] Setting assessments, count:', assessmentsData.assessments?.length);
+        setAssessments(assessmentsData.assessments || []);
       } else {
-        console.error('[ADMIN] Failed to fetch assessments:', assessmentsResponse.status, await assessmentsResponse.text());
+        console.error('[ADMIN] Failed to fetch assessments:', assessmentsResponse.status);
+        const errorText = await assessmentsResponse.text();
+        console.error('[ADMIN] Error response:', errorText);
       }
     } catch (err) {
       setError('Failed to load surveys');
@@ -302,6 +311,7 @@ const AdminDashboard = () => {
           ) : (
             // AI Assessments Section
             <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] mb-6 p-6">
+              {console.log('[RENDER] Assessments in render:', assessments.length, assessments)}
               <div className="mb-6">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-bold">AI Assessment Submissions</h2>

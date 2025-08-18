@@ -7,6 +7,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   console.log('[ASSESSMENTS API] Handler called, method:', req.method);
+  console.log('[ASSESSMENTS API] Headers:', req.headers);
+  console.log('[ASSESSMENTS API] Raw cookie header:', req.headers.cookie);
   
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -16,7 +18,8 @@ export default async function handler(
   const cookies = cookie.parse(req.headers.cookie || '');
   const isAuthenticated = cookies.adminAuth === 'true';
   
-  console.log('[ASSESSMENTS API] Auth check:', { isAuthenticated, cookies });
+  console.log('[ASSESSMENTS API] Parsed cookies:', cookies);
+  console.log('[ASSESSMENTS API] Auth check:', { isAuthenticated, adminAuth: cookies.adminAuth });
 
   if (!isAuthenticated) {
     return res.status(401).json({ error: 'Unauthorized' });
