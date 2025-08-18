@@ -190,9 +190,10 @@ const QuizStep = () => {
   // Handle keyboard events
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      // Don't trigger if user is typing in a textarea or input
+      // Only prevent for textarea (multi-line input)
+      // Allow Enter to submit for single-line text inputs
       const target = event.target as HTMLElement;
-      if (target.tagName === 'TEXTAREA' || (target.tagName === 'INPUT' && target.getAttribute('type') === 'text')) {
+      if (target.tagName === 'TEXTAREA') {
         return;
       }
       
