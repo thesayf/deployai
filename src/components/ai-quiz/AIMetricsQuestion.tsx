@@ -14,22 +14,26 @@ interface MetricsQuestionProps {
 
 const TIME_RANGES = [
   { value: 'none', label: 'None', displayLabel: 'None' },
-  { value: '<10hrs', label: '<10 hrs/wk', displayLabel: '<10 hrs/wk' },
-  { value: '10-40hrs', label: '10-40 hrs/wk (1 person)', displayLabel: '10-40 hrs/wk (1 person)' },
-  { value: '40-120hrs', label: '40-120 hrs/wk (1-3 people)', displayLabel: '40-120 hrs/wk (1-3 people)' },
-  { value: '120-400hrs', label: '120-400 hrs/wk (3-10 people)', displayLabel: '120-400 hrs/wk (3-10 people)' },
-  { value: '400-1000hrs', label: '400-1000 hrs/wk (10-25 people)', displayLabel: '400-1000 hrs/wk (10-25 people)' },
-  { value: '1000+hrs', label: '1000+ hrs/wk (25+ people)', displayLabel: '1000+ hrs/wk (25+ people)' },
+  { value: '1-5hrs', label: '1-5 hrs/wk', displayLabel: '1-5 hrs' },
+  { value: '5-10hrs', label: '5-10 hrs/wk', displayLabel: '5-10 hrs' },
+  { value: '10-20hrs', label: '10-20 hrs/wk', displayLabel: '10-20 hrs' },
+  { value: '20-40hrs', label: '20-40 hrs/wk', displayLabel: '20-40 hrs' },
+  { value: '40-80hrs', label: '40-80 hrs/wk', displayLabel: '40-80 hrs' },
+  { value: '80-200hrs', label: '80-200 hrs/wk', displayLabel: '80-200 hrs' },
+  { value: '200-500hrs', label: '200-500 hrs/wk', displayLabel: '200-500 hrs' },
+  { value: '500+hrs', label: '500+ hrs/wk', displayLabel: '500+ hrs' },
 ];
 
 const COST_RANGES = [
   { value: '$0', label: '$0', displayLabel: '$0' },
-  { value: '<$2k', label: '<$2k', displayLabel: '<$2K' },
-  { value: '$2-10k', label: '$2-10k', displayLabel: '$2-10K' },
-  { value: '$10-50k', label: '$10-50k', displayLabel: '$10-50K' },
-  { value: '$50-200k', label: '$50-200k', displayLabel: '$50-200K' },
-  { value: '$200-500k', label: '$200-500k', displayLabel: '$200-500K' },
-  { value: '$500k+', label: '$500k+', displayLabel: '$500K+' },
+  { value: '<$500', label: '<$500', displayLabel: '<$500' },
+  { value: '$500-1k', label: '$500-1k', displayLabel: '$500-1K' },
+  { value: '$1-2.5k', label: '$1k-2.5k', displayLabel: '$1-2.5K' },
+  { value: '$2.5-5k', label: '$2.5k-5k', displayLabel: '$2.5-5K' },
+  { value: '$5-15k', label: '$5k-15k', displayLabel: '$5-15K' },
+  { value: '$15-50k', label: '$15k-50k', displayLabel: '$15-50K' },
+  { value: '$50-150k', label: '$50k-150k', displayLabel: '$50-150K' },
+  { value: '$150k+', label: '$150k+', displayLabel: '$150K+' },
 ];
 
 export const AIMetricsQuestion: React.FC<MetricsQuestionProps> = ({
@@ -107,8 +111,8 @@ export const AIMetricsQuestion: React.FC<MetricsQuestionProps> = ({
       <div className="mb-4">
         <p className="text-xs sm:text-sm text-gray-600 leading-relaxed italic text-center">
           {questionType === 'time' 
-            ? 'Think total hours across your entire team. "1 person" = 40 hrs/week full-time equivalent.'
-            : 'Estimate monthly impact including direct costs, lost opportunities, and inefficiencies.'
+            ? 'Estimate total weekly hours across your entire team'
+            : 'Estimate total monthly cost including lost opportunities'
           }
         </p>
       </div>

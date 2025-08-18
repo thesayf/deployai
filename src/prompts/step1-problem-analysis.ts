@@ -27,16 +27,18 @@ export function generateStep1Prompt(responses: QuizResponseData, companyName?: s
         ?.options?.find(opt => opt.value === taskId);
       const taskLabel = task?.label || taskId;
       
-      // Convert natural language range to specific hours for calculation
+      // Convert range to specific hours for calculation (using mid-point)
       let hours = '0';
       switch(timeRange) {
         case 'none': hours = '0 hours'; break;
-        case '<10hrs': hours = '8 hours'; break; // Conservative estimate
-        case '10-40hrs': hours = '25 hours'; break; // Mid-point
-        case '40-120hrs': hours = '80 hours'; break; // 2 people mid-point
-        case '120-400hrs': hours = '260 hours'; break; // 6.5 people mid-point
-        case '400-1000hrs': hours = '700 hours'; break; // 17.5 people mid-point
-        case '1000+hrs': hours = '1200 hours'; break; // 30 people estimate
+        case '1-5hrs': hours = '3 hours'; break;
+        case '5-10hrs': hours = '7.5 hours'; break;
+        case '10-20hrs': hours = '15 hours'; break;
+        case '20-40hrs': hours = '30 hours'; break;
+        case '40-80hrs': hours = '60 hours'; break;
+        case '80-200hrs': hours = '140 hours'; break;
+        case '200-500hrs': hours = '350 hours'; break;
+        case '500+hrs': hours = '750 hours'; break;
         default: hours = timeRange;
       }
       
@@ -68,16 +70,18 @@ export function generateStep1Prompt(responses: QuizResponseData, companyName?: s
         ?.options?.find(opt => opt.value === problemId);
       const problemLabel = problem?.label || problemId;
       
-      // Convert cost range to specific value for calculations
+      // Convert cost range to specific value for calculations (using mid-point)
       let costValue = costRange;
       switch(costRange) {
         case '$0': costValue = '$0'; break;
-        case '<$2k': costValue = '$1,500'; break;
-        case '$2-10k': costValue = '$6,000'; break;
-        case '$10-50k': costValue = '$30,000'; break;
-        case '$50-200k': costValue = '$125,000'; break;
-        case '$200-500k': costValue = '$350,000'; break;
-        case '$500k+': costValue = '$750,000'; break;
+        case '<$500': costValue = '$250'; break;
+        case '$500-1k': costValue = '$750'; break;
+        case '$1-2.5k': costValue = '$1,750'; break;
+        case '$2.5-5k': costValue = '$3,750'; break;
+        case '$5-15k': costValue = '$10,000'; break;
+        case '$15-50k': costValue = '$32,500'; break;
+        case '$50-150k': costValue = '$100,000'; break;
+        case '$150k+': costValue = '$250,000'; break;
         default: costValue = costRange;
       }
       

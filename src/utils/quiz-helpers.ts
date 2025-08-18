@@ -103,7 +103,7 @@ export function validateResponse(questionId: string, response: any): { valid: bo
           
           // Check if at least ONE item has a non-zero value
           const hasNonZeroValue = itemKeys.some(key => 
-            response[key] && response[key] !== 'none' && response[key] !== '$0'
+            response[key] && response[key] !== 'none' && response[key] !== '$0' && response[key] !== ''
           );
           if (!hasNonZeroValue) {
             return { valid: false, error: 'Please select actual time/cost values for at least one item' };
