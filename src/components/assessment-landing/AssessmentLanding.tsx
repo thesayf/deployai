@@ -84,7 +84,7 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
               Feeling Frustrated That Your Competitors Are Already Using AI to Steal Market Share?
             </h1>
             <h2 className="text-base md:text-xl font-semibold text-[#FF6B35] mb-5 md:mb-6">
-              Answer 17 questions to find out where you're falling behind.
+              Answer 14 questions to find out where you're falling behind.
             </h2>
             
             <p className="text-sm md:text-base text-gray-300 font-semibold mb-3">
@@ -158,7 +158,7 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">How Your Assessment Works</h2>
           <h3 className="text-xl text-gray-700 mb-8">
-            5-6 minutes. 17 questions. Your complete AI roadmap.
+            Under 3 minutes. 14 questions. Your complete AI roadmap.
           </h3>
           <p className="text-lg text-gray-600 mb-12">
             We'll analyze your business across 4 critical dimensions to identify exactly where AI 
@@ -220,14 +220,14 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">What We Actually Measure</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Find Your $10K-$100K Monthly AI Opportunity</h2>
           <h3 className="text-xl text-gray-700 text-center mb-12">
-            17 strategic questions that reveal your AI opportunity gaps.
+            14 questions in under 3 minutes. Zero fluff. Your exact profit leaks identified.
           </h3>
           
           <p className="text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            We analyze your business across 4 critical areas to show you exactly where 
-            competitors are gaining advantage and where you can strike back fast.
+            While you're reading this, your competitors are using AI to steal your customers. 
+            Here's what we'll uncover:
           </p>
           
           <div className="grid md:grid-cols-2 gap-6">
@@ -325,11 +325,11 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
                     <p className="text-sm opacity-90">Find it valuable</p>
                   </div>
                   <div>
-                    <p className="text-3xl font-bold">6 min</p>
+                    <p className="text-3xl font-bold">3 min</p>
                     <p className="text-sm opacity-90">Average time</p>
                   </div>
                   <div>
-                    <p className="text-3xl font-bold">17</p>
+                    <p className="text-3xl font-bold">14</p>
                     <p className="text-sm opacity-90">Questions</p>
                   </div>
                   <div>

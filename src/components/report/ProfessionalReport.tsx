@@ -320,7 +320,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
                   {readinessStatus || data.executiveSummary.readinessLevel}
                 </p>
                 {(readinessExplanation || data.executiveSummary.readinessExplanation) && (
-                  <p className="text-xs sm:text-sm text-gray-500 mt-1 max-w-xs">
+                  <p className="text-xs sm:text-sm text-gray-500 mt-1 max-w-xs ml-auto">
                     {readinessExplanation || data.executiveSummary.readinessExplanation}
                   </p>
                 )}
