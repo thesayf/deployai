@@ -334,17 +334,17 @@ const AdminDashboard = () => {
 
               {/* Table */}
               <div className="overflow-x-auto">
-                <table className="w-full">
+                <table className="w-full table-fixed">
                   <thead>
                     <tr className="border-b-2 border-black">
-                      <th className="text-left p-3 font-bold">Date</th>
-                      <th className="text-left p-3 font-bold">Company</th>
-                      <th className="text-left p-3 font-bold">User</th>
-                      <th className="text-left p-3 font-bold">Email</th>
-                      <th className="text-left p-3 font-bold">Industry</th>
-                      <th className="text-left p-3 font-bold">Status</th>
-                      <th className="text-left p-3 font-bold">Report Link</th>
-                      <th className="text-left p-3 font-bold">Actions</th>
+                      <th className="text-left p-2 font-bold w-[100px]">Date</th>
+                      <th className="text-left p-2 font-bold w-[120px]">Company</th>
+                      <th className="text-left p-2 font-bold w-[120px]">User</th>
+                      <th className="text-left p-2 font-bold w-[180px]">Email</th>
+                      <th className="text-left p-2 font-bold w-[100px]">Industry</th>
+                      <th className="text-left p-2 font-bold w-[80px]">Status</th>
+                      <th className="text-left p-2 font-bold w-[40px]">📋</th>
+                      <th className="text-left p-2 font-bold w-[100px]">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -355,49 +355,54 @@ const AdminDashboard = () => {
                           index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
                         }`}
                       >
-                        <td className="p-3 text-sm">
-                          {formatDate(assessment.createdAt)}
+                        <td className="p-2 text-xs">
+                          <div>{new Date(assessment.createdAt).toLocaleDateString('en-GB')}</div>
+                          <div className="text-gray-500">{new Date(assessment.createdAt).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
                         </td>
-                        <td className="p-3">
-                          <div className="font-semibold">{assessment.company}</div>
+                        <td className="p-2">
+                          <div className="font-semibold text-sm truncate" title={assessment.company}>
+                            {assessment.company}
+                          </div>
                         </td>
-                        <td className="p-3 text-sm">{assessment.userName}</td>
-                        <td className="p-3">
-                          <a href={`mailto:${assessment.userEmail}`} className="text-sm text-blue-600 hover:underline">
+                        <td className="p-2 text-sm truncate" title={assessment.userName}>
+                          {assessment.userName}
+                        </td>
+                        <td className="p-2">
+                          <a href={`mailto:${assessment.userEmail}`} className="text-xs text-blue-600 hover:underline truncate block" title={assessment.userEmail}>
                             {assessment.userEmail}
                           </a>
                         </td>
-                        <td className="p-3 text-sm">
-                          <div className="truncate max-w-xs" title={assessment.industry}>
+                        <td className="p-2 text-xs">
+                          <div className="break-words line-clamp-2" title={assessment.industry}>
                             {assessment.industry}
                           </div>
                         </td>
-                        <td className="p-3">
-                          <span className={`px-2 py-1 text-xs font-semibold rounded ${getStatusColor(assessment.status)}`}>
+                        <td className="p-2">
+                          <span className={`px-1 py-0.5 text-xs font-semibold rounded ${getStatusColor(assessment.status)}`}>
                             {assessment.status}
                           </span>
                         </td>
-                        <td className="p-3">
+                        <td className="p-2 text-center">
                           {assessment.accessToken && (
                             <button
                               onClick={() => copyReportLink(assessment.accessToken!)}
-                              className="text-gray-600 hover:text-black"
+                              className="text-gray-600 hover:text-black inline-block"
                               title="Copy report link"
                             >
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                               </svg>
                             </button>
                           )}
                         </td>
-                        <td className="p-3">
+                        <td className="p-2">
                           <Button
                             onClick={() => handleViewAIReport(assessment.accessToken)}
                             intent="primary"
                             size="small"
                             disabled={!assessment.accessToken || assessment.status !== 'completed'}
                           >
-                            View Report
+                            View
                           </Button>
                         </td>
                       </tr>
