@@ -1,0 +1,276 @@
+{
+  "internalReference": {
+    "tools": [
+      {
+        "priority": 1,
+        "realToolName": "Zapier",
+        "realVendor": "Zapier, Inc.",
+        "internalNotes": "Use Zapier for quick no-code connectors between QuickBooks, Salesforce and cloud-hosted spreadsheets for automated report consolidation and scheduled exports. Best for event-driven syncs and small-volume automations.",
+        "apiRequirements": "Requires API access/keys for QuickBooks Online and Salesforce; OAuth connections; ability to host and update intermediate Google Sheets/Excel Online endpoints.",
+        "planLevel": "Professional plan (or equivalent) to support multi-step zaps and team access ($50-$100/mo)"
+      },
+      {
+        "priority": 2,
+        "realToolName": "Microsoft Power BI",
+        "realVendor": "Microsoft",
+        "internalNotes": "Use Power BI for consolidated dashboards and a self-service reporting portal tied to consolidated data model pulled from QuickBooks, Excel exports and Salesforce. Includes scheduled refresh and row-level security.",
+        "apiRequirements": "Service principal or gateway for on-prem Excel files, Power BI Pro or Premium per user licensing for sharing, connectors for QuickBooks and Salesforce (may require intermediate ETL).",
+        "planLevel": "Power BI Pro (per user) for development; consider Premium Per Capacity for wide internal sharing"
+      },
+      {
+        "priority": 3,
+        "realToolName": "UiPath (RPA) / Integration Platform",
+        "realVendor": "UiPath (or equivalent iPaaS/RPA)",
+        "internalNotes": "Use RPA or an iPaaS for complex record-level logic, bi-directional syncs and legacy Excel macros replacement. Ideal for automating multi-step finance workflows and moving data into QuickBooks/ERP and Salesforce reliably.",
+        "apiRequirements": "Service account credentials for QuickBooks and Salesforce; secure vault for credentials; orchestration server for scheduled robots; ability to host runners.",
+        "planLevel": "Orchestration-enabled plan or cloud automation plan depending on on-prem runner needs"
+      }
+    ]
+  },
+  "clientSolution": {
+    "executiveSummary": {
+      "businessProfile": "Test Manufacturing Co is a 50-100 person manufacturing business using QuickBooks, Excel and Salesforce. Your core pain is highly manual reporting and reconciliation that consumes staff time and drives avoidable cost.",
+      "totalInvestmentRange": "$5,000 - $5,000 per month",
+      "expectedROI": "Pay back your investment in 2-8 months across solutions; combined program ROI ~234% in year one",
+      "implementationTimeline": "6-8 weeks total for all solutions",
+      "keyOutcomes": [
+        "Automated monthly and weekly reports delivered in minutes instead of hours",
+        "80% reduction in time spent on reporting, freeing finance and operations staff for revenue-generating work",
+        "Cleaner, faster data flow between QuickBooks, Excel and Salesforce with fewer errors"
+      ],
+      "estimatedAnnualOpportunity": "$120,000 (sum of all problem costs)"
+    },
+    "implementedSolutions": [
+      {
+        "priority": 1,
+        "solutionName": "Automated Reporting & Data Consolidation",
+        "solutionCategory": "Automated reporting and data consolidation",
+        "whatWeImplement": "DeployAI delivers an automated reporting engine that consolidates QuickBooks, Excel and Salesforce data into a single trusted reporting pipeline so your team receives scheduled, accurate reports and can stop manual consolidation.",
+        "problemSolved": "Reporting processes consuming 60 hours/week across team",
+        "howItSolvesYourProblem": [
+          "Eliminates the manual steps that take the team the majority of their reporting hours by automating data pulls, transforms and scheduled report generation",
+          "Reduces errors and rework by creating a single source of truth and scheduled distribution so managers always have up-to-date numbers"
+        ],
+        "capabilities": [
+          "Daily and weekly scheduled financial and operational reports delivered to email or a portal",
+          "Automated reconciling of key fields between QuickBooks and spreadsheets",
+          "Alerting when data gaps or mismatches occur"
+        ],
+        "investment": {
+          "monthlyInvestment": "$1,200 per month",
+          "setupInvestment": "$1,200 one-time setup",
+          "totalFirstYear": "$15,600 first year total"
+        },
+        "businessCase": {
+          "currentProblemCost": "$10,000 per month",
+          "projectedSavings": "$6,000 per month",
+          "projectedRevenue": "$4,000 per month",
+          "paybackPeriod": "2 months (calculated: $15,600 ÷ ($6,000 + $4,000) = 1.56 months, rounded to 2)",
+          "roiPercentage": "670% annual ROI (calculated: ((($6,000+$4,000)×12) - $15,600) ÷ $15,600 × 100 ≈ 670%)",
+          "provenResults": [
+            {
+              "context": "A similar 60-employee manufacturer where DeployAI automated monthly consolidations",
+              "industry": "Manufacturing",
+              "outcome": "We reduced reporting time from ~60 hours/week to ~12 hours/week (80% reduction) and automated monthly P&L and KPI delivery",
+              "metric": "Saved $96,000/year in labor costs; reports delivered automatically on schedule"
+            }
+          ]
+        },
+        "ourImplementation": {
+          "timeframe": "2 weeks to full deployment",
+          "approach": "We run discovery on your reporting flows, map required fields, build the consolidation pipeline, and deliver scheduled reports. We iterate with you for one reporting cycle and tune distributions.",
+          "integrationsWeHandle": [
+            "QuickBooks",
+            "Excel (cloud-hosted and local files)",
+            "Salesforce"
+          ],
+          "training": "Two 90-minute live sessions for report owners and finance users, plus recorded walkthroughs",
+          "ongoingSupport": "Monthly health checks, alert tuning and a support channel for ad-hoc report changes"
+        },
+        "successMetrics": [
+          {
+            "metric": "Reporting labor hours",
+            "currentState": "60 hours/week (≈258 hours/month)",
+            "targetState": "12 hours/week (≈52 hours/month) — 80% reduction",
+            "howWeMeasure": "Time logs, approval times and automated job-run metrics"
+          }
+        ]
+      },
+      {
+        "priority": 2,
+        "solutionName": "Self-Service Dashboards & Reporting Portal",
+        "solutionCategory": "Business Intelligence & self-service reporting",
+        "whatWeImplement": "DeployAI delivers a self-service dashboard portal for managers and sales so stakeholders can answer their own questions without relying on manual report builds.",
+        "problemSolved": "Reporting processes consuming 60 hours/week across team",
+        "howItSolvesYourProblem": [
+          "Reduces ad-hoc report requests to the central team by empowering managers to filter and drill into live dashboards",
+          "Speeds decisions by providing near real-time visibility into sales, production and margins"
+        ],
+        "capabilities": [
+          "Interactive dashboards for finance, operations and sales",
+          "Role-based views so each user sees tailored KPIs",
+          "Exports and scheduled snapshot reports"
+        ],
+        "investment": {
+          "monthlyInvestment": "$1,100 per month",
+          "setupInvestment": "$1,500 one-time setup",
+          "totalFirstYear": "$14,700 first year total"
+        },
+        "businessCase": {
+          "currentProblemCost": "$10,000 per month",
+          "projectedSavings": "$1,500 per month",
+          "projectedRevenue": "$2,000 per month",
+          "paybackPeriod": "4 months (calculated: $14,700 ÷ ($1,500 + $2,000) = 4.2 months, rounded to 4)",
+          "roiPercentage": "186% annual ROI (calculated: ((($1,500+$2,000)×12) - $14,700) ÷ $14,700 × 100 ≈ 186%)",
+          "provenResults": [
+            {
+              "context": "A small manufacturer where DeployAI deployed a self-service portal",
+              "industry": "Manufacturing",
+              "outcome": "Reduced ad-hoc report requests by over 70% and shortened decision cycles for production planning",
+              "metric": "Delivered ~$18,000/year in time savings and improved on-time production decisions"
+            }
+          ]
+        },
+        "ourImplementation": {
+          "timeframe": "2 weeks to full deployment",
+          "approach": "We design dashboard templates for each role, connect the consolidated data model, and run training to enable self-service use. We tune filters and build a library of saved views.",
+          "integrationsWeHandle": [
+            "QuickBooks",
+            "Excel",
+            "Salesforce"
+          ],
+          "training": "Role-based group training (2 sessions) and a gallery of self-service guides",
+          "ongoingSupport": "Quarterly dashboard refreshes and ad-hoc dashboard builds included in support"
+        },
+        "successMetrics": [
+          {
+            "metric": "Ad-hoc report requests",
+            "currentState": "High (multiple requests weekly, contributing to 60 hrs/week reporting)",
+            "targetState": "70% fewer ad-hoc requests",
+            "howWeMeasure": "Ticket counts, dashboard usage analytics and time saved per request"
+          }
+        ]
+      },
+      {
+        "priority": 3,
+        "solutionName": "Workflow Automation & Sales-Finance Sync",
+        "solutionCategory": "Workflow automation & integration",
+        "whatWeImplement": "DeployAI delivers automated workflows that synchronize orders, invoicing and customer data between Salesforce, spreadsheets and QuickBooks so finance and sales are aligned and manual handoffs are removed.",
+        "problemSolved": "Reporting processes consuming 60 hours/week across team",
+        "howItSolvesYourProblem": [
+          "Removes manual reconciliation steps that feed into reporting by keeping source systems synchronized",
+          "Frees finance time by automating invoicing and status updates, reducing reporting exceptions"
+        ],
+        "capabilities": [
+          "Bi-directional sync for customer, order and invoice records",
+          "Automated exceptions and reconciliation workflows",
+          "Workflow for approvals and notifications"
+        ],
+        "investment": {
+          "monthlyInvestment": "$2,700 per month",
+          "setupInvestment": "$2,000 one-time setup",
+          "totalFirstYear": "$34,400 first year total"
+        },
+        "businessCase": {
+          "currentProblemCost": "$10,000 per month",
+          "projectedSavings": "$500 per month",
+          "projectedRevenue": "$4,000 per month",
+          "paybackPeriod": "8 months (calculated: $34,400 ÷ ($500 + $4,000) = 7.64 months, rounded to 8)",
+          "roiPercentage": "57% annual ROI (calculated: ((($500+$4,000)×12) - $34,400) ÷ $34,400 × 100 ≈ 57%)",
+          "provenResults": [
+            {
+              "context": "A regional manufacturer where DeployAI automated sales-to-finance handoffs",
+              "industry": "Manufacturing",
+              "outcome": "Reduced invoicing delays and cut reconciliation time, enabling faster cash collection and higher sales throughput",
+              "metric": "Increased monthly revenue capacity and reduced billing errors; realized ~$48,000/year in improved cash flow and new capacity"
+            }
+          ]
+        },
+        "ourImplementation": {
+          "timeframe": "2-4 weeks to full deployment",
+          "approach": "We map your sales and finance workflows, build and test integrations, run pilot with a subset of orders, then scale. We include exception handling and approval flows.",
+          "integrationsWeHandle": [
+            "QuickBooks",
+            "Salesforce",
+            "Excel"
+          ],
+          "training": "Hands-on workflow owner training and playbooks for exceptions",
+          "ongoingSupport": "Monthly automation monitoring and quarterly workflow optimization"
+        },
+        "successMetrics": [
+          {
+            "metric": "Time to reconcile orders/invoices",
+            "currentState": "High manual effort feeding reporting (part of 60 hrs/week)",
+            "targetState": "Reduce reconciliation time by 50% for automated flows",
+            "howWeMeasure": "Reconciliation time logs, number of exceptions per month, and automation run success rates"
+          }
+        ]
+      }
+    ],
+    "ourRecommendation": {
+      "firstPhase": "Automated Reporting & Data Consolidation",
+      "rationale": "This delivers the highest immediate cost reduction and fastest time to value by eliminating the core manual work that creates the ongoing reporting burden. It unlocks the quick wins that make the rest of the program simpler and more effective.",
+      "immediateBottleneck": "Manual data consolidation across QuickBooks, Excel and Salesforce that consumes ~60 hrs/week",
+      "expectedImpact": "Reports delivered in minutes, 80% reduction in reporting hours, immediate monthly savings of $6,000 and capacity to reallocate staff",
+      "timeToValue": "2 weeks to first automated reports",
+      "expectedROI": "Expect ~670% ROI and payback in ~2 months for this phase (based on the calculation above)"
+    },
+    "implementationRoadmap": {
+      "phase1": {
+        "timeline": "Week 1-2",
+        "whatWeDeliver": "Automated Reporting & Data Consolidation deployed",
+        "activities": [
+          "Discovery: map current reports and data sources",
+          "Build consolidation pipeline and schedule",
+          "Run first automated reporting cycle and validate"
+        ],
+        "yourMilestone": "Automated weekly and monthly reports running and validated"
+      },
+      "phase2": {
+        "timeline": "Week 3-4",
+        "whatWeDeliver": "Self-Service Dashboards & Reporting Portal",
+        "activities": [
+          "Design dashboards for finance, operations and sales",
+          "Connect dashboards to the consolidated data model",
+          "Train users and publish portal"
+        ],
+        "dependencies": "Phase 1 completed and consolidated data model validated"
+      },
+      "phase3": {
+        "timeline": "Week 5-6",
+        "whatWeDeliver": "Workflow Automation & Sales-Finance Sync",
+        "activities": [
+          "Map and automate key sales-to-finance workflows",
+          "Pilot automated invoicing and reconciliation flows",
+          "Optimize and scale automation"
+        ],
+        "dependencies": "Data consolidation complete and dashboards in use"
+      }
+    },
+    "totalInvestmentSummary": {
+      "monthlyInvestment": "$5,000 total monthly for all solutions",
+      "implementationInvestment": "$4,700 one-time implementation fee",
+      "firstYearTotal": "$64,700 total first year investment",
+      "projectedAnnualReturn": "$216,000 in savings and new revenue",
+      "netROI": "234% return on investment (( $216,000 - $64,700 ) ÷ $64,700 × 100 ≈ 234%)",
+      "breakeven": "4 months to positive ROI (calculated: $64,700 ÷ ($216,000 ÷ 12) ≈ 3.6 months, rounded to 4)"
+    },
+    "nextSteps": {
+      "immediate": [
+        "Schedule implementation planning call with DeployAI",
+        "Provide access to QuickBooks, Salesforce and representative Excel files",
+        "Identify 2-3 key stakeholders for reporting and workflows"
+      ],
+      "week1": [
+        "Begin Phase 1 implementation",
+        "Configure initial integrations and schedule",
+        "Start team onboarding and initial training"
+      ],
+      "month1": [
+        "Complete all solution deployments (Phases 1-3)",
+        "Optimize based on initial usage",
+        "Measure and report on results and next improvement backlog"
+      ]
+    }
+  }
+}
