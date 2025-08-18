@@ -257,6 +257,7 @@ const QuizStep = () => {
                 isLast={currentStep === 13}
                 isValid={isCurrentAnswerValid}
                 validationError={validationError}
+                allResponses={responses}
               />
             </div>
           </div>

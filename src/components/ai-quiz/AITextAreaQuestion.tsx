@@ -7,6 +7,7 @@ interface TextAreaQuestionProps {
   value: string;
   onChange: (value: string) => void;
   error?: string;
+  previousSelections?: { label: string; items: string[] };
 }
 
 export const AITextAreaQuestion: React.FC<TextAreaQuestionProps> = ({
@@ -14,11 +15,29 @@ export const AITextAreaQuestion: React.FC<TextAreaQuestionProps> = ({
   value,
   onChange,
   error,
+  previousSelections,
 }) => {
   const rows = question.maxLength && question.maxLength > 200 ? 6 : 4;
   
   return (
     <div className="flex flex-col justify-center h-full">
+      {/* Display previous selections if provided */}
+      {previousSelections && previousSelections.items.length > 0 && (
+        <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-xs font-semibold text-blue-900 mb-2">{previousSelections.label}</p>
+          <div className="flex flex-wrap gap-2">
+            {previousSelections.items.map((item, index) => (
+              <span 
+                key={index}
+                className="inline-block px-2 py-1 text-xs bg-white text-blue-800 border border-blue-300 rounded"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+      
       {/* Always reserve space for subtitle - consistent spacing */}
       <div className="h-12 mb-3">
         {question.subtitle && (

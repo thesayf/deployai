@@ -6,6 +6,7 @@ import { AISingleSelectQuestion } from './AISingleSelectQuestion';
 import { AIMultiSelectQuestion } from './AIMultiSelectQuestion';
 import { AITextInputQuestion } from './AITextInputQuestion';
 import { AITextAreaQuestion } from './AITextAreaQuestion';
+import quizData from '@/data/quiz-questions.json';
 
 interface AIQuestionCardProps {
   question: QuizQuestion;
@@ -17,6 +18,7 @@ interface AIQuestionCardProps {
   isLast: boolean;
   isValid: boolean;
   validationError?: string;
+  allResponses?: Record<string, any>;
 }
 
 export const AIQuestionCard: React.FC<AIQuestionCardProps> = ({
@@ -29,7 +31,48 @@ export const AIQuestionCard: React.FC<AIQuestionCardProps> = ({
   isLast,
   isValid,
   validationError,
+  allResponses = {},
 }) => {
+  // Helper to get previous selections for context display
+  const getPreviousSelections = () => {
+    // Question 5 (weeklyTimeBreakdown) shows selections from Question 4 (repetitiveTasks)
+    if (question.id === 'weeklyTimeBreakdown' && allResponses.repetitiveTasks) {
+      const tasks = allResponses.repetitiveTasks;
+      const taskLabels = tasks.map((taskId: string) => {
+        const taskOption = quizData.questions
+          .find(q => q.id === 'repetitiveTasks')
+          ?.options?.find(opt => opt.value === taskId);
+        return taskOption?.label || taskId;
+      });
+      return { label: 'Your selected tasks that take up time:', items: taskLabels };
+    }
+    
+    // Question 7 (monthlyCostBreakdown) shows selections from Question 6 (businessChallenges) and Question 9 (moneyLeaks)
+    if (question.id === 'monthlyCostBreakdown') {
+      const items: string[] = [];
+      
+      // Get business challenges
+      if (allResponses.businessChallenges) {
+        const challenges = allResponses.businessChallenges;
+        const challengeLabels = challenges.map((challengeId: string) => {
+          const challengeOption = quizData.questions
+            .find(q => q.id === 'businessChallenges')
+            ?.options?.find(opt => opt.value === challengeId);
+          return challengeOption?.label || challengeId;
+        });
+        items.push(...challengeLabels);
+      }
+      
+      // Since moneyLeaks comes after (question 9), we won't have it yet on question 7
+      // So we only show business challenges
+      if (items.length > 0) {
+        return { label: 'Your selected operational challenges:', items };
+      }
+    }
+    
+    return undefined;
+  };
+
   const renderQuestionInput = () => {
     switch (question.type) {
       case 'single-select':
@@ -69,6 +112,7 @@ export const AIQuestionCard: React.FC<AIQuestionCardProps> = ({
             value={currentAnswer || ''}
             onChange={onAnswer}
             error={validationError}
+            previousSelections={getPreviousSelections()}
           />
         );
       
