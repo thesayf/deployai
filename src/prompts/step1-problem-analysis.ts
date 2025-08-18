@@ -27,16 +27,16 @@ export function generateStep1Prompt(responses: QuizResponseData, companyName?: s
         ?.options?.find(opt => opt.value === taskId);
       const taskLabel = task?.label || taskId;
       
-      // Convert FTE range to specific hours for calculation
+      // Convert natural language range to specific hours for calculation
       let hours = '0';
       switch(timeRange) {
         case 'none': hours = '0 hours'; break;
-        case '<0.25fte': hours = '8 hours'; break; // 0.2 FTE estimate
-        case '0.25-1fte': hours = '25 hours'; break; // 0.6 FTE mid-point
-        case '1-3fte': hours = '80 hours'; break; // 2 FTE mid-point
-        case '3-10fte': hours = '260 hours'; break; // 6.5 FTE mid-point
-        case '10-25fte': hours = '700 hours'; break; // 17.5 FTE mid-point
-        case '25+fte': hours = '1200 hours'; break; // 30 FTE estimate
+        case '<10hrs': hours = '8 hours'; break; // Conservative estimate
+        case '10-40hrs': hours = '25 hours'; break; // Mid-point
+        case '40-120hrs': hours = '80 hours'; break; // 2 people mid-point
+        case '120-400hrs': hours = '260 hours'; break; // 6.5 people mid-point
+        case '400-1000hrs': hours = '700 hours'; break; // 17.5 people mid-point
+        case '1000+hrs': hours = '1200 hours'; break; // 30 people estimate
         default: hours = timeRange;
       }
       

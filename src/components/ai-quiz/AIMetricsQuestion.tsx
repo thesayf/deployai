@@ -14,12 +14,12 @@ interface MetricsQuestionProps {
 
 const TIME_RANGES = [
   { value: 'none', label: 'None', displayLabel: 'None' },
-  { value: '<0.25fte', label: '<0.25 FTE', displayLabel: '<0.25 FTE' },
-  { value: '0.25-1fte', label: '0.25-1 FTE', displayLabel: '0.25-1 FTE' },
-  { value: '1-3fte', label: '1-3 FTE', displayLabel: '1-3 FTE' },
-  { value: '3-10fte', label: '3-10 FTE', displayLabel: '3-10 FTE' },
-  { value: '10-25fte', label: '10-25 FTE', displayLabel: '10-25 FTE' },
-  { value: '25+fte', label: '25+ FTE', displayLabel: '25+ FTE' },
+  { value: '<10hrs', label: '<10 hrs/wk', displayLabel: '<10 hrs/wk' },
+  { value: '10-40hrs', label: '10-40 hrs/wk (1 person)', displayLabel: '10-40 hrs/wk (1 person)' },
+  { value: '40-120hrs', label: '40-120 hrs/wk (1-3 people)', displayLabel: '40-120 hrs/wk (1-3 people)' },
+  { value: '120-400hrs', label: '120-400 hrs/wk (3-10 people)', displayLabel: '120-400 hrs/wk (3-10 people)' },
+  { value: '400-1000hrs', label: '400-1000 hrs/wk (10-25 people)', displayLabel: '400-1000 hrs/wk (10-25 people)' },
+  { value: '1000+hrs', label: '1000+ hrs/wk (25+ people)', displayLabel: '1000+ hrs/wk (25+ people)' },
 ];
 
 const COST_RANGES = [
@@ -103,11 +103,11 @@ export const AIMetricsQuestion: React.FC<MetricsQuestionProps> = ({
         )}
       </div>
 
-      {/* Subtitle with FTE explanation */}
+      {/* Subtitle with explanation */}
       <div className="mb-4">
         <p className="text-xs sm:text-sm text-gray-600 leading-relaxed italic text-center">
           {questionType === 'time' 
-            ? 'FTE = Full-Time Equivalent (1 FTE = 40 hrs/week). Think total team hours across all staff.'
+            ? 'Think total hours across your entire team. "1 person" = 40 hrs/week full-time equivalent.'
             : 'Estimate monthly impact including direct costs, lost opportunities, and inefficiencies.'
           }
         </p>
