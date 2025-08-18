@@ -95,10 +95,18 @@ export function validateResponse(questionId: string, response: any): { valid: bo
             return { valid: false, error: 'Please quantify your selected items' };
           }
           
-          // Check if ALL items have been quantified (not just set to 'none' or '$0')
+          // Check if ALL items have been quantified
           const unquantifiedItems = itemKeys.filter(key => !response[key] || response[key] === '');
           if (unquantifiedItems.length > 0) {
             return { valid: false, error: `Please quantify all ${unquantifiedItems.length} selected items` };
+          }
+          
+          // Check if at least ONE item has a non-zero value
+          const hasNonZeroValue = itemKeys.some(key => 
+            response[key] && response[key] !== 'none' && response[key] !== '$0'
+          );
+          if (!hasNonZeroValue) {
+            return { valid: false, error: 'Please select actual time/cost values for at least one item' };
           }
           
           return { valid: true };
