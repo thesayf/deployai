@@ -71,7 +71,6 @@ export function validateResponse(questionId: string, response: any): { valid: bo
   // Type-specific validation
   switch (question.type) {
     case 'text':
-    case 'textarea':
       if (typeof response !== 'string') {
         return { valid: false, error: 'Invalid response type' };
       }
@@ -80,6 +79,38 @@ export function validateResponse(questionId: string, response: any): { valid: bo
       }
       if (question.maxLength && response.length > question.maxLength) {
         return { valid: false, error: `Maximum ${question.maxLength} characters allowed` };
+      }
+      break;
+
+    case 'textarea':
+      // Handle both string (legacy) and object (metrics) formats
+      if (questionId === 'weeklyTimeBreakdown' || questionId === 'monthlyCostBreakdown') {
+        // Metrics questions - accept object with at least one selection (excluding _notes)
+        if (typeof response === 'object' && response !== null) {
+          const hasSelections = Object.keys(response).some(key => key !== '_notes' && response[key] && response[key] !== 'none' && response[key] !== '$0');
+          if (!hasSelections) {
+            return { valid: false, error: 'Please quantify at least one item' };
+          }
+          return { valid: true };
+        } else if (typeof response === 'string') {
+          // Legacy text format - still valid
+          if (question.minLength && response.length < question.minLength) {
+            return { valid: false, error: `Minimum ${question.minLength} characters required` };
+          }
+          return { valid: true };
+        }
+        return { valid: false, error: 'Invalid response format' };
+      } else {
+        // Regular textarea questions
+        if (typeof response !== 'string') {
+          return { valid: false, error: 'Invalid response type' };
+        }
+        if (question.minLength && response.length < question.minLength) {
+          return { valid: false, error: `Minimum ${question.minLength} characters required` };
+        }
+        if (question.maxLength && response.length > question.maxLength) {
+          return { valid: false, error: `Maximum ${question.maxLength} characters allowed` };
+        }
       }
       break;
 

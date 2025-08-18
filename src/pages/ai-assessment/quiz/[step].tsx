@@ -190,9 +190,15 @@ const QuizStep = () => {
   // Handle keyboard events
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
+      // Don't trigger if user is typing in a textarea or input
+      const target = event.target as HTMLElement;
+      if (target.tagName === 'TEXTAREA' || (target.tagName === 'INPUT' && target.getAttribute('type') === 'text')) {
+        return;
+      }
+      
       if (event.key === 'Enter' && !event.shiftKey) {
         // Only trigger if validation passes
-        const isValid = currentQuestion && currentAnswer !== undefined && currentAnswer !== null
+        const isValid = currentQuestion 
           ? validateResponse(currentQuestion.id, currentAnswer).valid
           : false;
         if (isValid) {
