@@ -6,12 +6,25 @@ export function generateStep1Prompt(responses: QuizResponseData, companyName?: s
   if (!responses || Object.keys(responses).length === 0) {
     throw new Error('Quiz responses are empty or missing');
   }
+  
+  // Ensure responses is not null and handle any parsing issues
+  try {
+    // Test if responses need any cleanup
+    if (typeof responses === 'string') {
+      responses = JSON.parse(responses);
+    }
+  } catch (e) {
+    console.error('Error parsing responses:', e);
+  }
 
   // Parse quantification data - handle both text and JSON formats
   let weeklyTimeBreakdown = '';
   let monthlyCostBreakdown = '';
   
   // Handle weeklyTimeBreakdown - could be string or JSON object
+  console.log('[PROMPT] weeklyTimeBreakdown type:', typeof responses.weeklyTimeBreakdown);
+  console.log('[PROMPT] weeklyTimeBreakdown value:', JSON.stringify(responses.weeklyTimeBreakdown).substring(0, 100));
+  
   if (typeof responses.weeklyTimeBreakdown === 'object' && responses.weeklyTimeBreakdown !== null) {
     // Convert JSON metrics to readable text
     const timeData = responses.weeklyTimeBreakdown as Record<string, string>;
