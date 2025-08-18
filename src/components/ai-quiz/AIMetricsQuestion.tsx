@@ -46,8 +46,28 @@ export const AIMetricsQuestion: React.FC<MetricsQuestionProps> = ({
 }) => {
   // Initialize or parse existing value
   const metricsData = typeof value === 'string' ? {} : (value || {});
-  const [localData, setLocalData] = React.useState<Record<string, string>>(metricsData);
+  
+  // Initialize data for all previous selections if not already set
+  const initialData = React.useMemo(() => {
+    const data: Record<string, string> = { ...metricsData };
+    // Ensure all previousSelections have an entry (even if empty)
+    previousSelections.forEach(id => {
+      if (!(id in data)) {
+        data[id] = ''; // Initialize as empty, not selected yet
+      }
+    });
+    return data;
+  }, [previousSelections, metricsData]);
+  
+  const [localData, setLocalData] = React.useState<Record<string, string>>(initialData);
   const [notes, setNotes] = React.useState(metricsData._notes || '');
+
+  // Call onChange with initialized data on mount if value was empty
+  React.useEffect(() => {
+    if (!value || Object.keys(value).length === 0) {
+      onChange(initialData);
+    }
+  }, []); // Only on mount
 
   const ranges = questionType === 'time' ? TIME_RANGES : COST_RANGES;
 
