@@ -129,19 +129,19 @@ export const AIQuestionCard: React.FC<AIQuestionCardProps> = ({
       transition={{ duration: 0.3 }}
       className="flex flex-col h-full"
     >
-      {/* Question Input - Fixed viewport height container */}
-      <div className="h-[50vh] max-h-[500px] flex items-center pb-24 md:pb-0">
-        <div className="w-full h-full">
+      {/* Question Input - Responsive height container */}
+      <div className="h-[45vh] sm:h-[50vh] max-h-[400px] sm:max-h-[500px] flex items-center pb-20 sm:pb-24 md:pb-0">
+        <div className="w-full h-full px-2 sm:px-0">
           {renderQuestionInput()}
         </div>
       </div>
 
       {/* Navigation Buttons - Fixed on mobile, static on desktop */}
-      <div className="fixed bottom-20 left-0 right-0 px-4 md:relative md:bottom-auto md:left-auto md:right-auto md:px-0 bg-white py-4 shadow-lg md:bg-transparent md:py-0 md:shadow-none flex justify-center gap-4 flex-shrink-0">
+      <div className="fixed bottom-16 sm:bottom-20 left-0 right-0 px-4 md:relative md:bottom-auto md:left-auto md:right-auto md:px-0 bg-white py-3 sm:py-4 shadow-lg md:bg-transparent md:py-0 md:shadow-none flex justify-center gap-3 sm:gap-4 flex-shrink-0">
         {!isFirst && (
           <button
             onClick={onPrevious}
-            className="px-8 py-3 text-gray-600 hover:text-gray-800 transition-colors"
+            className="px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base text-gray-600 hover:text-gray-800 transition-colors"
           >
             Previous
           </button>
@@ -150,7 +150,7 @@ export const AIQuestionCard: React.FC<AIQuestionCardProps> = ({
         <button
           onClick={onNext}
           disabled={!isValid}
-          className="px-8 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+          className="px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base bg-gray-800 text-white rounded-lg hover:bg-gray-900 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
         >
           {isLast ? 'Complete' : 'Next'}
         </button>

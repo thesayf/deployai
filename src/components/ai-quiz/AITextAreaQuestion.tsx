@@ -20,16 +20,16 @@ export const AITextAreaQuestion: React.FC<TextAreaQuestionProps> = ({
   const rows = question.maxLength && question.maxLength > 200 ? 6 : 4;
   
   return (
-    <div className="flex flex-col justify-center h-full">
+    <div className="flex flex-col justify-center h-full overflow-y-auto">
       {/* Display previous selections if provided */}
       {previousSelections && previousSelections.items.length > 0 && (
-        <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-xs font-semibold text-blue-900 mb-2">{previousSelections.label}</p>
-          <div className="flex flex-wrap gap-2">
+        <div className="mb-3 p-2 sm:p-3 bg-blue-50 border border-blue-200 rounded-lg max-h-32 sm:max-h-40 overflow-y-auto">
+          <p className="text-xs font-semibold text-blue-900 mb-1.5 sm:mb-2">{previousSelections.label}</p>
+          <div className="flex flex-wrap gap-1 sm:gap-2">
             {previousSelections.items.map((item, index) => (
               <span 
                 key={index}
-                className="inline-block px-2 py-1 text-xs bg-white text-blue-800 border border-blue-300 rounded"
+                className="inline-block px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs bg-white text-blue-800 border border-blue-300 rounded"
               >
                 {item}
               </span>
@@ -39,9 +39,9 @@ export const AITextAreaQuestion: React.FC<TextAreaQuestionProps> = ({
       )}
       
       {/* Always reserve space for subtitle - consistent spacing */}
-      <div className="h-12 mb-3">
+      <div className="min-h-[2rem] sm:h-12 mb-2 sm:mb-3">
         {question.subtitle && (
-          <p className="text-sm text-gray-600 leading-relaxed italic">
+          <p className="text-xs sm:text-sm text-gray-600 leading-relaxed italic">
             {question.subtitle}
           </p>
         )}
@@ -54,13 +54,13 @@ export const AITextAreaQuestion: React.FC<TextAreaQuestionProps> = ({
         maxLength={question.maxLength}
         rows={rows}
         className={`
-          w-full px-6 py-4 text-lg
+          w-full px-3 sm:px-6 py-3 sm:py-4 text-sm sm:text-lg
           bg-gray-100 rounded-lg
           focus:bg-gray-200
           transition-all duration-200
           outline-none
-          resize-y min-h-[120px]
-          placeholder-gray-500
+          resize-none sm:resize-y min-h-[100px] sm:min-h-[120px]
+          placeholder-gray-500 placeholder:text-sm sm:placeholder:text-base
         `}
       />
       
