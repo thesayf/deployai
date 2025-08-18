@@ -81,7 +81,10 @@ const AdminDashboard = () => {
       // Assessments might fail if table doesn't exist yet, but don't break the page
       if (assessmentsResponse.ok) {
         const assessmentsData = await assessmentsResponse.json();
+        console.log('[ADMIN] Assessments data received:', assessmentsData);
         setAssessments(assessmentsData.assessments);
+      } else {
+        console.error('[ADMIN] Failed to fetch assessments:', assessmentsResponse.status, await assessmentsResponse.text());
       }
     } catch (err) {
       setError('Failed to load surveys');

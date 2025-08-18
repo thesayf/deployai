@@ -1,11 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
-import cookie from 'cookie';
+import * as cookie from 'cookie';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log('[ASSESSMENTS API] Handler called, method:', req.method);
+  
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -13,6 +15,8 @@ export default async function handler(
   // Check authentication using same cookie auth as MVP admin
   const cookies = cookie.parse(req.headers.cookie || '');
   const isAuthenticated = cookies.adminAuth === 'true';
+  
+  console.log('[ASSESSMENTS API] Auth check:', { isAuthenticated, cookies });
 
   if (!isAuthenticated) {
     return res.status(401).json({ error: 'Unauthorized' });
@@ -20,6 +24,7 @@ export default async function handler(
 
   try {
     const supabase = supabaseAdmin();
+    console.log('[ASSESSMENTS API] Supabase client created');
 
     // Fetch AI assessments with user data
     const { data: assessments, error } = await supabase
@@ -43,9 +48,15 @@ export default async function handler(
       `)
       .order('created_at', { ascending: false });
 
+    console.log('[ASSESSMENTS API] Query result:', { 
+      assessmentsCount: assessments?.length || 0, 
+      error,
+      firstAssessment: assessments?.[0]
+    });
+
     if (error) {
-      console.error('Error fetching assessments:', error);
-      return res.status(500).json({ error: 'Failed to fetch assessments' });
+      console.error('[ASSESSMENTS API] Error fetching assessments:', error);
+      return res.status(500).json({ error: 'Failed to fetch assessments', details: error.message });
     }
 
     // Format the data for the admin interface
