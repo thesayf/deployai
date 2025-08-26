@@ -153,7 +153,7 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
         generatedDate={report.email_sent_at ? new Date(report.email_sent_at) : new Date()}
         variant="executive"
         onScheduleConsultation={() => {
-          window.open('https://calendly.com/deployai-consultation', '_blank');
+          window.open('https://calendly.com/hello-deployai/30min', '_blank');
         }}
       />
 
@@ -166,7 +166,7 @@ export default function ReportViewPage({ accessToken }: ReportViewPageProps) {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <button
-              onClick={() => window.open('https://calendly.com/deployai-consultation', '_blank')}
+              onClick={() => window.open('https://calendly.com/hello-deployai/30min', '_blank')}
               className="px-6 sm:px-8 py-2.5 sm:py-3 bg-white text-black text-sm sm:text-base font-bold uppercase border-2 sm:border-3 border-white hover:shadow-hard-lg transition-shadow"
             >
               Schedule Free Consultation

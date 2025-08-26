@@ -69,7 +69,7 @@ export const ProfessionalReport: React.FC<ProfessionalReportProps> = ({
     if (onScheduleConsultation) {
       onScheduleConsultation();
     } else {
-      window.open('https://calendly.com/deployai-consultation', '_blank');
+      window.open('https://calendly.com/hello-deployai/30min', '_blank');
     }
   };
 

@@ -96,7 +96,7 @@ export const ActionPlan: React.FC<ActionPlanProps> = ({
       onScheduleConsultation();
     } else {
       // Default behavior - could open a calendar link or modal
-      window.open('https://calendly.com/your-link', '_blank');
+      window.open('https://calendly.com/hello-deployai/30min', '_blank');
     }
   };
 
