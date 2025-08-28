@@ -51,20 +51,20 @@ export class OpenAIProvider extends AIProvider {
       });
 
       // Add a timeout wrapper (adjust based on model and reasoning effort)
-      let timeoutMs = 90000; // Default 90 seconds
+      let timeoutMs = 180000; // Default 180 seconds (3 minutes)
       
       // Special handling for large prompts with medium/high reasoning
       const isLargePrompt = options.prompt.length > 30000;
       
       if (this.config.model === 'gpt-5') {
-        timeoutMs = 180000; // 3 minutes for gpt-5 full
+        timeoutMs = 270000; // 4.5 minutes for gpt-5 full
       } else if ((options.reasoning_effort === 'medium' || options.reasoning_effort === 'high')) {
         // For large prompts with medium/high reasoning, give more time
         if (isLargePrompt) {
-          timeoutMs = 300000; // 5 minutes for large prompts with complex reasoning
+          timeoutMs = 390000; // 6.5 minutes for large prompts with complex reasoning
           console.log(`[OpenAI-${this.config.model}] Large prompt detected (${options.prompt.length} chars), using extended 5-minute timeout`);
         } else {
-          timeoutMs = 150000; // 2.5 minutes for normal medium/high reasoning
+          timeoutMs = 240000; // 4 minutes for normal medium/high reasoning
         }
       }
       const timeoutPromise = new Promise((_, reject) => 
