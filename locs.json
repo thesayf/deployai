@@ -1,0 +1,15 @@
+{
+  "industry": "Hair and beauty ",
+  "timeline": "within-month",
+  "moneyLeaks": ["manual-errors"],
+  "companySize": "micro",
+  "monthlyBudget": "under-500",
+  "currentSystems": "some-tools",
+  "desiredOutcome": ["real-time-insights"],
+  "teamCapability": "moderately-comfortable",
+  "repetitiveTasks": ["scheduling"],
+  "efficiencyRating": "gaps",
+  "businessChallenges": ["inconsistent-service"],
+  "weeklyTimeBreakdown": { "scheduling": "40-80hrs" },
+  "monthlyCostBreakdown": { "inconsistent-service": "<$500" }
+}
