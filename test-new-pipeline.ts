@@ -42,7 +42,7 @@ async function runPipeline() {
     const response1 = await callOpenAI(step1Prompt);
     const problemAnalysis = JSON.parse(response1);
     console.log('✓ Problem Analysis Complete');
-    console.log('Top problems identified:', problemAnalysis.topOpportunities.map(o => o.problemArea));
+    console.log('Top problems identified:', problemAnalysis.topOpportunities.map((o: any) => o.problemArea));
     fs.writeFileSync('./test-outputs/step1-analysis.json', JSON.stringify(problemAnalysis, null, 2));
     
     // Step 2: Tool Research  
@@ -98,13 +98,13 @@ async function runPipeline() {
     console.log('✓ PIPELINE COMPLETE!');
     console.log('=================================');
     console.log('\nKey Recommendations:');
-    finalReport.recommendedSolutions.forEach((sol, i) => {
+    finalReport.recommendedSolutions.forEach((sol: any, i: number) => {
       console.log(`${i + 1}. ${sol.solutionName}`);
       console.log(`   Impact: ${sol.directImpact[0]}`);
     });
     console.log('\nAll outputs saved to test-outputs/');
     
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in pipeline:', error);
     console.error('Details:', error.message);
   }
