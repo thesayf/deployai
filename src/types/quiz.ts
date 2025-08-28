@@ -55,12 +55,16 @@ export interface QuizResponseData {
   // Modified question
   currentSystems?: string;        // q8 - CHANGED: now single-select (was array)
   
+  // NEW system context questions
+  systemsReality?: string;        // q9 - NEW: textarea for current tools and failures
+  idealSystemVision?: string;     // q10 - NEW: textarea for transformation vision
+  
   // Renumbered questions
-  moneyLeaks?: string[];          // q9 (was q6)
-  desiredOutcome?: string[];     // q10 (was q9)
-  teamCapability?: string;        // q11 (was q11 - same position)
-  monthlyBudget?: string;         // q12 (was q12 - same position)
-  timeline?: string;              // q13 (was q13 - same position)
+  moneyLeaks?: string[];          // q11 (was q9, was q6)
+  desiredOutcome?: string[];      // q12 (was q10, was q9)
+  teamCapability?: string;        // q13 (was q11)
+  monthlyBudget?: string;         // q14 (was q12)
+  timeline?: string;              // q15 (was q13)
   
   // REMOVED questions (kept for backward compatibility)
   customerExperienceIssues?: string[]; // REMOVED (was q5)

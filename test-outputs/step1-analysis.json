@@ -1,0 +1,61 @@
+{
+  "businessContext": {
+    "companyName": "Adisco Locs Stylist Ltd",
+    "industry": "Hair and beauty salon specializing in dreadlocks and natural hair styling",
+    "companySize": "micro",
+    "monthlyBudget": "under-500",
+    "urgency": "within-month",
+    "techCapability": "moderately-comfortable",
+    "currentSystems": "some-tools",
+    "currentToolEcosystem": "Fresha, WhatsApp, paper diary, Excel, card payment terminals",
+    "workflowBreakpoints": "Customers bypass Fresha deposits, staff don't check Fresha regularly, messages get lost in WhatsApp, Excel not consistently updated",
+    "integrationGaps": "Fresha doesn't enforce deposits well, lack of synchronization between tools",
+    "transformationVision": "Unified system for online bookings with deposits, automatic reminders, real-time schedule access, and integrated customer records",
+    "businessObjectives": "Reduce no-shows, improve customer satisfaction, streamline scheduling, enhance operational efficiency",
+    "integrationNeeds": "Need to integrate booking, payment, customer records, and scheduling systems into a single platform"
+  },
+  "topOpportunities": [
+    {
+      "problemArea": "Staff spending excessive time on scheduling and managing appointments",
+      "monthlyTimeCost": "60 hours/week x 4.3 weeks = 258 hours/month",
+      "monthlyFinancialCost": "Assuming $40/hour, $10,320/month",
+      "annualCost": "$123,840/year",
+      "aiSolutionType": "AI-powered scheduling and appointment management software",
+      "problemEvidence": "Scheduling and managing appointments: 60 hours/week",
+      "searchKeywords": [
+        "Hair salon AI scheduling automation",
+        "Fresha integration with deposit enforcement",
+        "Salon appointment management automation micro business"
+      ],
+      "expectedOutcome": "Reduce scheduling time from 258 hours/month to 50 hours/month, saving $8,320/month"
+    },
+    {
+      "problemArea": "Lost revenue from no-shows and late cancellations",
+      "monthlyTimeCost": "N/A",
+      "monthlyFinancialCost": "£800/month",
+      "annualCost": "£9,600/year",
+      "aiSolutionType": "Automated booking and deposit system with penalty enforcement",
+      "problemEvidence": "Lost revenue from no-shows and late cancellations: £800/month",
+      "searchKeywords": [
+        "Hair salon no-show reduction AI",
+        "Automated deposit systems for salons",
+        "Integrate Fresha with penalty enforcement"
+      ],
+      "expectedOutcome": "Decrease lost revenue from £800/month to £200/month, saving £600/month"
+    },
+    {
+      "problemArea": "Staff overtime due to manual scheduling",
+      "monthlyTimeCost": "N/A",
+      "monthlyFinancialCost": "£600/month",
+      "annualCost": "£7,200/year",
+      "aiSolutionType": "AI-driven scheduling optimization and automation",
+      "problemEvidence": "Staff overtime managing manual scheduling: £600/month",
+      "searchKeywords": [
+        "Salon staff scheduling AI optimization",
+        "Automate manual scheduling hair salon",
+        "Fresha staff management automation"
+      ],
+      "expectedOutcome": "Eliminate need for staff overtime, saving £600/month"
+    }
+  ]
+}

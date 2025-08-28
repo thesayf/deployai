@@ -275,8 +275,30 @@
       ]
     },
     {
-      "id": "moneyLeaks",
+      "id": "systemsReality",
       "questionNumber": 9,
+      "title": "Tell us about your current tech stack - what are you using and where is it falling short?",
+      "subtitle": "Share the tools/software you rely on daily and what's not working as well as you'd hoped",
+      "type": "textarea",
+      "required": true,
+      "maxLength": 600,
+      "placeholder": "e.g., 'We use QuickBooks for accounting which works okay but doesn't connect to our Square POS, so we manually reconcile daily. Our CRM is HubSpot but the team finds it overwhelming so they still use spreadsheets. Customer service runs through shared Gmail which means messages get lost. We tried Calendly for scheduling but clients still prefer calling. Everything takes multiple steps that should be automatic.'",
+      "aiCategory": "systems-reality-check"
+    },
+    {
+      "id": "idealSystemVision",
+      "questionNumber": 10,
+      "title": "In an ideal world, how would your systems work?",
+      "subtitle": "Forget current limitations - describe your dream workflow",
+      "type": "textarea",
+      "required": false,
+      "maxLength": 400,
+      "placeholder": "e.g., 'Customer books online, automatically gets confirmations and reminders, payment processes itself, inventory updates, staff gets notified, follow-ups happen automatically. Everything just flows without us managing every step. One source of truth instead of five different systems.'",
+      "aiCategory": "transformation-vision"
+    },
+    {
+      "id": "moneyLeaks",
+      "questionNumber": 11,
       "title": "Where do you think you're losing money?",
       "subtitle": "Select all that apply",
       "type": "multi-select",
@@ -337,7 +359,7 @@
     },
     {
       "id": "desiredOutcome",
-      "questionNumber": 10,
+      "questionNumber": 12,
       "title": "What's your ideal vision for your business operations?",
       "subtitle": "Choose your top 2 priorities",
       "type": "multi-select",
@@ -379,7 +401,7 @@
     },
     {
       "id": "teamCapability",
-      "questionNumber": 11,
+      "questionNumber": 13,
       "title": "How comfortable are you with technology?",
       "type": "single-select",
       "required": true,
@@ -413,7 +435,7 @@
     },
     {
       "id": "monthlyBudget",
-      "questionNumber": 12,
+      "questionNumber": 14,
       "title": "What's your monthly AI tool budget?",
       "type": "single-select",
       "required": true,
@@ -452,7 +474,7 @@
     },
     {
       "id": "timeline",
-      "questionNumber": 13,
+      "questionNumber": 15,
       "title": "How urgent is solving these problems?",
       "type": "single-select",
       "required": true,

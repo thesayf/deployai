@@ -1,44 +1,45 @@
-import { ProblemAnalysis } from '@/types/ai-analysis-new';
-
-export function generateStep2Prompt(analysis: ProblemAnalysis): string {
-  const companyName = analysis.businessContext.companyName || 'the organization';
-  
-  return `You have identified 3 specific problems for ${companyName} in the ${analysis.businessContext.industry} industry. Now use web search to find the EXACT tools that solve THEIR specific problems.
+You have identified 3 specific problems for Adisco Locs Stylist Ltd in the Hair and beauty salon specializing in dreadlocks and natural hair styling industry. Now use web search to find the EXACT tools that solve THEIR specific problems.
 
 THEIR SPECIFIC SITUATION:
-- Company: ${companyName} 
-- Industry: ${analysis.businessContext.industry}
-- Size: ${analysis.businessContext.companySize}
-- Budget: ${analysis.businessContext.monthlyBudget}/month
-- Current tools they use: ${analysis.businessContext.currentSystems}
-- What's not working: ${analysis.businessContext.workflowBreakpoints || 'various inefficiencies'}
-- Their tool ecosystem: ${analysis.businessContext.currentToolEcosystem || 'their existing systems'}
-- They need to integrate with: ${analysis.businessContext.integrationNeeds}
+- Company: Adisco Locs Stylist Ltd 
+- Industry: Hair and beauty salon specializing in dreadlocks and natural hair styling
+- Size: micro
+- Budget: under-500/month
+- Current tools they use: some-tools
+- What's not working: Customers bypass Fresha deposits, staff don't check Fresha regularly, messages get lost in WhatsApp, Excel not consistently updated
+- Their tool ecosystem: Fresha, WhatsApp, paper diary, Excel, card payment terminals
+- They need to integrate with: Need to integrate booking, payment, customer records, and scheduling systems into a single platform
 
 THEIR SPECIFIC PROBLEMS TO SOLVE:
 
-PROBLEM 1: ${analysis.topOpportunities[0].problemArea}
-Evidence: "${analysis.topOpportunities[0].problemEvidence}"
+PROBLEM 1: Staff spending excessive time on scheduling and managing appointments
+Evidence: "Scheduling and managing appointments: 60 hours/week"
 YOU MUST SEARCH FOR:
-${analysis.topOpportunities[0].searchKeywords.map(k => `- "${k}"`).join('\n')}
+- "Hair salon AI scheduling automation"
+- "Fresha integration with deposit enforcement"
+- "Salon appointment management automation micro business"
 
-PROBLEM 2: ${analysis.topOpportunities[1].problemArea}
-Evidence: "${analysis.topOpportunities[1].problemEvidence}"
+PROBLEM 2: Lost revenue from no-shows and late cancellations
+Evidence: "Lost revenue from no-shows and late cancellations: £800/month"
 YOU MUST SEARCH FOR:
-${analysis.topOpportunities[1].searchKeywords.map(k => `- "${k}"`).join('\n')}
+- "Hair salon no-show reduction AI"
+- "Automated deposit systems for salons"
+- "Integrate Fresha with penalty enforcement"
 
-PROBLEM 3: ${analysis.topOpportunities[2].problemArea}
-Evidence: "${analysis.topOpportunities[2].problemEvidence}"
+PROBLEM 3: Staff overtime due to manual scheduling
+Evidence: "Staff overtime managing manual scheduling: £600/month"
 YOU MUST SEARCH FOR:
-${analysis.topOpportunities[2].searchKeywords.map(k => `- "${k}"`).join('\n')}
+- "Salon staff scheduling AI optimization"
+- "Automate manual scheduling hair salon"
+- "Fresha staff management automation"
 
 SEARCH STRATEGY:
-Think about the end goal - find the best AI-powered solutions that solve multiple problems for ${companyName}.
+Think about the end goal - find the best AI-powered solutions that solve multiple problems for Adisco Locs Stylist Ltd.
 
 Start your research journey:
-1. Begin broad to understand what AI tools are available for ${analysis.businessContext.industry} businesses
+1. Begin broad to understand what AI tools are available for Hair and beauty salon specializing in dreadlocks and natural hair styling businesses
 2. Look for AI tools and automation that successful companies in their industry actually use
-3. Remember they already have ${analysis.businessContext.currentToolEcosystem || analysis.businessContext.currentSystems} that isn't meeting their needs
+3. Remember they already have Fresha, WhatsApp, paper diary, Excel, card payment terminals that isn't meeting their needs
 4. Prioritize solutions that address multiple problems from their assessment
 5. Focus on AI-powered tools but don't dismiss excellent automation systems that deliver real results
 
@@ -49,17 +50,17 @@ Natural search progression:
 - Compare option e.g: alternatives to what they're currently using
 
 Consider the full picture:
-They're dealing with ${analysis.businessContext.repetitiveTasks?.length || 'multiple'} time-wasting tasks, 
-${analysis.businessContext.businessChallenges?.length || 'several'} operational challenges,
-and their current tools (${analysis.businessContext.currentToolEcosystem || analysis.businessContext.currentSystems}) aren't cutting it.
+They're dealing with multiple time-wasting tasks, 
+several operational challenges,
+and their current tools (Fresha, WhatsApp, paper diary, Excel, card payment terminals) aren't cutting it.
 Look for solutions that address this complete scenario, not just individual pieces.
 
 WHAT TO LOOK FOR:
 - AI-powered solutions that address their specific problems
-- The AI tools that successful ${analysis.businessContext.industry} businesses actually use
+- The AI tools that successful Hair and beauty salon specializing in dreadlocks and natural hair styling businesses actually use
 - Solutions that could replace or enhance their current setup and solve multiple issues they're facing
 - Platforms that solve multiple issues they're facing
-- Real pricing and implementation details for ${analysis.businessContext.companySize} companies
+- Real pricing and implementation details for micro companies
 - Proven results from similar businesses
 
 RESEARCH APPROACH:
@@ -141,9 +142,8 @@ Focus on finding tools that:
 2. Provide maximum business value and ROI
 3. Have proven success in similar industries
 4. Can be implemented within their urgency timeline
-5. Integrate with their current systems (${analysis.businessContext.currentSystems})
-6. Support their business objectives (${analysis.businessContext.businessObjectives})
+5. Integrate with their current systems (some-tools)
+6. Support their business objectives (Reduce no-shows, improve customer satisfaction, streamline scheduling, enhance operational efficiency)
 7. Are appropriate for their decision-making structure
 
-CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }`;
-}
+CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }

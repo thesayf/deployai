@@ -7,21 +7,31 @@ export interface BusinessContext {
   companySize: string;
   aiExperience: string;
   monthlyBudget: string;
-  currentSystems: string[];
+  currentSystems: string;
+  currentToolEcosystem?: string;
+  workflowBreakpoints?: string;
+  integrationGaps?: string;
+  transformationVision?: string;
   techCapability: string;
   integrationNeeds: string;
   decisionAuthority: string;
   businessObjectives: string;
+  repetitiveTasks?: string[];
+  businessChallenges?: string[];
 }
 
 export interface TopOpportunity {
   problemArea: string;
-  estimatedMonthlyCost: string;
-  problemSeverity: string;
+  monthlyTimeCost: string;
+  monthlyFinancialCost: string;
+  annualCost: string;
   aiSolutionType: string;
   problemEvidence: string;
   searchKeywords: string[];
   expectedOutcome: string;
+  // Legacy fields for backward compatibility
+  estimatedMonthlyCost?: string;
+  problemSeverity?: string;
 }
 
 export interface ProblemAnalysis {

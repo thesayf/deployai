@@ -1,0 +1,414 @@
+You are a senior AI implementation consultant at DeployAI. Based on the problem analysis and tool research, design 3 comprehensive solutions that DeployAI will implement for this business.
+
+BUSINESS CONTEXT:
+{
+  "companyName": "Adisco Locs Stylist Ltd",
+  "industry": "Hair and beauty salon specializing in dreadlocks and natural hair styling",
+  "companySize": "micro",
+  "monthlyBudget": "under-500",
+  "urgency": "within-month",
+  "techCapability": "moderately-comfortable",
+  "currentSystems": "some-tools",
+  "currentToolEcosystem": "Fresha, WhatsApp, paper diary, Excel, card payment terminals",
+  "workflowBreakpoints": "Customers bypass Fresha deposits, staff don't check Fresha regularly, messages get lost in WhatsApp, Excel not consistently updated",
+  "integrationGaps": "Fresha doesn't enforce deposits well, lack of synchronization between tools",
+  "transformationVision": "Unified system for online bookings with deposits, automatic reminders, real-time schedule access, and integrated customer records",
+  "businessObjectives": "Reduce no-shows, improve customer satisfaction, streamline scheduling, enhance operational efficiency",
+  "integrationNeeds": "Need to integrate booking, payment, customer records, and scheduling systems into a single platform"
+}
+
+IDENTIFIED PROBLEMS WITH COSTS:
+[
+  {
+    "problemArea": "Staff spending excessive time on scheduling and managing appointments",
+    "monthlyTimeCost": "60 hours/week x 4.3 weeks = 258 hours/month",
+    "monthlyFinancialCost": "Assuming $40/hour, $10,320/month",
+    "annualCost": "$123,840/year",
+    "aiSolutionType": "AI-powered scheduling and appointment management software",
+    "problemEvidence": "Scheduling and managing appointments: 60 hours/week",
+    "searchKeywords": [
+      "Hair salon AI scheduling automation",
+      "Fresha integration with deposit enforcement",
+      "Salon appointment management automation micro business"
+    ],
+    "expectedOutcome": "Reduce scheduling time from 258 hours/month to 50 hours/month, saving $8,320/month"
+  },
+  {
+    "problemArea": "Lost revenue from no-shows and late cancellations",
+    "monthlyTimeCost": "N/A",
+    "monthlyFinancialCost": "£800/month",
+    "annualCost": "£9,600/year",
+    "aiSolutionType": "Automated booking and deposit system with penalty enforcement",
+    "problemEvidence": "Lost revenue from no-shows and late cancellations: £800/month",
+    "searchKeywords": [
+      "Hair salon no-show reduction AI",
+      "Automated deposit systems for salons",
+      "Integrate Fresha with penalty enforcement"
+    ],
+    "expectedOutcome": "Decrease lost revenue from £800/month to £200/month, saving £600/month"
+  },
+  {
+    "problemArea": "Staff overtime due to manual scheduling",
+    "monthlyTimeCost": "N/A",
+    "monthlyFinancialCost": "£600/month",
+    "annualCost": "£7,200/year",
+    "aiSolutionType": "AI-driven scheduling optimization and automation",
+    "problemEvidence": "Staff overtime managing manual scheduling: £600/month",
+    "searchKeywords": [
+      "Salon staff scheduling AI optimization",
+      "Automate manual scheduling hair salon",
+      "Fresha staff management automation"
+    ],
+    "expectedOutcome": "Eliminate need for staff overtime, saving £600/month"
+  }
+]
+
+RESEARCHED TOOLS WITH COMPREHENSIVE DATA:
+{
+  "estimatedAnnualOpportunity": "$19,200",
+  "recommendedSolutions": [
+    {
+      "problemArea": "Scheduling and Appointment Management",
+      "estimatedMonthlyCost": "$400",
+      "estimatedAnnualCost": "$4,800",
+      "tools": [
+        {
+          "name": "Acuity Scheduling",
+          "verboseName": "AI-Powered Booking and Scheduling Platform",
+          "category": "Scheduling Automation",
+          "description": "Acuity Scheduling offers an automated appointment scheduling solution that allows clients to book appointments directly integrated with calendar systems. It also includes features for enforcing deposits and reducing no-shows through automated reminders.",
+          "primaryBenefits": [
+            "Automate appointment scheduling with client self-booking",
+            "Reduce no-shows with automated reminders and deposit enforcement",
+            "Integrate seamlessly with existing calendars and payment systems"
+          ],
+          "pricing": {
+            "model": "Monthly subscription",
+            "range": "$15-50/month",
+            "setupFee": "$0",
+            "notes": "Includes multiple calendar syncing"
+          },
+          "implementationTime": "1-2 weeks",
+          "caseStudies": [
+            {
+              "company": "Small Beauty Salon",
+              "industry": "Hair and Beauty",
+              "result": "Reduced scheduling time by 50%, decreased no-shows by 40%",
+              "metric": "50% time saved on scheduling",
+              "source": "https://acuityscheduling.com/case-studies"
+            },
+            {
+              "company": "Boutique Spa",
+              "industry": "Wellness",
+              "result": "Improved client retention by 30% through better booking management",
+              "metric": "30% increase in client retention",
+              "source": "https://acuityscheduling.com/case-studies"
+            }
+          ],
+          "annualROI": {
+            "potentialSavings": "$9,600",
+            "percentageImprovement": "200%",
+            "paybackPeriod": "6 months"
+          },
+          "bestFor": "Small to medium-sized salons and spas",
+          "integrations": [
+            "Google Calendar",
+            "Zoom",
+            "Stripe",
+            "PayPal"
+          ],
+          "implementationComplexity": "Low"
+        }
+      ]
+    },
+    {
+      "problemArea": "Reducing No-Shows and Late Cancellations",
+      "estimatedMonthlyCost": "$300",
+      "estimatedAnnualCost": "$3,600",
+      "tools": [
+        {
+          "name": "Setmore",
+          "verboseName": "Online Appointment Scheduling Software",
+          "category": "No-Show Reduction",
+          "description": "Setmore is an appointment scheduling tool that provides features to manage bookings, reduce no-shows, and enforce cancellation policies with automated notifications and payment integrations.",
+          "primaryBenefits": [
+            "Reduce no-shows with automated confirmation and reminder emails",
+            "Secure bookings with upfront payments and enforced cancellation policies",
+            "Streamline customer communication with integrated messaging"
+          ],
+          "pricing": {
+            "model": "Monthly subscription",
+            "range": "$9-25/month",
+            "setupFee": "$0",
+            "notes": "Free plan available with limited features"
+          },
+          "implementationTime": "1 week",
+          "caseStudies": [
+            {
+              "company": "Local Hair Salon",
+              "industry": "Hair and Beauty",
+              "result": "Cut no-show rates by 35% and improved booking efficiency",
+              "metric": "35% reduction in no-shows",
+              "source": "https://www.setmore.com/case-studies"
+            }
+          ],
+          "annualROI": {
+            "potentialSavings": "$7,200",
+            "percentageImprovement": "150%",
+            "paybackPeriod": "5 months"
+          },
+          "bestFor": "Small businesses with frequent bookings",
+          "integrations": [
+            "Facebook",
+            "Instagram",
+            "Square"
+          ],
+          "implementationComplexity": "Low"
+        }
+      ]
+    },
+    {
+      "problemArea": "Staff Scheduling and Management",
+      "estimatedMonthlyCost": "$350",
+      "estimatedAnnualCost": "$4,200",
+      "tools": [
+        {
+          "name": "When I Work",
+          "verboseName": "Employee Scheduling and Time Tracking Software",
+          "category": "Staff Scheduling Optimization",
+          "description": "When I Work is a workforce management platform that automates employee scheduling, time tracking, and communication, helping to reduce overtime and improve efficiency.",
+          "primaryBenefits": [
+            "Optimize staff scheduling with AI-driven shift planning",
+            "Reduce overtime costs through efficient scheduling",
+            "Enhance team communication with built-in messaging"
+          ],
+          "pricing": {
+            "model": "Monthly subscription",
+            "range": "$2-4/user/month",
+            "setupFee": "$0",
+            "notes": "Custom pricing available for larger teams"
+          },
+          "implementationTime": "1-2 weeks",
+          "caseStudies": [
+            {
+              "company": "Retail Chain",
+              "industry": "Retail",
+              "result": "Reduced overtime by 20% and improved shift coverage",
+              "metric": "20% reduction in overtime",
+              "source": "https://wheniwork.com/case-studies"
+            }
+          ],
+          "annualROI": {
+            "potentialSavings": "$2,400",
+            "percentageImprovement": "100%",
+            "paybackPeriod": "7 months"
+          },
+          "bestFor": "Businesses with dynamic staff scheduling needs",
+          "integrations": [
+            "QuickBooks",
+            "ADP",
+            "Slack"
+          ],
+          "implementationComplexity": "Medium"
+        }
+      ]
+    }
+  ]
+}
+
+SELECTION CRITERIA:
+1. Problem-solution fit (how well the tool addresses their specific issues)
+2. Budget alignment (fits within their stated budget range)
+3. ROI potential (strong business case with measurable returns)
+4. Industry relevance (proven success in similar businesses)
+5. Business impact (maximum value regardless of complexity)
+
+CRITICAL INSTRUCTIONS:
+1. Select exactly 3 solutions that provide the best overall value
+2. Preserve ALL case studies from the research but present them as "our implementations"
+3. Calculate which solution should be implemented FIRST based on:
+   - Highest immediate impact on revenue/cost savings
+   - Fastest time to value
+   - Addresses most urgent business bottleneck
+   - Best ROI regardless of complexity
+4. Map each solution to the specific problems it solves
+5. Calculate total annual opportunity from all problems
+
+MATHEMATICAL CONSISTENCY REQUIREMENTS:
+- Use consistent time periods throughout all calculations (convert weekly to monthly as: hours/week × 4.33 = hours/month)
+- Ensure payback period calculations align: (monthlyInvestment ÷ (monthlySavings + monthlyRevenue) = paybackMonths)
+- Verify that projected savings don't exceed the total cost of the problem being solved
+- Use business-friendly round numbers ($5,000 not $4,847) while maintaining accuracy
+- Total annual opportunity must equal sum of all individual problem costs identified
+
+REVENUE CALCULATION GUIDANCE:
+- Identify revenue opportunities from each solution: faster processes enabling more sales, improved conversion rates, reduced customer churn, ability to handle more volume, etc.
+- Calculate monthly revenue gains conservatively: if solution enables 20% more capacity and current revenue is $50k/month, additional revenue potential is $10k/month
+- Include revenue from: time savings that can be redirected to revenue activities, improved customer experience leading to higher conversion/retention, automation enabling business scaling
+- Always separate savings (cost reduction) from revenue (income increase) in calculations
+- Be conservative on revenue projections - use lower estimates when uncertain
+
+BUSINESS LANGUAGE REQUIREMENTS:
+- Write all descriptions in natural business language, not technical specifications
+- Use "we will implement" or "DeployAI delivers" instead of system feature lists
+- Frame benefits in business outcomes, not technical capabilities
+- Present proven results as specific, credible examples without exaggeration
+- Explain ROI in simple terms: "Pay back your investment in X months, then save $Y monthly"
+
+CRITICAL DATA SEPARATION:
+You MUST create two completely separate objects:
+1. "internalReference" - Contains real tool names for DeployAI team's database (NEVER shown to clients)
+2. "clientSolution" - Contains ONLY DeployAI-branded solutions (this is what the client sees)
+
+NEVER mention tool names, vendor names, or third-party products in the clientSolution.
+Present everything as DeployAI's solutions and implementations.
+
+OUTPUT FORMAT (return only valid JSON):
+{
+  "internalReference": {
+    "tools": [
+      {
+        "priority": 1,
+        "realToolName": "Actual tool name (e.g., TenantCloud)",
+        "realVendor": "Actual vendor name",
+        "internalNotes": "Implementation notes for DeployAI team",
+        "apiRequirements": "Technical integration details",
+        "planLevel": "Subscription tier needed"
+      }
+    ]
+  },
+  "clientSolution": {
+    "executiveSummary": {
+      "businessProfile": "Brief description of the business and their main challenges",
+      "totalInvestmentRange": "$X,XXX - $X,XXX per month",
+      "expectedROI": "X-X months payback period",
+      "implementationTimeline": "X-X weeks total for all solutions",
+      "keyOutcomes": [
+        "Primary outcome we'll deliver",
+        "Secondary outcome we'll deliver", 
+        "Tertiary outcome we'll deliver"
+      ],
+      "estimatedAnnualOpportunity": "$XXX,XXX (sum of all problem costs)"
+    },
+    "implementedSolutions": [
+      {
+        "priority": 1,
+        "solutionName": "Descriptive solution name (e.g., 'Automated Property Documentation System')",
+        "solutionCategory": "Category of solution (e.g., 'Document & Invoice Automation')",
+        "whatWeImplement": "Natural business description: 'DeployAI will build you a system that automatically...' Avoid technical jargon, focus on business outcomes",
+        "problemSolved": "Specific problem from original analysis",
+        "howItSolvesYourProblem": [
+          "Primary way this addresses their pain",
+          "Secondary improvement it delivers"
+        ],
+        "capabilities": [
+          "Capability 1 they'll receive",
+          "Capability 2 they'll receive",
+          "Capability 3 they'll receive"
+        ],
+        "investment": {
+          "monthlyInvestment": "$XXX per month (round to nearest $50)",
+          "setupInvestment": "$XXX one-time setup (if any, round to nearest $100)",
+          "totalFirstYear": "$X,XXX first year total (monthly × 12 + setup)"
+        },
+        "businessCase": {
+          "currentProblemCost": "Monthly cost of current problem (from problem analysis)",
+          "projectedSavings": "Monthly cost savings we'll deliver (must be less than problem cost)", 
+          "projectedRevenue": "Monthly new revenue opportunities we'll unlock (from faster processes, more capacity, better conversion, etc.)",
+          "paybackPeriod": "X months (calculated: totalFirstYear ÷ ((projectedSavings + projectedRevenue) × 12))",
+          "roiPercentage": "XXX% annual ROI (calculated: (((projectedSavings + projectedRevenue) × 12) - totalFirstYear) ÷ totalFirstYear × 100)",
+          "provenResults": [
+            {
+              "context": "A similar company we worked with (make relatable to their business size/type)",
+              "industry": "Industry (or 'similar business' if different)",
+              "outcome": "What we achieved for them (use actual case study data)",
+              "metric": "Specific metric improvement (use exact numbers from research)"
+            }
+          ]
+        },
+        "ourImplementation": {
+          "timeframe": "X weeks to full deployment",
+          "approach": "How DeployAI handles the implementation (conversational explanation)",
+          "integrationsWeHandle": ["Their existing systems from business context"],
+          "training": "How we train your team",
+          "ongoingSupport": "Our support model post-implementation"
+        },
+        "successMetrics": [
+          {
+            "metric": "Key performance indicator",
+            "currentState": "Where they are now (from problem analysis)", 
+            "targetState": "Where we'll get them (realistic improvement)",
+            "howWeMeasure": "Our measurement approach"
+          }
+        ]
+      }
+    ],
+    "ourRecommendation": {
+      "firstPhase": "Name of priority 1 solution (from implementedSolutions)",
+      "rationale": "Why we recommend starting here (business reasoning, not technical)",
+      "immediateBottleneck": "The urgent problem this addresses",
+      "expectedImpact": "What you'll see immediately", 
+      "timeToValue": "X weeks to first results",
+      "expectedROI": "Based on similar implementations, expect XXX% ROI in X months (use actual calculation)"
+    },
+    "implementationRoadmap": {
+      "phase1": {
+        "timeline": "Week 1-2",
+        "whatWeDeliver": "First solution deployment",
+        "activities": ["What we do in this phase", "Integration work we handle"],
+        "yourMilestone": "What you'll have working"
+      },
+      "phase2": {
+        "timeline": "Week 3-4", 
+        "whatWeDeliver": "Second solution deployment",
+        "activities": ["What we do next", "Additional capabilities we add"],
+        "dependencies": "What needs to be ready"
+      },
+      "phase3": {
+        "timeline": "Week 5-6",
+        "whatWeDeliver": "Final solution and optimization",
+        "activities": ["Final implementations", "System optimization"],
+        "dependencies": "Prerequisites from earlier phases"
+      }
+    },
+    "totalInvestmentSummary": {
+      "monthlyInvestment": "$X,XXX total monthly for all solutions (sum of all monthly investments)",
+      "implementationInvestment": "$X,XXX one-time implementation fee (sum of all setup costs)",
+      "firstYearTotal": "$XX,XXX total first year investment (monthlyInvestment × 12 + implementationInvestment)",
+      "projectedAnnualReturn": "$XX,XXX in savings and new revenue (sum of all projectedSavings × 12 + sum of all projectedRevenue × 12)",
+      "netROI": "XXX% return on investment ((projectedAnnualReturn - firstYearTotal) ÷ firstYearTotal × 100)",
+      "breakeven": "X months to positive ROI (firstYearTotal ÷ (projectedAnnualReturn ÷ 12))"
+    },
+    "nextSteps": {
+      "immediate": [
+        "Schedule implementation planning call with DeployAI",
+        "Gather access to your existing systems",
+        "Identify key team members for training"
+      ],
+      "week1": [
+        "Begin Phase 1 implementation",
+        "Configure initial integrations",
+        "Start team onboarding"
+      ],
+      "month1": [
+        "Complete all solution deployments",
+        "Optimize based on initial usage",
+        "Measure and report on results"
+      ]
+    }
+  }
+}
+
+QUALITY REQUIREMENTS:
+- Ensure all calculations are mathematically consistent and use the formulas provided above
+- Write all business descriptions in natural, conversational language
+- Verify solutions actually work with their stated current systems
+- Focus on business value and outcomes DeployAI will deliver
+- Position DeployAI as the solution provider, not a tool broker
+- Transform case studies into "our similar implementations" with exact metrics preserved
+- NEVER mention actual tool/vendor names in clientSolution
+- The ourRecommendation section MUST suggest the Priority 1 solution
+- Calculate estimatedAnnualOpportunity as the sum of all problem costs
+- Each solution must clearly map to which problems it solves
+
+CRITICAL: Return ONLY the JSON object. Do not include any text before or after the JSON. Do not wrap in markdown code blocks. Do not add explanations. Start with { and end with }

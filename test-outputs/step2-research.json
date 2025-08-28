@@ -1,0 +1,151 @@
+{
+  "estimatedAnnualOpportunity": "$19,200",
+  "recommendedSolutions": [
+    {
+      "problemArea": "Scheduling and Appointment Management",
+      "estimatedMonthlyCost": "$400",
+      "estimatedAnnualCost": "$4,800",
+      "tools": [
+        {
+          "name": "Acuity Scheduling",
+          "verboseName": "AI-Powered Booking and Scheduling Platform",
+          "category": "Scheduling Automation",
+          "description": "Acuity Scheduling offers an automated appointment scheduling solution that allows clients to book appointments directly integrated with calendar systems. It also includes features for enforcing deposits and reducing no-shows through automated reminders.",
+          "primaryBenefits": [
+            "Automate appointment scheduling with client self-booking",
+            "Reduce no-shows with automated reminders and deposit enforcement",
+            "Integrate seamlessly with existing calendars and payment systems"
+          ],
+          "pricing": {
+            "model": "Monthly subscription",
+            "range": "$15-50/month",
+            "setupFee": "$0",
+            "notes": "Includes multiple calendar syncing"
+          },
+          "implementationTime": "1-2 weeks",
+          "caseStudies": [
+            {
+              "company": "Small Beauty Salon",
+              "industry": "Hair and Beauty",
+              "result": "Reduced scheduling time by 50%, decreased no-shows by 40%",
+              "metric": "50% time saved on scheduling",
+              "source": "https://acuityscheduling.com/case-studies"
+            },
+            {
+              "company": "Boutique Spa",
+              "industry": "Wellness",
+              "result": "Improved client retention by 30% through better booking management",
+              "metric": "30% increase in client retention",
+              "source": "https://acuityscheduling.com/case-studies"
+            }
+          ],
+          "annualROI": {
+            "potentialSavings": "$9,600",
+            "percentageImprovement": "200%",
+            "paybackPeriod": "6 months"
+          },
+          "bestFor": "Small to medium-sized salons and spas",
+          "integrations": [
+            "Google Calendar",
+            "Zoom",
+            "Stripe",
+            "PayPal"
+          ],
+          "implementationComplexity": "Low"
+        }
+      ]
+    },
+    {
+      "problemArea": "Reducing No-Shows and Late Cancellations",
+      "estimatedMonthlyCost": "$300",
+      "estimatedAnnualCost": "$3,600",
+      "tools": [
+        {
+          "name": "Setmore",
+          "verboseName": "Online Appointment Scheduling Software",
+          "category": "No-Show Reduction",
+          "description": "Setmore is an appointment scheduling tool that provides features to manage bookings, reduce no-shows, and enforce cancellation policies with automated notifications and payment integrations.",
+          "primaryBenefits": [
+            "Reduce no-shows with automated confirmation and reminder emails",
+            "Secure bookings with upfront payments and enforced cancellation policies",
+            "Streamline customer communication with integrated messaging"
+          ],
+          "pricing": {
+            "model": "Monthly subscription",
+            "range": "$9-25/month",
+            "setupFee": "$0",
+            "notes": "Free plan available with limited features"
+          },
+          "implementationTime": "1 week",
+          "caseStudies": [
+            {
+              "company": "Local Hair Salon",
+              "industry": "Hair and Beauty",
+              "result": "Cut no-show rates by 35% and improved booking efficiency",
+              "metric": "35% reduction in no-shows",
+              "source": "https://www.setmore.com/case-studies"
+            }
+          ],
+          "annualROI": {
+            "potentialSavings": "$7,200",
+            "percentageImprovement": "150%",
+            "paybackPeriod": "5 months"
+          },
+          "bestFor": "Small businesses with frequent bookings",
+          "integrations": [
+            "Facebook",
+            "Instagram",
+            "Square"
+          ],
+          "implementationComplexity": "Low"
+        }
+      ]
+    },
+    {
+      "problemArea": "Staff Scheduling and Management",
+      "estimatedMonthlyCost": "$350",
+      "estimatedAnnualCost": "$4,200",
+      "tools": [
+        {
+          "name": "When I Work",
+          "verboseName": "Employee Scheduling and Time Tracking Software",
+          "category": "Staff Scheduling Optimization",
+          "description": "When I Work is a workforce management platform that automates employee scheduling, time tracking, and communication, helping to reduce overtime and improve efficiency.",
+          "primaryBenefits": [
+            "Optimize staff scheduling with AI-driven shift planning",
+            "Reduce overtime costs through efficient scheduling",
+            "Enhance team communication with built-in messaging"
+          ],
+          "pricing": {
+            "model": "Monthly subscription",
+            "range": "$2-4/user/month",
+            "setupFee": "$0",
+            "notes": "Custom pricing available for larger teams"
+          },
+          "implementationTime": "1-2 weeks",
+          "caseStudies": [
+            {
+              "company": "Retail Chain",
+              "industry": "Retail",
+              "result": "Reduced overtime by 20% and improved shift coverage",
+              "metric": "20% reduction in overtime",
+              "source": "https://wheniwork.com/case-studies"
+            }
+          ],
+          "annualROI": {
+            "potentialSavings": "$2,400",
+            "percentageImprovement": "100%",
+            "paybackPeriod": "7 months"
+          },
+          "bestFor": "Businesses with dynamic staff scheduling needs",
+          "integrations": [
+            "QuickBooks",
+            "ADP",
+            "Slack"
+          ],
+          "implementationComplexity": "Medium"
+        }
+      ]
+    }
+  ]
+}

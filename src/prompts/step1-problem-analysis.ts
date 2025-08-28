@@ -125,6 +125,9 @@ export function generateStep1Prompt(responses: QuizResponseData, companyName?: s
     monthlyCostBreakdown: monthlyCostBreakdown,
     // Modified field - now single value
     currentSystems: responses.currentSystems || 'not specified',
+    // NEW system context fields
+    systemsReality: responses.systemsReality || 'not provided',
+    idealSystemVision: responses.idealSystemVision || 'not provided',
     // Remaining fields
     moneyLeaks: responses.moneyLeaks || [],
     desiredOutcome: responses.desiredOutcome || [],
@@ -155,6 +158,21 @@ Extract specific monthly costs for each problem. Look for:
 - Lost opportunities (e.g., "2-3 clients worth £1,000 each")
 - Inefficiencies (e.g., "undercharging by 10%")
 
+EXTRACT FROM THEIR SYSTEMS CONTEXT:
+From systemsReality response: "${responses.systemsReality || 'not provided'}"
+Identify:
+- Specific tools/platforms they currently use
+- Integration gaps (where systems don't connect)
+- Manual processes between systems
+- Complexity mismatches (too simple/complex for needs)
+- What specifically is failing them
+
+From idealSystemVision (if provided): "${responses.idealSystemVision || 'not provided'}"
+Understand:
+- Their transformation goals
+- Must-have capabilities they envision
+- Workflow improvements they prioritize
+
 YOUR TASK:
 Based on their QUANTIFIED data:
 - Business efficiency rating: ${JSON.stringify(responses.efficiencyRating || 'not specified')}
@@ -163,6 +181,8 @@ Based on their QUANTIFIED data:
 - Operational challenges: ${JSON.stringify(responses.businessChallenges || [])}
 - Where they think money is leaking: ${JSON.stringify(responses.moneyLeaks || [])}
 - Current systems: ${JSON.stringify(responses.currentSystems || 'not specified')}
+- What's not working: ${JSON.stringify(responses.systemsReality || 'not provided')}
+- Their ideal vision: ${JSON.stringify(responses.idealSystemVision || 'not provided')}
 - Desired outcomes: ${JSON.stringify(responses.desiredOutcome || [])}
 
 Now identify their 3 BIGGEST, MOST EXPENSIVE problems using THEIR NUMBERS. Be SPECIFIC with quantification.
@@ -182,8 +202,12 @@ OUTPUT FORMAT (return only valid JSON):
     "urgency": ${JSON.stringify(responses.timeline || 'not specified')},
     "techCapability": ${JSON.stringify(responses.teamCapability || 'not specified')},
     "currentSystems": ${JSON.stringify(responses.currentSystems || 'not specified')},
+    "currentToolEcosystem": "List specific tools mentioned in systemsReality",
+    "workflowBreakpoints": "Where their systems fail them from systemsReality",
+    "integrationGaps": "Systems that don't connect based on systemsReality",
+    "transformationVision": "What they want to achieve from idealSystemVision",
     "businessObjectives": "Based on their responses, infer their main business goals",
-    "integrationNeeds": "What systems they need to integrate with based on currentSystems"
+    "integrationNeeds": "What systems they need to integrate with based on currentSystems and systemsReality"
   },
   "topOpportunities": [
     {

@@ -1,0 +1,58 @@
+{
+  "businessContext": {
+    "urgency": "within-month",
+    "industry": "Hair and beauty ",
+    "companyName": "Adisco Locs Stylist Ltd",
+    "companySize": "micro",
+    "monthlyBudget": "under-500",
+    "currentSystems": "some-tools",
+    "techCapability": "moderately-comfortable",
+    "integrationNeeds": "Online booking/calendar system(s), staff scheduling tools, POS/appointment records, basic CRM or client history — integrations with existing 'some-tools' (likely calendar apps, messaging, or spreadsheets)",
+    "businessObjectives": "Stabilize and standardize service quality, reduce manual scheduling burden, gain real-time visibility into operations and staff performance to improve consistency and free up billable time"
+  },
+  "topOpportunities": [
+    {
+      "annualCost": "$92,880–$154,800/year (monthly × 12)",
+      "problemArea": "Staff spending 60 hours/week on scheduling appointments and meetings (manual/semimanual processes using some-tools)",
+      "aiSolutionType": "Automated appointment booking + intelligent scheduling assistant (calendar/booking automation with AI availability matching, confirmations & rescheduling workflows)",
+      "searchKeywords": [
+        "hair and beauty appointment scheduling automation 258 hours/month reduction micro salon",
+        "automated booking system integration some-tools calendar automation Adisco Locs Stylist Ltd",
+        "AI scheduling assistant for hair salon save 60 hours/week",
+        "salon booking automation reduce scheduling labor $30 hourly"
+      ],
+      "expectedOutcome": "Reduce scheduling time from 258 hours/month to 26–52 hours/month (90–80% reduction). At $30/hr this saves $6,960–$6,480/month; at $50/hr saves $11,160–$10,320/month. Annual savings approx $83,520–$133,920 (depending on realized reduction and hourly rate)",
+      "monthlyTimeCost": "60 hours/week × 4.3 = 258 hours/month",
+      "problemEvidence": "\"Scheduling appointments and meetings: 60 hours/week\"",
+      "monthlyFinancialCost": "Labor cost estimate: at $30–$50/hour → $7,740–$12,900/month (258 hrs × $30–$50)"
+    },
+    {
+      "annualCost": "$3,000/year (reported: $250 × 12)",
+      "problemArea": "Service quality inconsistency causing direct monthly cost of $250/month and likely additional unquantified lost revenue/opportunity",
+      "aiSolutionType": "AI-driven staff training and quality-monitoring tools (standardized SOPs, client preference profiles in CRM, automated feedback capture & alerts to reduce variability)",
+      "searchKeywords": [
+        "hair salon staff quality monitoring AI inconsistency $250/month micro salon",
+        "salon client preference CRM automate service consistency some-tools",
+        "AI training modules for stylists reduce service variation hair and beauty"
+      ],
+      "expectedOutcome": "Reduce reported direct inconsistency cost from $250/month to near $0–$50/month by standardizing service and using preference profiles — annual savings $2,400–$3,000; additional indirect gains (retention, fewer refunds) could add $200–$1,000+/month depending on reduced churn",
+      "monthlyTimeCost": "No direct time hours provided for service variability; estimate 5–10 hours/month in corrections/handling complaints and re-dos (estimate)",
+      "problemEvidence": "\"Service quality varies by staff member: $250/month\" and business challenge: \"inconsistent-service\"",
+      "monthlyFinancialCost": "$250/month reported direct cost for inconsistent service (explicit)"
+    },
+    {
+      "annualCost": "$3,600–$12,000/year (estimated additional losses) plus the reported $3,000/year for inconsistent service = $6,600–$15,000 total when combined",
+      "problemArea": "Manual errors (money leaks) related to scheduling and operations causing hidden costs beyond the $250/month — manual processes across 'some-tools' leading to cancellations, double-bookings, no-shows and corrective admin",
+      "aiSolutionType": "End-to-end booking + confirmation automation with SMS/email reminders, auto-rebook for cancellations, and payment capture (reduce no-shows and manual entry errors); automated reconciliation with POS",
+      "searchKeywords": [
+        "salon reduce manual errors booking double bookings no-shows automation some-tools",
+        "appointment reminder automation hair salon reduce no-show revenue loss micro business",
+        "integrate POS and booking to prevent manual-errors salon AI reconciliation"
+      ],
+      "expectedOutcome": "Cut manual-error fallout costs by 60–90%. If additional manual-error losses are $300–$1,000/month, expected reduction to $30–$100/month — monthly savings $270–$900. Combined with scheduling automation, net monthly savings (labor + error reduction) could be $7,260–$13,800+ depending on labor rate",
+      "monthlyTimeCost": "Implicit within 258 hours/month scheduling; estimate additional 10–20 hours/month handling error fallout (confirmations, refunds, rescheduling)",
+      "problemEvidence": "\"Where they think money is leaking: [\\\"manual-errors\\\"]\" and currentSystems: \"some-tools\" combined with 60 hours/week scheduling burden",
+      "monthlyFinancialCost": "Explicitly reported leak: $250/month (service quality). Estimate additional losses from manual-errors: $300–$1,000/month (missed revenue from no-shows/double bookings and admin corrections) — conservative estimate because no explicit number provided"
+    }
+  ]
+}

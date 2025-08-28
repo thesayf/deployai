@@ -1,0 +1,128 @@
+Deeply analyze this business assessment with CONCRETE QUANTIFICATION. Think carefully about their SPECIFIC situation and the TIME/COST data they provided.
+
+THEIR ACTUAL RESPONSES WITH QUANTIFICATION:
+{
+  "companyName": "Adisco Locs Stylist Ltd",
+  "industry": "Hair and beauty salon specializing in dreadlocks and natural hair styling",
+  "companySize": "micro",
+  "monthlyBudget": "under-500",
+  "timeline": "within-month",
+  "efficiencyRating": "gaps",
+  "repetitiveTasks": [
+    "scheduling"
+  ],
+  "weeklyTimeBreakdown": "Scheduling and managing appointments: 60 hours/week. Taking phone calls for bookings: 20 hours/week. Managing cancellations and rescheduling: 15 hours/week. Following up on no-shows: 5 hours/week. Total scheduling-related work: 100 hours/week across the team.",
+  "businessChallenges": [
+    "inconsistent-service"
+  ],
+  "monthlyCostBreakdown": "Lost revenue from no-shows and late cancellations: £800/month. Double bookings causing customer dissatisfaction: £300/month. Staff overtime managing manual scheduling: £600/month. Lost customers due to booking frustrations: £500/month. Total monthly cost: £2,200/month.",
+  "currentSystems": "some-tools",
+  "systemsReality": "We use Fresha for online bookings which is decent but many customers still prefer calling or texting WhatsApp to book. We have card payment terminals for electronic payments but customers have gotten used to paying after the service in full with no deposit requirement. This means we get a lot of no-shows and late cancellations that cost us money. The Fresha system doesn't enforce deposits well and customers bypass it. We also use a paper diary as backup because not all staff check Fresha regularly. WhatsApp groups for staff coordination but messages get lost. Excel for tracking customer preferences and hair history but it's not updated consistently.",
+  "idealSystemVision": "Customers book online and automatically pay a deposit that ensures they show up. The system sends automatic reminders via SMS and WhatsApp. All staff can see the same real-time schedule on their phones. Customer preferences and visit history are automatically tracked. No-shows are automatically charged. The deposit system works smoothly without making customers feel uncomfortable or driving them away. Everything syncs together - bookings, payments, customer records, staff schedules. One source of truth instead of Fresha, WhatsApp, paper diary, and Excel.",
+  "moneyLeaks": [
+    "manual-errors"
+  ],
+  "desiredOutcome": [
+    "real-time-insights"
+  ],
+  "teamCapability": "moderately-comfortable",
+  "customerExperienceIssues": [],
+  "growthBottlenecks": [],
+  "pastAttempts": [],
+  "additionalContext": "none provided"
+}
+
+CRITICAL QUANTIFICATION DATA TO EXTRACT:
+
+TIME COSTS (from weeklyTimeBreakdown):
+"Scheduling and managing appointments: 60 hours/week. Taking phone calls for bookings: 20 hours/week. Managing cancellations and rescheduling: 15 hours/week. Following up on no-shows: 5 hours/week. Total scheduling-related work: 100 hours/week across the team."
+Extract specific hours per week for each task mentioned. Calculate monthly hours (weekly x 4.3).
+If they mention staff doing tasks, calculate labor cost at $30-50/hour depending on role.
+
+FINANCIAL COSTS (from monthlyCostBreakdown):
+"Lost revenue from no-shows and late cancellations: £800/month. Double bookings causing customer dissatisfaction: £300/month. Staff overtime managing manual scheduling: £600/month. Lost customers due to booking frustrations: £500/month. Total monthly cost: £2,200/month."
+Extract specific monthly costs for each problem. Look for:
+- Direct costs (e.g., "£500/month in corrections")
+- Lost opportunities (e.g., "2-3 clients worth £1,000 each")
+- Inefficiencies (e.g., "undercharging by 10%")
+
+EXTRACT FROM THEIR SYSTEMS CONTEXT:
+From systemsReality response: "We use Fresha for online bookings which is decent but many customers still prefer calling or texting WhatsApp to book. We have card payment terminals for electronic payments but customers have gotten used to paying after the service in full with no deposit requirement. This means we get a lot of no-shows and late cancellations that cost us money. The Fresha system doesn't enforce deposits well and customers bypass it. We also use a paper diary as backup because not all staff check Fresha regularly. WhatsApp groups for staff coordination but messages get lost. Excel for tracking customer preferences and hair history but it's not updated consistently."
+Identify:
+- Specific tools/platforms they currently use
+- Integration gaps (where systems don't connect)
+- Manual processes between systems
+- Complexity mismatches (too simple/complex for needs)
+- What specifically is failing them
+
+From idealSystemVision (if provided): "Customers book online and automatically pay a deposit that ensures they show up. The system sends automatic reminders via SMS and WhatsApp. All staff can see the same real-time schedule on their phones. Customer preferences and visit history are automatically tracked. No-shows are automatically charged. The deposit system works smoothly without making customers feel uncomfortable or driving them away. Everything syncs together - bookings, payments, customer records, staff schedules. One source of truth instead of Fresha, WhatsApp, paper diary, and Excel."
+Understand:
+- Their transformation goals
+- Must-have capabilities they envision
+- Workflow improvements they prioritize
+
+YOUR TASK:
+Based on their QUANTIFIED data:
+- Business efficiency rating: "gaps"
+- TIME they waste on: "Scheduling and managing appointments: 60 hours/week. Taking phone calls for bookings: 20 hours/week. Managing cancellations and rescheduling: 15 hours/week. Following up on no-shows: 5 hours/week. Total scheduling-related work: 100 hours/week across the team."
+- MONEY they're losing on: "Lost revenue from no-shows and late cancellations: £800/month. Double bookings causing customer dissatisfaction: £300/month. Staff overtime managing manual scheduling: £600/month. Lost customers due to booking frustrations: £500/month. Total monthly cost: £2,200/month."
+- Operational challenges: ["inconsistent-service"]
+- Where they think money is leaking: ["manual-errors"]
+- Current systems: "some-tools"
+- What's not working: "We use Fresha for online bookings which is decent but many customers still prefer calling or texting WhatsApp to book. We have card payment terminals for electronic payments but customers have gotten used to paying after the service in full with no deposit requirement. This means we get a lot of no-shows and late cancellations that cost us money. The Fresha system doesn't enforce deposits well and customers bypass it. We also use a paper diary as backup because not all staff check Fresha regularly. WhatsApp groups for staff coordination but messages get lost. Excel for tracking customer preferences and hair history but it's not updated consistently."
+- Their ideal vision: "Customers book online and automatically pay a deposit that ensures they show up. The system sends automatic reminders via SMS and WhatsApp. All staff can see the same real-time schedule on their phones. Customer preferences and visit history are automatically tracked. No-shows are automatically charged. The deposit system works smoothly without making customers feel uncomfortable or driving them away. Everything syncs together - bookings, payments, customer records, staff schedules. One source of truth instead of Fresha, WhatsApp, paper diary, and Excel."
+- Desired outcomes: ["real-time-insights"]
+
+Now identify their 3 BIGGEST, MOST EXPENSIVE problems using THEIR NUMBERS. Be SPECIFIC with quantification.
+
+Example: If they said "Data entry: 6 hours/week", calculate:
+- 6 hours/week = 26 hours/month
+- At $40/hour = $1,040/month labor cost
+- Annual cost = $12,480
+
+OUTPUT FORMAT (return only valid JSON):
+{
+  "businessContext": {
+    "companyName": "Adisco Locs Stylist Ltd",
+    "industry": "Hair and beauty salon specializing in dreadlocks and natural hair styling",
+    "companySize": "micro", 
+    "monthlyBudget": "under-500",
+    "urgency": "within-month",
+    "techCapability": "moderately-comfortable",
+    "currentSystems": "some-tools",
+    "currentToolEcosystem": "List specific tools mentioned in systemsReality",
+    "workflowBreakpoints": "Where their systems fail them from systemsReality",
+    "integrationGaps": "Systems that don't connect based on systemsReality",
+    "transformationVision": "What they want to achieve from idealSystemVision",
+    "businessObjectives": "Based on their responses, infer their main business goals",
+    "integrationNeeds": "What systems they need to integrate with based on currentSystems and systemsReality"
+  },
+  "topOpportunities": [
+    {
+      "problemArea": "The EXACT problem with TIME QUANTIFICATION. E.g., 'Staff spending 26 hours/month on manual data entry between some-tools'",
+      "monthlyTimeCost": "Extract from weeklyTimeBreakdown. E.g., '26 hours/month'",
+      "monthlyFinancialCost": "Calculate or extract from monthlyCostBreakdown. E.g., '$1,040/month in labor costs'",
+      "annualCost": "Multiply monthly by 12. E.g., '$12,480/year'",
+      "aiSolutionType": "SPECIFIC type of solution for this exact problem",
+      "problemEvidence": "Direct quote from their weeklyTimeBreakdown or monthlyCostBreakdown showing this problem",
+      "searchKeywords": [
+        "Very specific search terms including their industry and quantified problem",
+        "Include their current systems that need integration: some-tools",
+        "Search for automation that saves X hours per week",
+        "Search for '[their exact workflow] automation [their industry] [company size]'"
+      ],
+      "expectedOutcome": "Specific, measurable improvement. E.g., 'Reduce 26 hours/month to 2 hours/month, saving $960/month'"
+    }
+  ]
+}
+
+CRITICAL RULES:
+1. ALWAYS use their actual numbers from weeklyTimeBreakdown and monthlyCostBreakdown
+2. If they didn't provide specific numbers, estimate based on industry standards but note it's an estimate
+3. Calculate annual costs by multiplying monthly costs by 12
+4. For time costs, assume $30-50/hour depending on the task complexity
+5. Make search keywords VERY specific to their quantified problems
+
+Think about THIS business with THESE specific costs. What makes THEIR situation unique based on the numbers they provided?
+
+CRITICAL: Return ONLY the JSON object. Start with { and end with }

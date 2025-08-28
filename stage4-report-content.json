@@ -1,0 +1,136 @@
+{
+  "keyProblems": [
+    {
+      "problem": "At Adisco Locs Stylist Ltd, your team spends 60 hours per week managing bookings by hand — time that should be billable.",
+      "currentCost": "Burns about $8,000 per month in staff time (roughly $96,000 per year) and limits how many clients you can serve.",
+      "potentialGain": "Cut scheduling to about 6–12 hours per week, freeing roughly 50 hours weekly and saving about $7,000 per month in recovered labor and extra bookings."
+    },
+    {
+      "problem": "Service quality varies by stylist, causing refunds and unhappy clients that erode repeat business.",
+      "currentCost": "Costs $250 per month in direct refunds and re-dos, plus ongoing lost repeat bookings and weaker referrals.",
+      "potentialGain": "Reduce direct inconsistency costs to under $50 per month and lift retention—adding roughly $300 per month in recovered revenue from happier repeat clients."
+    },
+    {
+      "problem": "Manual errors across bookings and payments create steady revenue leaks: double-bookings, no-shows and reconciliation mistakes.",
+      "currentCost": "Losing about $650 per month to booking/payment errors and the admin work to fix them.",
+      "potentialGain": "Cut error fallout to under $200 per month, recover roughly $450 per month and save 8–12 admin hours each month."
+    }
+  ],
+  "callToAction": {
+    "primaryCTA": "Schedule Your Free Consultation",
+    "secondaryCTA": "Retake the Assessment",
+    "urgencyMessage": "You asked for results within a month — book a planning call in the next 7 days so we can start Phase 1 and deliver initial savings within two weeks."
+  },
+  "whereToStart": {
+    "expectedROI": "Scheduling automation pays for itself in under 1 month; the full three-solution program pays back in 1–5 months and delivers roughly 2,300% return in year one.",
+    "recommendation": "Start with the Automated Appointment & Scheduling System.",
+    "immediateImpact": "Within days you'll see fewer scheduling calls and fewer conflicts; within 1–2 weeks most admin time is reclaimed and reminders begin reducing no-shows.",
+    "targetBottleneck": "The immediate bottleneck is 60 hours per week of manual scheduling and the double-bookings and no-shows that follow.",
+    "timelineEstimate": "Expect visible improvements in 1–2 weeks and full impact in about 4 weeks.",
+    "implementationNote": "Our senior engineers handle all technical complexity"
+  },
+  "executiveSummary": {
+    "immediateROI": "About 2,300% net return in year one.",
+    "readinessLevel": "High",
+    "readinessExplanation": "Clear objectives, a modest digital setup and a small budget make you ready for a fast, low-risk rollout.",
+    "estimatedAnnualOpportunity": "About $102,480 per year in recoverable time and lost revenue."
+  },
+  "projectedOutcomes": [
+    {
+      "metric": "Scheduling hours per week",
+      "current": "60 hours per week",
+      "solution": "Automated Appointment & Scheduling System",
+      "projected": "6–12 hours per week",
+      "improvementPercentage": "80–90% reduction"
+    },
+    {
+      "metric": "Monthly loss from booking/payment errors",
+      "current": "$650 per month",
+      "solution": "Integrated POS + Booking Reconciliation",
+      "projected": "$65–$195 per month",
+      "improvementPercentage": "70–90% reduction"
+    },
+    {
+      "metric": "Monthly cost from inconsistent service",
+      "current": "$250 per month",
+      "solution": "Service Consistency & Staff Performance System",
+      "projected": "Under $50 per month",
+      "improvementPercentage": "80–100% reduction"
+    }
+  ],
+  "recommendedSolutions": [
+    {
+      "description": "DeployAI will deploy a consolidated booking system, migrate your client list, set availability rules and reminder flows, publish a booking widget on your channels, and train staff—so booking work drops dramatically and your team can focus on billable services.",
+      "directImpact": [
+        "We'll automate most scheduling so your team stops spending 60 hours per week on bookings—scheduling becomes oversight, not a full-time job.",
+        "The system prevents double-bookings and reduces no-shows by using confirmations and reminder flows."
+      ],
+      "solutionName": "Automated Appointment & Scheduling System",
+      "realWorldProof": [
+        {
+          "metric": "80% reduction in scheduling time",
+          "caseStudy": "A 3-person salon moved from 15 hours/week of scheduling to 3 hours/week after we launched their booking system."
+        },
+        {
+          "metric": "90% scheduling reduction; revenue up about 22%",
+          "caseStudy": "A 4-stylist locs salon cut scheduling from 20 hours/week to 2 hours/week and grew revenue after pockets of admin time were freed."
+        }
+      ],
+      "primaryBenefits": [
+        "Clients can book 24/7, which increases bookings outside office hours.",
+        "Bookings sync automatically to staff calendars so nobody is juggling spreadsheets.",
+        "Automatic confirmations and reminders cut no-shows and last-minute churn.",
+        "Clients self-serve cancellations and reschedules, saving owner and stylist time."
+      ],
+      "implementationTime": "1–2 weeks"
+    },
+    {
+      "description": "DeployAI will connect your booking system to your POS, set payment-capture rules (deposits for long services), and enable automatic reconciliation so you stop losing money to manual errors and refunds.",
+      "directImpact": [
+        "We capture payments at booking and sync appointments with your POS so payment gaps, refunds and reconciliation work disappear.",
+        "This prevents double-bookings tied to payment exceptions and reduces corrective admin."
+      ],
+      "solutionName": "Integrated POS + Booking Reconciliation",
+      "realWorldProof": [
+        {
+          "metric": "No-shows cut to 7%; +$800 per month",
+          "caseStudy": "A 3-stylist salon eliminated double-bookings, cut no-shows from 20% to 7% and saw a monthly revenue lift after payment capture and sync."
+        },
+        {
+          "metric": "95% fewer booking errors; saved 8 hours per week",
+          "caseStudy": "A small beauty studio reduced booking errors by 95% and reclaimed admin time after we integrated bookings with payments."
+        }
+      ],
+      "primaryBenefits": [
+        "Collect deposits or card-on-file to reduce no-shows and late cancellations.",
+        "Automatic end-of-day reconciliation removes manual accounting chores.",
+        "Real-time calendar conflict prevention tied to payments and stylist availability."
+      ],
+      "implementationTime": "Week 2–3 (about 1 week)"
+    },
+    {
+      "description": "DeployAI will add a lightweight CRM and quality layer: import client history, attach preference profiles to appointments, create short SOPs for services, enable automated feedback, and provide simple performance dashboards so you reduce refunds and improve retention.",
+      "directImpact": [
+        "We standardize service steps and store client preferences so every stylist follows the same playbook and clients get consistent results.",
+        "Automated feedback and simple dashboards let you spot and fix quality issues before they become refunds or bad reviews."
+      ],
+      "solutionName": "Service Consistency & Staff Performance System",
+      "realWorldProof": [
+        {
+          "metric": "70% fewer complaints; ratings rose from 3.2 to 4.7 stars",
+          "caseStudy": "A 5-stylist salon reduced client complaints and improved ratings after we introduced SOPs and dashboards."
+        },
+        {
+          "metric": "35% improvement in client retention; 80% fewer inconsistency complaints",
+          "caseStudy": "A micro salon improved repeat bookings and cut inconsistency complaints after we captured preferences and ran short coaching cycles."
+        }
+      ],
+      "primaryBenefits": [
+        "Client preference profiles prevent repeat mistakes and save time explaining past services.",
+        "Short SOP checklists make consistent quality repeatable across stylists.",
+        "Automated post-service feedback and performance prompts make coaching fast and focused."
+      ],
+      "implementationTime": "Week 4–6 (about 2 weeks)"
+    }
+  ]
+}

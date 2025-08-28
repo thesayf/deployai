@@ -1,0 +1,17 @@
+{
+  "industry": "Hair and beauty salon specializing in dreadlocks and natural hair styling",
+  "efficiencyRating": "gaps",
+  "companySize": "micro",
+  "repetitiveTasks": ["scheduling"],
+  "weeklyTimeBreakdown": "Scheduling and managing appointments: 60 hours/week. Taking phone calls for bookings: 20 hours/week. Managing cancellations and rescheduling: 15 hours/week. Following up on no-shows: 5 hours/week. Total scheduling-related work: 100 hours/week across the team.",
+  "businessChallenges": ["inconsistent-service"],
+  "monthlyCostBreakdown": "Lost revenue from no-shows and late cancellations: £800/month. Double bookings causing customer dissatisfaction: £300/month. Staff overtime managing manual scheduling: £600/month. Lost customers due to booking frustrations: £500/month. Total monthly cost: £2,200/month.",
+  "currentSystems": "some-tools",
+  "systemsReality": "We use Fresha for online bookings which is decent but many customers still prefer calling or texting WhatsApp to book. We have card payment terminals for electronic payments but customers have gotten used to paying after the service in full with no deposit requirement. This means we get a lot of no-shows and late cancellations that cost us money. The Fresha system doesn't enforce deposits well and customers bypass it. We also use a paper diary as backup because not all staff check Fresha regularly. WhatsApp groups for staff coordination but messages get lost. Excel for tracking customer preferences and hair history but it's not updated consistently.",
+  "idealSystemVision": "Customers book online and automatically pay a deposit that ensures they show up. The system sends automatic reminders via SMS and WhatsApp. All staff can see the same real-time schedule on their phones. Customer preferences and visit history are automatically tracked. No-shows are automatically charged. The deposit system works smoothly without making customers feel uncomfortable or driving them away. Everything syncs together - bookings, payments, customer records, staff schedules. One source of truth instead of Fresha, WhatsApp, paper diary, and Excel.",
+  "moneyLeaks": ["manual-errors"],
+  "desiredOutcome": ["real-time-insights"],
+  "teamCapability": "moderately-comfortable",
+  "monthlyBudget": "under-500",
+  "timeline": "within-month"
+}

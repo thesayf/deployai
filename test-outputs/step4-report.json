@@ -1,0 +1,132 @@
+{
+  "executiveSummary": {
+    "readinessLevel": "Medium",
+    "readinessExplanation": "Strong objectives and existing tools, but needs AI integration experience",
+    "estimatedAnnualOpportunity": "Opportunity to save $20,100 annually",
+    "immediateROI": "Expect a 59% return on investment"
+  },
+  "keyProblems": [
+    {
+      "problem": "At Adisco Locs Stylist Ltd, managing appointments manually is consuming valuable staff time",
+      "currentCost": "Costs $10,000 monthly in lost productivity",
+      "potentialGain": "Automating scheduling will save $8,000 monthly and free up time for customer service"
+    },
+    {
+      "problem": "Adisco Locs Stylist Ltd is losing revenue due to no-shows, impacting their bottom line",
+      "currentCost": "Losing £800 monthly from no-shows",
+      "potentialGain": "Implementing a no-show reduction system could save £600 monthly"
+    },
+    {
+      "problem": "Manual scheduling is leading to unnecessary overtime costs for Adisco Locs Stylist Ltd",
+      "currentCost": "Overtime costs £600 monthly",
+      "potentialGain": "Optimizing staff schedules can eliminate overtime costs, saving £600 monthly"
+    }
+  ],
+  "recommendedSolutions": [
+    {
+      "solutionName": "Automated Appointment Scheduling System",
+      "directImpact": [
+        "This system automates booking, freeing up staff to focus on customer satisfaction"
+      ],
+      "primaryBenefits": [
+        "Clients can book themselves easily, reducing no-shows with deposit requirements",
+        "Automated reminders ensure clients remember their appointments",
+        "Integrates with calendars and payment systems for seamless operations"
+      ],
+      "description": "DeployAI will set up an automated scheduling system, improving efficiency and client satisfaction",
+      "realWorldProof": [
+        {
+          "caseStudy": "A similar small beauty salon reduced scheduling time by 50%",
+          "metric": "50% reduction in scheduling time"
+        },
+        {
+          "caseStudy": "Reduced no-shows by 40% in a comparable salon",
+          "metric": "40% drop in no-shows"
+        }
+      ],
+      "implementationTime": "Up and running in 2 weeks"
+    },
+    {
+      "solutionName": "No-Show Reduction and Booking Efficiency System",
+      "directImpact": [
+        "Secures bookings with upfront payments and reduces no-shows with reminders"
+      ],
+      "primaryBenefits": [
+        "Automated emails confirm bookings, reducing missed appointments",
+        "Upfront payment ensures commitment",
+        "Streamlined customer communication boosts satisfaction"
+      ],
+      "description": "DeployAI ensures a system that reduces no-shows with secure bookings and reminders",
+      "realWorldProof": [
+        {
+          "caseStudy": "A local salon cut no-show rates by 35%",
+          "metric": "35% reduction in no-shows"
+        },
+        {
+          "caseStudy": "Improved booking efficiency significantly",
+          "metric": "Efficiency boost noticeable immediately"
+        }
+      ],
+      "implementationTime": "Fully operational in 1 week"
+    },
+    {
+      "solutionName": "Optimized Staff Scheduling System",
+      "directImpact": [
+        "Eliminates manual scheduling, cutting down on overtime"
+      ],
+      "primaryBenefits": [
+        "AI-driven shift planning optimizes staff schedules",
+        "Tracks time and reports, reducing unnecessary hours",
+        "Facilitates team communication for better coverage"
+      ],
+      "description": "DeployAI optimizes staff scheduling to reduce overtime and improve efficiency",
+      "realWorldProof": [
+        {
+          "caseStudy": "A retail chain reduced overtime by 20%",
+          "metric": "20% reduction in overtime"
+        },
+        {
+          "caseStudy": "Enhanced shift coverage in a similar business",
+          "metric": "Improved coverage immediately"
+        }
+      ],
+      "implementationTime": "Ready to go in 2 weeks"
+    }
+  ],
+  "projectedOutcomes": [
+    {
+      "solution": "Automated Appointment Scheduling System",
+      "metric": "Scheduling time",
+      "current": "258 hours per month",
+      "projected": "50 hours per month",
+      "improvementPercentage": "80% improvement"
+    },
+    {
+      "solution": "No-Show Reduction and Booking Efficiency System",
+      "metric": "Lost revenue from no-shows",
+      "current": "£800 per month",
+      "projected": "£200 per month",
+      "improvementPercentage": "75% improvement"
+    },
+    {
+      "solution": "Optimized Staff Scheduling System",
+      "metric": "Overtime costs",
+      "current": "£600 per month",
+      "projected": "£0 per month",
+      "improvementPercentage": "100% improvement"
+    }
+  ],
+  "whereToStart": {
+    "recommendation": "Begin with the Automated Appointment Scheduling System",
+    "targetBottleneck": "Excessive staff time on scheduling",
+    "immediateImpact": "See a reduction in scheduling time within weeks",
+    "timelineEstimate": "Results in just 2 weeks",
+    "expectedROI": "Expect 200% ROI in 5 months",
+    "implementationNote": "Our senior engineers handle all technical complexity"
+  },
+  "callToAction": {
+    "primaryCTA": "Schedule Your Free Consultation",
+    "secondaryCTA": "Retake the Assessment",
+    "urgencyMessage": "Start now to see improvements within the month and boost your bottom line"
+  }
+}
