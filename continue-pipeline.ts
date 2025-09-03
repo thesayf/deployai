@@ -7,9 +7,9 @@ console.log('=================================');
 console.log('CONTINUING PIPELINE - STEPS 3 & 4');
 console.log('=================================\n');
 
-// Load existing outputs
-const problemAnalysis = JSON.parse(fs.readFileSync('./test-outputs/step1-analysis.json', 'utf-8'));
-const toolResearch = JSON.parse(fs.readFileSync('./test-outputs/step2-research.json', 'utf-8'));
+// Load existing outputs from database export
+const problemAnalysis = JSON.parse(fs.readFileSync('./stage1-existing.json', 'utf-8'));
+const toolResearch = JSON.parse(fs.readFileSync('./stage2-existing.json', 'utf-8'));
 
 async function continuePipeline() {
   try {
@@ -22,7 +22,7 @@ async function continuePipeline() {
     fs.writeFileSync('./test-prompts/step3-prompt.txt', step3Prompt);
     console.log('Prompt saved. Calling OpenAI API with extended timeout...');
     
-    const response3 = await callOpenAI(step3Prompt, 60000); // 60 second timeout
+    const response3 = await callOpenAI(step3Prompt, 180000); // 180 second timeout
     const curatedTools = JSON.parse(response3);
     
     console.log('✓ Solution Curation Complete');
@@ -40,7 +40,7 @@ async function continuePipeline() {
     const step4Prompt = generateStep4Prompt(problemAnalysis, curatedTools.clientSolution);
     fs.writeFileSync('./test-prompts/step4-prompt.txt', step4Prompt);
     
-    const response4 = await callOpenAI(step4Prompt, 60000); // 60 second timeout
+    const response4 = await callOpenAI(step4Prompt, 180000); // 180 second timeout
     const finalReport = JSON.parse(response4);
     
     console.log('✓ Report Generation Complete');
@@ -64,6 +64,64 @@ async function continuePipeline() {
     }
     console.log('\nAll outputs saved to test-outputs/');
     
+    // Update database with the completed stages
+    console.log('\n=================================');
+    console.log('UPDATING DATABASE');
+    console.log('=================================');
+    
+    const { createClient } = require('@supabase/supabase-js');
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+    
+    const REPORT_ID = '2bcc84fd-2d90-4ec8-94fe-d52fce5db171';
+    
+    // Update Stage 3
+    const { error: error3 } = await supabase
+      .from('ai_reports')
+      .update({
+        stage3_tool_selection: curatedTools,
+        report_status: 'stage3_complete',
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', REPORT_ID);
+    
+    if (!error3) {
+      console.log('✓ Stage 3 saved to database');
+    } else {
+      console.error('Failed to save Stage 3:', error3);
+    }
+    
+    // Update Stage 4
+    const { error: error4 } = await supabase
+      .from('ai_reports')
+      .update({
+        stage4_report_content: finalReport,
+        report_status: 'completed',
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', REPORT_ID);
+    
+    if (!error4) {
+      console.log('✓ Stage 4 saved to database');
+      console.log('✓ Report marked as COMPLETED');
+      
+      // Get share token
+      const { data: report } = await supabase
+        .from('ai_reports')
+        .select('share_token')
+        .eq('id', REPORT_ID)
+        .single();
+        
+      if (report?.share_token) {
+        console.log('\nView report at:');
+        console.log('https://deployai.studio/report/view/' + report.share_token);
+      }
+    } else {
+      console.error('Failed to save Stage 4:', error4);
+    }
+    
   } catch (error: any) {
     console.error('Error in pipeline:', error);
     console.error('Details:', error.message);
@@ -86,7 +144,7 @@ async function callOpenAI(prompt: string, timeout: number = 30000): Promise<stri
         'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'gpt-5-mini',
         messages: [
           { 
             role: 'system', 
@@ -94,8 +152,7 @@ async function callOpenAI(prompt: string, timeout: number = 30000): Promise<stri
           },
           { role: 'user', content: prompt }
         ],
-        temperature: 0.7,
-        max_tokens: 4000
+        max_completion_tokens: 16000
       }),
       signal: controller.signal
     });

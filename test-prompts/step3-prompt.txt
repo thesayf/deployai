@@ -2,218 +2,360 @@ You are a senior AI implementation consultant at DeployAI. Based on the problem 
 
 BUSINESS CONTEXT:
 {
-  "companyName": "Adisco Locs Stylist Ltd",
-  "industry": "Hair and beauty salon specializing in dreadlocks and natural hair styling",
-  "companySize": "micro",
-  "monthlyBudget": "under-500",
-  "urgency": "within-month",
-  "techCapability": "moderately-comfortable",
-  "currentSystems": "some-tools",
-  "currentToolEcosystem": "Fresha, WhatsApp, paper diary, Excel, card payment terminals",
-  "workflowBreakpoints": "Customers bypass Fresha deposits, staff don't check Fresha regularly, messages get lost in WhatsApp, Excel not consistently updated",
-  "integrationGaps": "Fresha doesn't enforce deposits well, lack of synchronization between tools",
-  "transformationVision": "Unified system for online bookings with deposits, automatic reminders, real-time schedule access, and integrated customer records",
-  "businessObjectives": "Reduce no-shows, improve customer satisfaction, streamline scheduling, enhance operational efficiency",
-  "integrationNeeds": "Need to integrate booking, payment, customer records, and scheduling systems into a single platform"
+  "urgency": "exploring",
+  "industry": "We are a care home",
+  "companyName": "Akshar Business Consulting Ltd",
+  "companySize": "large",
+  "monthlyBudget": "500-2000",
+  "currentSystems": "mostly-manual",
+  "techCapability": "need-help",
+  "integrationGaps": "Aquilla ↔ Power BI (reporting workaround), Timesheet management system ↔ Fabric (no API; CSV export/import), Aquilla invoice allocation ↔ accounting/reporting (unallocated payments not applied), Aimplan/Power BI integration immature due to lack of skills.",
+  "integrationNeeds": "Automated posting/allocation between Aquilla and accounting/reporting; reliable API ingestion from Timesheet system into Fabric (or replace timesheet system with API-first tool); embedding Power BI/Aimplan dashboards fed by clean, reconciled source data; automated invoice creation/payment reconciliation with booking and timesheet systems.",
+  "businessObjectives": "Reduce manual work and errors, improve reporting and cash/application accuracy, free leadership time for strategy, enable scalable operations.",
+  "workflowBreakpoints": "Aquilla has many unallocated invoices (received payments not applied to invoice level) causing poor reporting; Timesheet system cannot push all data via API into Fabric requiring CSV downloads; Power BI and Aimplan are recently introduced and not yet embedded due to lack of in‑house skills; multiple manual handoffs and reconciliation between systems causing time lost and reporting gaps.",
+  "currentToolEcosystem": [
+    "Aquilla",
+    "Fabric",
+    "Power BI",
+    "Aimplan",
+    "Customer booking system",
+    "Timesheet management system"
+  ],
+  "transformationVision": "Leadership spends most time on business decisions rather than data wrangling; accounting books are well maintained and up to date."
 }
 
 IDENTIFIED PROBLEMS WITH COSTS:
 [
   {
-    "problemArea": "Staff spending excessive time on scheduling and managing appointments",
-    "monthlyTimeCost": "60 hours/week x 4.3 weeks = 258 hours/month",
-    "monthlyFinancialCost": "Assuming $40/hour, $10,320/month",
-    "annualCost": "$123,840/year",
-    "aiSolutionType": "AI-powered scheduling and appointment management software",
-    "problemEvidence": "Scheduling and managing appointments: 60 hours/week",
+    "annualCost": "At $30/hr = $11,610/year; at $50/hr = $19,350/year",
+    "problemArea": "Manual entry between systems: Entering data between different systems — 7.5 hours/week per their report",
+    "aiSolutionType": "Robotic Process Automation (RPA) + API integrations (connector between Aquilla, Timesheet system, Fabric and booking system) with a lightweight orchestration layer to auto-sync records and apply payments to invoice level.",
     "searchKeywords": [
-      "Hair salon AI scheduling automation",
-      "Fresha integration with deposit enforcement",
-      "Salon appointment management automation micro business"
+      "care home automate data entry Aquilla to Fabric connector",
+      "RPA Aquilla invoice allocation automate apply payments",
+      "Timesheet CSV to Fabric API automation care home",
+      "automate Aquilla Power BI data pipeline care home 32 hours/month"
     ],
-    "expectedOutcome": "Reduce scheduling time from 258 hours/month to 50 hours/month, saving $8,320/month"
+    "expectedOutcome": "Reduce manual cross-system entry from 32.25 hours/month to ~4 hours/month (initial exceptions only) — saving ~28.25 hours/month. Financially save approximately $847–$1,412/month and $10,164–$16,944/year depending on labour rate.",
+    "monthlyTimeCost": "7.5 hours/week × 4.3 = 32.25 hours/month",
+    "problemEvidence": "\"Entering data between different systems: 7.5 hours/week.\"",
+    "monthlyFinancialCost": "At $30/hr = $967.50/month; at $50/hr = $1,612.50/month (useful range: $968–$1,613/month)"
   },
   {
-    "problemArea": "Lost revenue from no-shows and late cancellations",
-    "monthlyTimeCost": "N/A",
-    "monthlyFinancialCost": "£800/month",
-    "annualCost": "£9,600/year",
-    "aiSolutionType": "Automated booking and deposit system with penalty enforcement",
-    "problemEvidence": "Lost revenue from no-shows and late cancellations: £800/month",
+    "annualCost": "At $30/hr = $11,610/year; at $50/hr = $19,350/year",
+    "problemArea": "Invoice creation and processing payments: Creating invoices and processing payments — 7.5 hours/week",
+    "aiSolutionType": "Automated billing/invoicing system connected to booking and timesheet systems (invoice generation rules, automated payment application, auto-reconciliation into Aquilla), plus intelligent matching for unallocated payments.",
     "searchKeywords": [
-      "Hair salon no-show reduction AI",
-      "Automated deposit systems for salons",
-      "Integrate Fresha with penalty enforcement"
+      "care home automated invoicing Aquilla integration",
+      "invoice reconciliation automation unallocated payments Aquilla",
+      "billing automation booking system to accounting care home 32 hours/month"
     ],
-    "expectedOutcome": "Decrease lost revenue from £800/month to £200/month, saving £600/month"
+    "expectedOutcome": "Reduce invoice & payment processing from 32.25 hours/month to ~3–6 hours/month (exceptions), saving ~26–29 hours/month ≈ $780–$1,450/month and $9,360–$17,400/year depending on labour rate. Also reduce unallocated invoices (improve cash reporting) which addresses a $1,750/month pain point tied to operational chaos.",
+    "monthlyTimeCost": "7.5 hours/week × 4.3 = 32.25 hours/month",
+    "problemEvidence": "\"Creating invoices and processing payments: 7.5 hours/week.\" and \"Aquilla has loads of unallocated invoices where we have received money for invoices but not applied it to the invoice level\"",
+    "monthlyFinancialCost": "At $30/hr = $967.50/month; at $50/hr = $1,612.50/month"
   },
   {
-    "problemArea": "Staff overtime due to manual scheduling",
-    "monthlyTimeCost": "N/A",
-    "monthlyFinancialCost": "£600/month",
-    "annualCost": "£7,200/year",
-    "aiSolutionType": "AI-driven scheduling optimization and automation",
-    "problemEvidence": "Staff overtime managing manual scheduling: £600/month",
+    "annualCost": "At $30/hr = $9,288/year; at $50/hr = $15,480/year",
+    "problemArea": "Turning business data into actionable insights: Reporting and analytics time — 3 hours/week (plus bookkeeping/expense tracking supporting it: 3 hours/week)",
+    "aiSolutionType": "Data pipeline + BI automation (Power BI models fed by Fabric with ETL transforms), plus prebuilt care-home KPI dashboards and automated anomaly detection to flag errors and money leaks.",
     "searchKeywords": [
-      "Salon staff scheduling AI optimization",
-      "Automate manual scheduling hair salon",
-      "Fresha staff management automation"
+      "Power BI automation care home Fabric integration 13 hours/month reporting",
+      "automated bookkeeping reconciliation care home Aquilla Power BI",
+      "care home KPI dashboard Aimplan Power BI embed 26 hours/month"
     ],
-    "expectedOutcome": "Eliminate need for staff overtime, saving £600/month"
+    "expectedOutcome": "Reduce combined reporting/bookkeeping time from 25.8 hours/month to ~4–6 hours/month (automated pipelines and dashboards) — saving ~20–22 hours/month ≈ $600–$1,100/month and $7,200–$13,200/year. Improved reporting also reduces the operational-chaos cost of $1,750/month by better capacity planning and fewer manual corrections.",
+    "monthlyTimeCost": "Reporting: 3 hours/week × 4.3 = 12.9 hours/month. Bookkeeping/expense tracking: 3 hours/week × 4.3 = 12.9 hours/month. Combined = 25.8 hours/month.",
+    "problemEvidence": "\"Turning business data into actionable insights: 3 hours/week.\" and \"Tracking expenses and bookkeeping: 3 hours/week\" and \"PowerBI and Aimplan are new so still embedding...we dont have inhouse skills\"",
+    "monthlyFinancialCost": "At $30/hr = $774/month; at $50/hr = $1,290/month"
   }
 ]
 
 RESEARCHED TOOLS WITH COMPREHENSIVE DATA:
 {
-  "estimatedAnnualOpportunity": "$19,200",
   "recommendedSolutions": [
     {
-      "problemArea": "Scheduling and Appointment Management",
-      "estimatedMonthlyCost": "$400",
-      "estimatedAnnualCost": "$4,800",
       "tools": [
         {
-          "name": "Acuity Scheduling",
-          "verboseName": "AI-Powered Booking and Scheduling Platform",
-          "category": "Scheduling Automation",
-          "description": "Acuity Scheduling offers an automated appointment scheduling solution that allows clients to book appointments directly integrated with calendar systems. It also includes features for enforcing deposits and reducing no-shows through automated reminders.",
-          "primaryBenefits": [
-            "Automate appointment scheduling with client self-booking",
-            "Reduce no-shows with automated reminders and deposit enforcement",
-            "Integrate seamlessly with existing calendars and payment systems"
-          ],
+          "name": "Zapier",
+          "bestFor": "Companies needing to connect multiple existing systems",
           "pricing": {
             "model": "Monthly subscription",
-            "range": "$15-50/month",
-            "setupFee": "$0",
-            "notes": "Includes multiple calendar syncing"
+            "notes": "Professional plan at $49/month suitable for most care homes",
+            "range": "$19.99-$599/month",
+            "setupFee": "$0"
           },
-          "implementationTime": "1-2 weeks",
+          "category": "Process Automation",
+          "annualROI": {
+            "paybackPeriod": "3 months",
+            "potentialSavings": "$39,000",
+            "percentageImprovement": "406%"
+          },
           "caseStudies": [
             {
-              "company": "Small Beauty Salon",
-              "industry": "Hair and Beauty",
-              "result": "Reduced scheduling time by 50%, decreased no-shows by 40%",
-              "metric": "50% time saved on scheduling",
-              "source": "https://acuityscheduling.com/case-studies"
+              "metric": "85% reduction in manual work",
+              "result": "Reduced data entry time by 85%, eliminated duplicate entries across 6 systems",
+              "source": "Data not available",
+              "company": "Healthcare services company with 150 employees",
+              "industry": "Healthcare"
             },
             {
-              "company": "Boutique Spa",
-              "industry": "Wellness",
-              "result": "Improved client retention by 30% through better booking management",
-              "metric": "30% increase in client retention",
-              "source": "https://acuityscheduling.com/case-studies"
+              "metric": "20 hours weekly savings",
+              "result": "Saved 20 hours per week on administrative tasks, improved data accuracy to 99.5%",
+              "source": "Data not available",
+              "company": "Service-based business with multiple software systems",
+              "industry": "Professional Services"
             }
           ],
-          "annualROI": {
-            "potentialSavings": "$9,600",
-            "percentageImprovement": "200%",
-            "paybackPeriod": "6 months"
-          },
-          "bestFor": "Small to medium-sized salons and spas",
+          "description": "Zapier is a no-code automation platform that connects over 5,000 apps and services, enabling automated data transfer between systems. It can create workflows (called Zaps) that automatically move data from timesheet systems to accounting software, trigger invoice creation from booking systems, and sync data between multiple platforms without manual intervention.",
+          "verboseName": "Automated Workflow Integration Platform",
           "integrations": [
-            "Google Calendar",
-            "Zoom",
-            "Stripe",
-            "PayPal"
+            "Aquilla",
+            "Power BI",
+            "Most accounting software",
+            "CSV/API connections"
           ],
-          "implementationComplexity": "Low"
-        }
-      ]
-    },
-    {
-      "problemArea": "Reducing No-Shows and Late Cancellations",
-      "estimatedMonthlyCost": "$300",
-      "estimatedAnnualCost": "$3,600",
-      "tools": [
-        {
-          "name": "Setmore",
-          "verboseName": "Online Appointment Scheduling Software",
-          "category": "No-Show Reduction",
-          "description": "Setmore is an appointment scheduling tool that provides features to manage bookings, reduce no-shows, and enforce cancellation policies with automated notifications and payment integrations.",
           "primaryBenefits": [
-            "Reduce no-shows with automated confirmation and reminder emails",
-            "Secure bookings with upfront payments and enforced cancellation policies",
-            "Streamline customer communication with integrated messaging"
+            "Automate data transfer between 5,000+ applications without coding",
+            "Reduce manual data entry by up to 90% with triggered workflows",
+            "Create multi-step workflows that handle complex business processes"
           ],
-          "pricing": {
-            "model": "Monthly subscription",
-            "range": "$9-25/month",
-            "setupFee": "$0",
-            "notes": "Free plan available with limited features"
-          },
-          "implementationTime": "1 week",
-          "caseStudies": [
-            {
-              "company": "Local Hair Salon",
-              "industry": "Hair and Beauty",
-              "result": "Cut no-show rates by 35% and improved booking efficiency",
-              "metric": "35% reduction in no-shows",
-              "source": "https://www.setmore.com/case-studies"
-            }
-          ],
-          "annualROI": {
-            "potentialSavings": "$7,200",
-            "percentageImprovement": "150%",
-            "paybackPeriod": "5 months"
-          },
-          "bestFor": "Small businesses with frequent bookings",
-          "integrations": [
-            "Facebook",
-            "Instagram",
-            "Square"
-          ],
-          "implementationComplexity": "Low"
-        }
-      ]
-    },
-    {
-      "problemArea": "Staff Scheduling and Management",
-      "estimatedMonthlyCost": "$350",
-      "estimatedAnnualCost": "$4,200",
-      "tools": [
-        {
-          "name": "When I Work",
-          "verboseName": "Employee Scheduling and Time Tracking Software",
-          "category": "Staff Scheduling Optimization",
-          "description": "When I Work is a workforce management platform that automates employee scheduling, time tracking, and communication, helping to reduce overtime and improve efficiency.",
-          "primaryBenefits": [
-            "Optimize staff scheduling with AI-driven shift planning",
-            "Reduce overtime costs through efficient scheduling",
-            "Enhance team communication with built-in messaging"
-          ],
-          "pricing": {
-            "model": "Monthly subscription",
-            "range": "$2-4/user/month",
-            "setupFee": "$0",
-            "notes": "Custom pricing available for larger teams"
-          },
           "implementationTime": "1-2 weeks",
+          "implementationComplexity": "Low"
+        },
+        {
+          "name": "Microsoft Power Automate",
+          "bestFor": "Organizations already using Microsoft ecosystem",
+          "pricing": {
+            "model": "Per user monthly",
+            "notes": "May be included in existing Microsoft licenses",
+            "range": "$15-40/month per user",
+            "setupFee": "$0"
+          },
+          "category": "RPA and Workflow Automation",
+          "annualROI": {
+            "paybackPeriod": "4 months",
+            "potentialSavings": "$35,000",
+            "percentageImprovement": "350%"
+          },
           "caseStudies": [
             {
-              "company": "Retail Chain",
-              "industry": "Retail",
-              "result": "Reduced overtime by 20% and improved shift coverage",
-              "metric": "20% reduction in overtime",
-              "source": "https://wheniwork.com/case-studies"
+              "metric": "70% faster processing",
+              "result": "Automated invoice processing reduced processing time by 70%, eliminated 95% of data entry errors",
+              "source": "Data not available",
+              "company": "Healthcare organization with 500+ employees",
+              "industry": "Healthcare"
             }
           ],
-          "annualROI": {
-            "potentialSavings": "$2,400",
-            "percentageImprovement": "100%",
-            "paybackPeriod": "7 months"
-          },
-          "bestFor": "Businesses with dynamic staff scheduling needs",
+          "description": "Microsoft Power Automate is a cloud-based service that creates automated workflows between applications and services. It offers both simple automation and advanced RPA capabilities, with deep integration into Microsoft ecosystem including Power BI. It can handle complex data transformations and API integrations while providing enterprise-grade security and compliance.",
+          "verboseName": "Enterprise Process Automation and Integration Platform",
           "integrations": [
-            "QuickBooks",
-            "ADP",
-            "Slack"
+            "Power BI",
+            "Fabric",
+            "Most business applications",
+            "Custom APIs"
           ],
+          "primaryBenefits": [
+            "Native integration with Power BI and Microsoft ecosystem",
+            "Advanced RPA capabilities for complex data processing",
+            "Enterprise security and compliance built-in"
+          ],
+          "implementationTime": "2-4 weeks",
           "implementationComplexity": "Medium"
         }
-      ]
+      ],
+      "problemArea": "Manual Data Entry Between Systems",
+      "estimatedAnnualCost": "$9,600",
+      "estimatedMonthlyCost": "$800"
+    },
+    {
+      "tools": [
+        {
+          "name": "QuickBooks Enterprise",
+          "bestFor": "Care homes needing comprehensive accounting automation",
+          "pricing": {
+            "model": "Annual subscription",
+            "notes": "Care home specific features available in industry editions",
+            "range": "$1,340-$6,480/year",
+            "setupFee": "$0-500"
+          },
+          "category": "Accounting Automation",
+          "annualROI": {
+            "paybackPeriod": "2 months",
+            "potentialSavings": "$42,000",
+            "percentageImprovement": "583%"
+          },
+          "caseStudies": [
+            {
+              "metric": "80% faster processing",
+              "result": "Reduced invoice processing time by 80%, eliminated 90% of payment allocation errors",
+              "source": "Data not available",
+              "company": "Multi-location care facility with 200 residents",
+              "industry": "Care Home"
+            },
+            {
+              "metric": "75% automation rate",
+              "result": "Automated 75% of invoice creation, reduced accounts receivable by 40%",
+              "source": "Data not available",
+              "company": "Healthcare services provider",
+              "industry": "Healthcare"
+            }
+          ],
+          "description": "QuickBooks Enterprise is a comprehensive accounting solution with advanced features for invoice automation, payment matching, and financial reporting. It includes automated invoice creation from service records, payment matching algorithms to resolve unallocated payments, and integration capabilities with care home management systems.",
+          "verboseName": "Advanced Accounting and Invoice Management System",
+          "integrations": [
+            "Power BI",
+            "Most care home management systems",
+            "Banking systems"
+          ],
+          "primaryBenefits": [
+            "Automated payment matching reduces unallocated invoices by 95%",
+            "Streamlined invoice creation from service records",
+            "Advanced reporting and integration with existing systems"
+          ],
+          "implementationTime": "4-6 weeks",
+          "implementationComplexity": "Medium"
+        },
+        {
+          "name": "Xero",
+          "bestFor": "Organizations wanting cloud-based automation with strong integration",
+          "pricing": {
+            "model": "Monthly subscription",
+            "notes": "Additional costs for integrations and add-ons",
+            "range": "$13-70/month",
+            "setupFee": "$0"
+          },
+          "category": "Financial Automation",
+          "annualROI": {
+            "paybackPeriod": "1 month",
+            "potentialSavings": "$38,000",
+            "percentageImprovement": "4,556%"
+          },
+          "caseStudies": [
+            {
+              "metric": "85% time reduction",
+              "result": "Reduced reconciliation time by 85%, improved cash flow visibility by 60%",
+              "source": "Data not available",
+              "company": "Care home group with multiple facilities",
+              "industry": "Care Home"
+            }
+          ],
+          "description": "Xero is a cloud-based accounting platform with AI-powered invoice and payment automation features. It includes automated bank reconciliation, smart invoice matching, and integration capabilities with care home systems. The platform uses machine learning to improve payment allocation accuracy over time.",
+          "verboseName": "Cloud-Based Automated Accounting Platform",
+          "integrations": [
+            "Power BI",
+            "Banking systems",
+            "Care home management software"
+          ],
+          "primaryBenefits": [
+            "AI-powered bank reconciliation matches 90% of transactions automatically",
+            "Automated invoice creation and payment tracking",
+            "Real-time financial reporting and dashboard integration"
+          ],
+          "implementationTime": "2-3 weeks",
+          "implementationComplexity": "Low"
+        }
+      ],
+      "problemArea": "Invoice Creation and Payment Processing",
+      "estimatedAnnualCost": "$7,200",
+      "estimatedMonthlyCost": "$600"
+    },
+    {
+      "tools": [
+        {
+          "name": "Tableau",
+          "bestFor": "Organizations needing advanced analytics and visualization",
+          "pricing": {
+            "model": "Per user monthly",
+            "notes": "Creator licenses needed for dashboard development",
+            "range": "$15-75/month per user",
+            "setupFee": "$0"
+          },
+          "category": "Business Intelligence",
+          "annualROI": {
+            "paybackPeriod": "2 months",
+            "potentialSavings": "$31,200",
+            "percentageImprovement": "650%"
+          },
+          "caseStudies": [
+            {
+              "metric": "90% reporting time reduction",
+              "result": "Reduced reporting time by 90%, identified $2M in operational savings through data insights",
+              "source": "Data not available",
+              "company": "Healthcare network with 50+ facilities",
+              "industry": "Healthcare"
+            },
+            {
+              "metric": "80% report automation",
+              "result": "Automated 80% of routine reports, improved decision-making speed by 60%",
+              "source": "Data not available",
+              "company": "Multi-location care provider",
+              "industry": "Care Home"
+            }
+          ],
+          "description": "Tableau is a powerful data visualization and business intelligence platform that can connect to multiple data sources including Aquilla, Fabric, and existing systems. It provides automated data refresh, advanced analytics capabilities, and can create comprehensive dashboards for care home operations, financial performance, and resident care metrics.",
+          "verboseName": "Advanced Data Visualization and Analytics Platform",
+          "integrations": [
+            "Power BI",
+            "Fabric",
+            "Aquilla",
+            "Most databases and cloud services"
+          ],
+          "primaryBenefits": [
+            "Automated data connections eliminate manual report creation",
+            "Advanced analytics reveal insights not visible in basic reporting",
+            "Interactive dashboards enable self-service analytics for leadership"
+          ],
+          "implementationTime": "4-6 weeks",
+          "implementationComplexity": "Medium"
+        },
+        {
+          "name": "Microsoft Power Platform",
+          "bestFor": "Organizations already using Microsoft tools wanting integrated solution",
+          "pricing": {
+            "model": "Per user monthly",
+            "notes": "May have existing licenses that can be upgraded",
+            "range": "$20-40/month per user",
+            "setupFee": "$0"
+          },
+          "category": "Business Intelligence and Automation",
+          "annualROI": {
+            "paybackPeriod": "1 month",
+            "potentialSavings": "$45,000",
+            "percentageImprovement": "938%"
+          },
+          "caseStudies": [
+            {
+              "metric": "75% process automation",
+              "result": "Integrated 8 separate systems, reduced manual processes by 75%, improved reporting accuracy to 99%",
+              "source": "Data not available",
+              "company": "Healthcare services organization",
+              "industry": "Healthcare"
+            }
+          ],
+          "description": "Microsoft Power Platform combines Power BI, Power Automate, Power Apps, and Power Virtual Agents into an integrated solution. Since Akshar already has Power BI, this approach leverages their existing investment while adding automation and custom applications to address their specific workflow challenges.",
+          "verboseName": "Integrated Low-Code Business Application Platform",
+          "integrations": [
+            "Existing Power BI",
+            "Fabric",
+            "Aquilla",
+            "Most business systems"
+          ],
+          "primaryBenefits": [
+            "Leverages existing Power BI investment with enhanced automation",
+            "Custom applications can bridge gaps between existing systems",
+            "Integrated platform reduces complexity and training requirements"
+          ],
+          "implementationTime": "6-8 weeks",
+          "implementationComplexity": "Medium"
+        }
+      ],
+      "problemArea": "Business Intelligence and Reporting",
+      "estimatedAnnualCost": "$4,800",
+      "estimatedMonthlyCost": "$400"
     }
-  ]
+  ],
+  "estimatedAnnualOpportunity": "$156,000"
 }
 
 SELECTION CRITERIA:

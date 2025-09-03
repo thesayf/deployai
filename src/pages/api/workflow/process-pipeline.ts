@@ -94,8 +94,8 @@ const { handler } = servePagesRouter<WorkflowPayload>(
       console.log('[Workflow] Report fetched, status:', report.report_status);
       
       // Check if already being processed (duplicate prevention)
-      if (report.report_status === 'processing' && !force) {
-        console.log('[Workflow] Report already being processed, skipping duplicate');
+      if (report.report_status === 'generating' && !force) {
+        console.log('[Workflow] Report already being generated, skipping duplicate');
         return { alreadyProcessing: true };
       }
       
@@ -112,8 +112,8 @@ const { handler } = servePagesRouter<WorkflowPayload>(
     if (reportData.alreadyProcessing) {
       return { 
         success: true, 
-        message: 'Report already being processed',
-        status: 'processing'
+        message: 'Report already being generated',
+        status: 'generating'
       };
     }
     
@@ -134,7 +134,7 @@ const { handler } = servePagesRouter<WorkflowPayload>(
       const { error } = await supabase
         .from('ai_reports')
         .update({ 
-          report_status: 'processing',
+          report_status: 'generating',
           updated_at: new Date().toISOString()
         })
         .eq('id', reportId);
@@ -142,7 +142,7 @@ const { handler } = servePagesRouter<WorkflowPayload>(
       if (error) {
         console.error('[Workflow] Failed to set processing status:', error);
       } else {
-        console.log('[Workflow] Set report status to processing');
+        console.log('[Workflow] Set report status to generating');
       }
     });
     

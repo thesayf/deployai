@@ -1,300 +1,364 @@
-You are creating a persuasive AI readiness report. Your job is to transform solution data into compelling executive communication that feels personalized to Adisco Locs Stylist Ltd in the Hair and beauty salon specializing in dreadlocks and natural hair styling industry.
+You are creating a persuasive AI readiness report. Your job is to transform solution data into compelling executive communication that feels personalized to Akshar Business Consulting Ltd in the We are a care home industry.
 
 IMPORTANT: You MUST include ALL solutions from clientSolution.implementedSolutions in the report. If there are 3 solutions, the report MUST have 3 solution entries. Each solution addresses specific problems - include them all.
 
 CRITICAL CONTEXT FOR NARRATIVE VOICE:
-- Company: Adisco Locs Stylist Ltd
-- They are a micro Hair and beauty salon specializing in dreadlocks and natural hair styling company
-- Their budget is under-500
-- Their timeline urgency is within-month
-- They currently use: some-tools
-- Their main objectives: Reduce no-shows, improve customer satisfaction, streamline scheduling, enhance operational efficiency
+- Company: Akshar Business Consulting Ltd
+- They are a large We are a care home company
+- Their budget is 500-2000
+- Their timeline urgency is exploring
+- They currently use: mostly-manual
+- Their main objectives: Reduce manual work and errors, improve reporting and cash/application accuracy, free leadership time for strategy, enable scalable operations.
 
 RAW DATA TO TRANSFORM:
 Problems Identified: [
   {
-    "problemArea": "Staff spending excessive time on scheduling and managing appointments",
-    "monthlyTimeCost": "60 hours/week x 4.3 weeks = 258 hours/month",
-    "monthlyFinancialCost": "Assuming $40/hour, $10,320/month",
-    "annualCost": "$123,840/year",
-    "aiSolutionType": "AI-powered scheduling and appointment management software",
-    "problemEvidence": "Scheduling and managing appointments: 60 hours/week",
+    "annualCost": "At $30/hr = $11,610/year; at $50/hr = $19,350/year",
+    "problemArea": "Manual entry between systems: Entering data between different systems — 7.5 hours/week per their report",
+    "aiSolutionType": "Robotic Process Automation (RPA) + API integrations (connector between Aquilla, Timesheet system, Fabric and booking system) with a lightweight orchestration layer to auto-sync records and apply payments to invoice level.",
     "searchKeywords": [
-      "Hair salon AI scheduling automation",
-      "Fresha integration with deposit enforcement",
-      "Salon appointment management automation micro business"
+      "care home automate data entry Aquilla to Fabric connector",
+      "RPA Aquilla invoice allocation automate apply payments",
+      "Timesheet CSV to Fabric API automation care home",
+      "automate Aquilla Power BI data pipeline care home 32 hours/month"
     ],
-    "expectedOutcome": "Reduce scheduling time from 258 hours/month to 50 hours/month, saving $8,320/month"
+    "expectedOutcome": "Reduce manual cross-system entry from 32.25 hours/month to ~4 hours/month (initial exceptions only) — saving ~28.25 hours/month. Financially save approximately $847–$1,412/month and $10,164–$16,944/year depending on labour rate.",
+    "monthlyTimeCost": "7.5 hours/week × 4.3 = 32.25 hours/month",
+    "problemEvidence": "\"Entering data between different systems: 7.5 hours/week.\"",
+    "monthlyFinancialCost": "At $30/hr = $967.50/month; at $50/hr = $1,612.50/month (useful range: $968–$1,613/month)"
   },
   {
-    "problemArea": "Lost revenue from no-shows and late cancellations",
-    "monthlyTimeCost": "N/A",
-    "monthlyFinancialCost": "£800/month",
-    "annualCost": "£9,600/year",
-    "aiSolutionType": "Automated booking and deposit system with penalty enforcement",
-    "problemEvidence": "Lost revenue from no-shows and late cancellations: £800/month",
+    "annualCost": "At $30/hr = $11,610/year; at $50/hr = $19,350/year",
+    "problemArea": "Invoice creation and processing payments: Creating invoices and processing payments — 7.5 hours/week",
+    "aiSolutionType": "Automated billing/invoicing system connected to booking and timesheet systems (invoice generation rules, automated payment application, auto-reconciliation into Aquilla), plus intelligent matching for unallocated payments.",
     "searchKeywords": [
-      "Hair salon no-show reduction AI",
-      "Automated deposit systems for salons",
-      "Integrate Fresha with penalty enforcement"
+      "care home automated invoicing Aquilla integration",
+      "invoice reconciliation automation unallocated payments Aquilla",
+      "billing automation booking system to accounting care home 32 hours/month"
     ],
-    "expectedOutcome": "Decrease lost revenue from £800/month to £200/month, saving £600/month"
+    "expectedOutcome": "Reduce invoice & payment processing from 32.25 hours/month to ~3–6 hours/month (exceptions), saving ~26–29 hours/month ≈ $780–$1,450/month and $9,360–$17,400/year depending on labour rate. Also reduce unallocated invoices (improve cash reporting) which addresses a $1,750/month pain point tied to operational chaos.",
+    "monthlyTimeCost": "7.5 hours/week × 4.3 = 32.25 hours/month",
+    "problemEvidence": "\"Creating invoices and processing payments: 7.5 hours/week.\" and \"Aquilla has loads of unallocated invoices where we have received money for invoices but not applied it to the invoice level\"",
+    "monthlyFinancialCost": "At $30/hr = $967.50/month; at $50/hr = $1,612.50/month"
   },
   {
-    "problemArea": "Staff overtime due to manual scheduling",
-    "monthlyTimeCost": "N/A",
-    "monthlyFinancialCost": "£600/month",
-    "annualCost": "£7,200/year",
-    "aiSolutionType": "AI-driven scheduling optimization and automation",
-    "problemEvidence": "Staff overtime managing manual scheduling: £600/month",
+    "annualCost": "At $30/hr = $9,288/year; at $50/hr = $15,480/year",
+    "problemArea": "Turning business data into actionable insights: Reporting and analytics time — 3 hours/week (plus bookkeeping/expense tracking supporting it: 3 hours/week)",
+    "aiSolutionType": "Data pipeline + BI automation (Power BI models fed by Fabric with ETL transforms), plus prebuilt care-home KPI dashboards and automated anomaly detection to flag errors and money leaks.",
     "searchKeywords": [
-      "Salon staff scheduling AI optimization",
-      "Automate manual scheduling hair salon",
-      "Fresha staff management automation"
+      "Power BI automation care home Fabric integration 13 hours/month reporting",
+      "automated bookkeeping reconciliation care home Aquilla Power BI",
+      "care home KPI dashboard Aimplan Power BI embed 26 hours/month"
     ],
-    "expectedOutcome": "Eliminate need for staff overtime, saving £600/month"
+    "expectedOutcome": "Reduce combined reporting/bookkeeping time from 25.8 hours/month to ~4–6 hours/month (automated pipelines and dashboards) — saving ~20–22 hours/month ≈ $600–$1,100/month and $7,200–$13,200/year. Improved reporting also reduces the operational-chaos cost of $1,750/month by better capacity planning and fewer manual corrections.",
+    "monthlyTimeCost": "Reporting: 3 hours/week × 4.3 = 12.9 hours/month. Bookkeeping/expense tracking: 3 hours/week × 4.3 = 12.9 hours/month. Combined = 25.8 hours/month.",
+    "problemEvidence": "\"Turning business data into actionable insights: 3 hours/week.\" and \"Tracking expenses and bookkeeping: 3 hours/week\" and \"PowerBI and Aimplan are new so still embedding...we dont have inhouse skills\"",
+    "monthlyFinancialCost": "At $30/hr = $774/month; at $50/hr = $1,290/month"
   }
 ]
 Our Solutions: {
   "executiveSummary": {
-    "businessProfile": "Adisco Locs Stylist Ltd is a micro hair and beauty salon specializing in dreadlocks and natural hair styling. They face challenges in scheduling, managing appointments, and reducing no-shows.",
-    "totalInvestmentRange": "$650 - $1,100 per month",
-    "expectedROI": "6-8 months payback period",
-    "implementationTimeline": "6 weeks total for all solutions",
+    "businessProfile": "Akshar Business Consulting Ltd is a large care home operator currently running mostly-manual finance and workforce workflows. Key pain points are high manual entry, unallocated payments in Aquilla causing poor reporting, fragmented timesheet ingestion into Fabric, and Power BI/Aimplan not yet embedded due to missing data hygiene and internal skills.",
+    "totalInvestmentRange": "$1,750 - $1,950 per month",
+    "expectedROI": "Pay back your investment in 5-8 months",
+    "implementationTimeline": "6-8 weeks total for all three solutions",
     "keyOutcomes": [
-      "Streamlined scheduling and appointment management",
-      "Reduced no-shows and increased booking efficiency",
-      "Optimized staff scheduling with reduced overtime"
+      "We will remove routine manual work so leadership spends time on strategy instead of data wrangling",
+      "We will deliver consistent, reconciled financials with dramatically fewer unallocated payments and accurate cash reporting",
+      "We will embed dashboards and alerts so you prevent issues early and scale operations without adding headcount"
     ],
-    "estimatedAnnualOpportunity": "$20,100 (sum of all problem costs)"
+    "estimatedAnnualOpportunity": "$32,500 - $54,200 (sum of identified problem annual costs)"
   },
   "implementedSolutions": [
     {
       "priority": 1,
-      "solutionName": "Automated Appointment Scheduling System",
-      "solutionCategory": "Scheduling Automation",
-      "whatWeImplement": "DeployAI will implement a system that automates your appointment scheduling, allowing clients to book online with deposit requirements and automated reminders.",
-      "problemSolved": "Staff spending excessive time on scheduling and managing appointments",
+      "solutionName": "Automated Integration & Payment Allocation Engine",
+      "solutionCategory": "Process Automation & Payment Reconciliation",
+      "whatWeImplement": "DeployAI delivers an orchestration layer that automatically syncs records across your booking, timesheet, accounting and reporting systems and applies received payments down to the invoice level. We will reduce repetitive data entry, automatically allocate payments in Aquilla, and keep Fabric and Power BI fed with reconciled source data.",
+      "problemSolved": "Manual entry between systems; many unallocated payments in Aquilla causing poor reporting and reconciliation delays",
       "howItSolvesYourProblem": [
-        "Reduces time spent on scheduling by automating bookings",
-        "Decreases no-shows with automated reminders and deposit enforcement"
+        "Automatically moves timesheet, booking and payment records between systems, removing manual CSV downloads and copy/paste",
+        "Intelligently matches and applies payments to invoices so Aquilla and accounting remain reconciled and Power BI reports are accurate"
       ],
       "capabilities": [
-        "Client self-booking with deposit enforcement",
-        "Automated appointment reminders",
-        "Integration with existing calendar and payment systems"
+        "Automated two-way sync of invoice, payment and client records between booking, timesheet, Aquilla and accounting",
+        "Smart matching algorithms to apply unallocated payments to invoice level with exception queues for human review",
+        "Scheduled and on-demand data refresh to the reporting layer so dashboards reflect reconciled data"
       ],
       "investment": {
-        "monthlyInvestment": "$400 per month",
-        "setupInvestment": "$0 one-time setup",
-        "totalFirstYear": "$4,800 first year total"
+        "monthlyInvestment": "$800 per month",
+        "setupInvestment": "$500 one-time setup",
+        "totalFirstYear": "$10,100 first year total (monthly × 12 + setup)"
       },
       "businessCase": {
-        "currentProblemCost": "$10,320/month",
-        "projectedSavings": "$8,320/month",
-        "projectedRevenue": "$0/month",
-        "paybackPeriod": "5 months",
-        "roiPercentage": "200% annual ROI",
+        "currentProblemCost": "$970 - $1,613 per month (manual entry & allocation time)",
+        "projectedSavings": "$1,000 per month",
+        "projectedRevenue": "$200 per month (capacity freed for revenue-generating admin/placements)",
+        "paybackPeriod": "8 months (calculated: $10,100 ÷ ($1,000 + $200) = 8.4 → 8 months)",
+        "roiPercentage": "43% annual ROI (calculated: (((1,000 + 200) × 12) - 10,100) ÷ 10,100 × 100 ≈ 43%)",
         "provenResults": [
           {
-            "context": "A similar small beauty salon",
-            "industry": "Hair and Beauty",
-            "outcome": "Reduced scheduling time by 50%, decreased no-shows by 40%",
-            "metric": "50% time saved on scheduling"
+            "context": "A similar healthcare services client with multiple systems",
+            "industry": "Healthcare",
+            "outcome": "Reduced data entry time by 85%, eliminating duplicate entries across six systems",
+            "metric": "85% reduction in manual work"
+          },
+          {
+            "context": "A mid-sized service business with administrative overload",
+            "industry": "Professional Services",
+            "outcome": "Saved 20 hours per week on administrative tasks and improved data accuracy to 99.5%",
+            "metric": "20 hours weekly savings"
+          },
+          {
+            "context": "A large healthcare organisation automating invoice workflows",
+            "industry": "Healthcare",
+            "outcome": "Automated invoice processing reduced processing time by 70% and eliminated 95% of data entry errors",
+            "metric": "70% faster processing"
           }
         ]
       },
       "ourImplementation": {
-        "timeframe": "2 weeks to full deployment",
-        "approach": "DeployAI will set up your new scheduling system, ensuring all configurations meet your business needs. We handle all integrations.",
+        "timeframe": "2-4 weeks to full deployment",
+        "approach": "We will run a quick discovery, configure the orchestration flows, build matching rules for payments, and deploy an exception dashboard for the finance team. We iterate quickly with your team to tune matching confidence and exception handling.",
         "integrationsWeHandle": [
-          "Fresha",
-          "Google Calendar",
-          "Stripe",
-          "PayPal"
+          "Aquilla",
+          "Fabric",
+          "Power BI",
+          "Customer booking system",
+          "Timesheet management system"
         ],
-        "training": "We provide comprehensive training for your staff to ensure smooth adoption.",
-        "ongoingSupport": "Our team offers continuous support and system updates post-implementation."
+        "training": "Two 90-minute workshops for finance and operations plus detailed user guides and a recorded training session",
+        "ongoingSupport": "Monthly support retainer with SLA for bug fixes, monthly cadence tuning, and quarterly health checks"
       },
       "successMetrics": [
         {
-          "metric": "Scheduling time reduction",
-          "currentState": "258 hours/month",
-          "targetState": "50 hours/month",
-          "howWeMeasure": "Monthly staff time audits"
+          "metric": "Hours spent on manual cross-system entry",
+          "currentState": "32.5 hours/month (7.5 hrs/week × 4.33)",
+          "targetState": "4 hours/month (exceptions only)",
+          "howWeMeasure": "Compare system logs and time tracking before and after; exception queue size and resolved items per week"
+        },
+        {
+          "metric": "Unallocated payments in Aquilla",
+          "currentState": "High counts causing poor reporting (qualitative: frequent exceptions)",
+          "targetState": "Reduce unallocated payments by 80-95%",
+          "howWeMeasure": "Number and value of unallocated payments in Aquilla monthly, matched vs unmatched ratios"
         }
       ]
     },
     {
       "priority": 2,
-      "solutionName": "No-Show Reduction and Booking Efficiency System",
-      "solutionCategory": "No-Show Reduction",
-      "whatWeImplement": "DeployAI will establish a system that secures bookings with upfront payments and reduces no-shows through automated reminders.",
-      "problemSolved": "Lost revenue from no-shows and late cancellations",
+      "solutionName": "Automated Billing & Reconciliation System",
+      "solutionCategory": "Invoice & Accounting Automation",
+      "whatWeImplement": "DeployAI builds an automated billing engine that generates invoices from booking and timesheet records, applies payments back to accounting, and runs intelligent reconciliation so books are accurate and AR is under control.",
+      "problemSolved": "Manual invoice creation and processing; unallocated payments and invoicing errors causing cash reporting problems",
       "howItSolvesYourProblem": [
-        "Enforces upfront payment policies to secure bookings",
-        "Sends automatic reminders to reduce no-shows"
+        "Generates invoices automatically from bookings and payroll/timesheet data, removing duplicate manual invoice creation",
+        "Automatically reconciles bank payments to invoices and flags exceptions for quick resolution, reducing unallocated payments"
       ],
       "capabilities": [
-        "Automated confirmation and reminder emails",
-        "Upfront payment enforcement",
-        "Integrated customer communication"
+        "Rules-driven invoice generation from bookings and timesheets",
+        "Automatic bank/payment matching and invoice allocation with exception handling",
+        "Reconciled ledger exports into Fabric and dashboards so financials are accurate daily"
       ],
       "investment": {
-        "monthlyInvestment": "$300 per month",
-        "setupInvestment": "$0 one-time setup",
-        "totalFirstYear": "$3,600 first year total"
+        "monthlyInvestment": "$600 per month",
+        "setupInvestment": "$400 one-time setup",
+        "totalFirstYear": "$7,600 first year total (monthly × 12 + setup)"
       },
       "businessCase": {
-        "currentProblemCost": "£800/month",
-        "projectedSavings": "£600/month",
-        "projectedRevenue": "$0/month",
-        "paybackPeriod": "6 months",
-        "roiPercentage": "150% annual ROI",
+        "currentProblemCost": "$970 - $1,613 per month (invoice creation & payment processing)",
+        "projectedSavings": "$900 per month",
+        "projectedRevenue": "$300 per month (faster collections, lower DSO, and capacity for additional placements)",
+        "paybackPeriod": "6 months (calculated: $7,600 ÷ ($900 + $300) = 6.33 → 6 months)",
+        "roiPercentage": "89% annual ROI (calculated: (((900 + 300) × 12) - 7,600) ÷ 7,600 × 100 ≈ 89%)",
         "provenResults": [
           {
-            "context": "A local hair salon",
-            "industry": "Hair and Beauty",
-            "outcome": "Cut no-show rates by 35% and improved booking efficiency",
-            "metric": "35% reduction in no-shows"
+            "context": "A multi-location care facility",
+            "industry": "Care Home",
+            "outcome": "Reduced invoice processing time by 80% and eliminated 90% of payment allocation errors",
+            "metric": "80% faster processing"
+          },
+          {
+            "context": "Healthcare services provider",
+            "industry": "Healthcare",
+            "outcome": "Automated 75% of invoice creation and reduced accounts receivable by 40%",
+            "metric": "75% automation rate"
+          },
+          {
+            "context": "Care home group with multiple facilities",
+            "industry": "Care Home",
+            "outcome": "Reduced reconciliation time by 85% and improved cash flow visibility by 60%",
+            "metric": "85% time reduction"
           }
         ]
       },
       "ourImplementation": {
-        "timeframe": "1 week to full deployment",
-        "approach": "DeployAI configures the system to align with your booking policies and integrates it with your existing tools.",
+        "timeframe": "4-6 weeks to full deployment",
+        "approach": "We map your current invoicing rules, configure automated invoice generation from the booking and timesheet feeds, implement reconciliation rules and an exceptions dashboard for finance to review. We run parallel validation for 2 billing cycles before full cutover.",
         "integrationsWeHandle": [
-          "Fresha",
-          "Square",
-          "WhatsApp"
+          "Customer booking system",
+          "Timesheet management system",
+          "Aquilla",
+          "Fabric"
         ],
-        "training": "We offer training sessions to help your team leverage the new system.",
-        "ongoingSupport": "Continuous monitoring and support ensure the system runs smoothly."
+        "training": "Hands-on sessions for billing and accounts teams, including reconciliation walkthroughs and exception triage playbook",
+        "ongoingSupport": "Quarterly policy and rules review, monthly reconciliation audit and priority support for payment exceptions"
       },
       "successMetrics": [
         {
-          "metric": "No-show rate reduction",
-          "currentState": "Lost revenue of £800/month",
-          "targetState": "Lost revenue of £200/month",
-          "howWeMeasure": "Monthly revenue audits"
+          "metric": "Hours spent creating invoices and processing payments",
+          "currentState": "32.5 hours/month (7.5 hrs/week × 4.33)",
+          "targetState": "5 hours/month (exceptions only)",
+          "howWeMeasure": "Time tracking for invoicing tasks, count of invoices created manually vs automated"
+        },
+        {
+          "metric": "Value of unallocated payments",
+          "currentState": "Significant operational pain and reporting inaccuracies (qualitative, repeating monthly)",
+          "targetState": "Reduce unallocated payments by 80% and improve cash accuracy",
+          "howWeMeasure": "Monthly value and count of unallocated payments before and after implementation"
         }
       ]
     },
     {
       "priority": 3,
-      "solutionName": "Optimized Staff Scheduling System",
-      "solutionCategory": "Staff Scheduling Optimization",
-      "whatWeImplement": "DeployAI delivers a system that optimizes your staff scheduling, reducing overtime and improving shift coverage.",
-      "problemSolved": "Staff overtime due to manual scheduling",
+      "solutionName": "Reconciled Data & Embedded BI Suite",
+      "solutionCategory": "Data Pipeline & Business Intelligence",
+      "whatWeImplement": "DeployAI will deliver a clean data pipeline from source systems into your reporting layer and deliver embedded dashboards and KPI packs. We will automate ETL, embed Aimplan-style scenario outputs and deliver anomaly detection to surface issues early.",
+      "problemSolved": "Reporting and analytics not embedded due to dirty data and lack of in-house BI skills; slow, manual reporting takes leadership time",
       "howItSolvesYourProblem": [
-        "Automates and optimizes staff schedules",
-        "Reduces overtime costs with efficient shift planning"
+        "Feeds reconciled, validated data into Power BI dashboards so leadership sees reliable numbers without manual reconciliation",
+        "Provides prebuilt care-home KPI dashboards and automated anomaly alerts so problems are flagged before they become urgent"
       ],
       "capabilities": [
-        "AI-driven shift planning",
-        "Time tracking and reporting",
-        "Built-in team communication"
+        "Automated ETL/cleaning and scheduled refreshes of reconciled datasets",
+        "Prebuilt executive dashboards for occupancy, capacity, AR, payroll and cash flow",
+        "Automated anomaly detection and monthly pack generation for leadership"
       ],
       "investment": {
-        "monthlyInvestment": "$350 per month",
-        "setupInvestment": "$0 one-time setup",
-        "totalFirstYear": "$4,200 first year total"
+        "monthlyInvestment": "$400 per month",
+        "setupInvestment": "$300 one-time setup",
+        "totalFirstYear": "$5,100 first year total (monthly × 12 + setup)"
       },
       "businessCase": {
-        "currentProblemCost": "£600/month",
-        "projectedSavings": "£600/month",
-        "projectedRevenue": "$0/month",
-        "paybackPeriod": "7 months",
-        "roiPercentage": "100% annual ROI",
+        "currentProblemCost": "$774 - $1,290 per month (reporting and bookkeeping time)",
+        "projectedSavings": "$800 per month",
+        "projectedRevenue": "$200 per month (better capacity planning and faster decisions enabling marginal growth)",
+        "paybackPeriod": "5 months (calculated: $5,100 ÷ ($800 + $200) = 5.1 → 5 months)",
+        "roiPercentage": "135% annual ROI (calculated: (((800 + 200) × 12) - 5,100) ÷ 5,100 × 100 ≈ 135%)",
         "provenResults": [
           {
-            "context": "A retail chain",
-            "industry": "Retail",
-            "outcome": "Reduced overtime by 20% and improved shift coverage",
-            "metric": "20% reduction in overtime"
+            "context": "Healthcare network with 50+ facilities",
+            "industry": "Healthcare",
+            "outcome": "Reduced reporting time by 90% and identified $2M in operational savings",
+            "metric": "90% reporting time reduction"
+          },
+          {
+            "context": "Multi-location care provider",
+            "industry": "Care Home",
+            "outcome": "Automated 80% of routine reports and improved decision-making speed by 60%",
+            "metric": "80% report automation"
+          },
+          {
+            "context": "Healthcare services organization integrating multiple systems",
+            "industry": "Healthcare",
+            "outcome": "Integrated eight separate systems and reduced manual processes by 75%, improving reporting accuracy to 99%",
+            "metric": "75% process automation"
           }
         ]
       },
       "ourImplementation": {
-        "timeframe": "2 weeks to full deployment",
-        "approach": "DeployAI configures and optimizes your staff schedules, ensuring seamless integration with your current systems.",
+        "timeframe": "3-5 weeks to full deployment",
+        "approach": "We will build a Fabric-fed data model for reconciled source data, create executive dashboards aligned to your KPIs, and deliver anomaly alerts and an operations pack for leadership. We upskill one or two internal champions to manage dashboards after go-live.",
         "integrationsWeHandle": [
-          "Excel",
-          "Slack"
+          "Fabric",
+          "Power BI",
+          "Aquilla",
+          "Aimplan",
+          "Timesheet management system",
+          "Customer booking system"
         ],
-        "training": "We provide hands-on training to help your team manage schedules effortlessly.",
-        "ongoingSupport": "Our support team is available for consultations and adjustments post-implementation."
+        "training": "BI coaching for two internal champions plus a one-hour leadership walkthrough of dashboards and packs",
+        "ongoingSupport": "Monthly dashboard updates, quarterly KPI reviews, and ad-hoc dashboard builds as your reporting needs evolve"
       },
       "successMetrics": [
         {
-          "metric": "Overtime cost reduction",
-          "currentState": "Overtime costs of £600/month",
-          "targetState": "£0/month",
-          "howWeMeasure": "Monthly financial reports"
+          "metric": "Combined hours spent on reporting and bookkeeping",
+          "currentState": "26.0 hours/month (3 hrs/week reporting + 3 hrs/week bookkeeping × 4.33 = 25.98 → 26 hrs/month)",
+          "targetState": "5 hours/month combined",
+          "howWeMeasure": "Time tracking, number of manual reconciliations required per month, dashboard usage metrics"
+        },
+        {
+          "metric": "Leadership time spent preparing data for decisions",
+          "currentState": "Significant—leadership spends time on data wrangling weekly",
+          "targetState": "Leadership spends near-zero time on data prep and focuses on decisions",
+          "howWeMeasure": "Surveys, time logs, and reduction in ad-hoc reporting requests"
         }
       ]
     }
   ],
   "ourRecommendation": {
-    "firstPhase": "Automated Appointment Scheduling System",
-    "rationale": "We recommend starting here as it addresses the most urgent bottleneck: excessive time spent on scheduling which consumes significant resources.",
-    "immediateBottleneck": "Staff spending excessive time on scheduling and managing appointments",
-    "expectedImpact": "Immediate reduction in scheduling time and improved booking process",
-    "timeToValue": "2 weeks to first results",
-    "expectedROI": "Based on similar implementations, expect 200% ROI in 5 months"
+    "firstPhase": "Automated Integration & Payment Allocation Engine",
+    "rationale": "We recommend starting with automated integration and payment allocation because it unlocks the largest immediate cash and time benefits, fixes the primary reporting bottleneck (unallocated payments in Aquilla), and enables downstream BI and invoicing automation to work reliably. It also delivers fast time-to-value and the best short-term ROI.",
+    "immediateBottleneck": "Unallocated payments and time lost to manual cross-system entry",
+    "expectedImpact": "You will see fewer unallocated payments, dramatically less manual entry, and reconciled data feeding your reports within weeks.",
+    "timeToValue": "2-4 weeks to first results (exceptions and matching improve with the first month of operation)",
+    "expectedROI": "Expect ~43% annual ROI within the first 12 months and payback in about 8 months (based on conservative savings estimates)"
   },
   "implementationRoadmap": {
     "phase1": {
       "timeline": "Week 1-2",
-      "whatWeDeliver": "First solution deployment",
+      "whatWeDeliver": "Deploy initial integration flows and payment matching logic for Aquilla and booking/timesheet sources",
       "activities": [
-        "Set up automated scheduling system",
-        "Integration with existing calendars"
+        "Discovery workshop and mapping of invoice/payment rules",
+        "Configure orchestration flows and initial matching rules",
+        "Deploy exception dashboard for finance"
       ],
-      "yourMilestone": "Automated scheduling system operational"
+      "yourMilestone": "Automated sync and first automated payment allocations; exceptions visible in the dashboard"
     },
     "phase2": {
       "timeline": "Week 3-4",
-      "whatWeDeliver": "Second solution deployment",
+      "whatWeDeliver": "Automated invoice generation and reconciliation; feed reconciled data into Fabric",
       "activities": [
-        "Implement no-show reduction system",
-        "Configure payment and reminder settings"
+        "Implement invoice generation rules from bookings/timesheets",
+        "Enable bank/payment matching and AR automation",
+        "Run parallel validation for billing cycles"
       ],
-      "dependencies": "Automated scheduling system fully operational"
+      "dependencies": "Access to booking, timesheet and banking feeds; agreement on invoice rules and mapping"
     },
     "phase3": {
       "timeline": "Week 5-6",
-      "whatWeDeliver": "Final solution and optimization",
+      "whatWeDeliver": "Deliver reconciled BI dashboards, anomaly detection and handover to internal champions",
       "activities": [
-        "Deploy staff scheduling system",
-        "Optimize shift planning"
+        "Build executive dashboards and KPIs",
+        "Implement scheduled data refresh and anomaly alerts",
+        "Conduct training and transition champions"
       ],
-      "dependencies": "No-show reduction system fully operational"
+      "dependencies": "Cleaned and reconciled source data from phases 1-2; stakeholder availability for sign-off"
     }
   },
   "totalInvestmentSummary": {
-    "monthlyInvestment": "$1,050 total monthly for all solutions",
-    "implementationInvestment": "$0 one-time implementation fee",
-    "firstYearTotal": "$12,600 total first year investment",
-    "projectedAnnualReturn": "$20,100 in savings and new revenue",
-    "netROI": "59% return on investment",
-    "breakeven": "8 months to positive ROI"
+    "monthlyInvestment": "$1,800 total monthly for all solutions (sum of all monthly investments)",
+    "implementationInvestment": "$1,200 one-time implementation fee (sum of all setup costs)",
+    "firstYearTotal": "$22,800 total first year investment (monthlyInvestment × 12 + implementationInvestment)",
+    "projectedAnnualReturn": "$40,800 in savings and new revenue (sum of all projectedSavings × 12 + sum of all projectedRevenue × 12)",
+    "netROI": "79% return on investment ((40,800 - 22,800) ÷ 22,800 × 100 ≈ 79%)",
+    "breakeven": "7 months to positive ROI (22,800 ÷ (40,800 ÷ 12) ≈ 6.7 → 7 months)"
   },
   "nextSteps": {
     "immediate": [
       "Schedule implementation planning call with DeployAI",
-      "Gather access to your existing systems",
-      "Identify key team members for training"
+      "Provide access to Aquilla, Fabric, Power BI, booking and timesheet systems",
+      "Identify two internal champions for finance and operations"
     ],
     "week1": [
       "Begin Phase 1 implementation",
-      "Configure initial integrations",
-      "Start team onboarding"
+      "Configure initial integration flows and matching rules",
+      "Start team onboarding and workshops"
     ],
     "month1": [
-      "Complete all solution deployments",
-      "Optimize based on initial usage",
-      "Measure and report on results"
+      "Complete integration and invoice automation deployments",
+      "Deploy reconciled datasets to Power BI and initial dashboards",
+      "Optimize matching rules and measure early results"
     ]
   }
 }
@@ -375,18 +439,18 @@ OUTPUT FORMAT (return only valid JSON):
   
   "keyProblems": [
     {
-      "problem": "Transform problemAnalysis.topOpportunities[0] into urgent business headline for Adisco Locs Stylist Ltd. Example: 'At Adisco Locs Stylist Ltd, customers wait 24+ hours for responses while competitors reply instantly'",
+      "problem": "Transform problemAnalysis.topOpportunities[0] into urgent business headline for Akshar Business Consulting Ltd. Example: 'At Akshar Business Consulting Ltd, customers wait 24+ hours for responses while competitors reply instantly'",
       "currentCost": "Synthesize the financial impact from problem evidence. Make it specific and painful. Examples: 'Costs $5,000 monthly in lost sales' or 'Burns 15 hours weekly of manager time'",
       "potentialGain": "Describe improvement using metrics from the matching solution in natural language. Examples: 'Cut response time to under 2 hours' or 'Free up 12 hours weekly for growth activities'"
     },
     {
-      "problem": "Make problem 2 feel like Adisco Locs Stylist Ltd is falling behind competitors in their industry",
-      "currentCost": "Quantify the pain specifically for Adisco Locs Stylist Ltd's industry and size in relatable terms",
+      "problem": "Make problem 2 feel like Akshar Business Consulting Ltd is falling behind competitors in their industry",
+      "currentCost": "Quantify the pain specifically for Akshar Business Consulting Ltd's industry and size in relatable terms",
       "potentialGain": "Describe real improvement from the matching solution using business-friendly language"
     },
     {
-      "problem": "Frame problem 3 as missed opportunity or growing risk for Adisco Locs Stylist Ltd",
-      "currentCost": "Use industry-appropriate metrics that Adisco Locs Stylist Ltd faces, written naturally",
+      "problem": "Frame problem 3 as missed opportunity or growing risk for Akshar Business Consulting Ltd",
+      "currentCost": "Use industry-appropriate metrics that Akshar Business Consulting Ltd faces, written naturally",
       "potentialGain": "Describe proven results from the solution in achievable, credible terms"
     }
   ],
@@ -433,7 +497,7 @@ OUTPUT FORMAT (return only valid JSON):
   
   "whereToStart": {
     "recommendation": "Synthesize clientSolution.ourRecommendation.firstPhase into conversational recommendation",
-    "targetBottleneck": "Describe the urgent problem this addresses in Adisco Locs Stylist Ltd's terms",
+    "targetBottleneck": "Describe the urgent problem this addresses in Akshar Business Consulting Ltd's terms",
     "immediateImpact": "Describe what they'll see immediately in specific, credible terms",
     "timelineEstimate": "Present timeToValue in business-friendly language",
     "expectedROI": "Synthesize ROI expectation into simple, credible terms",
@@ -443,7 +507,7 @@ OUTPUT FORMAT (return only valid JSON):
   "callToAction": {
     "primaryCTA": "Schedule Your Free Consultation",
     "secondaryCTA": "Retake the Assessment", 
-    "urgencyMessage": "Create appropriate urgency based on their timeline (within-month) and business impact, avoiding pushy language"
+    "urgencyMessage": "Create appropriate urgency based on their timeline (exploring) and business impact, avoiding pushy language"
   }
 }
 
