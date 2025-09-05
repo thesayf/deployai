@@ -92,9 +92,9 @@ export default async function handler(
       report = existingReport;
       
       // Only return if report is already being processed or completed
-      if (existingReport.report_status === 'processing' || 
-          existingReport.report_status === 'completed' ||
-          existingReport.report_status === 'generating') {  // Keep for backward compatibility
+      if (existingReport.report_status === 'pending' ||
+          existingReport.report_status === 'generating' || 
+          existingReport.report_status === 'completed') {
         console.log(`Report is already ${existingReport.report_status}, skipping duplicate trigger`);
         return res.status(200).json({
           success: true,
@@ -131,22 +131,8 @@ export default async function handler(
     }
 
     // Report is now created with 'pending' status
+    // The workflow will handle updating to 'generating' when it starts processing
     console.log('[SUBMIT] Report created with status: pending');
-    
-    // Update status to 'generating' immediately (database constraint doesn't allow 'processing')
-    const { error: statusUpdateError } = await supabase
-      .from('ai_reports')
-      .update({ 
-        report_status: 'generating',
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', report.id);
-    
-    if (statusUpdateError) {
-      console.error('[SUBMIT] Failed to update status to generating:', statusUpdateError);
-    } else {
-      console.log('[SUBMIT] Updated report status to generating');
-    }
     
     // Send confirmation email immediately
     console.log('[SUBMIT] Sending confirmation email...');
