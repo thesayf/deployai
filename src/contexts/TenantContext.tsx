@@ -93,9 +93,10 @@ function getSubdomainFromWindow(): string | null {
 
   const hostname = window.location.hostname;
 
-  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+  // Handle localhost subdomains (e.g., testconsultant.localhost)
+  if (hostname.includes('localhost') || hostname === '127.0.0.1') {
     const parts = hostname.split('.');
-    if (parts.length > 1) {
+    if (parts.length > 1 && parts[0] !== 'www') {
       return parts[0];
     }
     return null;

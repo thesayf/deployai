@@ -1,0 +1,146 @@
+import React, { useEffect, useState } from 'react';
+import { useTenant } from '@/contexts/TenantContext';
+import DashboardStats from './dashboard/DashboardStats';
+import UsageMeter from './dashboard/UsageMeter';
+import RecentAssessments from './dashboard/RecentAssessments';
+import MonthlyTrend from './dashboard/MonthlyTrend';
+
+interface DashboardData {
+  usage: {
+    used: number;
+    limit: number | null;
+    percentage: number;
+  };
+  recentAssessments: any[];
+  stats: {
+    total: number;
+    completed: number;
+    processing: number;
+    failed: number;
+    thisMonth: number;
+    lastMonth: number;
+    conversionRate: number;
+    averageCompletionTime: number;
+  };
+  monthlyTrend: Array<{
+    month: string;
+    count: number;
+  }>;
+}
+
+const Dashboard: React.FC = () => {
+  const { tenantContext } = useTenant();
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, [tenantContext]);
+
+  const fetchDashboardData = async () => {
+    if (!tenantContext) return;
+
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/admin/dashboard`);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch dashboard data');
+      }
+
+      const data = await response.json();
+      setDashboardData(data);
+    } catch (err) {
+      console.error('Error fetching dashboard data:', err);
+      setError('Failed to load dashboard data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="text-xl font-medium text-gray-600 mb-2">Loading...</div>
+          <div className="animate-pulse bg-gray-300 h-2 w-32 mx-auto rounded"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !dashboardData) {
+    return (
+      <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+        <p className="font-medium text-red-600">{error || 'Failed to load dashboard'}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-8">
+      {/* Page Header */}
+      <div>
+        <h1 className="text-2xl font-semibold">Dashboard</h1>
+        <p className="text-gray-600 mt-2">
+          Welcome back to {tenantContext?.tenant.company_name} Admin Portal
+        </p>
+      </div>
+
+      {/* Usage Meter */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+        <div className="lg:col-span-1">
+          <UsageMeter
+            used={dashboardData.usage.used}
+            limit={dashboardData.usage.limit}
+            percentage={dashboardData.usage.percentage}
+            tier={tenantContext?.tenant.subscription_tier || 'starter'}
+          />
+        </div>
+
+        {/* Quick Actions */}
+        <div className="lg:col-span-2">
+          <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 h-full flex flex-col">
+            <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <button className="bg-gray-900 text-white font-medium py-2 px-4 rounded-md hover:bg-gray-800 transition-colors">
+                Copy Assessment Link
+              </button>
+              <button className="bg-white font-medium py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+                Export Data
+              </button>
+              <button className="bg-white font-medium py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+                View Reports
+              </button>
+            </div>
+
+            {/* Assessment Link */}
+            <div className="mt-auto pt-4">
+              <div className="p-3 bg-gray-50 border border-gray-200 rounded-md">
+              <p className="text-xs font-medium text-gray-500 mb-1">Your Assessment Link</p>
+              <code className="text-sm break-all">
+                https://{tenantContext?.tenant.subdomain}.deployai.studio
+              </code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Statistics */}
+      <DashboardStats stats={dashboardData.stats} />
+
+      {/* Recent Assessments and Trend */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <RecentAssessments
+          assessments={dashboardData.recentAssessments}
+          tenantSubdomain={tenantContext?.tenant.subdomain || ''}
+        />
+        <MonthlyTrend data={dashboardData.monthlyTrend} />
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;

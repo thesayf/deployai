@@ -1,14 +1,23 @@
 import { NextApiRequest } from 'next';
+import { IncomingMessage } from 'http';
 import { tenantService, TenantContext } from '@/services/tenant';
 
-export async function getTenantFromRequest(req: NextApiRequest): Promise<TenantContext | null> {
+export async function getTenantFromRequest(req: NextApiRequest | IncomingMessage): Promise<TenantContext | null> {
   const subdomain = req.headers['x-tenant-subdomain'] as string | undefined;
 
   if (!subdomain) {
     return null;
   }
 
-  const userEmail = req.body?.user_email || req.query?.user_email as string | undefined;
+  // Handle both NextApiRequest and IncomingMessage types
+  let userEmail: string | undefined;
+  if ('body' in req && 'query' in req) {
+    // NextApiRequest
+    userEmail = req.body?.user_email || req.query?.user_email as string | undefined;
+  } else {
+    // IncomingMessage - no body/query available
+    userEmail = undefined;
+  }
 
   const context = await tenantService.getTenantContext(subdomain, userEmail);
   return context;
