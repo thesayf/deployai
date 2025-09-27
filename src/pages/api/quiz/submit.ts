@@ -2,6 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { SubmitQuizRequest, SubmitQuizResponse, QuizResponseData } from '@/types/quiz';
 import { supabaseAdmin } from '@/lib/supabase';
 import quizData from '@/data/quiz-questions.json';
+import { getTenantFromRequest, addTenantIdToData } from '@/utils/tenant-helpers';
+import { tenantService } from '@/services/tenant';
 
 export default async function handler(
   req: NextApiRequest,
@@ -47,15 +49,32 @@ export default async function handler(
 
     const supabase = supabaseAdmin();
 
+    // Get tenant context if available
+    const tenantContext = await getTenantFromRequest(req);
+
+    // Check if tenant can use assessment
+    if (tenantContext) {
+      if (!tenantContext.canUseAssessment) {
+        return res.status(403).json({
+          success: false,
+          reportId: '',
+          processingTime: '',
+          error: `Assessment limit reached. You have used ${tenantContext.tenant.assessments_used} of ${tenantContext.tenant.assessments_limit || 'unlimited'} assessments.`,
+        });
+      }
+    }
+
     // Update quiz with final responses (no scoring)
+    const updateData = addTenantIdToData({
+      responses: finalResponses,
+      industry: finalResponses.industry,
+      company_size: finalResponses.companySize,
+      completed_at: new Date().toISOString(),
+    }, tenantContext?.tenant.id);
+
     const { data: updatedQuiz, error: updateError } = await supabase
       .from('quiz_responses')
-      .update({
-        responses: finalResponses,
-        industry: finalResponses.industry,
-        company_size: finalResponses.companySize,
-        completed_at: new Date().toISOString(),
-      })
+      .update(updateData)
       .eq('id', quizId)
       .select()
       .single();
@@ -105,14 +124,16 @@ export default async function handler(
     } else {
       // Create new AI report record with 'pending' status for async processing
       console.log(`[SUBMIT] No existing report found, creating new report for quiz ${quizId}...`);
+      const insertData = addTenantIdToData({
+        quiz_response_id: quizId,
+        report_status: 'pending',  // Changed from 'generating' to 'pending' for async processing
+        company_name: updatedQuiz.user_company || 'Your Organization',
+        industry_context: finalResponses.industry,
+      }, tenantContext?.tenant.id);
+
       const { data: newReport, error: reportError } = await supabase
         .from('ai_reports')
-        .insert({
-          quiz_response_id: quizId,
-          report_status: 'pending',  // Changed from 'generating' to 'pending' for async processing
-          company_name: updatedQuiz.user_company || 'Your Organization',
-          industry_context: finalResponses.industry,
-        })
+        .insert(insertData)
         .select('id, access_token')
         .single();
 
@@ -202,6 +223,11 @@ export default async function handler(
     } catch (error) {
       console.error('[SUBMIT] Error triggering processing:', error);
       // Don't fail the request - cron will pick it up as backup
+    }
+
+    // Increment tenant usage if applicable
+    if (tenantContext) {
+      await tenantService.incrementAssessmentUsage(tenantContext.tenant.id);
     }
 
     // Return immediately - don't wait for processing

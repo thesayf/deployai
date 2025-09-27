@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { SubmitMVPPlannerRequest, SubmitMVPPlannerResponse } from '@/types/mvp-planner';
 import { supabaseAdmin } from '@/lib/supabase';
+import { getTenantFromRequest, addTenantIdToData } from '@/utils/tenant-helpers';
+import { tenantService } from '@/services/tenant';
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,14 +24,29 @@ export default async function handler(
 
     const supabase = supabaseAdmin();
 
+    // Get tenant context if available
+    const tenantContext = await getTenantFromRequest(req);
+
+    // Check if tenant can use assessment
+    if (tenantContext) {
+      if (!tenantContext.canUseAssessment) {
+        return res.status(403).json({
+          success: false,
+          error: `Assessment limit reached. You have used ${tenantContext.tenant.assessments_used} of ${tenantContext.tenant.assessments_limit || 'unlimited'} assessments.`,
+        });
+      }
+    }
+
     // Update quiz response with final data
+    const updateData = addTenantIdToData({
+      responses,
+      total_score: totalScore,
+      completed_at: new Date().toISOString(),
+    }, tenantContext?.tenant.id);
+
     const { error: updateError } = await supabase
       .from('mvp_planner_responses')
-      .update({
-        responses,
-        total_score: totalScore,
-        completed_at: new Date().toISOString(),
-      })
+      .update(updateData)
       .eq('id', quizId);
 
     if (updateError) {
@@ -41,12 +58,14 @@ export default async function handler(
     }
 
     // Create report entry
+    const insertData = addTenantIdToData({
+      mvp_planner_response_id: quizId,
+      report_status: 'pending',
+    }, tenantContext?.tenant.id);
+
     const { data: reportData, error: reportError } = await supabase
       .from('mvp_planner_reports')
-      .insert({
-        mvp_planner_response_id: quizId,
-        report_status: 'pending',
-      })
+      .insert(insertData)
       .select('id, access_token')
       .single();
 
@@ -69,6 +88,11 @@ export default async function handler(
     }).catch(error => {
       console.error('Error triggering report generation:', error);
     });
+
+    // Increment tenant usage if applicable
+    if (tenantContext) {
+      await tenantService.incrementAssessmentUsage(tenantContext.tenant.id);
+    }
 
     res.status(200).json({
       success: true,
