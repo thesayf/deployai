@@ -40,7 +40,7 @@ export default async function handler(
       success: true,
       usage: {
         assessments_used: tenant.assessments_used,
-        assessments_limit: tenant.assessments_limit,
+        assessments_limit: tenant.assessments_limit || null,
         remaining_assessments: tenantContext.remainingAssessments || null,
         subscription_tier: tenant.subscription_tier || 'starter',
         can_use_assessment: tenantContext.canUseAssessment,
