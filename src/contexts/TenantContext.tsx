@@ -34,16 +34,22 @@ export const TenantProvider: React.FC<TenantProviderProps> = ({ children }) => {
       setLoading(true);
       setError(null);
 
-      const subdomain = getSubdomainFromWindow();
+      // Try to get tenant from path first (path-based routing)
+      let tenantSlug = getTenantFromPath();
 
-      if (!subdomain || subdomain === 'www') {
+      // If not found in path, try subdomain (subdomain-based routing)
+      if (!tenantSlug) {
+        tenantSlug = getSubdomainFromWindow();
+      }
+
+      if (!tenantSlug || tenantSlug === 'www') {
         setTenantContext(null);
         setLoading(false);
         return;
       }
 
       const userEmail = getUserEmailFromSession();
-      const context = await tenantService.getTenantContext(subdomain, userEmail);
+      const context = await tenantService.getTenantContext(tenantSlug, userEmail);
 
       if (!context) {
         setError('Invalid tenant subdomain');
@@ -85,6 +91,22 @@ export const TenantProvider: React.FC<TenantProviderProps> = ({ children }) => {
     </TenantContext.Provider>
   );
 };
+
+function getTenantFromPath(): string | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  const pathname = window.location.pathname;
+  // Extract tenant from path like /testconsultant/admin
+  const match = pathname.match(/^\/([^\/]+)\/(admin|public)/);
+
+  if (match) {
+    return match[1];
+  }
+
+  return null;
+}
 
 function getSubdomainFromWindow(): string | null {
   if (typeof window === 'undefined') {

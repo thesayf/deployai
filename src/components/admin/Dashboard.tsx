@@ -43,7 +43,11 @@ const Dashboard: React.FC = () => {
 
     try {
       setLoading(true);
-      const response = await fetch(`/api/admin/dashboard`);
+      const response = await fetch(`/api/admin/dashboard`, {
+        headers: {
+          'x-tenant-subdomain': tenantContext.tenant.subdomain,
+        },
+      });
 
       if (!response.ok) {
         throw new Error('Failed to fetch dashboard data');

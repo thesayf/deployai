@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
-import { Mail, Chrome, ArrowRight, AlertCircle } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useTenant } from '@/contexts/TenantContext';
-import { getTenantFromRequest } from '@/utils/tenant-helpers';
+import { Mail, Globe, ArrowRight, AlertCircle } from 'lucide-react';
+import { signInWithGoogleClient, signInWithEmailClient, signUpWithEmailClient } from '@/lib/auth-actions';
 
 interface LoginPageProps {
   tenant: any;
@@ -15,23 +13,17 @@ const LoginPage: React.FC<LoginPageProps> = ({ tenant }) => {
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { signInWithGoogle, signInWithEmail, signUpWithEmail, error, clearError } = useAuth();
-  const { tenantContext } = useTenant();
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const router = useRouter();
-
-  useEffect(() => {
-    clearError();
-  }, [isSignUp]);
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
+    setError(null);
     try {
-      // Store the subdomain before redirecting to OAuth
-      if (tenantContext) {
-        localStorage.setItem('auth_redirect_subdomain', tenantContext.tenant.subdomain);
-      }
-      await signInWithGoogle();
-    } finally {
+      await signInWithGoogleClient(tenant.subdomain);
+    } catch (err) {
+      setError('Failed to sign in with Google');
       setLoading(false);
     }
   };
@@ -39,12 +31,23 @@ const LoginPage: React.FC<LoginPageProps> = ({ tenant }) => {
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
+    setSuccess(null);
+
     try {
       if (isSignUp) {
-        await signUpWithEmail(email, password);
+        const result = await signUpWithEmailClient(email, password);
+        if (result.user) {
+          setSuccess('Check your email to confirm your account');
+        }
       } else {
-        await signInWithEmail(email, password);
+        const result = await signInWithEmailClient(email, password);
+        if (result.user) {
+          router.push(`/${tenant.subdomain}/admin`);
+        }
       }
+    } catch (err: any) {
+      setError(err.message || 'An unexpected error occurred');
     } finally {
       setLoading(false);
     }
@@ -75,6 +78,12 @@ const LoginPage: React.FC<LoginPageProps> = ({ tenant }) => {
             </div>
           )}
 
+          {success && (
+            <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-md">
+              <p className="text-sm text-green-700">{success}</p>
+            </div>
+          )}
+
           <div className="space-y-6">
             <button
               type="button"
@@ -82,7 +91,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ tenant }) => {
               disabled={loading}
               className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Chrome className="h-5 w-5" />
+              <Globe className="h-5 w-5" />
               Continue with Google
             </button>
 
@@ -168,7 +177,14 @@ const LoginPage: React.FC<LoginPageProps> = ({ tenant }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const tenantContext = await getTenantFromRequest(context.req);
+  // Get tenant from URL path parameter
+  const { tenant: tenantSlug } = context.params as { tenant: string };
+
+  // Import tenant service
+  const { tenantService } = await import('@/services/tenant');
+
+  // Get tenant context
+  const tenantContext = await tenantService.getTenantContext(tenantSlug);
 
   if (!tenantContext) {
     return {

@@ -3,7 +3,6 @@ import { GetServerSideProps } from 'next';
 import AdminLayout from '@/components/admin/layout/AdminLayout';
 import Dashboard from '@/components/admin/Dashboard';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
-import { getTenantFromRequest } from '@/utils/tenant-helpers';
 
 const AdminDashboardPage = () => {
   return (
@@ -16,14 +15,20 @@ const AdminDashboardPage = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const tenantContext = await getTenantFromRequest(context.req);
+  // Get tenant from URL path parameter
+  const { tenant: tenantSlug } = context.params as { tenant: string };
+
+  // Import tenant service
+  const { tenantService } = await import('@/services/tenant');
+
+  // Get tenant context
+  const tenantContext = await tenantService.getTenantContext(tenantSlug);
 
   if (!tenantContext) {
     return {
       notFound: true,
     };
   }
-
 
   return {
     props: {},

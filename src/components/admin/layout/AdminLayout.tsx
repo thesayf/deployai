@@ -31,10 +31,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
           <p className="text-gray-600 mb-4">
             This admin portal requires a valid tenant subdomain.
           </p>
-          <Link href="/">
-            <a className="inline-block bg-gray-900 text-white px-4 py-2 font-medium rounded-md hover:bg-gray-800 transition-colors">
-              Go to Main Site
-            </a>
+          <Link href="/" className="inline-block bg-gray-900 text-white px-4 py-2 font-medium rounded-md hover:bg-gray-800 transition-colors">
+            Go to Main Site
           </Link>
         </div>
       </div>
