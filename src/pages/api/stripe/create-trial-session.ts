@@ -80,7 +80,6 @@ export default async function handler(
         .from('tenants')
         .update({
           stripe_customer_id: customerId,
-          billing_email: email,
         })
         .eq('id', tenantId);
 
@@ -95,9 +94,17 @@ export default async function handler(
     // Step 3: Get Starter plan price ID
     const starterPriceId = process.env.STRIPE_PRICE_STARTER_ID || SUBSCRIPTION_TIERS.starter.priceId;
 
-    if (!starterPriceId) {
+    console.log(`[TRIAL] Price ID from env: ${process.env.STRIPE_PRICE_STARTER_ID}`);
+    console.log(`[TRIAL] Price ID from config: ${SUBSCRIPTION_TIERS.starter.priceId}`);
+    console.log(`[TRIAL] Using price ID: ${starterPriceId}`);
+
+    if (!starterPriceId || starterPriceId.includes('here')) {
       return res.status(500).json({
-        error: 'Starter plan price ID not configured. Please set STRIPE_PRICE_STARTER_ID environment variable.'
+        error: 'Starter plan price ID not configured. Please set STRIPE_PRICE_STARTER_ID environment variable.',
+        debug: {
+          env: process.env.STRIPE_PRICE_STARTER_ID,
+          config: SUBSCRIPTION_TIERS.starter.priceId
+        }
       });
     }
 
