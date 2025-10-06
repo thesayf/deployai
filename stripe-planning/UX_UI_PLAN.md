@@ -2,7 +2,36 @@
 
 ## Overview
 
-Complete UX enhancement plan for Stripe billing integration. This document outlines all required pages, components, and user flows to provide a complete billing experience aligned with our neubrutalist design system.
+Complete UX enhancement plan for Stripe billing integration. This document outlines all required pages, components, and user flows to provide a complete billing experience using **shadcn/ui components** for a clean, consistent SaaS design.
+
+## Design System
+
+**Using shadcn/ui components for clean, consistent SaaS design:**
+
+### Required Components
+Install these shadcn/ui components (if not already installed):
+```bash
+npx shadcn-ui@latest add card
+npx shadcn-ui@latest add button
+npx shadcn-ui@latest add badge
+npx shadcn-ui@latest add alert
+npx shadcn-ui@latest add progress
+npx shadcn-ui@latest add table
+npx shadcn-ui@latest add dialog
+npx shadcn-ui@latest add input
+npx shadcn-ui@latest add label
+npx shadcn-ui@latest add accordion
+npx shadcn-ui@latest add scroll-area
+```
+
+### Design Principles
+- **Consistency:** Use shadcn variants (default, secondary, outline, destructive, ghost)
+- **Typography:** Follow shadcn text utilities (text-muted-foreground, font-semibold, etc.)
+- **Spacing:** Standard Tailwind spacing scale (space-y-6, gap-4, p-6)
+- **Colors:** Leverage CSS variables from shadcn theme (primary, destructive, muted)
+- **Icons:** lucide-react for all icons (already installed)
+- **Accessibility:** Built-in ARIA, keyboard navigation, focus states
+- **Mobile:** Responsive by default, touch-friendly targets
 
 ---
 
@@ -14,74 +43,81 @@ Complete UX enhancement plan for Stripe billing integration. This document outli
 
 **Content Requirements:**
 - **Page Header**
-  - Title: "Billing" (uppercase, font-black)
-  - Subtitle: "Manage your subscription and payment details"
+  - Title: "Billing" (text-3xl font-bold)
+  - Subtitle: "Manage your subscription and payment details" (text-muted-foreground)
 
 - **Trial Status Banner** (if user is trialing)
-  - Visual indicator: Yellow background (#FFF5F0), 3px black border, 6px shadow
+  - Component: `<Alert>` with variant="default" (yellow/amber theme)
+  - Icon: Clock icon from lucide-react
   - Trial countdown: "X days remaining"
   - Assessments remaining: "X assessments left"
   - Trial end date: Format as "MMM d, yyyy"
   - Auto-charge warning: "You'll be charged $X/month after trial ends"
-  - Action button: "Cancel Trial" (links to Stripe Customer Portal)
+  - Action: `<Button variant="outline">` "Cancel Trial" → Stripe Customer Portal
 
 - **Current Plan Card**
-  - Plan tier badge (Starter/Professional/Scale) with color coding:
-    - Starter: #FF6B35 (orange)
-    - Professional: #4ECDC4 (teal)
-    - Scale: #6C5CE7 (purple)
-  - Monthly price: "$X/mo" (large, font-black)
+  - Component: `<Card>` with `<CardHeader>`, `<CardContent>`, `<CardFooter>`
+  - Plan tier: `<Badge variant="default">` (Starter/Professional/Scale)
+  - Badge colors:
+    - Starter: bg-orange-500
+    - Professional: bg-blue-500
+    - Scale: bg-purple-500
+  - Monthly price: text-4xl font-bold
   - Plan details grid (3 columns):
     - Assessments: "X / month" or "∞"
-    - Status: "trialing" | "active" | "past_due" | "canceled"
+    - Status: `<Badge>` with color-coded variants
     - Next billing date: Format as "MMM d, yyyy"
-  - Action button: "Change Plan" → links to `/billing/plans`
+  - Action: `<Button>` "Change Plan" → `/billing/plans`
   - Cancellation notice (if cancel_at_period_end = true):
-    - "⚠️ Your subscription will cancel at end of billing period"
+    - `<Alert variant="destructive">` with warning icon
 
 - **Payment Method Card**
-  - Card brand: Display uppercase (VISA, MASTERCARD, etc.)
+  - Component: `<Card>` with card icon from lucide-react
+  - Card brand: Display with CreditCard icon
   - Last 4 digits: "•••• 1234"
-  - Label: "Primary payment method"
-  - Action button: "Update" → opens Stripe Customer Portal
+  - Label: "Primary payment method" (text-sm text-muted-foreground)
+  - Action: `<Button variant="secondary">` "Update" → Stripe Customer Portal
 
 - **Quick Actions Grid** (3 columns)
+  - Each as clickable `<Card>` with hover effect
   - **Billing History**
-    - Icon: 📄
-    - Title: "Billing History" (uppercase)
+    - Icon: FileText from lucide-react
+    - Title: "Billing History"
     - Description: "View invoices and receipts"
     - Links to: `/billing/history`
   - **Manage Subscription**
-    - Icon: ⚙️
-    - Title: "Manage Subscription" (uppercase)
+    - Icon: Settings from lucide-react
+    - Title: "Manage Subscription"
     - Description: "Update, pause, or cancel"
     - Action: Opens Stripe Customer Portal
   - **Upgrade Plan**
-    - Icon: 🚀
-    - Title: "Upgrade Plan" (uppercase)
+    - Icon: Rocket from lucide-react
+    - Title: "Upgrade Plan"
     - Description: "Get more assessments"
     - Links to: `/billing/plans`
 
 - **Usage Section**
-  - Title: "Usage This Month"
-  - Progress bar:
+  - Component: `<Card>`
+  - Title: "Usage This Month" (CardHeader)
+  - Progress bar: `<Progress>` component
     - Shows assessments_used / assessments_limit
-    - Color: #FF6B35 (orange)
-    - 3px black border, full width
+    - Color: primary (blue/indigo)
   - Labels: "X used" and "X limit" (or "∞ limit")
   - Limit reached warning (if used >= limit):
-    - Red background (#FEE2E2)
+    - `<Alert variant="destructive">`
     - "⚠️ You've reached your monthly limit. Upgrade to get more assessments."
+
+**shadcn Components Used:**
+- `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`
+- `Button` (variants: default, secondary, outline, destructive)
+- `Badge` (variants: default, secondary, destructive, outline)
+- `Alert`, `AlertDescription`, `AlertTitle`
+- `Progress`
+- Icons from `lucide-react`
 
 **API Requirements:**
 - Fetch tenant billing data from Supabase tenants table
 - Fields: stripe_customer_id, subscription_status, subscription_tier, trial_end_date, current_period_end, payment_method_brand, payment_method_last4, assessments_used, assessments_limit, cancel_at_period_end
-
-**Design Notes:**
-- All cards: 3px black borders, 6px shadows
-- Buttons: Neubrutalist style with hover lift effect (translate -2px)
-- Use uppercase for all headings
-- Maintain consistent spacing: 6px gap between sections
 
 ---
 
@@ -92,37 +128,37 @@ Complete UX enhancement plan for Stripe billing integration. This document outli
 **Content Requirements:**
 
 - **Page Header**
-  - Title: "Choose Your Plan" (uppercase, font-black)
-  - Subtitle: "Upgrade or downgrade anytime. No commitments."
+  - Title: "Choose Your Plan" (text-3xl font-bold)
+  - Subtitle: "Upgrade or downgrade anytime. No commitments." (text-muted-foreground)
 
 - **Current Plan Indicator**
-  - Badge showing: "CURRENT PLAN: [TIER]"
+  - `<Badge>` showing: "Current Plan: [TIER]"
   - Positioned above the relevant pricing card
 
 - **Pricing Cards Grid** (3 columns, responsive)
+  - Components: `<Card>` for each plan
+  - Layout: `grid grid-cols-1 md:grid-cols-3 gap-6`
 
   **Starter Plan Card:**
-  - Plan name: "STARTER" (uppercase, font-black)
-  - Price: "$199" (large) + "/month" (small)
-  - Border color: 3px black
-  - Highlight color: #FF6B35 (orange) for current plan
-  - Features list:
+  - `<Card>` with border-orange-500 if current
+  - Plan name: `<CardTitle>` "Starter"
+  - Price: `<span className="text-4xl font-bold">$199</span>/month`
+  - Features list with Check icons from lucide-react:
     - ✓ 5 AI Assessments/month
     - ✓ Full platform access
     - ✓ Email support
     - ✓ Export reports (PDF)
     - ✓ 14-day free trial
-  - Action button:
-    - If current: "Current Plan" (disabled, gray)
-    - If higher tier: "Downgrade" (white bg, black border)
-    - If no plan: "Start Trial" (orange bg)
+  - Action: `<Button>` with appropriate variant
+    - If current: variant="outline" disabled "Current Plan"
+    - If higher tier: variant="secondary" "Downgrade"
+    - If no plan: variant="default" "Start Trial"
 
   **Professional Plan Card:**
-  - Plan name: "PROFESSIONAL" (uppercase, font-black)
-  - Price: "$499" + "/month"
-  - Border: 3px black, 8px shadow (emphasized)
-  - Highlight color: #4ECDC4 (teal)
-  - Popular badge: "MOST POPULAR" (top-right corner, rotated -5deg)
+  - `<Card className="border-2 border-primary">` (emphasized)
+  - `<Badge className="absolute -top-3 right-4">` "Most Popular"
+  - Plan name: "Professional"
+  - Price: "$499/month"
   - Features list:
     - ✓ 20 AI Assessments/month
     - ✓ Priority support
@@ -130,17 +166,16 @@ Complete UX enhancement plan for Stripe billing integration. This document outli
     - ✓ Custom branding
     - ✓ API access
     - ✓ Team collaboration
-  - Action button:
-    - If current: "Current Plan" (disabled)
-    - If lower tier: "Upgrade" (teal bg)
-    - If higher tier: "Downgrade" (white bg)
+  - Action: `<Button>` with conditional variant
+    - If current: variant="outline" disabled
+    - If lower tier: variant="default" "Upgrade"
+    - If higher tier: variant="secondary" "Downgrade"
 
   **Scale Plan Card:**
-  - Plan name: "SCALE" (uppercase, font-black)
-  - Price: "$997" + "/month"
-  - Border: 3px black
-  - Highlight color: #6C5CE7 (purple)
-  - Enterprise badge: "ENTERPRISE" (top-right)
+  - `<Card>` with border-purple-500 if current
+  - `<Badge>` "Enterprise"
+  - Plan name: "Scale"
+  - Price: "$997/month"
   - Features list:
     - ✓ Unlimited Assessments
     - ✓ Dedicated account manager
@@ -148,39 +183,39 @@ Complete UX enhancement plan for Stripe billing integration. This document outli
     - ✓ Custom integrations
     - ✓ SLA guarantee
     - ✓ Training & onboarding
-  - Action button:
-    - If current: "Current Plan" (disabled)
-    - If lower tier: "Upgrade" (purple bg)
-    - If higher tier: "Downgrade" (white bg)
+  - Action: `<Button>` with conditional variant
 
-- **Single Assessment Option** (separate section below plans)
+- **Single Assessment Option**
+  - `<Card>` (separate section below plans)
   - Title: "Need Just One Assessment?"
   - Price: "$99" (one-time)
   - Description: "Perfect for trying out the platform or one-off projects"
-  - Action button: "Purchase Single Assessment" (black bg, white text)
+  - Action: `<Button variant="outline">` "Purchase Single Assessment"
 
 - **Proration Notice** (if upgrading/downgrading)
-  - Info box with gray background
-  - Text: "💡 Proration applied: You'll be charged/credited the difference for the remainder of your billing period"
+  - `<Alert>` with Lightbulb icon from lucide-react
+  - Text: "Proration applied: You'll be charged/credited the difference for the remainder of your billing period"
 
-- **FAQ Section** (accordion style)
-  - Q: "Can I change plans anytime?"
-    - A: "Yes, upgrade or downgrade at any time. Changes take effect immediately."
-  - Q: "What happens to unused assessments?"
-    - A: "Unused assessments don't roll over. Your count resets each billing period."
-  - Q: "How does proration work?"
-    - A: "If you upgrade, you pay the prorated difference. If you downgrade, you receive credit."
+- **FAQ Section**
+  - Component: `<Accordion>` from shadcn/ui
+  - `<AccordionItem>` for each question
+  - Questions:
+    - "Can I change plans anytime?"
+    - "What happens to unused assessments?"
+    - "How does proration work?"
+
+**shadcn Components Used:**
+- `Card`, `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`
+- `Button` (variants: default, secondary, outline)
+- `Badge`
+- `Alert`, `AlertDescription`
+- `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`
+- Icons: Check, Lightbulb from lucide-react
 
 **API Requirements:**
 - POST `/api/stripe/create-checkout-session` for upgrades (new subscriptions)
 - POST `/api/stripe/update-subscription` for plan changes (existing subscriptions)
 - Fetch current subscription tier from Supabase
-
-**Design Notes:**
-- Pricing cards: Neubrutalist style with 3px borders
-- Emphasize "most popular" plan with larger shadow (8px vs 6px)
-- Use brand colors for plan differentiation
-- Action buttons should show loading state during API calls
 
 ---
 
@@ -191,55 +226,59 @@ Complete UX enhancement plan for Stripe billing integration. This document outli
 **Content Requirements:**
 
 - **Page Header**
-  - Title: "Billing History" (uppercase, font-black)
-  - Subtitle: "View and download your invoices"
+  - Title: "Billing History" (text-3xl font-bold)
+  - Subtitle: "View and download your invoices" (text-muted-foreground)
 
 - **Invoices Table**
+  - Component: `<Table>` from shadcn/ui
+  - Wrapper: `<Card>` containing the table
   - Columns:
     - **Date:** Format as "MMM d, yyyy" (e.g., "Jan 15, 2025")
     - **Description:** "Starter Plan - Monthly subscription" or "Single Assessment"
-    - **Amount:** "$199.00" (bold)
-    - **Status:** Badge with color coding:
-      - Paid: Green background (#D1FAE5), "PAID" text
-      - Pending: Yellow background (#FEF3C7), "PENDING" text
-      - Failed: Red background (#FEE2E2), "FAILED" text
-    - **Invoice:** Link to Stripe-hosted invoice PDF
+    - **Amount:** "$199.00" (font-medium)
+    - **Status:** `<Badge>` with color coding:
+      - Paid: `<Badge variant="success">` "Paid"
+      - Pending: `<Badge variant="secondary">` "Pending"
+      - Failed: `<Badge variant="destructive">` "Failed"
     - **Actions:**
-      - "View" button (opens invoice in new tab)
-      - "Download PDF" button
+      - `<Button variant="ghost" size="sm">` with ExternalLink icon "View"
+      - `<Button variant="ghost" size="sm">` with Download icon "PDF"
 
-  - Table styling:
-    - 3px black borders
-    - Alternating row backgrounds (white/gray-50)
-    - Hover effect on rows
-    - Sticky header on scroll
+  - Table structure:
+    - `<TableHeader>`, `<TableBody>`, `<TableRow>`, `<TableCell>`
+    - Responsive: Use `<ScrollArea>` for mobile horizontal scroll
+    - Hover: `hover:bg-muted/50` on rows
 
 - **Empty State** (if no invoices)
-  - Illustration or icon: 📄
+  - Component: `<Card>` with centered content
+  - Icon: FileText from lucide-react (large, text-muted-foreground)
   - Message: "No invoices yet"
   - Description: "Your billing history will appear here once you have transactions"
 
 - **Failed Payment Alert** (if any failed payments exist)
-  - Red border, red background (#FEE2E2)
-  - Icon: ⚠️
+  - Component: `<Alert variant="destructive">` at top of page
+  - Icon: AlertCircle from lucide-react
   - Message: "Payment failed on [date]. Please update your payment method."
-  - Action button: "Update Payment Method" → opens Stripe Customer Portal
+  - Action: `<Button variant="outline" size="sm">` "Update Payment Method"
 
 - **Pagination** (if >10 invoices)
-  - Show 10 invoices per page
-  - Previous/Next buttons (neubrutalist style)
-  - Page indicator: "Page X of Y"
+  - Component: `<Pagination>` from shadcn/ui (if available) or custom
+  - `<Button variant="outline" size="sm">` for Previous/Next
+  - Page indicator: text-sm text-muted-foreground "Page X of Y"
+
+**shadcn Components Used:**
+- `Card`, `CardHeader`, `CardContent`
+- `Table`, `TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`
+- `Badge` (variants: default, secondary, destructive)
+- `Button` (variants: ghost, outline)
+- `Alert`, `AlertDescription`
+- `ScrollArea` for responsive table
+- Icons: FileText, ExternalLink, Download, AlertCircle from lucide-react
 
 **API Requirements:**
 - GET `/api/stripe/invoices?customerId=[id]` → fetch from Stripe API
 - Use `stripe.invoices.list({ customer: customerId, limit: 100 })`
 - Return: id, created (date), amount_paid, status, invoice_pdf, description
-
-**Design Notes:**
-- Table should be responsive (stack on mobile)
-- Invoice links open in new tab
-- Failed payments highlighted prominently
-- Download buttons use browser download attribute
 
 ---
 
@@ -250,65 +289,69 @@ Complete UX enhancement plan for Stripe billing integration. This document outli
 **Content Requirements:**
 
 - **Page Header**
-  - Title: "Update Payment Method" (uppercase, font-black)
-  - Subtitle: "Keep your subscription active with a valid payment method"
+  - Title: "Update Payment Method" (text-3xl font-bold)
+  - Subtitle: "Keep your subscription active with a valid payment method" (text-muted-foreground)
 
 - **Current Payment Method Display**
-  - Card brand icon (Visa, Mastercard, etc.)
+  - Component: `<Card>`
+  - Icon: CreditCard from lucide-react
   - Last 4 digits: "•••• 1234"
-  - Label: "Current card on file"
-  - Styling: Gray background box with 3px black border
+  - Label: "Current card on file" (text-sm text-muted-foreground)
+  - Card brand badge (e.g., `<Badge>` "Visa")
 
 - **New Payment Method Form**
+  - Wrapper: `<Card>` with `<CardContent>`
   - Uses Stripe Elements for PCI compliance
-  - Fields:
+  - Fields wrapped in `<Label>` components:
     - **Card Number:** Stripe CardNumberElement
     - **Expiry Date:** Stripe CardExpiryElement
     - **CVC:** Stripe CardCvcElement
-    - **Billing ZIP:** Text input (optional but recommended)
+    - **Billing ZIP:** `<Input>` component (optional)
 
   - Field styling:
-    - 3px black borders
-    - 16px padding
-    - Focus state: Orange border (#FF6B35)
-    - Error state: Red border with error message below
+    - Use shadcn `<Input>` styling as base
+    - Stripe Elements themed to match
+    - Focus state: ring-2 ring-primary
+    - Error state: border-destructive with error text
 
 - **Security Notice**
-  - Lock icon: 🔒
+  - Component: `<Alert>` with Lock icon from lucide-react
   - Text: "Your payment information is encrypted and secure. We never store your card details."
-  - Gray background, small text
 
 - **Action Buttons**
+  - Wrapper: `<CardFooter>` or form footer
   - **Update Payment Method:**
-    - Orange background (#FF6B35)
-    - White text, uppercase, font-black
-    - Loading state: "UPDATING..." with spinner
+    - `<Button type="submit">` (variant="default")
+    - Loading state: `<Button disabled>` with Loader2 icon spinning
   - **Cancel:**
-    - White background, black border
+    - `<Button variant="outline">` "Cancel"
     - Returns to billing dashboard
 
 - **Success State** (after successful update)
-  - Green border, green background (#D1FAE5)
-  - Checkmark icon: ✓
+  - Component: `<Alert variant="success">` (custom variant or use default with green styling)
+  - Icon: CheckCircle2 from lucide-react
   - Message: "Payment method updated successfully!"
   - Auto-redirect to billing dashboard after 2 seconds
 
 - **Error State** (if update fails)
-  - Red border, red background (#FEE2E2)
+  - Component: `<Alert variant="destructive">`
+  - Icon: AlertCircle from lucide-react
   - Message: Display Stripe error message
   - Retry button visible
+
+**shadcn Components Used:**
+- `Card`, `CardHeader`, `CardContent`, `CardFooter`
+- `Button` (variants: default, outline)
+- `Input`, `Label`
+- `Alert`, `AlertDescription`
+- `Badge`
+- Icons: CreditCard, Lock, CheckCircle2, AlertCircle, Loader2 from lucide-react
 
 **API Requirements:**
 - POST `/api/stripe/update-payment-method`
 - Body: { customerId, paymentMethodId }
 - Use Stripe.js to create payment method token
 - Update default payment method via Stripe API
-
-**Design Notes:**
-- Use Stripe Elements styled to match neubrutalist design
-- Clear visual feedback for success/error states
-- Mobile-responsive form layout
-- Disable submit button until form is complete and valid
 
 ---
 
@@ -618,38 +661,70 @@ const invoices = await stripe.invoices.list({
 
 ## Design System Constants
 
-### Color Palette:
+### shadcn/ui Theme Configuration
+
+**Tier Color Badges:**
 ```typescript
-export const BILLING_COLORS = {
-  starter: '#FF6B35',      // Orange
-  professional: '#4ECDC4', // Teal
-  scale: '#6C5CE7',        // Purple
-  trial: '#FFF5F0',        // Warm peach
-  warning: '#FEF3C7',      // Yellow
-  error: '#FEE2E2',        // Red
-  success: '#D1FAE5',      // Green
-};
+export const TIER_BADGE_COLORS = {
+  starter: 'bg-orange-500 hover:bg-orange-600',
+  professional: 'bg-blue-500 hover:bg-blue-600',
+  scale: 'bg-purple-500 hover:bg-purple-600',
+} as const;
 ```
 
-### Typography:
+**Status Badge Variants:**
 ```typescript
-export const BILLING_TEXT = {
-  pageTitle: 'text-4xl font-black uppercase',
-  cardTitle: 'text-2xl font-black uppercase',
-  price: 'text-3xl font-black',
-  label: 'text-sm font-bold text-gray-600',
-  body: 'text-base font-medium',
-};
+// Use shadcn Badge component with these variants
+export const STATUS_VARIANTS = {
+  trialing: 'default',      // Blue/primary
+  active: 'success',        // Green (custom variant if needed)
+  past_due: 'destructive',  // Red
+  canceled: 'secondary',    // Gray
+  incomplete: 'secondary',  // Gray
+} as const;
 ```
 
-### Spacing & Borders:
+**Typography Classes:**
 ```typescript
-export const BILLING_STYLES = {
-  cardBorder: 'border-[3px] border-black',
-  cardShadow: 'shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]',
-  buttonHover: 'hover:translate-x-[-2px] hover:translate-y-[-2px]',
-  sectionGap: 'space-y-6',
-};
+// Consistent with shadcn/ui typography
+export const TEXT_STYLES = {
+  pageTitle: 'text-3xl font-bold tracking-tight',
+  pageSubtitle: 'text-muted-foreground',
+  cardTitle: 'text-xl font-semibold',
+  price: 'text-4xl font-bold',
+  label: 'text-sm font-medium',
+  description: 'text-sm text-muted-foreground',
+} as const;
+```
+
+**Layout Spacing:**
+```typescript
+export const SPACING = {
+  pageGap: 'space-y-6',
+  cardGap: 'space-y-4',
+  gridGap: 'gap-6',
+  sectionPadding: 'p-6',
+} as const;
+```
+
+**Component Defaults:**
+```typescript
+// Use these as base configurations
+export const COMPONENT_CONFIG = {
+  button: {
+    default: 'default',    // Primary actions
+    secondary: 'outline',  // Secondary actions
+    ghost: 'ghost',        // Subtle actions
+  },
+  card: {
+    className: 'transition-all duration-200 hover:shadow-md',
+  },
+  alert: {
+    trial: 'default',      // Yellow/amber for trial info
+    error: 'destructive',  // Red for errors/failures
+    success: 'default',    // Custom green styling
+  },
+} as const;
 ```
 
 ---
@@ -991,5 +1066,24 @@ src/
 ---
 
 **Last Updated:** 2025-01-06
-**Version:** 1.0
+**Version:** 2.0 (shadcn/ui)
 **Status:** Ready for Implementation
+
+## Summary of Changes (v2.0)
+
+**Design System Update:**
+- Replaced neubrutalist design with shadcn/ui components
+- Standardized on clean, professional SaaS aesthetic
+- All pages now use Card, Button, Badge, Alert, Table, Progress components
+- Consistent typography and spacing using Tailwind utilities
+- Color-coded tier badges (orange/blue/purple)
+- Icons from lucide-react throughout
+- Mobile-responsive and accessible by default
+
+**Benefits:**
+- ✅ Faster development with pre-built components
+- ✅ Consistent design language across entire app
+- ✅ Built-in accessibility (ARIA, keyboard nav)
+- ✅ Mobile-optimized by default
+- ✅ Easy to maintain and extend
+- ✅ Professional SaaS appearance
