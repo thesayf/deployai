@@ -10,6 +10,7 @@ export interface Tenant {
   stripe_customer_id?: string;
   subscription_tier?: 'starter' | 'professional' | 'scale';
   subscription_status: string;
+  trial_end_date?: string | null;
   assessments_used: number;
   assessments_limit?: number;
   created_at: string;

@@ -20,7 +20,17 @@ export default async function handler(
     const assessmentService = new AssessmentService(tenantContext.tenant.id);
     const dashboardData = await assessmentService.getDashboardData();
 
-    res.status(200).json(dashboardData);
+    // Add billing data from tenant context
+    const responseData = {
+      ...dashboardData,
+      billing: {
+        subscription_status: tenantContext.tenant.subscription_status,
+        trial_end_date: tenantContext.tenant.trial_end_date,
+        subscription_tier: tenantContext.tenant.subscription_tier,
+      },
+    };
+
+    res.status(200).json(responseData);
   } catch (error) {
     console.error('Error fetching dashboard data:', error);
     res.status(500).json({ error: 'Failed to fetch dashboard data' });

@@ -4,6 +4,7 @@ import DashboardStats from './dashboard/DashboardStats';
 import UsageMeter from './dashboard/UsageMeter';
 import RecentAssessments from './dashboard/RecentAssessments';
 import MonthlyTrend from './dashboard/MonthlyTrend';
+import { TrialBanner } from '@/components/billing/TrialBanner';
 
 interface DashboardData {
   usage: {
@@ -26,6 +27,11 @@ interface DashboardData {
     month: string;
     count: number;
   }>;
+  billing?: {
+    subscription_status: string;
+    trial_end_date: string | null;
+    subscription_tier: string | null;
+  };
 }
 
 const Dashboard: React.FC = () => {
@@ -82,6 +88,21 @@ const Dashboard: React.FC = () => {
     );
   }
 
+  // Calculate trial data
+  const isTrialing = dashboardData?.billing?.subscription_status === 'trialing';
+  const trialEndDate = dashboardData?.billing?.trial_end_date;
+  const trialDaysRemaining = trialEndDate
+    ? Math.max(0, Math.ceil((new Date(trialEndDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
+    : 0;
+
+  // Get tier pricing
+  const TIER_PRICING: Record<string, number> = {
+    starter: 199,
+    professional: 499,
+    scale: 997,
+  };
+  const monthlyPrice = TIER_PRICING[dashboardData?.billing?.subscription_tier || 'starter'];
+
   return (
     <div className="space-y-8">
       {/* Page Header */}
@@ -92,6 +113,18 @@ const Dashboard: React.FC = () => {
         </p>
       </div>
 
+      {/* Trial Banner */}
+      {isTrialing && trialEndDate && (
+        <TrialBanner
+          daysRemaining={trialDaysRemaining}
+          assessmentsUsed={dashboardData.usage.used}
+          assessmentsLimit={dashboardData.usage.limit || 5}
+          trialEndDate={trialEndDate}
+          monthlyPrice={monthlyPrice}
+          tenant={tenantContext?.tenant.subdomain || ''}
+        />
+      )}
+
       {/* Usage Meter */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
         <div className="lg:col-span-1">
@@ -100,6 +133,7 @@ const Dashboard: React.FC = () => {
             limit={dashboardData.usage.limit}
             percentage={dashboardData.usage.percentage}
             tier={tenantContext?.tenant.subscription_tier || 'starter'}
+            tenant={tenantContext?.tenant.subdomain}
           />
         </div>
 

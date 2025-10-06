@@ -1,14 +1,17 @@
 import React from 'react';
 import { AlertTriangle } from 'lucide-react';
+import { useRouter } from 'next/router';
 
 interface UsageMeterProps {
   used: number;
   limit: number | null;
   percentage: number;
   tier: string;
+  tenant?: string;
 }
 
-const UsageMeter: React.FC<UsageMeterProps> = ({ used, limit, percentage, tier }) => {
+const UsageMeter: React.FC<UsageMeterProps> = ({ used, limit, percentage, tier, tenant }) => {
+  const router = useRouter();
   const isUnlimited = limit === null;
   const isNearLimit = !isUnlimited && percentage >= 80;
   const isAtLimit = !isUnlimited && percentage >= 100;
@@ -24,6 +27,12 @@ const UsageMeter: React.FC<UsageMeterProps> = ({ used, limit, percentage, tier }
     if (isAtLimit) return 'Assessment limit reached';
     if (isNearLimit) return 'Approaching limit';
     return `${limit! - used} assessments remaining`;
+  };
+
+  const handleUpgradeClick = () => {
+    if (tenant) {
+      router.push(`/${tenant}/admin/billing`);
+    }
   };
 
   return (
@@ -65,8 +74,11 @@ const UsageMeter: React.FC<UsageMeterProps> = ({ used, limit, percentage, tier }
             {/* Upgrade prompt */}
             {isNearLimit && (
               <div className="mt-4">
-                <button className="w-full bg-gray-900 text-white font-medium py-2 px-4 rounded-md hover:bg-gray-800 transition-colors">
-                  Upgrade Plan
+                <button
+                  onClick={handleUpgradeClick}
+                  className="w-full bg-gray-900 text-white font-medium py-2 px-4 rounded-md hover:bg-gray-800 transition-colors"
+                >
+                  Manage Billing
                 </button>
               </div>
             )}
