@@ -37,84 +37,81 @@ export function PricingCard({
   isDisabled = false,
 }: PricingCardProps) {
   return (
-    <Card
-      className={cn(
-        'relative transition-all duration-200',
-        isDark
-          ? 'bg-gray-800 text-white border-gray-700'
-          : 'bg-white border-gray-200',
-        isRecommended && 'border-2 border-primary shadow-lg scale-105'
-      )}
-    >
+    <div className="relative">
       {isRecommended && (
-        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-          <Badge className="bg-primary text-primary-foreground px-4 py-1">
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+          <Badge className="bg-primary text-primary-foreground px-4 py-1.5 text-sm font-semibold shadow-md">
             Most Popular
           </Badge>
         </div>
       )}
+      <Card
+        className={cn(
+          'relative transition-all duration-200 rounded-lg overflow-hidden',
+          isDark
+            ? 'bg-gray-800 text-white border-gray-700'
+            : 'bg-white border-gray-200',
+          isRecommended && 'border-2 border-primary shadow-lg'
+        )}
+      >
+        <Badge className={cn('absolute top-4 right-4 uppercase text-xs font-bold', badgeColor)}>
+          {badgeText}
+        </Badge>
 
-      <CardHeader className="space-y-4 pb-4">
-        <div className="flex items-center justify-between">
-          <h3 className={cn('text-xl font-semibold', isDark && 'text-white')}>
+        <CardHeader className="space-y-4 pb-4 pt-6">
+          <h3 className={cn('text-2xl font-bold', isDark && 'text-white')}>
             {name}
           </h3>
-          <div className="flex items-center gap-2">
-            <div className={cn('h-2 w-2 rounded-full', badgeColor)} />
-            <span className={cn('text-sm font-medium', isDark ? 'text-gray-300' : 'text-gray-600')}>
-              {badgeText}
-            </span>
+
+          <div className="flex items-baseline gap-2">
+            {typeof price === 'number' ? (
+              <>
+                <span className={cn('text-5xl font-bold', isDark && 'text-white')}>
+                  ${price}
+                </span>
+                <span className={cn('text-base', isDark ? 'text-gray-400' : 'text-muted-foreground')}>
+                  {priceLabel}
+                </span>
+              </>
+            ) : (
+              <span className={cn('text-4xl font-bold', isDark && 'text-white')}>
+                {price}
+              </span>
+            )}
           </div>
-        </div>
+        </CardHeader>
 
-        <div className="flex items-baseline gap-2">
-          {typeof price === 'number' ? (
-            <>
-              <span className={cn('text-5xl font-bold', isDark && 'text-white')}>
-                ${price}
-              </span>
-              <span className={cn('text-lg', isDark ? 'text-gray-400' : 'text-muted-foreground')}>
-                {priceLabel}
-              </span>
-            </>
-          ) : (
-            <span className={cn('text-4xl font-bold', isDark && 'text-white')}>
-              {price}
-            </span>
-          )}
-        </div>
-      </CardHeader>
+        <CardContent className="space-y-6">
+          <Button
+            onClick={onAction}
+            disabled={isDisabled}
+            variant={actionVariant}
+            className={cn(
+              'w-full',
+              isDark && actionVariant === 'default' && 'bg-white text-gray-900 hover:bg-gray-100',
+              isCurrentPlan && 'bg-gray-100 text-gray-600 hover:bg-gray-100 cursor-not-allowed'
+            )}
+          >
+            {actionText}
+          </Button>
 
-      <CardContent className="space-y-6">
-        <Button
-          onClick={onAction}
-          disabled={isDisabled}
-          variant={actionVariant}
-          className={cn(
-            'w-full',
-            isDark && actionVariant === 'default' && 'bg-white text-gray-900 hover:bg-gray-100',
-            isCurrentPlan && 'cursor-not-allowed'
-          )}
-        >
-          {actionText}
-        </Button>
-
-        <ul className="space-y-3">
-          {features.map((feature, index) => (
-            <li key={index} className="flex items-start gap-3">
-              <Check
-                className={cn(
-                  'h-5 w-5 flex-shrink-0 mt-0.5',
-                  isDark ? 'text-green-400' : 'text-green-600'
-                )}
-              />
-              <span className={cn('text-sm', isDark ? 'text-gray-300' : 'text-gray-700')}>
-                {feature}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
+          <ul className="space-y-2">
+            {features.map((feature, index) => (
+              <li key={index} className="flex items-start gap-2.5">
+                <Check
+                  className={cn(
+                    'h-5 w-5 flex-shrink-0 mt-0.5',
+                    isDark ? 'text-green-400' : 'text-green-600'
+                  )}
+                />
+                <span className={cn('text-sm leading-relaxed', isDark ? 'text-gray-300' : 'text-gray-700')}>
+                  {feature}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

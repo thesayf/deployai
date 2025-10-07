@@ -34,8 +34,8 @@ const TIER_DETAILS = {
     monthly: 199,
     yearly: 1910,
     assessments: 5,
-    badgeText: 'FREE',
-    badgeColor: 'bg-orange-500',
+    badgeText: 'STARTER',
+    badgeColor: 'bg-orange-100 text-orange-800 border-orange-200',
     features: [
       '5 AI assessments per month',
       'Full platform access',
@@ -52,7 +52,7 @@ const TIER_DETAILS = {
     yearly: 4790,
     assessments: 20,
     badgeText: 'PRO',
-    badgeColor: 'bg-blue-500',
+    badgeColor: 'bg-blue-100 text-blue-800 border-blue-200',
     features: [
       '20 AI assessments per month',
       'Everything in Starter',
@@ -70,7 +70,7 @@ const TIER_DETAILS = {
     yearly: 9570,
     assessments: null,
     badgeText: 'ADVANCE',
-    badgeColor: 'bg-green-500',
+    badgeColor: 'bg-green-100 text-green-800 border-green-200',
     features: [
       'Unlimited AI assessments',
       'Everything in Professional',
@@ -251,12 +251,12 @@ export default function BillingDashboard() {
           )}
 
           {/* 3-Column Pricing Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
             <PricingCard
               name={TIER_DETAILS.starter.name}
               price={isYearly ? 159 : TIER_DETAILS.starter.monthly}
               priceLabel={isYearly ? '/month (billed yearly)' : '/month'}
-              badgeText={isTrialing && !currentTier ? TIER_DETAILS.starter.badgeText : 'STARTER'}
+              badgeText={TIER_DETAILS.starter.badgeText}
               badgeColor={TIER_DETAILS.starter.badgeColor}
               features={TIER_DETAILS.starter.features}
               isCurrentPlan={currentTier === 'starter'}
