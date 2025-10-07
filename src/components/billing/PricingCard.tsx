@@ -11,6 +11,7 @@ interface PricingCardProps {
   priceLabel: string;
   badgeText: string;
   badgeColor: string;
+  badgeDotColor?: string;
   features: string[];
   isCurrentPlan: boolean;
   isDark?: boolean;
@@ -27,6 +28,7 @@ export function PricingCard({
   priceLabel,
   badgeText,
   badgeColor,
+  badgeDotColor,
   features,
   isCurrentPlan,
   isDark = false,
@@ -37,28 +39,31 @@ export function PricingCard({
   isDisabled = false,
 }: PricingCardProps) {
   return (
-    <div className="relative">
+    <div className="relative pt-6">
       {isRecommended && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-          <Badge className="bg-primary text-primary-foreground px-4 py-1.5 text-sm font-semibold shadow-md">
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+          <Badge className="bg-primary text-primary-foreground px-4 py-1.5 text-sm font-semibold shadow-md whitespace-nowrap">
             Most Popular
           </Badge>
         </div>
       )}
       <Card
         className={cn(
-          'relative transition-all duration-200 rounded-lg overflow-hidden',
+          'relative transition-all duration-200 rounded-2xl overflow-hidden shadow-sm border',
           isDark
             ? 'bg-gray-800 text-white border-gray-700'
             : 'bg-white border-gray-200',
-          isRecommended && 'border-2 border-primary shadow-lg'
+          isRecommended && 'border-2 border-primary shadow-xl'
         )}
       >
-        <Badge className={cn('absolute top-4 right-4 uppercase text-xs font-bold', badgeColor)}>
-          {badgeText}
-        </Badge>
+        <div className="absolute top-4 right-4 flex items-center gap-1.5">
+          {badgeDotColor && <div className={cn('w-2.5 h-2.5 rounded-full', badgeDotColor)} />}
+          <Badge className={cn('uppercase text-xs font-semibold px-3 py-1 rounded-full', badgeColor)}>
+            {badgeText}
+          </Badge>
+        </div>
 
-        <CardHeader className="space-y-4 pb-4 pt-6">
+        <CardHeader className="space-y-4 pb-4 pt-6 pr-24">
           <h3 className={cn('text-2xl font-bold', isDark && 'text-white')}>
             {name}
           </h3>

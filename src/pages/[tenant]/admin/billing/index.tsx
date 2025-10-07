@@ -30,12 +30,13 @@ interface BillingData {
 
 const TIER_DETAILS = {
   starter: {
-    name: 'Starter',
+    name: 'Starter Plan',
     monthly: 199,
     yearly: 1910,
     assessments: 5,
-    badgeText: 'STARTER',
-    badgeColor: 'bg-orange-100 text-orange-800 border-orange-200',
+    badgeText: 'FREE',
+    badgeColor: 'bg-orange-500 text-white',
+    badgeDotColor: 'bg-orange-500',
     features: [
       '5 AI assessments per month',
       'Full platform access',
@@ -47,12 +48,13 @@ const TIER_DETAILS = {
     ],
   },
   professional: {
-    name: 'Professional',
+    name: 'Growth Plan',
     monthly: 499,
     yearly: 4790,
     assessments: 20,
     badgeText: 'PRO',
-    badgeColor: 'bg-blue-100 text-blue-800 border-blue-200',
+    badgeColor: 'bg-orange-500 text-white',
+    badgeDotColor: 'bg-orange-500',
     features: [
       '20 AI assessments per month',
       'Everything in Starter',
@@ -65,12 +67,13 @@ const TIER_DETAILS = {
     ],
   },
   scale: {
-    name: 'Scale',
+    name: 'Enterprise Plan',
     monthly: 997,
     yearly: 9570,
     assessments: null,
     badgeText: 'ADVANCE',
-    badgeColor: 'bg-green-100 text-green-800 border-green-200',
+    badgeColor: 'bg-green-500 text-white',
+    badgeDotColor: 'bg-green-500',
     features: [
       'Unlimited AI assessments',
       'Everything in Professional',
@@ -251,13 +254,14 @@ export default function BillingDashboard() {
           )}
 
           {/* 3-Column Pricing Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
             <PricingCard
               name={TIER_DETAILS.starter.name}
               price={isYearly ? 159 : TIER_DETAILS.starter.monthly}
               priceLabel={isYearly ? '/month (billed yearly)' : '/month'}
               badgeText={TIER_DETAILS.starter.badgeText}
               badgeColor={TIER_DETAILS.starter.badgeColor}
+              badgeDotColor={TIER_DETAILS.starter.badgeDotColor}
               features={TIER_DETAILS.starter.features}
               isCurrentPlan={currentTier === 'starter'}
               onAction={() => handleUpgrade('starter')}
@@ -272,6 +276,7 @@ export default function BillingDashboard() {
               priceLabel={isYearly ? '/month (billed yearly)' : '/month'}
               badgeText={TIER_DETAILS.professional.badgeText}
               badgeColor={TIER_DETAILS.professional.badgeColor}
+              badgeDotColor={TIER_DETAILS.professional.badgeDotColor}
               features={TIER_DETAILS.professional.features}
               isCurrentPlan={currentTier === 'professional'}
               isDark={true}
@@ -288,6 +293,7 @@ export default function BillingDashboard() {
               priceLabel="/month"
               badgeText={TIER_DETAILS.scale.badgeText}
               badgeColor={TIER_DETAILS.scale.badgeColor}
+              badgeDotColor={TIER_DETAILS.scale.badgeDotColor}
               features={TIER_DETAILS.scale.features}
               isCurrentPlan={currentTier === 'scale'}
               onAction={() => router.push('/contact')}

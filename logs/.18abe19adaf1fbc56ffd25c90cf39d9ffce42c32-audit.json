@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/rudihinds/code/deployai/logs/.18abe19adaf1fbc56ffd25c90cf39d9ffce42c32-audit.json",
+    "files": [
+        {
+            "date": 1759818270853,
+            "name": "/Users/rudihinds/code/deployai/logs/mcp-puppeteer-2025-10-07.log",
+            "hash": "830851dcafef02d43bfe4d2d482be51e99eb6baa1394edd0581eaed6b970e132"
+        }
+    ],
+    "hashType": "sha256"
+}

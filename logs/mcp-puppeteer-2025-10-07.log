@@ -1,0 +1,84 @@
+{"level":"info","message":"Starting MCP server","service":"mcp-puppeteer","timestamp":"2025-10-07 10:24:30.895"}
+{"level":"info","message":"MCP server started successfully","service":"mcp-puppeteer","timestamp":"2025-10-07 10:24:30.896"}
+{"arguments":{"debugPort":9222},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:26:49.350","tool":"puppeteer_connect_active_tab"}
+{"0":"n","1":"p","2":"x","level":"info","message":"Launching browser with config:","service":"mcp-puppeteer","timestamp":"2025-10-07 10:26:49.354"}
+{"level":"info","message":"Browser launched successfully","service":"mcp-puppeteer","timestamp":"2025-10-07 10:26:53.861"}
+{"level":"info","message":"Starting MCP server","service":"mcp-puppeteer","timestamp":"2025-10-07 10:30:26.155"}
+{"level":"info","message":"MCP server started successfully","service":"mcp-puppeteer","timestamp":"2025-10-07 10:30:26.157"}
+{"arguments":{"debugPort":9222},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:34:48.531","tool":"puppeteer_connect_active_tab"}
+{"0":"n","1":"p","2":"x","level":"info","message":"Launching browser with config:","service":"mcp-puppeteer","timestamp":"2025-10-07 10:34:48.532"}
+{"level":"info","message":"Browser launched successfully","service":"mcp-puppeteer","timestamp":"2025-10-07 10:34:49.498"}
+{"level":"info","message":"Connecting to existing browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:34:49.550","wsEndpoint":"ws://localhost:9222/devtools/browser/5daf4740-ee20-4ea6-848b-77428b446142"}
+{"level":"debug","message":"Establishing connection to browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:34:49.550"}
+{"level":"info","message":"Successfully connected to browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:34:49.560"}
+{"level":"info","message":"Found active webpage:","service":"mcp-puppeteer","timestamp":"2025-10-07 10:34:49.571","title":"","url":"chrome://intro/"}
+{"arguments":{"url":"http://localhost:3000"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:34:55.250","tool":"puppeteer_navigate"}
+{"level":"info","message":"Navigating to URL","service":"mcp-puppeteer","timestamp":"2025-10-07 10:34:55.250","url":"http://localhost:3000"}
+{"error":"Navigation timeout of 30000 ms exceeded","level":"error","message":"Navigation failed","service":"mcp-puppeteer","timestamp":"2025-10-07 10:35:25.250","url":"http://localhost:3000"}
+{"arguments":{"url":"http://localhost:3003"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:35:32.221","tool":"puppeteer_navigate"}
+{"level":"info","message":"Navigating to URL","service":"mcp-puppeteer","timestamp":"2025-10-07 10:35:32.221","url":"http://localhost:3003"}
+{"error":"Navigation timeout of 30000 ms exceeded","level":"error","message":"Navigation failed","service":"mcp-puppeteer","timestamp":"2025-10-07 10:36:02.221","url":"http://localhost:3003"}
+{"level":"info","message":"Starting MCP server","service":"mcp-puppeteer","timestamp":"2025-10-07 10:41:26.045"}
+{"level":"info","message":"MCP server started successfully","service":"mcp-puppeteer","timestamp":"2025-10-07 10:41:26.046"}
+{"level":"info","message":"Puppeteer MCP Server closing","service":"mcp-puppeteer","timestamp":"2025-10-07 10:41:26.056"}
+{"level":"info","message":"Starting MCP server","service":"mcp-puppeteer","timestamp":"2025-10-07 10:41:38.407"}
+{"level":"info","message":"MCP server started successfully","service":"mcp-puppeteer","timestamp":"2025-10-07 10:41:38.408"}
+{"level":"info","message":"Starting MCP server","service":"mcp-puppeteer","timestamp":"2025-10-07 10:42:40.045"}
+{"level":"info","message":"MCP server started successfully","service":"mcp-puppeteer","timestamp":"2025-10-07 10:42:40.046"}
+{"arguments":{"debugPort":9222},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:43:49.512","tool":"puppeteer_connect_active_tab"}
+{"0":"n","1":"p","2":"x","level":"info","message":"Launching browser with config:","service":"mcp-puppeteer","timestamp":"2025-10-07 10:43:49.513"}
+{"level":"info","message":"Browser launched successfully","service":"mcp-puppeteer","timestamp":"2025-10-07 10:43:50.569"}
+{"level":"info","message":"Connecting to existing browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:43:50.621","wsEndpoint":"ws://localhost:9222/devtools/browser/75eb4e79-73b9-45a3-a524-be844ecc25bb"}
+{"level":"debug","message":"Establishing connection to browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:43:50.621"}
+{"level":"info","message":"Successfully connected to browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:43:50.629"}
+{"level":"info","message":"Found active webpage:","service":"mcp-puppeteer","timestamp":"2025-10-07 10:43:50.637","title":"New tab","url":"chrome://new-tab-page/"}
+{"arguments":{"url":"http://localhost:3000/demo/admin/billing"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:43:59.360","tool":"puppeteer_navigate"}
+{"level":"info","message":"Navigating to URL","service":"mcp-puppeteer","timestamp":"2025-10-07 10:43:59.360","url":"http://localhost:3000/demo/admin/billing"}
+{"error":"Navigation timeout of 30000 ms exceeded","level":"error","message":"Navigation failed","service":"mcp-puppeteer","timestamp":"2025-10-07 10:44:29.362","url":"http://localhost:3000/demo/admin/billing"}
+{"arguments":{"url":"http://localhost:3000"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:45:04.372","tool":"puppeteer_navigate"}
+{"level":"info","message":"Navigating to URL","service":"mcp-puppeteer","timestamp":"2025-10-07 10:45:04.375","url":"http://localhost:3000"}
+{"error":"Navigation timeout of 30000 ms exceeded","level":"error","message":"Navigation failed","service":"mcp-puppeteer","timestamp":"2025-10-07 10:45:34.379","url":"http://localhost:3000"}
+{"arguments":{"url":"http://localhost:3000/demo/admin/billing"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:46:07.503","tool":"puppeteer_navigate"}
+{"level":"info","message":"Navigating to URL","service":"mcp-puppeteer","timestamp":"2025-10-07 10:46:07.503","url":"http://localhost:3000/demo/admin/billing"}
+{"error":"HTTP error: 404 Not Found","level":"error","message":"Navigation failed","service":"mcp-puppeteer","timestamp":"2025-10-07 10:46:14.923","url":"http://localhost:3000/demo/admin/billing"}
+{"arguments":{"url":"http://localhost:3000"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:46:35.950","tool":"puppeteer_navigate"}
+{"level":"info","message":"Navigating to URL","service":"mcp-puppeteer","timestamp":"2025-10-07 10:46:35.951","url":"http://localhost:3000"}
+{"error":"HTTP error: 404 Not Found","level":"error","message":"Navigation failed","service":"mcp-puppeteer","timestamp":"2025-10-07 10:46:51.992","url":"http://localhost:3000"}
+{"arguments":{"url":"http://localhost:3001/testconsultant/admin/billing"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:51:16.142","tool":"puppeteer_navigate"}
+{"level":"info","message":"Navigating to URL","service":"mcp-puppeteer","timestamp":"2025-10-07 10:51:16.142","url":"http://localhost:3001/testconsultant/admin/billing"}
+{"error":"Attempted to use detached Frame '78B8B733FC01A69089D572A552A91ED4'.","level":"error","message":"Navigation failed","service":"mcp-puppeteer","timestamp":"2025-10-07 10:51:16.143","url":"http://localhost:3001/testconsultant/admin/billing"}
+{"arguments":{"debugPort":9222,"targetUrl":"http://localhost:3001/testconsultant/admin/billing"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:51:30.994","tool":"puppeteer_connect_active_tab"}
+{"level":"info","message":"Connecting to existing browser","service":"mcp-puppeteer","targetUrl":"http://localhost:3001/testconsultant/admin/billing","timestamp":"2025-10-07 10:51:31.086","wsEndpoint":"ws://localhost:9222/devtools/browser/75eb4e79-73b9-45a3-a524-be844ecc25bb"}
+{"level":"debug","message":"Establishing connection to browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:51:31.086"}
+{"level":"info","message":"Successfully connected to browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:51:31.094"}
+{"level":"info","message":"Found active webpage:","service":"mcp-puppeteer","timestamp":"2025-10-07 10:51:31.100","title":"","url":"http://localhost:3001/testconsultant/admin/billing"}
+{"arguments":{"height":1080,"name":"billing-current-implementation","width":1920},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:51:46.583","tool":"puppeteer_screenshot"}
+{"arguments":{"url":"http://localhost:3001/testconsultant/admin/billing"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:56:42.076","tool":"puppeteer_navigate"}
+{"level":"info","message":"Navigating to URL","service":"mcp-puppeteer","timestamp":"2025-10-07 10:56:42.077","url":"http://localhost:3001/testconsultant/admin/billing"}
+{"level":"info","message":"Navigation successful","service":"mcp-puppeteer","status":200,"timestamp":"2025-10-07 10:56:44.861","url":"http://localhost:3001/testconsultant/admin/billing"}
+{"arguments":{"height":1080,"name":"billing-updated-design","width":1920},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:56:54.957","tool":"puppeteer_screenshot"}
+{"arguments":{"height":1080,"name":"billing-fixed-design","width":1920},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:57:11.091","tool":"puppeteer_screenshot"}
+{"arguments":{"script":"document.body.innerHTML.substring(0, 200)"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:57:26.020","tool":"puppeteer_evaluate"}
+{"level":"debug","message":"Executing script in browser","scriptLength":41,"service":"mcp-puppeteer","timestamp":"2025-10-07 10:57:26.020"}
+{"hasResult":false,"level":"debug","logCount":0,"message":"Script execution result","resultType":"undefined","service":"mcp-puppeteer","timestamp":"2025-10-07 10:57:26.021"}
+{"arguments":{"debugPort":9222},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:57:34.477","tool":"puppeteer_connect_active_tab"}
+{"level":"info","message":"Connecting to existing browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:57:34.530","wsEndpoint":"ws://localhost:9222/devtools/browser/75eb4e79-73b9-45a3-a524-be844ecc25bb"}
+{"level":"debug","message":"Establishing connection to browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:57:34.530"}
+{"level":"info","message":"Successfully connected to browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:57:34.537"}
+{"level":"info","message":"Found active webpage:","service":"mcp-puppeteer","timestamp":"2025-10-07 10:57:34.543","title":"","url":"http://localhost:3001/testconsultant/admin/billing"}
+{"arguments":{"name":"billing-page-fullscreen"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:57:51.861","tool":"puppeteer_screenshot"}
+{"arguments":{"debugPort":9222,"targetUrl":"http://localhost:3001/testconsultant/admin/billing"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:59:23.500","tool":"puppeteer_connect_active_tab"}
+{"level":"info","message":"Connecting to existing browser","service":"mcp-puppeteer","targetUrl":"http://localhost:3001/testconsultant/admin/billing","timestamp":"2025-10-07 10:59:23.528","wsEndpoint":"ws://localhost:9222/devtools/browser/75eb4e79-73b9-45a3-a524-be844ecc25bb"}
+{"level":"debug","message":"Establishing connection to browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:59:23.528"}
+{"level":"info","message":"Successfully connected to browser","service":"mcp-puppeteer","timestamp":"2025-10-07 10:59:23.536"}
+{"level":"info","message":"Found active webpage:","service":"mcp-puppeteer","timestamp":"2025-10-07 10:59:23.542","title":"","url":"http://localhost:3001/testconsultant/admin/billing"}
+{"arguments":{"height":1080,"name":"billing-updated-with-fixes","width":1920},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 10:59:29.258","tool":"puppeteer_screenshot"}
+{"arguments":{"height":812,"name":"billing-mobile-view","width":375},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 11:01:11.673","tool":"puppeteer_screenshot"}
+{"arguments":{"height":1024,"name":"billing-tablet-view","width":768},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 11:01:17.810","tool":"puppeteer_screenshot"}
+{"arguments":{"url":"http://localhost:3001/testconsultant/admin/billing"},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 11:02:07.301","tool":"puppeteer_navigate"}
+{"level":"info","message":"Navigating to URL","service":"mcp-puppeteer","timestamp":"2025-10-07 11:02:07.301","url":"http://localhost:3001/testconsultant/admin/billing"}
+{"level":"info","message":"Navigation successful","service":"mcp-puppeteer","status":200,"timestamp":"2025-10-07 11:02:10.212","url":"http://localhost:3001/testconsultant/admin/billing"}
+{"arguments":{"height":1080,"name":"billing-fixed-desktop","width":1920},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 11:02:16.288","tool":"puppeteer_screenshot"}
+{"arguments":{"height":1080,"name":"billing-desktop-final","width":1920},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 11:02:35.541","tool":"puppeteer_screenshot"}
+{"arguments":{"height":1024,"name":"billing-tablet-fixed","width":768},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 11:02:43.948","tool":"puppeteer_screenshot"}
+{"arguments":{"height":812,"name":"billing-mobile-fixed","width":375},"level":"debug","message":"Tool call received","service":"mcp-puppeteer","timestamp":"2025-10-07 11:02:51.738","tool":"puppeteer_screenshot"}
