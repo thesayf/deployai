@@ -731,15 +731,20 @@ export const COMPONENT_CONFIG = {
 
 ## Implementation Phases
 
-### Phase 1: MVP Critical (Day 1) - PRIORITY
+### Phase 1: MVP Critical (Day 1) - IN PROGRESS
 **Goal:** Users can view and manage their subscription
 
-✅ **Files to Create:**
-1. `/pages/[tenant]/admin/billing/index.tsx` - Main billing dashboard
-2. `/components/billing/TrialBanner.tsx` - Trial status banner for dashboard
-3. `/api/stripe/create-portal-session.ts` - Stripe portal session creation
+**Settings Organization (COMPLETED ✅)**
+1. ✅ `/components/admin/settings/SettingsLayout.tsx` - Settings page wrapper
+2. ✅ `/components/admin/settings/SettingsNav.tsx` - Horizontal tab navigation
+3. ✅ `/pages/[tenant]/admin/settings/billing.tsx` - Billing dashboard (moved from /admin/billing)
+4. ✅ Updated `/components/admin/layout/AdminSidebar.tsx` - Point to settings route
 
-✅ **Files to Modify:**
+**Remaining Files to Create:**
+1. `/components/billing/TrialBanner.tsx` - Trial status banner for dashboard
+2. `/api/stripe/create-portal-session.ts` - Stripe portal session creation
+
+**Files to Modify:**
 1. `/components/admin/dashboard/UsageMeter.tsx` - Link upgrade button
 2. `/pages/[tenant]/admin/index.tsx` - Add TrialBanner component
 
@@ -749,6 +754,8 @@ export const COMPONENT_CONFIG = {
 - [ ] Customer portal opens correctly
 - [ ] Usage meter links to billing pages
 - [ ] All data fetched correctly from Supabase
+- [x] Settings navigation structure working
+- [x] Billing page accessible via /admin/settings/billing
 
 ---
 
@@ -1009,22 +1016,29 @@ export const COMPONENT_CONFIG = {
 
 ```
 src/
-├── pages/
-│   └── [tenant]/admin/billing/
-│       ├── index.tsx                  # Main billing dashboard
-│       ├── plans.tsx                  # Plan selection/upgrade
-│       ├── history.tsx                # Invoice history
-│       ├── payment-method.tsx         # Update payment
-│       ├── trial-setup.tsx            # ✅ Already created
-│       └── success.tsx                # ✅ Already created
-│
 ├── components/
+│   ├── admin/
+│   │   └── settings/
+│   │       ├── SettingsLayout.tsx     # ✅ Settings page wrapper
+│   │       ├── SettingsNav.tsx        # ✅ Horizontal tab navigation
+│   │       └── index.ts               # ✅ Export barrel
 │   └── billing/
 │       ├── TrialBanner.tsx            # Trial status for dashboard
 │       ├── TrialSetupBanner.tsx       # Deferred trial reminder
 │       ├── TrialExpiringBanner.tsx    # Trial expiration warning
 │       ├── PaymentFailedBanner.tsx    # Payment failure alert
 │       └── PricingCard.tsx            # Reusable pricing card
+│
+├── pages/
+│   └── [tenant]/admin/
+│       ├── settings/
+│       │   └── billing.tsx            # ✅ Main billing dashboard (moved)
+│       └── billing/
+│           ├── plans.tsx              # Plan selection/upgrade
+│           ├── history.tsx            # Invoice history
+│           ├── payment-method.tsx     # Update payment
+│           ├── trial-setup.tsx        # ✅ Already created
+│           └── success.tsx            # ✅ Already created
 │
 ├── pages/api/stripe/
 │   ├── create-portal-session.ts       # New: Customer Portal

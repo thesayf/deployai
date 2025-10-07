@@ -13,8 +13,8 @@ Comprehensive implementation plan for MVP Stripe billing integration in deployAI
 ## Implementation Timeline
 
 **Target Completion**: 5 days
-**Current Status**: Phase 3 - Webhook Handler COMPLETED ✅
-**Progress**: 85% Complete - MVP READY FOR DEPLOYMENT
+**Current Status**: Phase 4 - Settings Organization COMPLETED ✅
+**Progress**: 90% Complete - MVP READY FOR DEPLOYMENT
 
 ## Phase 1: Foundation (COMPLETED ✅)
 
@@ -136,9 +136,53 @@ Comprehensive implementation plan for MVP Stripe billing integration in deployAI
 - Monitoring and rollback procedures
 - Post-launch tracking metrics
 
-## Phase 4: Usage Enforcement (OPTIONAL - Not MVP Critical)
+## Phase 4: Settings Route Organization (COMPLETED ✅)
 
-### Step 7: Usage Enforcement Integration (DEFERRED)
+### Step 8: Settings Page Structure ✅
+- [x] **8.1**: Create SettingsLayout component with navigation
+- [x] **8.2**: Create SettingsNav component with horizontal tabs
+- [x] **8.3**: Move billing page to /admin/settings/billing
+- [x] **8.4**: Update AdminSidebar navigation to point to settings
+- [x] **8.5**: Simplify to MVP scope (billing tab only)
+
+#### Step 8.1-8.2: Settings Components ✅
+**Files Created**:
+- `src/components/admin/settings/SettingsLayout.tsx`
+- `src/components/admin/settings/SettingsNav.tsx`
+- `src/components/admin/settings/index.ts`
+
+**Implementation**:
+- SettingsLayout provides consistent wrapper with optional action buttons
+- SettingsNav shows horizontal tab navigation (currently only billing tab)
+- Clean design with container alignment matching page content
+- No breadcrumb navigation (per user requirements)
+- No "Settings" heading on inner page (dynamic headings from individual pages)
+
+#### Step 8.3: Billing Page Migration ✅
+**File**: `src/pages/[tenant]/admin/settings/billing.tsx`
+**Changes**:
+- Moved from `/admin/billing` to `/admin/settings/billing`
+- Wrapped in SettingsLayout component
+- Updated returnUrl for Stripe portal to new settings path
+- AdminLayout title changed to "Settings"
+
+#### Step 8.4: Sidebar Navigation Update ✅
+**File**: `src/components/admin/layout/AdminSidebar.tsx`
+**Changes**:
+- Updated Settings href to `/admin/settings/billing`
+- Updated current detection to use `startsWith` for settings routes
+
+#### Step 8.5: MVP Scope Simplification ✅
+**Action**: Removed unnecessary placeholder pages
+**Files Deleted**:
+- account.tsx, team.tsx, preferences.tsx, integration.tsx, security.tsx, reports.tsx
+**Rationale**: Per STRIPE_BILLING_EPIC_REVISED.md, only billing functionality is in MVP scope
+
+**Build Status**: ✅ All files compile successfully
+
+## Phase 5: Usage Enforcement (OPTIONAL - Not MVP Critical)
+
+### Step 9: Usage Enforcement Integration (DEFERRED)
 **Status**: Optional enhancement for post-MVP
 **Integration Points**:
 - Assessment creation flow (check limits before allowing creation)
@@ -193,12 +237,23 @@ src/
 │   └── stripe/
 │       ├── index.ts                   ✅ Stripe client + tier config
 │       └── sync.ts                    ✅ Sync function (single source of truth)
+├── components/
+│   └── admin/
+│       ├── settings/
+│       │   ├── SettingsLayout.tsx     ✅ Settings page wrapper
+│       │   ├── SettingsNav.tsx        ✅ Horizontal tab navigation
+│       │   └── index.ts               ✅ Export barrel
+│       └── layout/
+│           └── AdminSidebar.tsx       ✅ Updated to point to settings
 ├── pages/
 │   ├── auth/
 │   │   └── redirect.tsx               ✅ OAuth callback with billing redirect
-│   ├── [tenant]/admin/billing/
-│   │   ├── trial-setup.tsx            ✅ Trial onboarding page
-│   │   └── success.tsx                ✅ Post-checkout success page
+│   ├── [tenant]/admin/
+│   │   ├── settings/
+│   │   │   └── billing.tsx            ✅ Billing dashboard (moved from /billing)
+│   │   └── billing/
+│   │       ├── trial-setup.tsx        ✅ Trial onboarding page
+│   │       └── success.tsx            ✅ Post-checkout success page
 │   └── api/
 │       └── stripe/
 │           ├── test-connection.ts     ✅ Test endpoint
