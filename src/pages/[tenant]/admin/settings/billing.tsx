@@ -9,9 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
-import { Switch } from '@/components/ui/switch';
 import { Clock, CreditCard, AlertCircle } from 'lucide-react';
-import { PricingCard } from '@/components/billing/PricingCard';
+import { CurrentPlanCard } from '@/components/billing/CurrentPlanCard';
+import { UpgradePlanModal } from '@/components/billing/UpgradePlanModal';
 import { BillingHistoryTable } from '@/components/billing/BillingHistoryTable';
 
 interface BillingData {
@@ -25,6 +25,8 @@ interface BillingData {
   cancel_at_period_end: boolean;
   payment_method_brand: string | null;
   payment_method_last4: string | null;
+  payment_method_exp_month: number | null;
+  payment_method_exp_year: number | null;
   assessments_used: number;
   assessments_limit: number | null;
 }
@@ -95,9 +97,9 @@ export default function BillingSettings() {
   const [billingData, setBillingData] = useState<BillingData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isYearly, setIsYearly] = useState(false);
   const [invoices, setInvoices] = useState<any[]>([]);
   const [loadingInvoices, setLoadingInvoices] = useState(false);
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
 
   useEffect(() => {
     if (tenant) {
@@ -110,7 +112,7 @@ export default function BillingSettings() {
       const supabase = createClient();
       const { data, error } = await supabase
         .from('tenants')
-        .select('stripe_customer_id, stripe_subscription_id, subscription_status, subscription_tier, trial_end_date, current_period_start, current_period_end, cancel_at_period_end, payment_method_brand, payment_method_last4, assessments_used, assessments_limit')
+        .select('stripe_customer_id, stripe_subscription_id, subscription_status, subscription_tier, trial_end_date, current_period_start, current_period_end, cancel_at_period_end, payment_method_brand, payment_method_last4, payment_method_exp_month, payment_method_exp_year, assessments_used, assessments_limit')
         .eq('subdomain', tenant)
         .single();
 
@@ -164,9 +166,8 @@ export default function BillingSettings() {
     }
   };
 
-  const handleUpgrade = (tier: string) => {
-    // Navigate to plan selection or trigger upgrade flow
-    router.push(`/${tenant}/admin/settings/billing/plans?selected=${tier}`);
+  const handleOpenUpgradeModal = () => {
+    setIsUpgradeModalOpen(true);
   };
 
   if (loading) {
@@ -201,6 +202,7 @@ export default function BillingSettings() {
 
   const isTrialing = billingData.subscription_status === 'trialing';
   const currentTier = billingData.subscription_tier as keyof typeof TIER_DETAILS | null;
+  const tierDetails = currentTier ? TIER_DETAILS[currentTier] : null;
 
   // Calculate trial days remaining
   const trialDaysRemaining = billingData.trial_end_date
@@ -211,33 +213,22 @@ export default function BillingSettings() {
     ? (billingData.assessments_used / billingData.assessments_limit) * 100
     : 0;
 
+  // Format card expiry
+  const cardExpiry = billingData.payment_method_exp_month && billingData.payment_method_exp_year
+    ? `${String(billingData.payment_method_exp_month).padStart(2, '0')}/${billingData.payment_method_exp_year}`
+    : null;
+
   return (
     <ProtectedRoute>
       <AdminLayout title="Settings">
         <SettingsLayout currentTab="billing">
           <div className="space-y-8">
-            {/* Page Header with Toggle */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div>
-                <h2 className="text-2xl font-bold tracking-tight">Billing & Subscription</h2>
-                <p className="text-muted-foreground mt-2">
-                  Keep track of your subscription details, update your billing information, and control your account's payment
-                </p>
-              </div>
-              <div className="flex items-center gap-3 bg-white border rounded-lg px-4 py-2">
-                <span className={!isYearly ? 'font-semibold text-sm' : 'text-sm text-muted-foreground'}>
-                  Monthly
-                </span>
-                <Switch checked={isYearly} onCheckedChange={setIsYearly} />
-                <span className={isYearly ? 'font-semibold text-sm' : 'text-sm text-muted-foreground'}>
-                  Yearly
-                </span>
-                {isYearly && (
-                  <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-medium">
-                    Save 20%
-                  </span>
-                )}
-              </div>
+            {/* Page Header */}
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight">Billing & Subscription</h2>
+              <p className="text-muted-foreground mt-2">
+                Manage your subscription and payment details
+              </p>
             </div>
 
             {/* Trial Status Banner */}
@@ -259,118 +250,96 @@ export default function BillingSettings() {
               </Alert>
             )}
 
-            {/* 3-Column Pricing Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              <PricingCard
-                name={TIER_DETAILS.starter.name}
-                price={isYearly ? 159 : TIER_DETAILS.starter.monthly}
-                priceLabel={isYearly ? '/month (billed yearly)' : '/month'}
-                badgeText={TIER_DETAILS.starter.badgeText}
-                badgeColor={TIER_DETAILS.starter.badgeColor}
-                badgeDotColor={TIER_DETAILS.starter.badgeDotColor}
-                features={TIER_DETAILS.starter.features}
-                isCurrentPlan={currentTier === 'starter'}
-                onAction={() => handleUpgrade('starter')}
-                actionText={currentTier === 'starter' ? 'Current Plan' : isTrialing ? 'Start Trial' : 'Downgrade'}
-                actionVariant={currentTier === 'starter' ? 'outline' : 'default'}
-                isDisabled={currentTier === 'starter'}
-              />
-
-              <PricingCard
-                name={TIER_DETAILS.professional.name}
-                price={isYearly ? 399 : TIER_DETAILS.professional.monthly}
-                priceLabel={isYearly ? '/month (billed yearly)' : '/month'}
-                badgeText={TIER_DETAILS.professional.badgeText}
-                badgeColor={TIER_DETAILS.professional.badgeColor}
-                badgeDotColor={TIER_DETAILS.professional.badgeDotColor}
-                features={TIER_DETAILS.professional.features}
-                isCurrentPlan={currentTier === 'professional'}
-                isDark={true}
-                isRecommended={true}
-                onAction={() => handleUpgrade('professional')}
-                actionText={currentTier === 'professional' ? 'Current Plan' : 'Upgrade Plan'}
-                actionVariant="default"
-                isDisabled={currentTier === 'professional'}
-              />
-
-              <PricingCard
-                name={TIER_DETAILS.scale.name}
-                price="Custom"
-                priceLabel="/month"
-                badgeText={TIER_DETAILS.scale.badgeText}
-                badgeColor={TIER_DETAILS.scale.badgeColor}
-                badgeDotColor={TIER_DETAILS.scale.badgeDotColor}
-                features={TIER_DETAILS.scale.features}
-                isCurrentPlan={currentTier === 'scale'}
-                onAction={() => router.push('/contact')}
-                actionText={currentTier === 'scale' ? 'Current Plan' : 'Contact Us'}
-                actionVariant={currentTier === 'scale' ? 'outline' : 'default'}
-                isDisabled={currentTier === 'scale'}
-              />
-            </div>
-
-            {/* Usage & Payment Method - 2 Column Grid */}
+            {/* Current Plan & Usage - 2 Column Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Current Plan Card */}
+              {tierDetails && (
+                <CurrentPlanCard
+                  planName={tierDetails.name}
+                  planTier={currentTier || 'starter'}
+                  price={tierDetails.monthly}
+                  status={billingData.subscription_status}
+                  nextPaymentDate={billingData.current_period_end}
+                  nextPaymentAmount={tierDetails.monthly}
+                  cancelAtPeriodEnd={billingData.cancel_at_period_end}
+                  onUpgrade={handleOpenUpgradeModal}
+                  onCancel={handleManageSubscription}
+                />
+              )}
+
               {/* Usage Card */}
               <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl">Usage This Month</CardTitle>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base">Usage This Month</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-2">
                   <div>
-                    <div className="flex justify-between text-sm font-medium text-muted-foreground mb-2">
+                    <div className="flex justify-between text-xs font-medium text-muted-foreground mb-1.5">
                       <span>{billingData.assessments_used} used</span>
                       <span>{billingData.assessments_limit === null ? '∞' : billingData.assessments_limit} limit</span>
                     </div>
-                    <Progress value={billingData.assessments_used} max={billingData.assessments_limit || 100} />
+                    <Progress value={billingData.assessments_used} max={billingData.assessments_limit || 100} className="h-2" />
                   </div>
                   {billingData.current_period_end && (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-xs text-muted-foreground">
                       Resets on {format(new Date(billingData.current_period_end), 'MMM d, yyyy')}
                     </p>
                   )}
                   {billingData.assessments_limit !== null && billingData.assessments_used >= billingData.assessments_limit && (
-                    <Alert variant="destructive">
-                      <AlertCircle className="h-4 w-4" />
-                      <AlertDescription>
+                    <Alert variant="destructive" className="py-1.5">
+                      <AlertCircle className="h-3.5 w-3.5" />
+                      <AlertDescription className="text-xs">
                         You've reached your monthly limit. Upgrade to get more assessments.
                       </AlertDescription>
                     </Alert>
                   )}
+                  <Button onClick={handleOpenUpgradeModal} className="w-full h-9 mt-1">
+                    Upgrade Plan
+                  </Button>
                 </CardContent>
               </Card>
-
-              {/* Payment Method Card */}
-              {billingData.payment_method_brand && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-xl">Payment Method</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="border-2 border-gray-300 p-3 rounded bg-gray-50">
-                          <CreditCard className="h-6 w-6 text-gray-700" />
-                        </div>
-                        <div>
-                          <p className="font-semibold text-base uppercase">
-                            {billingData.payment_method_brand} •••• {billingData.payment_method_last4}
-                          </p>
-                          <p className="text-sm text-muted-foreground">Primary payment method</p>
-                        </div>
-                      </div>
-                      <Button onClick={handleManageSubscription} variant="outline" size="sm">
-                        Update
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
             </div>
+
+            {/* Payment Method Card */}
+            {billingData.payment_method_brand && (
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base">Payment Method</CardTitle>
+                </CardHeader>
+                <CardContent className="py-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="border-2 border-gray-300 p-1.5 rounded bg-gray-50">
+                        <CreditCard className="h-4 w-4 text-gray-700" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm uppercase">
+                          {billingData.payment_method_brand} •••• {billingData.payment_method_last4}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {cardExpiry ? `Expires ${cardExpiry}` : 'Primary payment method'}
+                        </p>
+                      </div>
+                    </div>
+                    <Button onClick={handleManageSubscription} variant="outline" size="sm">
+                      Update
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Billing History Table */}
             <BillingHistoryTable invoices={invoices} loading={loadingInvoices} />
           </div>
+
+          {/* Upgrade Modal */}
+          <UpgradePlanModal
+            open={isUpgradeModalOpen}
+            onOpenChange={setIsUpgradeModalOpen}
+            currentTier={currentTier}
+            tenantSubdomain={tenant as string}
+          />
         </SettingsLayout>
       </AdminLayout>
     </ProtectedRoute>

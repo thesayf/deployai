@@ -9,6 +9,11 @@
             "date": 1759818270853,
             "name": "/Users/rudihinds/code/deployai/logs/mcp-puppeteer-2025-10-07.log",
             "hash": "830851dcafef02d43bfe4d2d482be51e99eb6baa1394edd0581eaed6b970e132"
+        },
+        {
+            "date": 1759909742632,
+            "name": "/Users/rudihinds/code/deployai/logs/mcp-puppeteer-2025-10-08.log",
+            "hash": "13909e0198ef29a1997dc623d47fd808794b5a3f0574ee01c669e2529e6da3d3"
         }
     ],
     "hashType": "sha256"

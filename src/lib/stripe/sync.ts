@@ -60,6 +60,8 @@ export async function syncStripeDataToSupabase(customerId: string): Promise<Sync
         cancel_at_period_end: false,
         payment_method_brand: null,
         payment_method_last4: null,
+        payment_method_exp_month: null,
+        payment_method_exp_year: null,
         last_sync_at: new Date().toISOString(),
         stripe_sync_error: null
       };
@@ -110,7 +112,12 @@ export async function syncStripeDataToSupabase(customerId: string): Promise<Sync
     changes.push(`Mapped price ${priceId} to tier ${tierInfo.tier}`);
 
     // Step 6: Extract payment method details
-    let paymentMethod: { brand: string | null; last4: string | null } = { brand: null, last4: null };
+    let paymentMethod: {
+      brand: string | null;
+      last4: string | null;
+      exp_month: number | null;
+      exp_year: number | null;
+    } = { brand: null, last4: null, exp_month: null, exp_year: null };
 
     if (subscription.default_payment_method &&
         typeof subscription.default_payment_method !== 'string') {
@@ -118,9 +125,11 @@ export async function syncStripeDataToSupabase(customerId: string): Promise<Sync
       if (pm.card) {
         paymentMethod = {
           brand: pm.card.brand || null,
-          last4: pm.card.last4 || null
+          last4: pm.card.last4 || null,
+          exp_month: pm.card.exp_month || null,
+          exp_year: pm.card.exp_year || null
         };
-        changes.push(`Updated payment method: ${paymentMethod.brand} ****${paymentMethod.last4}`);
+        changes.push(`Updated payment method: ${paymentMethod.brand} ****${paymentMethod.last4} (exp: ${paymentMethod.exp_month}/${paymentMethod.exp_year})`);
       }
     }
 
@@ -168,6 +177,8 @@ export async function syncStripeDataToSupabase(customerId: string): Promise<Sync
       cancel_at_period_end: subscription.cancel_at_period_end || false,
       payment_method_brand: paymentMethod.brand,
       payment_method_last4: paymentMethod.last4,
+      payment_method_exp_month: paymentMethod.exp_month,
+      payment_method_exp_year: paymentMethod.exp_year,
       last_sync_at: new Date().toISOString(),
       stripe_sync_error: null,
       // Reset usage if new period
