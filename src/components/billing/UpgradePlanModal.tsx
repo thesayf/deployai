@@ -82,16 +82,56 @@ export function UpgradePlanModal({
 }: UpgradePlanModalProps) {
   const router = useRouter();
   const [isYearly, setIsYearly] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handlePlanSelect = (tier: string) => {
+  const handlePlanSelect = async (tier: string) => {
     if (tier === 'scale') {
       // Enterprise plan - contact sales
       router.push('/contact');
       onOpenChange(false);
-    } else {
-      // Redirect to checkout or update subscription
-      router.push(`/${tenantSubdomain}/admin/settings/billing/checkout?plan=${tier}&billing=${isYearly ? 'yearly' : 'monthly'}`);
-      onOpenChange(false);
+      return;
+    }
+
+    if (currentTier === tier) {
+      // Already on this plan
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Use Stripe Customer Portal for plan changes
+      const response = await fetch('/api/stripe/get-customer-id', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tenantSubdomain }),
+      });
+
+      const { customerId } = await response.json();
+
+      if (!customerId) {
+        throw new Error('No customer found. Please start a trial first.');
+      }
+
+      // Open Customer Portal to manage subscription
+      const portalResponse = await fetch('/api/stripe/create-portal-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerId,
+          returnUrl: `${window.location.origin}/${tenantSubdomain}/admin/settings/billing`,
+        }),
+      });
+
+      const { url } = await portalResponse.json();
+
+      if (url) {
+        window.location.href = url;
+      }
+    } catch (error) {
+      console.error('Failed to open portal:', error);
+      alert('Failed to open billing portal. Please try again.');
+      setIsLoading(false);
     }
   };
 
@@ -147,9 +187,9 @@ export function UpgradePlanModal({
             features={TIER_DETAILS.starter.features}
             isCurrentPlan={currentTier === 'starter'}
             onAction={() => handlePlanSelect('starter')}
-            actionText={getActionText('starter')}
+            actionText={isLoading ? 'Loading...' : getActionText('starter')}
             actionVariant={currentTier === 'starter' ? 'outline' : 'default'}
-            isDisabled={currentTier === 'starter'}
+            isDisabled={currentTier === 'starter' || isLoading}
           />
 
           <PricingCard
@@ -164,9 +204,9 @@ export function UpgradePlanModal({
             isDark={true}
             isRecommended={true}
             onAction={() => handlePlanSelect('professional')}
-            actionText={getActionText('professional')}
+            actionText={isLoading ? 'Loading...' : getActionText('professional')}
             actionVariant="default"
-            isDisabled={currentTier === 'professional'}
+            isDisabled={currentTier === 'professional' || isLoading}
           />
 
           <PricingCard
@@ -179,9 +219,9 @@ export function UpgradePlanModal({
             features={TIER_DETAILS.scale.features}
             isCurrentPlan={currentTier === 'scale'}
             onAction={() => handlePlanSelect('scale')}
-            actionText={getActionText('scale')}
+            actionText={isLoading ? 'Loading...' : getActionText('scale')}
             actionVariant={currentTier === 'scale' ? 'outline' : 'default'}
-            isDisabled={currentTier === 'scale'}
+            isDisabled={currentTier === 'scale' || isLoading}
           />
         </div>
       </DialogContent>

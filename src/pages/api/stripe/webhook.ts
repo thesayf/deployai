@@ -153,8 +153,8 @@ async function processWebhookEvent(event: Stripe.Event) {
 
     console.log(`[WEBHOOK] Syncing data for customer: ${customerId}`);
 
-    // Sync all subscription data for this customer
-    const syncResult = await syncStripeDataToSupabase(customerId);
+    // Sync all subscription data for this customer (using service role client for webhooks)
+    const syncResult = await syncStripeDataToSupabase(customerId, true);
 
     if (syncResult.success) {
       console.log(`[WEBHOOK] ✓ Sync successful for ${event.type} (${event.id})`);

@@ -169,10 +169,19 @@ export class AssessmentRepository {
     return data || [];
   }
 
-  async getUsageStats() {
-    const tenant = await tenantService.getTenantById(this.tenantId);
+  async getUsageStats(tenant?: { assessments_used: number; assessments_limit: number | null }) {
+    // If tenant data is provided, use it directly (avoids extra DB query)
+    if (tenant) {
+      return {
+        assessments_used: tenant.assessments_used,
+        assessments_limit: tenant.assessments_limit,
+      };
+    }
 
-    if (!tenant) {
+    // Fallback to DB lookup if tenant data not provided
+    const tenantData = await tenantService.getTenantById(this.tenantId);
+
+    if (!tenantData) {
       return {
         assessments_used: 0,
         assessments_limit: null,
@@ -180,79 +189,79 @@ export class AssessmentRepository {
     }
 
     return {
-      assessments_used: tenant.assessments_used,
-      assessments_limit: tenant.assessments_limit,
+      assessments_used: tenantData.assessments_used,
+      assessments_limit: tenantData.assessments_limit,
     };
   }
 
   async getAssessmentStats() {
-    // Get total count
-    const { count: total } = await supabase
-      .from('quiz_responses')
-      .select('*', { count: 'exact', head: true })
-      .eq('tenant_id', this.tenantId);
-
-    // Get completed count
-    const { data: statusCounts } = await supabase
-      .from('ai_reports')
-      .select('report_status')
-      .eq('tenant_id', this.tenantId);
-
-    const completed = statusCounts?.filter(r => r.report_status === 'completed').length || 0;
-    const processing = statusCounts?.filter(r =>
-      ['generating', 'processing', 'pending'].includes(r.report_status)
-    ).length || 0;
-    const failed = statusCounts?.filter(r => r.report_status === 'failed').length || 0;
-
-    // Get this month's count
+    // Use single optimized query with SQL aggregation
     const now = new Date();
-    const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+    const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString();
+    const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999).toISOString();
 
-    const { count: thisMonth } = await supabase
-      .from('quiz_responses')
-      .select('*', { count: 'exact', head: true })
-      .eq('tenant_id', this.tenantId)
-      .gte('created_at', thisMonthStart.toISOString());
+    const { data, error } = await supabase.rpc('get_assessment_stats', {
+      p_tenant_id: this.tenantId,
+      p_this_month_start: thisMonthStart,
+      p_last_month_start: lastMonthStart,
+      p_last_month_end: lastMonthEnd,
+    });
 
-    // Get last month's count
-    const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-    const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0);
+    if (error) {
+      console.error('Error fetching assessment stats:', error);
+      // Fallback to default values on error
+      return {
+        total: 0,
+        completed: 0,
+        processing: 0,
+        failed: 0,
+        thisMonth: 0,
+        lastMonth: 0,
+      };
+    }
 
-    const { count: lastMonth } = await supabase
-      .from('quiz_responses')
-      .select('*', { count: 'exact', head: true })
-      .eq('tenant_id', this.tenantId)
-      .gte('created_at', lastMonthStart.toISOString())
-      .lte('created_at', lastMonthEnd.toISOString());
+    const stats = data?.[0] || {};
 
     return {
-      total: total || 0,
-      completed,
-      processing,
-      failed,
-      thisMonth: thisMonth || 0,
-      lastMonth: lastMonth || 0,
+      total: Number(stats.total) || 0,
+      completed: Number(stats.completed) || 0,
+      processing: Number(stats.processing) || 0,
+      failed: Number(stats.failed) || 0,
+      thisMonth: Number(stats.this_month) || 0,
+      lastMonth: Number(stats.last_month) || 0,
     };
   }
 
   async getMonthlyTrend(months: number = 6) {
+    // Use single optimized query with GROUP BY
+    const { data, error } = await supabase.rpc('get_monthly_trend', {
+      p_tenant_id: this.tenantId,
+      p_months_ago: months,
+    });
+
+    if (error) {
+      console.error('Error fetching monthly trend:', error);
+      return [];
+    }
+
+    // Fill in missing months with 0 count
     const trends = [];
     const now = new Date();
+    const resultMap = new Map(
+      (data || []).map(item => [
+        new Date(item.month).toISOString().slice(0, 7), // YYYY-MM format
+        item.count
+      ])
+    );
 
     for (let i = months - 1; i >= 0; i--) {
-      const monthStart = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const monthEnd = new Date(now.getFullYear(), now.getMonth() - i + 1, 0);
-
-      const { count } = await supabase
-        .from('quiz_responses')
-        .select('*', { count: 'exact', head: true })
-        .eq('tenant_id', this.tenantId)
-        .gte('created_at', monthStart.toISOString())
-        .lte('created_at', monthEnd.toISOString());
+      const monthDate = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const monthKey = monthDate.toISOString().slice(0, 7);
 
       trends.push({
-        month: monthStart.toISOString(),
-        count: count || 0,
+        month: monthDate.toISOString(),
+        count: Number(resultMap.get(monthKey) || 0),
       });
     }
 

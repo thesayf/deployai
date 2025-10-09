@@ -11,12 +11,20 @@ export default async function handler(
   }
 
   try {
-    const { tenantId, email, successUrl, cancelUrl } = req.body;
+    const { tenantId, email, planId, successUrl, cancelUrl } = req.body;
 
     if (!tenantId || !email || !successUrl || !cancelUrl) {
       return res.status(400).json({
         error: 'tenantId, email, successUrl, and cancelUrl are required'
       });
+    }
+
+    // Validate planId
+    const validPlans = ['starter', 'professional', 'scale'];
+    const selectedPlan = planId && validPlans.includes(planId) ? planId : 'starter';
+
+    if (planId && !validPlans.includes(planId)) {
+      console.warn(`[TRIAL] Invalid planId "${planId}" provided, defaulting to starter`);
     }
 
     // Create Supabase client for API route
@@ -91,19 +99,24 @@ export default async function handler(
       console.log(`[TRIAL] Using existing customer: ${customerId}`);
     }
 
-    // Step 3: Get Starter plan price ID
-    const starterPriceId = process.env.STRIPE_PRICE_STARTER_ID || SUBSCRIPTION_TIERS.starter.priceId;
+    // Step 3: Get price ID for selected plan
+    const priceIdMap: Record<string, string> = {
+      starter: process.env.STRIPE_PRICE_STARTER_ID!,
+      professional: process.env.STRIPE_PRICE_PROFESSIONAL_ID!,
+      scale: process.env.STRIPE_PRICE_SCALE_ID!,
+    };
 
-    console.log(`[TRIAL] Price ID from env: ${process.env.STRIPE_PRICE_STARTER_ID}`);
-    console.log(`[TRIAL] Price ID from config: ${SUBSCRIPTION_TIERS.starter.priceId}`);
-    console.log(`[TRIAL] Using price ID: ${starterPriceId}`);
+    const selectedPriceId = priceIdMap[selectedPlan];
 
-    if (!starterPriceId || starterPriceId.includes('here')) {
+    console.log(`[TRIAL] Selected plan: ${selectedPlan}`);
+    console.log(`[TRIAL] Using price ID: ${selectedPriceId}`);
+
+    if (!selectedPriceId || selectedPriceId.includes('your')) {
       return res.status(500).json({
-        error: 'Starter plan price ID not configured. Please set STRIPE_PRICE_STARTER_ID environment variable.',
+        error: `${selectedPlan} plan price ID not configured. Please set STRIPE_PRICE_${selectedPlan.toUpperCase()}_ID environment variable.`,
         debug: {
-          env: process.env.STRIPE_PRICE_STARTER_ID,
-          config: SUBSCRIPTION_TIERS.starter.priceId
+          plan: selectedPlan,
+          priceId: selectedPriceId
         }
       });
     }
@@ -117,7 +130,7 @@ export default async function handler(
       payment_method_types: ['card'],
       line_items: [
         {
-          price: starterPriceId,
+          price: selectedPriceId,
           quantity: 1,
         },
       ],
@@ -126,7 +139,7 @@ export default async function handler(
         metadata: {
           tenant_id: tenantId,
           subdomain: tenant.subdomain,
-          plan: 'starter',
+          plan: selectedPlan,
           trial_setup: 'true'
         },
       },
@@ -137,6 +150,7 @@ export default async function handler(
       metadata: {
         tenant_id: tenantId,
         subdomain: tenant.subdomain,
+        plan: selectedPlan,
       },
     });
 

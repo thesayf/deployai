@@ -25,14 +25,12 @@ const AuthRedirect = () => {
           return;
         }
 
-        // Clear the stored subdomain
-        localStorage.removeItem('auth_redirect_subdomain');
-
         // Check if user has completed trial setup
         const supabase = createClient();
         const { data: { user } } = await supabase.auth.getUser();
 
         if (!user) {
+          localStorage.removeItem('auth_redirect_subdomain');
           router.push('/');
           return;
         }
@@ -46,19 +44,32 @@ const AuthRedirect = () => {
 
         if (error || !tenant) {
           console.error('Failed to fetch tenant:', error);
+          localStorage.removeItem('auth_redirect_subdomain');
           router.push(`/${storedSubdomain}/admin`);
           return;
         }
 
-        // If tenant has no subscription and no customer ID, redirect to trial setup
-        if (!tenant.stripe_customer_id && !tenant.subscription_status) {
-          console.log('New tenant - redirecting to trial setup');
-          router.push(`/${storedSubdomain}/admin/billing/trial-setup`);
+        // Check if tenant has active subscription
+        const hasActiveSubscription =
+          tenant.subscription_status === 'active' ||
+          tenant.subscription_status === 'trialing';
+
+        const hasPaymentMethod = !!tenant.stripe_customer_id;
+
+        // Route based on subscription status
+        if (!hasActiveSubscription || !hasPaymentMethod) {
+          // New user OR expired trial → Plan Selection
+          console.log('No active subscription or payment method - redirecting to plan selection');
+          // Clear localStorage AFTER determining redirect path
+          localStorage.removeItem('auth_redirect_subdomain');
+          router.push(`/${storedSubdomain}/admin/billing/select-plan`);
           return;
         }
 
-        // Existing tenant - redirect to admin portal
-        console.log('Existing tenant - redirecting to admin portal');
+        // Existing customer with active subscription → Dashboard
+        console.log('Active subscription detected - redirecting to dashboard');
+        // Clear localStorage AFTER determining redirect path
+        localStorage.removeItem('auth_redirect_subdomain');
         router.push(`/${storedSubdomain}/admin`);
 
       } catch (error) {

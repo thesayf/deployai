@@ -36,14 +36,16 @@ const LoginPage: React.FC<LoginPageProps> = ({ tenant }) => {
 
     try {
       if (isSignUp) {
-        const result = await signUpWithEmailClient(email, password);
+        const result = await signUpWithEmailClient(email, password, tenant.subdomain);
         if (result.user) {
           setSuccess('Check your email to confirm your account');
         }
       } else {
         const result = await signInWithEmailClient(email, password);
         if (result.user) {
-          router.push(`/${tenant.subdomain}/admin`);
+          // Store subdomain for auth redirect
+          localStorage.setItem('auth_redirect_subdomain', tenant.subdomain);
+          router.push('/auth/redirect');
         }
       }
     } catch (err: any) {

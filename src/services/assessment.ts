@@ -95,9 +95,9 @@ class AssessmentService {
     return data ? this.transformAssessment(data) : null;
   }
 
-  async getDashboardData(): Promise<DashboardData> {
+  async getDashboardData(tenant?: { assessments_used: number; assessments_limit: number | null }): Promise<DashboardData> {
     const [usage, recent, stats, trend] = await Promise.all([
-      this.repository.getUsageStats(),
+      this.repository.getUsageStats(tenant),
       this.repository.getRecentAssessments(5),
       this.repository.getAssessmentStats(),
       this.repository.getMonthlyTrend(6),

@@ -1,12 +1,49 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { createClient } from '@/utils/supabase/client';
 
 export default function BillingSuccess() {
   const router = useRouter();
   const { tenant } = router.query;
   const [countdown, setCountdown] = useState(5);
+  const [syncing, setSyncing] = useState(true);
 
   useEffect(() => {
+    // Poll for subscription sync completion
+    const checkSync = async () => {
+      if (!tenant) return;
+
+      const supabase = createClient();
+      const { data } = await supabase
+        .from('tenants')
+        .select('subscription_status, stripe_subscription_id')
+        .eq('subdomain', tenant)
+        .single();
+
+      // If subscription is synced, stop polling
+      if (data?.subscription_status && data?.stripe_subscription_id) {
+        setSyncing(false);
+      }
+    };
+
+    // Check immediately, then poll every 2 seconds for up to 10 seconds
+    checkSync();
+    const pollInterval = setInterval(checkSync, 2000);
+    const pollTimeout = setTimeout(() => {
+      clearInterval(pollInterval);
+      setSyncing(false); // Stop after 10s regardless
+    }, 10000);
+
+    return () => {
+      clearInterval(pollInterval);
+      clearTimeout(pollTimeout);
+    };
+  }, [tenant]);
+
+  useEffect(() => {
+    // Only start countdown after sync is complete
+    if (syncing) return;
+
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
@@ -19,7 +56,7 @@ export default function BillingSuccess() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [router, tenant]);
+  }, [router, tenant, syncing]);
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">

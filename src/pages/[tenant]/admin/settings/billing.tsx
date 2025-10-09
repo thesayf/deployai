@@ -11,7 +11,6 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { Clock, CreditCard, AlertCircle } from 'lucide-react';
 import { CurrentPlanCard } from '@/components/billing/CurrentPlanCard';
-import { UpgradePlanModal } from '@/components/billing/UpgradePlanModal';
 import { BillingHistoryTable } from '@/components/billing/BillingHistoryTable';
 
 interface BillingData {
@@ -99,7 +98,6 @@ export default function BillingSettings() {
   const [error, setError] = useState<string | null>(null);
   const [invoices, setInvoices] = useState<any[]>([]);
   const [loadingInvoices, setLoadingInvoices] = useState(false);
-  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
 
   useEffect(() => {
     if (tenant) {
@@ -166,8 +164,29 @@ export default function BillingSettings() {
     }
   };
 
-  const handleOpenUpgradeModal = () => {
-    setIsUpgradeModalOpen(true);
+  const handleOpenUpgradeModal = async () => {
+    if (!billingData?.stripe_customer_id) return;
+
+    try {
+      // Open Customer Portal directly to subscription update flow
+      const response = await fetch('/api/stripe/create-portal-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerId: billingData.stripe_customer_id,
+          subscriptionId: billingData.stripe_subscription_id,
+          returnUrl: `${window.location.origin}/${tenant}/admin/settings/billing`,
+          flowType: 'subscription_update', // Direct to plan selection
+        }),
+      });
+
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error('Failed to open customer portal:', err);
+    }
   };
 
   if (loading) {
@@ -250,10 +269,9 @@ export default function BillingSettings() {
               </Alert>
             )}
 
-            {/* Current Plan & Usage - 2 Column Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Current Plan Card */}
-              {tierDetails && (
+            {/* Current Plan with Usage */}
+            <div className="max-w-2xl">
+              {tierDetails ? (
                 <CurrentPlanCard
                   planName={tierDetails.name}
                   planTier={currentTier || 'starter'}
@@ -264,82 +282,90 @@ export default function BillingSettings() {
                   cancelAtPeriodEnd={billingData.cancel_at_period_end}
                   onUpgrade={handleOpenUpgradeModal}
                   onCancel={handleManageSubscription}
+                  assessmentsUsed={billingData.assessments_used}
+                  assessmentsLimit={billingData.assessments_limit}
+                  currentPeriodEnd={billingData.current_period_end}
                 />
-              )}
-
-              {/* Usage Card */}
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base">Usage This Month</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div>
-                    <div className="flex justify-between text-xs font-medium text-muted-foreground mb-1.5">
-                      <span>{billingData.assessments_used} used</span>
-                      <span>{billingData.assessments_limit === null ? '∞' : billingData.assessments_limit} limit</span>
-                    </div>
-                    <Progress value={billingData.assessments_used} max={billingData.assessments_limit || 100} className="h-2" />
-                  </div>
-                  {billingData.current_period_end && (
-                    <p className="text-xs text-muted-foreground">
-                      Resets on {format(new Date(billingData.current_period_end), 'MMM d, yyyy')}
+              ) : (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>No Active Subscription</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground mb-4">
+                      You don't have an active subscription yet. Start your free trial to access all features.
                     </p>
-                  )}
-                  {billingData.assessments_limit !== null && billingData.assessments_used >= billingData.assessments_limit && (
-                    <Alert variant="destructive" className="py-1.5">
-                      <AlertCircle className="h-3.5 w-3.5" />
-                      <AlertDescription className="text-xs">
-                        You've reached your monthly limit. Upgrade to get more assessments.
-                      </AlertDescription>
-                    </Alert>
-                  )}
-                  <Button onClick={handleOpenUpgradeModal} className="w-full h-9 mt-1">
-                    Upgrade Plan
-                  </Button>
-                </CardContent>
-              </Card>
+                    <Button onClick={() => router.push(`/${tenant}/admin/billing/select-plan`)}>
+                      Start Free Trial
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
             </div>
 
             {/* Payment Method Card */}
             {billingData.payment_method_brand && (
               <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base">Payment Method</CardTitle>
-                </CardHeader>
-                <CardContent className="py-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="border-2 border-gray-300 p-1.5 rounded bg-gray-50">
-                        <CreditCard className="h-4 w-4 text-gray-700" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-sm uppercase">
-                          {billingData.payment_method_brand} •••• {billingData.payment_method_last4}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {cardExpiry ? `Expires ${cardExpiry}` : 'Primary payment method'}
-                        </p>
-                      </div>
+                <CardHeader className="pb-4">
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-1">
+                      <CardTitle className="text-xl font-semibold">Payment Method</CardTitle>
+                      <p className="text-sm text-gray-500">
+                        {billingData.payment_method_brand} ending in {billingData.payment_method_last4}
+                      </p>
                     </div>
-                    <Button onClick={handleManageSubscription} variant="outline" size="sm">
+                    <Button onClick={handleManageSubscription} variant="outline" size="sm" className="h-9 px-4">
                       Update
+                    </Button>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="pt-0">
+                  <div className="border-t pt-5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600">Expires</span>
+                      <span className="text-sm text-gray-900">
+                        {cardExpiry || 'N/A'}
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Cancel Subscription */}
+            {billingData.subscription_status === 'active' && !billingData.cancel_at_period_end && (
+              <Card>
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-xl font-semibold">Cancel Subscription</CardTitle>
+                </CardHeader>
+
+                <CardContent className="pt-0">
+                  <div className="border-t pt-5 space-y-4">
+                    <p className="text-sm text-gray-600">
+                      You can cancel your subscription at any time. You'll continue to have access until the end of your billing period.
+                    </p>
+                    <Button onClick={handleManageSubscription} variant="outline" size="sm" className="h-9 px-4">
+                      Manage Subscription
                     </Button>
                   </div>
                 </CardContent>
               </Card>
             )}
 
+            {/* Cancellation Notice */}
+            {billingData.cancel_at_period_end && billingData.current_period_end && (
+              <Alert>
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>
+                  Your subscription will be canceled on {format(new Date(billingData.current_period_end), 'MMMM d, yyyy')}
+                </AlertDescription>
+              </Alert>
+            )}
+
             {/* Billing History Table */}
             <BillingHistoryTable invoices={invoices} loading={loadingInvoices} />
           </div>
-
-          {/* Upgrade Modal */}
-          <UpgradePlanModal
-            open={isUpgradeModalOpen}
-            onOpenChange={setIsUpgradeModalOpen}
-            currentTier={currentTier}
-            tenantSubdomain={tenant as string}
-          />
         </SettingsLayout>
       </AdminLayout>
     </ProtectedRoute>

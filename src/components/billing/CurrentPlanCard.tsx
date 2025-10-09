@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Progress } from '@/components/ui/progress';
 import { AlertCircle, Sparkles } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -15,6 +16,9 @@ interface CurrentPlanCardProps {
   cancelAtPeriodEnd: boolean;
   onUpgrade: () => void;
   onCancel: () => void;
+  assessmentsUsed: number;
+  assessmentsLimit: number | null;
+  currentPeriodEnd: string | null;
 }
 
 const TIER_COLORS = {
@@ -42,6 +46,9 @@ export function CurrentPlanCard({
   cancelAtPeriodEnd,
   onUpgrade,
   onCancel,
+  assessmentsUsed,
+  assessmentsLimit,
+  currentPeriodEnd,
 }: CurrentPlanCardProps) {
   const tierColor = TIER_COLORS[planTier as keyof typeof TIER_COLORS] || TIER_COLORS.starter;
   const statusInfo = STATUS_VARIANTS[status as keyof typeof STATUS_VARIANTS] || STATUS_VARIANTS.none;
@@ -51,41 +58,48 @@ export function CurrentPlanCard({
     return `$${amount}`;
   };
 
+  const usagePercentage = assessmentsLimit
+    ? (assessmentsUsed / assessmentsLimit) * 100
+    : 0;
+
   return (
     <Card>
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-4">
         <div className="flex items-start justify-between">
-          <div>
-            <CardTitle className="text-lg font-bold mb-0.5">Your Plan</CardTitle>
-            <p className="text-xs text-muted-foreground">
-              Renews {nextPaymentDate ? format(new Date(nextPaymentDate), 'd MMM yyyy') : 'N/A'}
+          <div className="space-y-1">
+            <CardTitle className="text-xl font-semibold">Your Plan</CardTitle>
+            <p className="text-sm text-gray-500">
+              Renews {nextPaymentDate ? format(new Date(nextPaymentDate), 'MMM d, yyyy') : 'N/A'}
             </p>
           </div>
-          <Button onClick={onUpgrade} variant="outline" size="sm" className="h-8 px-4">
+          <Button onClick={onUpgrade} variant="outline" size="sm" className="h-9 px-4">
             Change Plan
           </Button>
         </div>
       </CardHeader>
+
       <CardContent className="pt-0">
-        <div className="grid grid-cols-2 gap-6 border-t pt-4">
-          {/* Left: Plan Details */}
-          <div className="space-y-1.5">
-            <h3 className="text-muted-foreground text-sm">{planName}</h3>
-            <div className="text-xl font-bold">{formatPrice(price)}/month</div>
-            <p className="text-sm text-muted-foreground">4 included users</p>
-            <button onClick={onUpgrade} className="text-sm text-blue-600 hover:underline pt-1">
-              Upgrade Plan
-            </button>
+        <div className="border-t pt-5 space-y-6">
+          {/* Plan Details */}
+          <div className="space-y-2">
+            <p className="text-base text-gray-600">{planName}</p>
+            <p className="text-2xl font-medium text-gray-900">{formatPrice(price)}/month</p>
           </div>
 
-          {/* Right: Additional Users */}
-          <div className="space-y-1.5">
-            <h3 className="text-muted-foreground text-sm">Additional Users</h3>
-            <div className="text-xl font-bold">--</div>
-            <p className="text-sm text-muted-foreground">0 included users</p>
-            <button className="text-sm text-blue-600 hover:underline pt-1">
-              Add More
-            </button>
+          {/* Usage Section */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-600">Usage</span>
+              <span className="text-sm text-gray-500">
+                {assessmentsUsed} of {assessmentsLimit === null ? '∞' : assessmentsLimit}
+              </span>
+            </div>
+            <Progress value={usagePercentage} className="h-2" />
+            {currentPeriodEnd && (
+              <p className="text-sm text-gray-500">
+                Resets {format(new Date(currentPeriodEnd), 'MMM d, yyyy')}
+              </p>
+            )}
           </div>
         </div>
       </CardContent>

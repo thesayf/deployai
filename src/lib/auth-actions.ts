@@ -43,8 +43,14 @@ export async function signInWithEmailClient(email: string, password: string) {
   return data;
 }
 
-export async function signUpWithEmailClient(email: string, password: string) {
+export async function signUpWithEmailClient(email: string, password: string, tenant?: string) {
   const supabase = createClient();
+
+  // Store the tenant subdomain before signup (like Google OAuth does)
+  if (typeof window !== 'undefined' && tenant) {
+    localStorage.setItem('auth_redirect_subdomain', tenant);
+  }
+
   const origin = window.location.origin;
 
   const { data, error } = await supabase.auth.signUp({

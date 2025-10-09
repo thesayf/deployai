@@ -11,7 +11,7 @@ export default async function handler(
   }
 
   try {
-    const { customerId, returnUrl } = req.body;
+    const { customerId, subscriptionId, returnUrl, flowType } = req.body;
 
     // Validation
     if (!customerId) {
@@ -23,12 +23,27 @@ export default async function handler(
     }
 
     console.log(`[PORTAL] Creating portal session for customer: ${customerId}`);
+    console.log(`[PORTAL] Flow type: ${flowType || 'default'}`);
 
     // Create Stripe Customer Portal session
-    const session = await stripe.billingPortal.sessions.create({
+    const sessionParams: any = {
       customer: customerId,
       return_url: returnUrl,
-    });
+      configuration: process.env.STRIPE_PORTAL_CONFIG_ID, // Test mode portal config
+    };
+
+    // Add flow_data to open directly to subscription update
+    if (flowType === 'subscription_update' && subscriptionId) {
+      console.log(`[PORTAL] Opening subscription update flow for: ${subscriptionId}`);
+      sessionParams.flow_data = {
+        type: 'subscription_update',
+        subscription_update: {
+          subscription: subscriptionId,
+        },
+      };
+    }
+
+    const session = await stripe.billingPortal.sessions.create(sessionParams);
 
     console.log(`[PORTAL] Session created: ${session.id}`);
 

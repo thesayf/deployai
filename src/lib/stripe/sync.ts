@@ -1,5 +1,6 @@
 import { stripe, SUBSCRIPTION_TIERS, type SubscriptionTier } from '@/lib/stripe';
 import { createClient } from '@/utils/supabase/server';
+import { createClient as createServiceClient } from '@supabase/supabase-js';
 
 export interface SyncResult {
   success: boolean;
@@ -15,10 +16,18 @@ export interface SyncResult {
  * This function ensures our database always reflects the current Stripe state
  *
  * @param customerId - Stripe customer ID
+ * @param isWebhook - Whether this is called from a webhook (uses service role client)
  * @returns Promise<SyncResult> - Result of sync operation
  */
-export async function syncStripeDataToSupabase(customerId: string): Promise<SyncResult> {
-  const supabase = await createClient();
+export async function syncStripeDataToSupabase(customerId: string, isWebhook: boolean = false): Promise<SyncResult> {
+  // Use service role client for webhooks (no request context)
+  // Use server client for API routes (has request context)
+  const supabase = isWebhook
+    ? createServiceClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+      )
+    : await createClient();
   const changes: string[] = [];
 
   try {
