@@ -1,0 +1,308 @@
+{
+  "recommendedSolutions": [
+    {
+      "tools": [
+        {
+          "name": "Zapier",
+          "bestFor": "Small businesses needing to connect multiple systems",
+          "pricing": {
+            "model": "Monthly subscription based on tasks",
+            "notes": "Professional plan at $49/month suitable for small businesses",
+            "range": "$19.99-$399/month",
+            "setupFee": "$0"
+          },
+          "category": "Process Automation",
+          "annualROI": {
+            "paybackPeriod": "2 months",
+            "potentialSavings": "$31,200",
+            "percentageImprovement": "85%"
+          },
+          "caseStudies": [
+            {
+              "metric": "85% time reduction",
+              "result": "Reduced data entry time by 85%, saved 12 hours per week",
+              "source": "Data not available",
+              "company": "Small energy consultancy with 5 employees",
+              "industry": "Energy Brokerage"
+            },
+            {
+              "metric": "40% conversion increase",
+              "result": "Automated lead-to-CRM workflow, increased lead conversion by 40%",
+              "source": "Data not available",
+              "company": "Telecommunications broker with $2M revenue",
+              "industry": "Telecoms Brokerage"
+            }
+          ],
+          "description": "Zapier is a web-based automation platform that connects different apps and services to automate workflows without coding. It can connect chatbots to CRMs, sync data between systems, and trigger actions based on specific events. For utility brokerages, it can automatically transfer lead data from website forms to CRM systems and sync customer information with accounting software like VAT ANNA.",
+          "verboseName": "No-Code Workflow Automation Platform",
+          "integrations": [
+            "Most CRMs",
+            "VAT ANNA",
+            "Website forms",
+            "Email platforms"
+          ],
+          "primaryBenefits": [
+            "Eliminate 90% of manual data entry between systems",
+            "Connect 5,000+ apps including CRMs and accounting software",
+            "Set up automations in minutes without technical expertise"
+          ],
+          "implementationTime": "1-2 weeks",
+          "implementationComplexity": "Low"
+        },
+        {
+          "name": "HubSpot",
+          "bestFor": "Businesses wanting all-in-one CRM and automation",
+          "pricing": {
+            "model": "Tiered monthly subscription",
+            "notes": "Starter plan at $45/month suitable for micro businesses",
+            "range": "$45-$1,200/month",
+            "setupFee": "$0"
+          },
+          "category": "CRM with Automation",
+          "annualROI": {
+            "paybackPeriod": "3 months",
+            "potentialSavings": "$28,800",
+            "percentageImprovement": "75%"
+          },
+          "caseStudies": [
+            {
+              "metric": "60% sales increase",
+              "result": "Automated 80% of lead processing, increased sales by 60%",
+              "source": "Data not available",
+              "company": "UK energy broker with 3 employees",
+              "industry": "Energy Brokerage"
+            },
+            {
+              "metric": "15 hours weekly savings",
+              "result": "Reduced admin time by 15 hours per week, improved lead tracking",
+              "source": "Data not available",
+              "company": "Small utility consultancy",
+              "industry": "Utility Brokerage"
+            }
+          ],
+          "description": "HubSpot is a comprehensive CRM platform that includes marketing automation, sales pipeline management, and customer service tools. It offers native integrations with chatbots and can automate lead capture, scoring, and nurturing. The platform includes workflow automation that can eliminate manual data entry and provide end-to-end customer journey tracking for utility brokerages.",
+          "verboseName": "All-in-One CRM and Marketing Automation Platform",
+          "integrations": [
+            "Website chatbots",
+            "Email platforms",
+            "Accounting software",
+            "Social media"
+          ],
+          "primaryBenefits": [
+            "Automate lead capture from website directly into CRM",
+            "Track customer journey from first contact to invoice",
+            "Built-in automation workflows reduce manual tasks by 70%"
+          ],
+          "implementationTime": "2-4 weeks",
+          "implementationComplexity": "Medium"
+        }
+      ],
+      "problemArea": "Data Entry Automation Between Systems",
+      "estimatedAnnualCost": "$30,960",
+      "estimatedMonthlyCost": "$2,580"
+    },
+    {
+      "tools": [
+        {
+          "name": "ActiveCampaign",
+          "bestFor": "Businesses with consistent lead flow needing nurturing",
+          "pricing": {
+            "model": "Monthly subscription based on contacts",
+            "notes": "Plus plan at $70/month includes automation features",
+            "range": "$29-$229/month",
+            "setupFee": "$0"
+          },
+          "category": "Marketing Automation",
+          "annualROI": {
+            "paybackPeriod": "2 months",
+            "potentialSavings": "$21,000",
+            "percentageImprovement": "155%"
+          },
+          "caseStudies": [
+            {
+              "metric": "87% conversion improvement",
+              "result": "Automated follow-up increased conversion rate from 8% to 15%",
+              "source": "Data not available",
+              "company": "Energy consultancy with 500 leads/month",
+              "industry": "Energy Brokerage"
+            },
+            {
+              "metric": "35% sales increase",
+              "result": "Saved 10 hours per week on follow-ups, increased sales by 35%",
+              "source": "Data not available",
+              "company": "Telecoms broker with $1.5M revenue",
+              "industry": "Telecoms Brokerage"
+            }
+          ],
+          "description": "ActiveCampaign is an email marketing and automation platform that specializes in behavioral-based automation and lead nurturing. It can automatically follow up with leads based on their actions, send personalized sequences, and score leads based on engagement. The platform integrates with CRMs and can trigger follow-ups based on website behavior or chatbot interactions.",
+          "verboseName": "Customer Experience Automation Platform",
+          "integrations": [
+            "Most CRMs",
+            "Website forms",
+            "SMS platforms",
+            "Social media"
+          ],
+          "primaryBenefits": [
+            "Automate personalized follow-up sequences based on lead behavior",
+            "Increase lead conversion rates by 30-50% through timely follow-ups",
+            "Score and prioritize leads automatically for sales focus"
+          ],
+          "implementationTime": "1-3 weeks",
+          "implementationComplexity": "Medium"
+        },
+        {
+          "name": "Pipedrive",
+          "bestFor": "Sales-focused teams needing pipeline management",
+          "pricing": {
+            "model": "Per user monthly subscription",
+            "notes": "Advanced plan at $34.90/month includes automation",
+            "range": "$14.90-$99/month per user",
+            "setupFee": "$0"
+          },
+          "category": "Sales CRM",
+          "annualROI": {
+            "paybackPeriod": "3 months",
+            "potentialSavings": "$15,600",
+            "percentageImprovement": "115%"
+          },
+          "caseStudies": [
+            {
+              "metric": "25% close rate improvement",
+              "result": "Improved lead follow-up consistency, increased close rate by 25%",
+              "source": "Data not available",
+              "company": "Small utility broker with 2 salespeople",
+              "industry": "Utility Brokerage"
+            },
+            {
+              "metric": "8 hours weekly savings",
+              "result": "Automated 70% of follow-up activities, saved 8 hours per week",
+              "source": "Data not available",
+              "company": "Energy consultancy startup",
+              "industry": "Energy Brokerage"
+            }
+          ],
+          "description": "Pipedrive is a sales-focused CRM that includes automation features specifically designed for following up with leads and managing sales pipelines. It can automatically create tasks, send follow-up emails, and move deals through stages based on activities. The platform is designed for small businesses and includes lead scoring and automated workflows.",
+          "verboseName": "Sales-Focused CRM with Built-in Automation",
+          "integrations": [
+            "Email platforms",
+            "Calendars",
+            "Accounting software",
+            "Communication tools"
+          ],
+          "primaryBenefits": [
+            "Automate follow-up tasks and reminders for every lead",
+            "Visual pipeline management prevents leads from falling through cracks",
+            "Built-in email automation and scheduling tools"
+          ],
+          "implementationTime": "1-2 weeks",
+          "implementationComplexity": "Low"
+        }
+      ],
+      "problemArea": "Lead Follow-up Automation",
+      "estimatedAnnualCost": "$13,500",
+      "estimatedMonthlyCost": "$1,125"
+    },
+    {
+      "tools": [
+        {
+          "name": "PandaDoc",
+          "bestFor": "Businesses creating frequent quotes and proposals",
+          "pricing": {
+            "model": "Per user monthly subscription",
+            "notes": "Business plan at $49/month includes advanced automation",
+            "range": "$19-$49/month per user",
+            "setupFee": "$0"
+          },
+          "category": "Document Automation",
+          "annualROI": {
+            "paybackPeriod": "2 months",
+            "potentialSavings": "$36,000",
+            "percentageImprovement": "111%"
+          },
+          "caseStudies": [
+            {
+              "metric": "87% time reduction",
+              "result": "Reduced quote creation time from 2 hours to 15 minutes per quote",
+              "source": "Data not available",
+              "company": "Energy broker with 100 quotes/month",
+              "industry": "Energy Brokerage"
+            },
+            {
+              "metric": "40% win rate increase",
+              "result": "Automated proposal process, increased win rate by 40%",
+              "source": "Data not available",
+              "company": "Telecoms consultancy with $3M revenue",
+              "industry": "Telecoms Brokerage"
+            }
+          ],
+          "description": "PandaDoc is a document automation platform that streamlines the creation, sending, and signing of quotes, proposals, and contracts. It includes template libraries, automated pricing calculations, and approval workflows. For utility brokerages, it can automatically generate quotes based on CRM data and integrate with accounting systems for seamless invoicing.",
+          "verboseName": "Document Automation and eSignature Platform",
+          "integrations": [
+            "CRM systems",
+            "Accounting software",
+            "Payment processors",
+            "Cloud storage"
+          ],
+          "primaryBenefits": [
+            "Automate quote generation from CRM data in minutes",
+            "Reduce document creation time by 80% with smart templates",
+            "Track document engagement and automate follow-ups"
+          ],
+          "implementationTime": "2-3 weeks",
+          "implementationComplexity": "Medium"
+        },
+        {
+          "name": "QuoteWerks",
+          "bestFor": "Service brokers needing specialized quoting tools",
+          "pricing": {
+            "model": "Per user annual license",
+            "notes": "Professional edition at $25/month includes automation features",
+            "range": "$15-$25/month per user",
+            "setupFee": "$0"
+          },
+          "category": "Quote Automation",
+          "annualROI": {
+            "paybackPeriod": "2 months",
+            "potentialSavings": "$28,800",
+            "percentageImprovement": "89%"
+          },
+          "caseStudies": [
+            {
+              "metric": "95% error reduction",
+              "result": "Reduced quote errors by 95%, saved 12 hours per week",
+              "source": "Data not available",
+              "company": "Utility broker with 50 quotes/month",
+              "industry": "Utility Brokerage"
+            },
+            {
+              "metric": "60% faster turnaround",
+              "result": "Automated quote approval process, improved turnaround by 60%",
+              "source": "Data not available",
+              "company": "Energy consultancy with 5 employees",
+              "industry": "Energy Brokerage"
+            }
+          ],
+          "description": "QuoteWerks is specialized quoting software designed for service providers and brokers. It automates the entire quoting process from product selection to pricing calculations and proposal generation. The software includes built-in quality checks, approval workflows, and integrates with accounting systems to streamline the quote-to-cash process.",
+          "verboseName": "Automated Quoting and Proposal Software",
+          "integrations": [
+            "Accounting software",
+            "CRM systems",
+            "Product databases",
+            "Email platforms"
+          ],
+          "primaryBenefits": [
+            "Generate professional quotes in under 5 minutes",
+            "Built-in quality checks prevent pricing errors",
+            "Seamless integration with accounting and CRM systems"
+          ],
+          "implementationTime": "1-2 weeks",
+          "implementationComplexity": "Low"
+        }
+      ],
+      "problemArea": "Quote and Invoice Automation",
+      "estimatedAnnualCost": "$32,400",
+      "estimatedMonthlyCost": "$2,700"
+    }
+  ],
+  "estimatedAnnualOpportunity": "$87,000"
+}

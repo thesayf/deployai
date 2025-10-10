@@ -29,7 +29,17 @@ export default async function handler(
           return res.status(404).json({ error: 'Assessment not found' });
         }
 
-        res.status(200).json(assessment);
+        // Transform the response to match frontend expectations
+        const response = {
+          ...assessment,
+          report: assessment.report ? {
+            ...assessment.report,
+            // Map stage1_problem_analysis to stage_1_analysis for backward compatibility
+            stage_1_analysis: assessment.report.stage1_problem_analysis,
+          } : null,
+        };
+
+        res.status(200).json(response);
       } catch (error) {
         console.error('Error fetching assessment:', error);
         res.status(500).json({ error: 'Failed to fetch assessment' });

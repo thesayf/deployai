@@ -84,6 +84,7 @@ export class AssessmentRepository {
           created_at,
           updated_at,
           final_report,
+          stage1_problem_analysis,
           report_html
         )
       `)

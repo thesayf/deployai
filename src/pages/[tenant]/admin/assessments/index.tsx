@@ -16,15 +16,20 @@ const AdminAssessmentsPage = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const tenantContext = await getTenantFromRequest(context.req);
+  // Get tenant from URL path parameter
+  const { tenant: tenantSlug } = context.params as { tenant: string };
+
+  // Import tenant service
+  const { tenantService } = await import('@/services/tenant');
+
+  // Get tenant context
+  const tenantContext = await tenantService.getTenantContext(tenantSlug);
 
   if (!tenantContext) {
     return {
       notFound: true,
     };
   }
-
-  // TODO: Add authentication check here in Phase 3
 
   return {
     props: {},
