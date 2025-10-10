@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 import { tenantService } from '@/services/tenant';
 
 export interface QueryOptions {
@@ -16,6 +16,7 @@ export class AssessmentRepository {
   constructor(private tenantId: string) {}
 
   async findByTenant(options: QueryOptions = {}) {
+    const supabase = supabaseAdmin();
     let query = supabase
       .from('quiz_responses')
       .select(`
@@ -70,6 +71,7 @@ export class AssessmentRepository {
   }
 
   async findById(assessmentId: string) {
+    const supabase = supabaseAdmin();
     const { data, error } = await supabase
       .from('quiz_responses')
       .select(`
@@ -98,6 +100,7 @@ export class AssessmentRepository {
   }
 
   async findAll(options: QueryOptions = {}) {
+    const supabase = supabaseAdmin();
     let query = supabase
       .from('quiz_responses')
       .select(`
@@ -146,6 +149,7 @@ export class AssessmentRepository {
   }
 
   async getRecentAssessments(limit: number = 5) {
+    const supabase = supabaseAdmin();
     const { data, error } = await supabase
       .from('quiz_responses')
       .select(`
@@ -195,6 +199,7 @@ export class AssessmentRepository {
   }
 
   async getAssessmentStats() {
+    const supabase = supabaseAdmin();
     // Use single optimized query with SQL aggregation
     const now = new Date();
     const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
@@ -234,6 +239,7 @@ export class AssessmentRepository {
   }
 
   async getMonthlyTrend(months: number = 6) {
+    const supabase = supabaseAdmin();
     // Use single optimized query with GROUP BY
     const { data, error } = await supabase.rpc('get_monthly_trend', {
       p_tenant_id: this.tenantId,
@@ -269,6 +275,7 @@ export class AssessmentRepository {
   }
 
   async getMVPAssessments(options: QueryOptions = {}) {
+    const supabase = supabaseAdmin();
     let query = supabase
       .from('mvp_planner_responses')
       .select(`

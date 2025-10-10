@@ -6,7 +6,20 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log('[Assessments API] Headers:', JSON.stringify({
+    host: req.headers.host,
+    'x-tenant-subdomain': req.headers['x-tenant-subdomain'],
+    referer: req.headers.referer
+  }, null, 2));
+
+  // Get tenant context from request header
   const tenantContext = await getTenantFromRequest(req);
+
+  console.log('[Assessments API] Tenant context:', tenantContext ? {
+    id: tenantContext.tenant.id,
+    subdomain: tenantContext.tenant.subdomain,
+    company: tenantContext.tenant.company_name
+  } : 'null');
 
   if (!tenantContext) {
     return res.status(401).json({ error: 'No tenant context found' });
@@ -40,6 +53,12 @@ export default async function handler(
         };
 
         const result = await assessmentService.getAssessments(filters);
+        console.log('[Assessments API] Result:', {
+          total: result.total,
+          count: result.assessments.length,
+          page: result.page,
+          totalPages: result.totalPages
+        });
         res.status(200).json(result);
       } catch (error) {
         console.error('Error fetching assessments:', error);

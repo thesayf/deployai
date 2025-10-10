@@ -59,7 +59,13 @@ const AssessmentTable: React.FC = () => {
       if (search) params.append('search', search);
       if (statusFilter !== 'all') params.append('status', statusFilter);
 
-      const response = await fetch(`/api/admin/assessments?${params}`);
+      // Use absolute URL to ensure correct origin in all environments
+      const apiUrl = `${window.location.origin}/api/admin/assessments?${params}`;
+      const response = await fetch(apiUrl, {
+        headers: {
+          'x-tenant-subdomain': tenantContext.tenant.subdomain,
+        },
+      });
 
       if (!response.ok) {
         throw new Error('Failed to fetch assessments');
