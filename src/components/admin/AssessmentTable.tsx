@@ -229,31 +229,31 @@ const AssessmentTable: React.FC = () => {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="w-full table-fixed divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
                   <th
                     onClick={() => handleSort('created_at')}
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    className="w-[13%] px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                   >
                     Date {sortBy === 'created_at' && (sortOrder === 'asc' ? '↑' : '↓')}
                   </th>
                   <th
                     onClick={() => handleSort('company')}
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    className="w-[28%] px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                   >
                     Company {sortBy === 'company' && (sortOrder === 'asc' ? '↑' : '↓')}
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="w-[28%] px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Contact
                   </th>
                   <th
                     onClick={() => handleSort('status')}
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                    className="w-[15%] px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                   >
                     Status {sortBy === 'status' && (sortOrder === 'asc' ? '↑' : '↓')}
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="w-[16%] px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -261,7 +261,7 @@ const AssessmentTable: React.FC = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {assessments.map((assessment) => (
                   <tr key={assessment.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <td className="px-4 py-4 whitespace-nowrap text-sm">
                       <div>
                         <p className="font-medium text-gray-900">
                           {new Date(assessment.created_at).toLocaleDateString()}
@@ -271,26 +271,26 @@ const AssessmentTable: React.FC = () => {
                         </p>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-4">
                       <div>
-                        <p className="font-medium text-gray-900">{assessment.user_company || 'N/A'}</p>
-                        <p className="text-xs text-gray-600">
+                        <p className="font-medium text-gray-900 truncate">{assessment.user_company || 'N/A'}</p>
+                        <p className="text-xs text-gray-600 truncate">
                           {assessment.industry} • {assessment.company_size}
                         </p>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-4">
                       <div>
-                        <p className="font-medium text-gray-900">
+                        <p className="font-medium text-gray-900 truncate">
                           {assessment.user_first_name} {assessment.user_last_name}
                         </p>
-                        <p className="text-xs text-gray-600">{assessment.user_email}</p>
+                        <p className="text-xs text-gray-600 truncate">{assessment.user_email}</p>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-4 whitespace-nowrap">
                       {getStatusBadge(assessment.report?.status)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-2">
                         <Link
                           href={`/${tenantContext?.tenant.subdomain}/admin/assessments/${assessment.id}`}
