@@ -20,12 +20,52 @@ const AdminAssessmentDetailPage = () => {
   const [assessment, setAssessment] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isApproving, setIsApproving] = useState(false);
 
   useEffect(() => {
     if (id && typeof id === 'string' && tenantContext) {
       fetchAssessment(id);
     }
   }, [id, tenantContext]);
+
+  const handleApprove = async () => {
+    if (!id || !tenantContext) return;
+
+    if (!confirm('Approve this assessment request? The user will receive an email with their assessment link.')) {
+      return;
+    }
+
+    setIsApproving(true);
+
+    try {
+      const response = await fetch(`/api/assessment-requests/${id}/approve`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-tenant-subdomain': tenantContext.tenant.subdomain,
+        },
+        body: JSON.stringify({
+          notes: `Approved by admin on ${new Date().toLocaleString()}`
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to approve request');
+      }
+
+      alert(`Assessment request approved!\n\nAssessment link:\n${result.assessmentLink}\n\n(Email sent to user)`);
+
+      // Refresh assessment data
+      await fetchAssessment(id as string);
+    } catch (err: any) {
+      console.error('Error approving request:', err);
+      alert(`Failed to approve: ${err.message}`);
+    } finally {
+      setIsApproving(false);
+    }
+  };
 
   const fetchAssessment = async (assessmentId: string) => {
     if (!tenantContext) return;
@@ -145,6 +185,59 @@ const AdminAssessmentDetailPage = () => {
             </Link>
           )}
         </div>
+
+        {/* Requested Status Banner */}
+        {assessment.request_status === 'requested' && (
+          <div className="bg-orange-100 border-l-4 border-orange-500 p-6 shadow-sm">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start gap-3">
+                <div className="text-3xl">⚠️</div>
+                <div className="flex-1">
+                  <h3 className="font-bold text-lg text-orange-900 mb-1">
+                    Assessment Requested
+                  </h3>
+                  <p className="text-orange-800 mb-2">
+                    This user has requested assessment access because they reached their limit.
+                    Approve to send them a unique assessment link via email.
+                  </p>
+                  <p className="text-sm text-orange-700">
+                    Requested on {new Date(assessment.created_at).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={handleApprove}
+                disabled={isApproving}
+                className="flex-shrink-0 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-bold py-3 px-6 rounded-md shadow-md hover:shadow-lg transition-all disabled:cursor-not-allowed"
+              >
+                {isApproving ? 'Approving...' : 'Approve & Send Link'}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Approved Status Banner */}
+        {assessment.request_status === 'approved' && !assessment.report && (
+          <div className="bg-blue-100 border-l-4 border-blue-500 p-6 shadow-sm">
+            <div className="flex items-start gap-3">
+              <div className="text-3xl">✓</div>
+              <div>
+                <h3 className="font-bold text-lg text-blue-900 mb-1">
+                  Assessment Approved - Awaiting Completion
+                </h3>
+                <p className="text-blue-800">
+                  This assessment request was approved and the user has been sent their unique link.
+                  They have not started the assessment yet.
+                </p>
+                {assessment.admin_notes && (
+                  <p className="text-sm text-blue-700 mt-2">
+                    <strong>Admin Notes:</strong> {assessment.admin_notes}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* AI Opportunity Scores */}
         {stage1 && (

@@ -42,6 +42,17 @@ export class AssessmentRepository {
       `);
     }
 
+    // Apply status filter
+    if (options.status && options.status !== 'all') {
+      // Check if filtering by request_status
+      if (options.status === 'requested' || options.status === 'approved') {
+        query = query.eq('request_status', options.status);
+      } else {
+        // Filter by report status
+        query = query.eq('ai_reports.report_status', options.status);
+      }
+    }
+
     // Apply date filters
     if (options.dateFrom) {
       query = query.gte('created_at', options.dateFrom);

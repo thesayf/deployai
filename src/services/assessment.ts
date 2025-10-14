@@ -13,6 +13,8 @@ export interface Assessment {
   completed_at: string | null;
   created_at: string;
   updated_at: string;
+  request_status?: 'requested' | 'approved' | 'completed' | null;
+  admin_notes?: string | null;
   report?: {
     id: string;
     status: string;
@@ -152,6 +154,8 @@ class AssessmentService {
       completed_at: item.completed_at,
       created_at: item.created_at,
       updated_at: item.updated_at,
+      request_status: item.request_status || null,
+      admin_notes: item.admin_notes || null,
       report: report ? {
         id: report.id,
         status: report.report_status || 'pending',

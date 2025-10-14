@@ -21,17 +21,87 @@ interface AIAssessmentFormData {
 
 const TenantAssessmentLanding = () => {
   const router = useRouter();
-  const { tenant } = router.query;
+  const { tenant, token } = router.query;
   const { tenantContext } = useTenant();
   const dispatch = useAppDispatch();
   const isModalOpen = useAppSelector(state => state.quiz.isModalOpen);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isCheckingLimit, setIsCheckingLimit] = React.useState(true);
+  const [approvedRequestId, setApprovedRequestId] = React.useState<string | null>(null);
+
+  // Check assessment limit and handle approved token
+  React.useEffect(() => {
+    if (!tenantContext || !tenant) return;
+
+    const checkAccess = async () => {
+      try {
+        // If token provided, verify it's an approved request
+        if (token && typeof token === 'string') {
+          const response = await fetch(`/api/assessment-requests/${token}/verify`, {
+            headers: {
+              'x-tenant-subdomain': tenant as string,
+            },
+          });
+
+          if (response.ok) {
+            const { approved, quizId } = await response.json();
+            if (approved) {
+              // Valid approved token - set quiz ID and allow access
+              setApprovedRequestId(quizId);
+              dispatch(setQuizId(quizId));
+              setIsCheckingLimit(false);
+              return;
+            }
+          }
+        }
+
+        // No valid token - check if tenant can create assessment
+        const response = await fetch('/api/tenant/can-create-assessment', {
+          headers: {
+            'x-tenant-subdomain': tenant as string,
+          },
+        });
+
+        const { canCreate } = await response.json();
+
+        if (!canCreate) {
+          // At limit - redirect to request page
+          router.push(`/${tenant}/assessment/request`);
+          return;
+        }
+
+        setIsCheckingLimit(false);
+      } catch (error) {
+        console.error('Error checking assessment access:', error);
+        setIsCheckingLimit(false);
+      }
+    };
+
+    checkAccess();
+  }, [tenant, token, tenantContext, router, dispatch]);
 
   const handleModalSubmit = async (data: AIAssessmentFormData) => {
     setIsSubmitting(true);
 
     try {
-      // Reset any existing quiz state to ensure clean start
+      // If this is an approved request, use the existing quiz ID
+      if (approvedRequestId) {
+        // Save user info to Redux (might already be set, but ensure it's updated)
+        dispatch(setUserInfo({
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          company: data.company,
+        }));
+
+        // Quiz ID already set from token verification
+        // Close modal and navigate to first question
+        dispatch(closeEmailModal());
+        router.push(`/${tenant}/assessment/quiz/1`);
+        return;
+      }
+
+      // Normal flow: Reset any existing quiz state to ensure clean start
       dispatch(resetQuiz());
 
       // Also clear localStorage directly as a safeguard
@@ -79,6 +149,23 @@ const TenantAssessmentLanding = () => {
       setIsSubmitting(false);
     }
   };
+
+  // Show loading state while checking access
+  if (isCheckingLimit) {
+    return (
+      <>
+        <Head>
+          <title>Loading... | {tenantContext?.tenant.company_name || 'AI Assessment'}</title>
+        </Head>
+        <div className="min-h-screen bg-[#212121] flex items-center justify-center">
+          <div className="text-center text-white">
+            <div className="text-2xl font-bold mb-4">Checking assessment access...</div>
+            <div className="animate-pulse">Please wait</div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

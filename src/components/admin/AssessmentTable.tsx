@@ -1,86 +1,109 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
 import { useTenant } from '@/contexts/TenantContext';
+import { useAssessments, type Assessment } from '@/hooks/useAssessments';
 import {
   Search,
   ChevronLeft,
   ChevronRight,
   Download,
   ExternalLink,
-  Filter
+  RefreshCw
 } from 'lucide-react';
-
-interface Assessment {
-  id: string;
-  user_email: string;
-  user_company: string;
-  user_first_name: string;
-  user_last_name: string;
-  industry: string;
-  company_size: string;
-  created_at: string;
-  report?: {
-    id: string;
-    status: string;
-    access_token: string;
-    email_sent_at: string | null;
-  };
-}
 
 const AssessmentTable: React.FC = () => {
   const { tenantContext } = useTenant();
-  const [assessments, setAssessments] = useState<Assessment[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { assessments: allAssessments, isLoading, isError, refresh } = useAssessments();
+
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [total, setTotal] = useState(0);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [sortBy, setSortBy] = useState<'created_at' | 'company' | 'status'>('created_at');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
-  useEffect(() => {
-    fetchAssessments();
-  }, [page, search, statusFilter, sortBy, sortOrder, tenantContext]);
+  const itemsPerPage = 20;
 
-  const fetchAssessments = async () => {
-    if (!tenantContext) return;
+  // Client-side filtering and sorting with useMemo
+  const filteredAndSortedAssessments = useMemo(() => {
+    let filtered = [...allAssessments];
 
-    try {
-      setLoading(true);
-      const params = new URLSearchParams({
-        page: page.toString(),
-        limit: '20',
-        sortBy,
-        sortOrder,
+    // Apply search filter (case-insensitive)
+    if (search.trim()) {
+      const searchLower = search.toLowerCase().trim();
+      filtered = filtered.filter(
+        (a) =>
+          a.user_email.toLowerCase().includes(searchLower) ||
+          a.user_company.toLowerCase().includes(searchLower) ||
+          a.user_first_name.toLowerCase().includes(searchLower) ||
+          a.user_last_name.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Apply status filter with priority logic
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter((a) => {
+        // Priority 1: request_status
+        if (statusFilter === 'requested') {
+          return a.request_status === 'requested';
+        }
+        if (statusFilter === 'approved') {
+          return a.request_status === 'approved' && !a.report;
+        }
+
+        // Priority 2: report status
+        return a.report?.status === statusFilter;
       });
+    }
 
-      if (search) params.append('search', search);
-      if (statusFilter !== 'all') params.append('status', statusFilter);
+    // Apply sorting
+    filtered.sort((a, b) => {
+      let compareValue = 0;
 
-      // Use absolute URL to ensure correct origin in all environments
-      const apiUrl = `${window.location.origin}/api/admin/assessments?${params}`;
-      const response = await fetch(apiUrl, {
-        headers: {
-          'x-tenant-subdomain': tenantContext.tenant.subdomain,
-        },
-      });
+      switch (sortBy) {
+        case 'created_at':
+          compareValue = new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+          break;
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch assessments');
+        case 'company':
+          compareValue = (a.user_company || '').localeCompare(b.user_company || '');
+          break;
+
+        case 'status': {
+          const statusA = a.request_status || a.report?.status || 'pending';
+          const statusB = b.request_status || b.report?.status || 'pending';
+          compareValue = statusA.localeCompare(statusB);
+          break;
+        }
       }
 
-      const data = await response.json();
-      setAssessments(data.assessments);
-      setTotal(data.total);
-      setTotalPages(data.totalPages);
-    } catch (error) {
-      console.error('Error fetching assessments:', error);
-    } finally {
-      setLoading(false);
+      return sortOrder === 'asc' ? compareValue : -compareValue;
+    });
+
+    return filtered;
+  }, [allAssessments, search, statusFilter, sortBy, sortOrder]);
+
+  // Client-side pagination
+  const paginatedAssessments = useMemo(() => {
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredAndSortedAssessments.slice(startIndex, endIndex);
+  }, [filteredAndSortedAssessments, page]);
+
+  const totalFiltered = filteredAndSortedAssessments.length;
+  const totalPages = Math.ceil(totalFiltered / itemsPerPage);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [search, statusFilter, sortBy, sortOrder]);
+
+  // Handle page out of bounds
+  useEffect(() => {
+    if (page > totalPages && totalPages > 0) {
+      setPage(totalPages);
     }
-  };
+  }, [page, totalPages]);
 
   const handleSort = (field: 'created_at' | 'company' | 'status') => {
     if (sortBy === field) {
@@ -130,7 +153,26 @@ const AssessmentTable: React.FC = () => {
     }
   };
 
-  const getStatusBadge = (status?: string) => {
+  const getStatusBadge = useCallback((assessment: Assessment) => {
+    // Priority 1: Check request_status (highest priority)
+    if (assessment.request_status === 'requested') {
+      return (
+        <span className="bg-orange-500 text-white px-2 py-1 text-xs font-bold rounded flex items-center gap-1">
+          ⚠️ REQUESTED
+        </span>
+      );
+    }
+
+    if (assessment.request_status === 'approved' && !assessment.report) {
+      return (
+        <span className="bg-blue-500 text-white px-2 py-1 text-xs font-bold rounded">
+          APPROVED
+        </span>
+      );
+    }
+
+    // Priority 2: Check report status
+    const reportStatus = assessment.report?.status;
     const statusConfig = {
       completed: { bg: 'bg-green-500', text: 'Completed' },
       generating: { bg: 'bg-yellow-500', text: 'Generating' },
@@ -139,14 +181,14 @@ const AssessmentTable: React.FC = () => {
       pending: { bg: 'bg-gray-500', text: 'Pending' }
     };
 
-    const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.pending;
+    const config = statusConfig[reportStatus as keyof typeof statusConfig] || statusConfig.pending;
 
     return (
       <span className={`${config.bg} text-white px-2 py-1 text-xs font-medium rounded`}>
         {config.text}
       </span>
     );
-  };
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -155,12 +197,23 @@ const AssessmentTable: React.FC = () => {
         <div>
           <h1 className="text-2xl font-semibold">Assessments</h1>
           <p className="text-gray-600 mt-2">
-            Total: {total} assessments
+            {totalFiltered === allAssessments.length
+              ? `Total: ${totalFiltered} assessments`
+              : `Showing ${totalFiltered} of ${allAssessments.length} assessments`}
           </p>
         </div>
 
-        {/* Export buttons */}
+        {/* Action buttons */}
         <div className="flex gap-2">
+          <button
+            onClick={() => refresh()}
+            disabled={isLoading}
+            className="flex items-center gap-2 bg-white font-medium py-2 px-4 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            title="Refresh data"
+          >
+            <RefreshCw className={`h-5 w-5 ${isLoading ? 'animate-spin' : ''}`} />
+            Refresh
+          </button>
           <button
             onClick={() => handleExport('csv')}
             className="flex items-center gap-2 bg-white font-medium py-2 px-4 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
@@ -208,6 +261,7 @@ const AssessmentTable: React.FC = () => {
             className="px-4 py-2 border border-gray-300 font-medium bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="all">All Status</option>
+            <option value="requested">⚠️ Requested</option>
             <option value="completed">Completed</option>
             <option value="generating">Generating</option>
             <option value="processing">Processing</option>
@@ -219,13 +273,39 @@ const AssessmentTable: React.FC = () => {
 
       {/* Table */}
       <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
-        {loading ? (
+        {isLoading ? (
           <div className="p-8 text-center">
-            <div className="text-lg font-medium text-gray-600">Loading...</div>
+            <div className="text-lg font-medium text-gray-600">Loading assessments...</div>
+            <div className="mt-2 text-sm text-gray-500">Please wait</div>
           </div>
-        ) : assessments.length === 0 ? (
+        ) : isError ? (
           <div className="p-8 text-center">
-            <p className="text-gray-600 font-medium">No assessments found</p>
+            <div className="text-lg font-medium text-red-600 mb-4">Failed to load assessments</div>
+            <button
+              onClick={() => refresh()}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+              Retry
+            </button>
+          </div>
+        ) : paginatedAssessments.length === 0 ? (
+          <div className="p-8 text-center">
+            <p className="text-gray-600 font-medium mb-2">
+              {allAssessments.length === 0
+                ? 'No assessments yet'
+                : 'No assessments match your filters'}
+            </p>
+            {(search || statusFilter !== 'all') && (
+              <button
+                onClick={() => {
+                  setSearch('');
+                  setStatusFilter('all');
+                }}
+                className="mt-4 text-blue-600 hover:text-blue-800 underline font-medium"
+              >
+                Clear filters
+              </button>
+            )}
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -259,7 +339,7 @@ const AssessmentTable: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {assessments.map((assessment) => (
+                {paginatedAssessments.map((assessment) => (
                   <tr key={assessment.id} className="hover:bg-gray-50">
                     <td className="px-4 py-4 whitespace-nowrap text-sm">
                       <div>
@@ -288,7 +368,7 @@ const AssessmentTable: React.FC = () => {
                       </div>
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap">
-                      {getStatusBadge(assessment.report?.status)}
+                      {getStatusBadge(assessment)}
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-2">
