@@ -1,0 +1,160 @@
+import React from 'react';
+import { GetServerSideProps } from 'next';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useAppSelector, useAppDispatch } from '@/store';
+import { openEmailModal, closeEmailModal, setUserInfo, setQuizId, resetQuiz } from '@/store/slices/quizSlice';
+import Image from 'next/image';
+import { Footer } from '@/components/footer/Footer';
+import { LogoTrustBanner } from '@/components/logo-trust-banner';
+import { AssessmentLanding } from '@/components/assessment-landing';
+import { AIAssessmentModal } from '@/components/ai-assessment-modal';
+import { useTenant } from '@/contexts/TenantContext';
+
+// Define the form data type for AI assessment
+interface AIAssessmentFormData {
+  email: string;
+  firstName: string;
+  lastName: string;
+  company: string;
+}
+
+const TenantAssessmentLanding = () => {
+  const router = useRouter();
+  const { tenant } = router.query;
+  const { tenantContext } = useTenant();
+  const dispatch = useAppDispatch();
+  const isModalOpen = useAppSelector(state => state.quiz.isModalOpen);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+
+  const handleModalSubmit = async (data: AIAssessmentFormData) => {
+    setIsSubmitting(true);
+
+    try {
+      // Reset any existing quiz state to ensure clean start
+      dispatch(resetQuiz());
+
+      // Also clear localStorage directly as a safeguard
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('quizState');
+      }
+
+      // Call the start quiz API with tenant context
+      const response = await fetch('/api/quiz/start', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-tenant-subdomain': tenant as string,
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Save user info to Redux
+        dispatch(setUserInfo({
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          company: data.company,
+        }));
+
+        // Save quiz ID
+        dispatch(setQuizId(result.quizId));
+
+        // Close modal
+        dispatch(closeEmailModal());
+
+        // Navigate to first question (tenant-specific route)
+        router.push(`/${tenant}/assessment/quiz/1`);
+      } else {
+        console.error('Failed to start quiz:', result.error);
+        alert('Failed to start assessment. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error starting quiz:', error);
+      alert('An error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <>
+      <Head>
+        <title>AI Business Readiness Assessment | {tenantContext?.tenant.company_name || 'AI Assessment'}</title>
+        <meta
+          name="description"
+          content="Discover your business's AI readiness with our free 3-minute assessment. Get a personalized score and implementation roadmap for AI transformation."
+        />
+        <meta property="og:title" content={`AI Business Readiness Assessment | ${tenantContext?.tenant.company_name || 'AI Assessment'}`} />
+        <meta property="og:description" content="Take our free 3-minute assessment to discover if your business is ready for AI implementation. Get personalized recommendations." />
+        <meta property="og:type" content="website" />
+      </Head>
+
+      {/* Logo Header */}
+      <div className="bg-[#212121] pt-6 pb-4 md:py-6">
+        <div className="container mx-auto px-6 flex justify-center">
+          <Image
+            src="/logo.png"
+            alt={tenantContext?.tenant.company_name || 'AI Assessment'}
+            width={220}
+            height={80}
+            className="h-10 md:h-12 w-auto brightness-0 invert"
+          />
+        </div>
+      </div>
+
+      <main className="bg-[#212121]">
+        <AssessmentLanding />
+
+        {/* Methodology Credibility */}
+        <div className="bg-white py-12">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <p className="text-lg text-gray-700">
+              <span className="font-bold">Why industry leaders trust our assessment:</span> We've distilled methodologies from
+              McKinsey's AI Trust Model, BCG's DRI Framework, and Deloitte's IntelligentOps into a rapid diagnostic tool that
+              delivers the same strategic insights in minutes, not months.
+            </p>
+          </div>
+        </div>
+
+        <LogoTrustBanner />
+      </main>
+
+      <Footer />
+
+      {/* Email Capture Modal */}
+      <AIAssessmentModal
+        isOpen={isModalOpen}
+        onClose={() => dispatch(closeEmailModal())}
+        onSubmit={handleModalSubmit}
+        isSubmitting={isSubmitting}
+      />
+    </>
+  );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // Get tenant from URL path parameter
+  const { tenant: tenantSlug } = context.params as { tenant: string };
+
+  // Import tenant service
+  const { tenantService } = await import('@/services/tenant');
+
+  // Get tenant context
+  const tenantContext = await tenantService.getTenantContext(tenantSlug);
+
+  if (!tenantContext) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
+
+export default TenantAssessmentLanding;

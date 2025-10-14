@@ -22,7 +22,7 @@ export default async function handler(
     // Pass tenant usage data directly to avoid redundant DB lookup
     const dashboardData = await assessmentService.getDashboardData({
       assessments_used: tenantContext.tenant.assessments_used,
-      assessments_limit: tenantContext.tenant.assessments_limit,
+      assessments_limit: tenantContext.tenant.assessments_limit ?? null,
     });
 
     // Add billing data from tenant context

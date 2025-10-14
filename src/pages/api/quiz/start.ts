@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { StartQuizRequest, StartQuizResponse } from '@/types/quiz';
 import { supabaseAdmin } from '@/lib/supabase';
+import { getTenantFromRequest, addTenantIdToData } from '@/utils/tenant-helpers';
 
 export default async function handler(
   req: NextApiRequest,
@@ -34,17 +35,23 @@ export default async function handler(
 
     // Create quiz session in Supabase
     const supabase = supabaseAdmin();
-    
+
+    // Get tenant context if available
+    const tenantContext = await getTenantFromRequest(req);
+
+    // Prepare insert data with tenant_id if available
+    const insertData = addTenantIdToData({
+      user_email: email.toLowerCase(),
+      user_first_name: firstName,
+      user_last_name: lastName,
+      user_company: company || null,
+      responses: {},
+      started_at: new Date().toISOString(),
+    }, tenantContext?.tenant.id);
+
     const { data, error } = await supabase
       .from('quiz_responses')
-      .insert({
-        user_email: email.toLowerCase(),
-        user_first_name: firstName,
-        user_last_name: lastName,
-        user_company: company || null,
-        responses: {},
-        started_at: new Date().toISOString(),
-      })
+      .insert(insertData)
       .select('id')
       .single();
 

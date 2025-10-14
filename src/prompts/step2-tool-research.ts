@@ -75,10 +75,107 @@ For each problem area, search for 3-5 solutions. Focus on AI-powered tools but i
 CRITICAL DATA INTEGRITY RULES:
 - NEVER make up tools, companies, or case studies
 - If you cannot find specific data, use "Data not available"
-- Case studies MUST be real and verifiable
+- Case studies MUST be real and verifiable from actual real user or web data
 - Include source URLs where available
 - If fewer than 3 case studies exist, provide what's available
 - All metrics must be from actual reports/testimonials
+
+CONSULTANT REVENUE OPPORTUNITY CALCULATION:
+Calculate the revenue opportunity for AI consultants implementing this solution. Use SMB-focused pricing (baseline $200/hour):
+
+COMPLEXITY ASSESSMENT - Score each factor (1-3):
+- Number of integrations: 1-2 tools (1), 3-5 tools (2), 6+ tools (3)
+- Data complexity: Simple/structured (1), Mixed formats (2), Unstructured (3)
+- Custom logic required: Minimal (1), Moderate (2), Extensive (3)
+- User volume: <100 users (1), 100-500 users (2), 500+ users (3)
+TOTAL SCORE: 4-6 = Simple, 7-9 = Medium, 10-12 = Complex
+
+PROJECT STRUCTURE (DO NOT hard-code these - calculate based on tool characteristics):
+- Discovery/Planning: 15% of total project cost
+- Implementation: 60% of total project cost
+- Training/Handoff: 15% of total project cost
+- 30-Day Support: 10% of total project cost
+
+1. IMPLEMENTATION TIMELINE:
+   Calculate weeks based on tool complexity and integrations:
+   - Basic chatbot/off-the-shelf: 3-4 weeks
+   - Standard integration: 4-6 weeks
+   - Complex/multi-system: 8-12 weeks
+   - Custom AI development: 10-16 weeks
+
+2. DISCOVERY & ASSESSMENT FEES:
+   Calculate based on company size and complexity:
+   - Basic process audit: $1,500-2,500 (1 week, simple needs)
+   - Comprehensive assessment: $3,500-5,000 (2-3 weeks, complex environment)
+   - Strategic roadmap workshop: $3,000-4,000 (1 week, multiple use cases)
+   Basis: Hours required × $200/hour
+
+3. IMPLEMENTATION FEES (Calculate, don't hard-code):
+
+   **For Chatbot Implementations:**
+   - Basic (FAQ, single channel): $8,000-15,000 (3-4 weeks)
+   - Standard (multi-turn, 2-3 channels, CRM integration): $15,000-30,000 (4-6 weeks)
+   - Advanced (AI-powered, multiple integrations, custom training): $30,000-60,000 (8-12 weeks)
+
+   **For Workflow Automation:**
+   - Simple (2-3 integrations, single workflow): $2,000-5,000 (1-2 weeks)
+   - Standard (4-6 integrations, multiple workflows): $5,000-12,000 (3-4 weeks)
+   - Complex (7+ integrations, department-wide): $12,000-25,000 (6-8 weeks)
+
+   **For Custom AI Solutions:**
+   - AI tool integration (GPT/Claude): $5,000-15,000 (3-5 weeks)
+   - Custom AI application: $25,000-60,000 (10-16 weeks)
+   - Predictive analytics: $35,000-75,000 (12-20 weeks)
+
+   **For Multi-System Integration:**
+   Calculate based on: Number of systems × complexity × base hours
+   Range: $15,000-30,000 (8-12 weeks)
+
+   Basis: Estimated hours × $200/hour, using project breakdown percentages
+
+4. TRAINING & HANDOFF FEES:
+   Calculate as 15% of total project cost
+   Includes: 2 training sessions, documentation, knowledge transfer
+   Additional sessions: $500-1,000 each
+   Basis: "Training hours × $200/hour for team of [size]"
+
+5. 30-DAY SUPPORT:
+   Calculate as 10% of total project cost (included in base price)
+   Covers: Bug fixes, monitoring, minor adjustments
+
+6. ONGOING MONTHLY RETAINER (Optional, calculate separately):
+   - Maintenance only (5-8 hours): $1,500-2,500/month
+   - Standard support (12-20 hours): $3,000-6,000/month
+   - Premium partnership (30-40 hours): $7,500-12,000/month
+
+   Note: 70% of clients opt for retainer in months 2-6
+   Description: Include specific services based on tool complexity
+
+7. YEAR 1 TOTAL REVENUE:
+   Calculate: Discovery + Implementation + (Average Monthly Retainer × 6 months)
+
+   Typical ranges:
+   - Simple projects: $10,000-20,000
+   - Standard projects: $20,000-45,000
+   - Complex projects: $45,000-100,000+
+
+   Provide min/max based on actual calculations, not these ranges
+
+8. PROFIT MARGIN:
+   Calculate after deducting:
+   - Tool subscription costs (if applicable)
+   - Third-party API costs
+   - Infrastructure costs
+   Typical margins: 75-85% on professional services
+   Tool resale markup: 20% on software costs
+
+ADJUSTMENTS (Apply when relevant):
+- Rush delivery: +25-40%
+- High complexity data: +15-25%
+- Legacy system integration: +20-35%
+- Advanced AI/ML requirements: +40-60%
+
+IMPORTANT: Base all calculations on the specific tool characteristics, number of integrations required, and complexity score. Do not use the example ranges as fixed outputs.
 
 OUTPUT FORMAT (return only valid JSON):
 {
@@ -129,7 +226,44 @@ OUTPUT FORMAT (return only valid JSON):
           },
           "bestFor": "Companies with high volume repetitive inquiries",
           "integrations": ["Salesforce", "Slack", "Shopify", "HubSpot"],
-          "implementationComplexity": "Low"
+          "implementationComplexity": "Low",
+          "consultantRevenue": {
+            "estimatedImplementationWeeks": 6,
+            "discoveryAssessmentFee": {
+              "min": 3500,
+              "max": 5000,
+              "description": "Comprehensive assessment including stakeholder interviews, process mapping, and implementation roadmap",
+              "basis": "2-3 weeks discovery @ $200/hour (17.5-25 hours)"
+            },
+            "integrationFee": {
+              "min": 6000,
+              "max": 12000,
+              "description": "Integration with CRM (Salesforce), communication platform (Slack), helpdesk (Zendesk)",
+              "basis": "3 integrations × $2-4K each for API setup, data mapping, testing"
+            },
+            "customizationFee": {
+              "min": 18000,
+              "max": 30000,
+              "description": "Custom chatbot flows, response templates, multi-channel setup, and analytics dashboard (60% of project cost)",
+              "basis": "90-150 hours development @ $200/hour"
+            },
+            "trainingFee": {
+              "min": 4500,
+              "max": 7500,
+              "description": "Team training sessions, documentation, and knowledge transfer (15% of project cost)",
+              "basis": "22.5-37.5 hours training @ $200/hour for support team of 10-20"
+            },
+            "ongoingMonthlyRetainer": {
+              "min": 3000,
+              "max": 6000,
+              "description": "Standard support including performance monitoring, optimization, issue resolution, and monthly improvements (12-20 hours/month)"
+            },
+            "year1TotalRevenue": {
+              "min": 50000,
+              "max": 90600
+            },
+            "profitMarginPercent": 78
+          }
         }
       ]
     }

@@ -11,6 +11,7 @@ import ProblemSummaryCard from '@/components/admin/assessments/detail/ProblemSum
 import RecommendedToolsGrid from '@/components/admin/assessments/detail/RecommendedToolsGrid';
 import FinancialSummaryCards from '@/components/admin/assessments/detail/FinancialSummaryCards';
 import ImplementationRoadmap from '@/components/admin/assessments/detail/ImplementationRoadmap';
+import RevenueOpportunityCards from '@/components/admin/assessments/detail/RevenueOpportunityCards';
 
 const AdminAssessmentDetailPage = () => {
   const router = useRouter();
@@ -158,7 +159,7 @@ const AdminAssessmentDetailPage = () => {
                   <p className="text-sm font-medium text-gray-500 capitalize mb-1">
                     {key.replace(/([A-Z])/g, ' $1').trim()}
                   </p>
-                  <p className="text-2xl font-bold text-gray-900">{value}/10</p>
+                  <p className="text-2xl font-bold text-gray-900">{String(value)}/10</p>
                 </div>
               ))}
             </div>
@@ -235,6 +236,12 @@ const AdminAssessmentDetailPage = () => {
 
         {stage2 && (
           <RecommendedToolsGrid
+            recommendedSolutions={stage2.marketIntelligence?.recommendedSolutions}
+          />
+        )}
+
+        {stage2 && (
+          <RevenueOpportunityCards
             recommendedSolutions={stage2.marketIntelligence?.recommendedSolutions}
           />
         )}

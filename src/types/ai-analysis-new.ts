@@ -39,6 +39,44 @@ export interface ProblemAnalysis {
   topOpportunities: TopOpportunity[];
 }
 
+export interface ConsultantRevenueOpportunity {
+  estimatedImplementationWeeks: number;
+  discoveryAssessmentFee: {
+    min: number;
+    max: number;
+    description: string;
+    basis: string;
+  };
+  integrationFee: {
+    min: number;
+    max: number;
+    description: string;
+    basis: string;
+  };
+  customizationFee: {
+    min: number;
+    max: number;
+    description: string;
+    basis: string;
+  };
+  trainingFee: {
+    min: number;
+    max: number;
+    description: string;
+    basis: string;
+  };
+  ongoingMonthlyRetainer: {
+    min: number;
+    max: number;
+    description: string;
+  };
+  year1TotalRevenue: {
+    min: number;
+    max: number;
+  };
+  profitMarginPercent: number;
+}
+
 export interface Tool {
   name: string;
   verboseName: string;
@@ -67,6 +105,7 @@ export interface Tool {
   bestFor: string;
   integrations: string[];
   implementationComplexity: string;
+  consultantRevenue?: ConsultantRevenueOpportunity;
 }
 
 export interface RecommendedSolution {

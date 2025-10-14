@@ -35,7 +35,7 @@ export default async function handler(
           report: assessment.report ? {
             ...assessment.report,
             // Map stage1_problem_analysis to stage_1_analysis for backward compatibility
-            stage_1_analysis: assessment.report.stage1_problem_analysis,
+            stage_1_analysis: (assessment.report as any).stage1_problem_analysis,
           } : null,
         };
 

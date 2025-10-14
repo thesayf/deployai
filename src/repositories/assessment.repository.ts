@@ -256,7 +256,7 @@ export class AssessmentRepository {
     const trends = [];
     const now = new Date();
     const resultMap = new Map(
-      (data || []).map(item => [
+      (data || []).map((item: any) => [
         new Date(item.month).toISOString().slice(0, 7), // YYYY-MM format
         item.count
       ])

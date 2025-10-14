@@ -5,6 +5,7 @@ import UsageMeter from './dashboard/UsageMeter';
 import RecentAssessments from './dashboard/RecentAssessments';
 import MonthlyTrend from './dashboard/MonthlyTrend';
 import { TrialBanner } from '@/components/billing/TrialBanner';
+import { getTenantAssessmentUrl } from '@/lib/utils/url-builder';
 
 interface DashboardData {
   usage: {
@@ -158,7 +159,7 @@ const Dashboard: React.FC = () => {
               <div className="p-3 bg-gray-50 border border-gray-200 rounded-md">
               <p className="text-xs font-medium text-gray-500 mb-1">Your Assessment Link</p>
               <code className="text-sm break-all">
-                https://{tenantContext?.tenant.subdomain}.deployai.studio
+                {getTenantAssessmentUrl(tenantContext?.tenant.subdomain || '')}
               </code>
               </div>
             </div>

@@ -7,29 +7,33 @@
  * Handles local development, preview deployments, and production
  */
 export function getBaseUrl(request?: { headers: { host?: string } }): string {
-  // 1. Check for explicitly configured production URL
+  // 1. In development, prioritize request host (handles any port 3000-3004)
+  if (process.env.NODE_ENV !== 'production' && request?.headers?.host) {
+    return `http://${request.headers.host}`;
+  }
+
+  // 2. Check for explicitly configured production URL
   if (process.env.NEXT_PUBLIC_APP_URL) {
     return process.env.NEXT_PUBLIC_APP_URL;
   }
 
-  // 2. Check for Vercel URL (preview deployments)
+  // 3. Check for Vercel URL (preview deployments)
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }
 
-  // 3. Check for request host header (server-side)
+  // 4. Production with request host
   if (request?.headers?.host) {
-    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-    return `${protocol}://${request.headers.host}`;
+    return `https://${request.headers.host}`;
   }
 
-  // 4. Client-side: use window.location
+  // 5. Client-side: use window.location
   if (typeof window !== 'undefined') {
     return window.location.origin;
   }
 
-  // 5. Fallback to localhost
-  return 'http://localhost:3000';
+  // 6. Fallback to localhost
+  return process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 }
 
 /**

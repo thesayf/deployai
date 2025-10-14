@@ -98,8 +98,8 @@ function getTenantFromPath(): string | null {
   }
 
   const pathname = window.location.pathname;
-  // Extract tenant from path like /testconsultant/admin
-  const match = pathname.match(/^\/([^\/]+)\/(admin|public)/);
+  // Extract tenant from path like /testconsultant/admin or /testconsultant/assessment
+  const match = pathname.match(/^\/([^\/]+)\/(admin|assessment|public)/);
 
   if (match) {
     return match[1];
