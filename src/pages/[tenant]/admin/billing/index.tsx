@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 import { createClient } from '@/utils/supabase/client';
 import AdminLayout from '@/components/admin/layout/AdminLayout';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
@@ -9,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { Switch } from '@/components/ui/switch';
-import { Clock, CreditCard, AlertCircle } from 'lucide-react';
+import { Clock, CreditCard, AlertCircle, RefreshCw } from 'lucide-react';
 import { PricingCard } from '@/components/billing/PricingCard';
 import { BillingHistoryTable } from '@/components/billing/BillingHistoryTable';
 
@@ -88,44 +89,65 @@ const TIER_DETAILS = {
   },
 };
 
+// Fetcher for billing data
+const fetchBillingData = async (subdomain: string): Promise<BillingData> => {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from('tenants')
+    .select('stripe_customer_id, stripe_subscription_id, subscription_status, subscription_tier, trial_end_date, current_period_start, current_period_end, cancel_at_period_end, payment_method_brand, payment_method_last4, assessments_used, assessments_limit')
+    .eq('subdomain', subdomain)
+    .single();
+
+  if (error) throw error;
+  return data;
+};
+
 export default function BillingDashboard() {
   const router = useRouter();
   const { tenant } = router.query;
-  const [billingData, setBillingData] = useState<BillingData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [isYearly, setIsYearly] = useState(false);
   const [invoices, setInvoices] = useState<any[]>([]);
   const [loadingInvoices, setLoadingInvoices] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
+  // Use SWR for automatic caching and revalidation
+  const { data: billingData, error, isLoading, mutate } = useSWR<BillingData>(
+    tenant ? `billing-${tenant}` : null,
+    () => fetchBillingData(tenant as string),
+    {
+      revalidateOnFocus: true, // Refresh when user returns to tab
+      revalidateOnReconnect: true,
+      dedupingInterval: 2000,
+      refreshInterval: 0, // No polling, only manual/focus refresh
+    }
+  );
+
+  // Detect return from Stripe portal and force refresh
   useEffect(() => {
-    if (tenant) {
-      fetchBillingData();
-    }
-  }, [tenant]);
+    if (tenant && typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const returnedFromStripe = urlParams.get('stripe_return');
 
-  const fetchBillingData = async () => {
-    try {
-      const supabase = createClient();
-      const { data, error } = await supabase
-        .from('tenants')
-        .select('stripe_customer_id, stripe_subscription_id, subscription_status, subscription_tier, trial_end_date, current_period_start, current_period_end, cancel_at_period_end, payment_method_brand, payment_method_last4, assessments_used, assessments_limit')
-        .eq('subdomain', tenant)
-        .single();
+      if (returnedFromStripe === 'true') {
+        // Remove the parameter from URL
+        urlParams.delete('stripe_return');
+        const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
+        window.history.replaceState({}, '', newUrl);
 
-      if (error) throw error;
-      setBillingData(data);
-
-      // Fetch invoices if customer exists
-      if (data?.stripe_customer_id) {
-        fetchInvoices(data.stripe_customer_id);
+        // Force refresh billing data with delay to allow webhook processing
+        setTimeout(() => {
+          mutate();
+        }, 1500);
       }
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [tenant, mutate]);
+
+  // Fetch invoices when billing data changes
+  useEffect(() => {
+    if (billingData?.stripe_customer_id) {
+      fetchInvoices(billingData.stripe_customer_id);
+    }
+  }, [billingData?.stripe_customer_id]);
 
   const fetchInvoices = async (customerId: string) => {
     try {
@@ -141,6 +163,44 @@ export default function BillingDashboard() {
     }
   };
 
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await mutate();
+    setTimeout(() => setIsRefreshing(false), 500);
+  };
+
+  const handleForceSync = async () => {
+    if (!tenant) return;
+
+    setIsRefreshing(true);
+    try {
+      const response = await fetch('/api/admin/stripe/force-sync', {
+        method: 'POST',
+        credentials: 'include', // Important: send cookies for auth
+        headers: {
+          'Content-Type': 'application/json',
+          'x-tenant-subdomain': tenant as string,
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log('[FORCE SYNC] Success:', data);
+        // Refresh billing data after sync
+        await mutate();
+      } else {
+        console.error('[FORCE SYNC] Error:', data);
+        alert(`Sync failed: ${data.error}`);
+      }
+    } catch (err) {
+      console.error('[FORCE SYNC] Failed:', err);
+      alert('Failed to sync subscription data');
+    } finally {
+      setTimeout(() => setIsRefreshing(false), 500);
+    }
+  };
+
   const handleManageSubscription = async () => {
     if (!billingData?.stripe_customer_id) return;
 
@@ -150,7 +210,7 @@ export default function BillingDashboard() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           customerId: billingData.stripe_customer_id,
-          returnUrl: `${window.location.origin}/${tenant}/admin/billing`,
+          returnUrl: `${window.location.origin}/${tenant}/admin/billing?stripe_return=true`,
         }),
       });
 
@@ -168,7 +228,7 @@ export default function BillingDashboard() {
     router.push(`/${tenant}/admin/billing/plans?selected=${tier}`);
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <ProtectedRoute>
         <AdminLayout title="Billing">
@@ -187,7 +247,7 @@ export default function BillingDashboard() {
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{error || 'Failed to load billing data'}</AlertDescription>
+            <AlertDescription>{error?.message || 'Failed to load billing data'}</AlertDescription>
           </Alert>
         </AdminLayout>
       </ProtectedRoute>
@@ -213,7 +273,17 @@ export default function BillingDashboard() {
           {/* Page Header with Toggle */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">Billing & Subscription</h1>
+              <div className="flex items-center gap-3">
+                <h1 className="text-3xl font-bold tracking-tight">Billing & Subscription</h1>
+                <button
+                  onClick={handleForceSync}
+                  disabled={isRefreshing}
+                  className="p-2 border border-gray-200 bg-white hover:bg-gray-50 rounded-md transition-colors disabled:opacity-50"
+                  title="Sync from Stripe and refresh billing data"
+                >
+                  <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+                </button>
+              </div>
               <p className="text-muted-foreground mt-2">
                 Keep track of your subscription details, update your billing information, and control your account's payment
               </p>
