@@ -24,19 +24,22 @@ export const SUBSCRIPTION_TIERS = {
   starter: {
     name: 'Starter',
     price: 199,
-    assessments: 5,
+    assessments: 25,
+    overagePrice: 4,
     priceId: process.env.STRIPE_PRICE_STARTER_ID,
   },
   professional: {
     name: 'Professional',
     price: 499,
-    assessments: 20,
+    assessments: 100,
+    overagePrice: 3,
     priceId: process.env.STRIPE_PRICE_PROFESSIONAL_ID,
   },
   scale: {
     name: 'Scale',
     price: 997,
-    assessments: null, // unlimited
+    assessments: 400,
+    overagePrice: 2,
     priceId: process.env.STRIPE_PRICE_SCALE_ID,
   },
 } as const;

@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { SUBSCRIPTION_TIERS } from '@/lib/stripe';
 
 export interface Tenant {
   id: string;
@@ -149,18 +150,13 @@ class TenantService {
   }
 
   private checkAssessmentAvailability(tenant: Tenant): boolean {
-    if (tenant.subscription_status !== 'active') {
+    // Check if subscription is active or trialing
+    if (tenant.subscription_status !== 'active' && tenant.subscription_status !== 'trialing') {
       return false;
     }
 
-    if (tenant.subscription_tier === 'scale') {
-      return true;
-    }
-
-    if (tenant.assessments_limit && tenant.assessments_used >= tenant.assessments_limit) {
-      return false;
-    }
-
+    // CHANGED: Always allow assessments - overages will be billed automatically
+    // This ensures the assessment link never breaks, even if limit is exceeded
     return true;
   }
 
@@ -217,16 +213,16 @@ class TenantService {
   }
 
   private getAssessmentLimitForTier(tier?: string): number | null {
-    switch (tier) {
-      case 'starter':
-        return 5;
-      case 'professional':
-        return 20;
-      case 'scale':
-        return null;
-      default:
-        return 5;
+    // If no tier provided, default to starter
+    if (!tier) {
+      return SUBSCRIPTION_TIERS.starter.assessments;
     }
+
+    // Get tier config from SUBSCRIPTION_TIERS (single source of truth)
+    const tierConfig = SUBSCRIPTION_TIERS[tier as keyof typeof SUBSCRIPTION_TIERS];
+
+    // Return assessment limit, or default to starter if tier not found
+    return tierConfig ? tierConfig.assessments : SUBSCRIPTION_TIERS.starter.assessments;
   }
 
   async updateSubscription(

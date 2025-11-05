@@ -105,11 +105,20 @@ export async function syncStripeDataToSupabase(customerId: string, isWebhook: bo
 
     console.log(`[STRIPE SYNC] Processing subscription ${subscription.id} with price ${priceId}`);
 
-    // Step 5: Map price ID to tier and limits
+    // Step 5: Map price ID to tier and limits (from SUBSCRIPTION_TIERS - single source of truth)
     const tierMapping: Record<string, { tier: SubscriptionTier; limit: number | null }> = {
-      [process.env.STRIPE_PRICE_STARTER_ID!]: { tier: 'starter', limit: 5 },
-      [process.env.STRIPE_PRICE_PROFESSIONAL_ID!]: { tier: 'professional', limit: 20 },
-      [process.env.STRIPE_PRICE_SCALE_ID!]: { tier: 'scale', limit: null },
+      [process.env.STRIPE_PRICE_STARTER_ID!]: {
+        tier: 'starter',
+        limit: SUBSCRIPTION_TIERS.starter.assessments
+      },
+      [process.env.STRIPE_PRICE_PROFESSIONAL_ID!]: {
+        tier: 'professional',
+        limit: SUBSCRIPTION_TIERS.professional.assessments
+      },
+      [process.env.STRIPE_PRICE_SCALE_ID!]: {
+        tier: 'scale',
+        limit: SUBSCRIPTION_TIERS.scale.assessments
+      },
     };
 
     const tierInfo = tierMapping[priceId];
