@@ -225,9 +225,65 @@ export default async function handler(
       // Don't fail the request - cron will pick it up as backup
     }
 
-    // Increment tenant usage if applicable
+    // Increment tenant usage and handle overage billing if applicable
     if (tenantContext) {
-      await tenantService.incrementAssessmentUsage(tenantContext.tenant.id);
+      try {
+        // Use the new database function that tracks overages
+        const { data: usageResult, error: usageError } = await supabase
+          .rpc('increment_assessment_usage_with_overage', {
+            p_tenant_id: tenantContext.tenant.id,
+          });
+
+        if (usageError) {
+          console.error('[OVERAGE] Failed to increment usage:', usageError);
+          // Don't fail the request - log and continue
+        } else if (usageResult && usageResult.length > 0) {
+          const { success, is_overage, overage_price_cents, assessments_used, assessments_overage } = usageResult[0];
+
+          if (success) {
+            console.log('[USAGE] Assessment usage incremented:', {
+              assessments_used,
+              is_overage,
+              assessments_overage,
+            });
+
+            // If this is an overage, create Stripe invoice item
+            if (is_overage && tenantContext.tenant.stripe_customer_id) {
+              console.log('[OVERAGE] Overage detected - creating Stripe invoice item');
+
+              // Import overage service
+              const { createOverageInvoiceItem } = await import('@/services/stripe-overage');
+
+              // Create invoice item
+              const invoiceResult = await createOverageInvoiceItem({
+                tenantId: tenantContext.tenant.id,
+                stripeCustomerId: tenantContext.tenant.stripe_customer_id,
+                tier: tenantContext.tenant.subscription_tier || 'starter',
+                assessmentId: quizId,
+                assessmentNumber: assessments_used,
+                billingPeriodStart: tenantContext.tenant.current_period_start || new Date().toISOString(),
+                billingPeriodEnd: tenantContext.tenant.current_period_end || new Date().toISOString(),
+              });
+
+              if (invoiceResult.success) {
+                console.log('[OVERAGE] Stripe invoice item created:', invoiceResult.invoiceItemId);
+
+                // TODO: Send overage notification email (first overage only)
+                if (assessments_overage === 1) {
+                  console.log('[OVERAGE] First overage - should send notification email');
+                  // We'll implement email notification in next phase
+                }
+              } else {
+                console.error('[OVERAGE] Failed to create invoice item:', invoiceResult.error);
+                // Don't fail the assessment - log error and continue
+              }
+            }
+          }
+        }
+      } catch (error) {
+        console.error('[OVERAGE] Error in overage billing logic:', error);
+        // Don't fail the assessment submission
+      }
     }
 
     // Return immediately - don't wait for processing

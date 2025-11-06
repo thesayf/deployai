@@ -74,7 +74,26 @@ export default function SignupPage() {
         throw new Error(data.error || 'Signup failed');
       }
 
-      // Success - redirect to tenant login
+      // Step 2: Auto-login the user
+      if (!data.requiresLogin) {
+        const supabase = createClient();
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (signInError) {
+          console.error('Auto-login failed:', signInError);
+          // Fall back to manual login
+          router.push(`/${subdomain}/admin/login`);
+          return;
+        }
+
+        // Store subdomain for redirect logic
+        localStorage.setItem('auth_redirect_subdomain', subdomain);
+      }
+
+      // Redirect to appropriate page
       if (data.redirectUrl) {
         router.push(data.redirectUrl);
       } else {

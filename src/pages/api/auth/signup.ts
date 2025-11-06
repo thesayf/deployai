@@ -128,13 +128,34 @@ export default async function handler(
 
     console.log('[SIGNUP] Signup complete for:', email);
 
+    // Step 5: Generate session for auto-login
+    const { data: sessionData, error: sessionError } = await supabaseAdmin.auth.admin.generateLink({
+      type: 'magiclink',
+      email: email,
+    });
+
+    if (sessionError || !sessionData) {
+      console.error('[SIGNUP] Session generation error:', sessionError);
+      // Fall back to login redirect if session generation fails
+      return res.status(200).json({
+        success: true,
+        message: 'Account created successfully. Redirecting to login...',
+        subdomain: subdomain,
+        userId: authData.user.id,
+        tenantId: tenantData.id,
+        redirectUrl: `/${subdomain}/admin/login`,
+        requiresLogin: true
+      });
+    }
+
     return res.status(200).json({
       success: true,
-      message: 'Account created successfully. Redirecting to login...',
+      message: 'Account created successfully.',
       subdomain: subdomain,
       userId: authData.user.id,
       tenantId: tenantData.id,
-      redirectUrl: `/${subdomain}/admin/login`
+      redirectUrl: `/${subdomain}/admin/billing/select-plan`,
+      requiresLogin: false
     });
 
   } catch (error: any) {
