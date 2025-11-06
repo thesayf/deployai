@@ -28,6 +28,8 @@ interface BillingData {
   payment_method_exp_year: number | null;
   assessments_used: number;
   assessments_limit: number | null;
+  assessments_overage: number;
+  overage_charges_current_period: number;
 }
 
 const TIER_DETAILS = {
@@ -36,6 +38,7 @@ const TIER_DETAILS = {
     monthly: 199,
     yearly: 1910,
     assessments: 5,
+    overagePrice: 4,
     badgeText: 'FREE',
     badgeColor: 'bg-orange-500 text-white',
     badgeDotColor: 'bg-orange-500',
@@ -54,6 +57,7 @@ const TIER_DETAILS = {
     monthly: 499,
     yearly: 4790,
     assessments: 20,
+    overagePrice: 3,
     badgeText: 'PRO',
     badgeColor: 'bg-orange-500 text-white',
     badgeDotColor: 'bg-orange-500',
@@ -73,6 +77,7 @@ const TIER_DETAILS = {
     monthly: 997,
     yearly: 9570,
     assessments: null,
+    overagePrice: 2,
     badgeText: 'ADVANCE',
     badgeColor: 'bg-green-500 text-white',
     badgeDotColor: 'bg-green-500',
@@ -110,7 +115,7 @@ export default function BillingSettings() {
       const supabase = createClient();
       const { data, error } = await supabase
         .from('tenants')
-        .select('stripe_customer_id, stripe_subscription_id, subscription_status, subscription_tier, trial_end_date, current_period_start, current_period_end, cancel_at_period_end, payment_method_brand, payment_method_last4, payment_method_exp_month, payment_method_exp_year, assessments_used, assessments_limit')
+        .select('stripe_customer_id, stripe_subscription_id, subscription_status, subscription_tier, trial_end_date, current_period_start, current_period_end, cancel_at_period_end, payment_method_brand, payment_method_last4, payment_method_exp_month, payment_method_exp_year, assessments_used, assessments_limit, assessments_overage, overage_charges_current_period')
         .eq('subdomain', tenant)
         .single();
 
@@ -285,6 +290,9 @@ export default function BillingSettings() {
                   assessmentsUsed={billingData.assessments_used}
                   assessmentsLimit={billingData.assessments_limit}
                   currentPeriodEnd={billingData.current_period_end}
+                  assessmentsOverage={billingData.assessments_overage || 0}
+                  overageChargesCurrentPeriod={billingData.overage_charges_current_period || 0}
+                  overagePricePerAssessment={tierDetails.overagePrice}
                 />
               ) : (
                 <Card>

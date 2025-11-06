@@ -19,6 +19,9 @@ interface CurrentPlanCardProps {
   assessmentsUsed: number;
   assessmentsLimit: number | null;
   currentPeriodEnd: string | null;
+  assessmentsOverage?: number;
+  overageChargesCurrentPeriod?: number;
+  overagePricePerAssessment?: number;
 }
 
 const TIER_COLORS = {
@@ -49,6 +52,9 @@ export function CurrentPlanCard({
   assessmentsUsed,
   assessmentsLimit,
   currentPeriodEnd,
+  assessmentsOverage = 0,
+  overageChargesCurrentPeriod = 0,
+  overagePricePerAssessment = 0,
 }: CurrentPlanCardProps) {
   const tierColor = TIER_COLORS[planTier as keyof typeof TIER_COLORS] || TIER_COLORS.starter;
   const statusInfo = STATUS_VARIANTS[status as keyof typeof STATUS_VARIANTS] || STATUS_VARIANTS.none;
@@ -92,6 +98,11 @@ export function CurrentPlanCard({
               <span className="text-sm text-gray-600">Usage</span>
               <span className="text-sm text-gray-500">
                 {assessmentsUsed} of {assessmentsLimit === null ? '∞' : assessmentsLimit}
+                {assessmentsOverage > 0 && (
+                  <span className="ml-1 text-orange-600 font-medium">
+                    (+{assessmentsOverage} overage)
+                  </span>
+                )}
               </span>
             </div>
             <Progress value={usagePercentage} className="h-2" />
@@ -101,6 +112,32 @@ export function CurrentPlanCard({
               </p>
             )}
           </div>
+
+          {/* Overage Warning */}
+          {assessmentsOverage > 0 && (
+            <Alert className="border-orange-200 bg-orange-50">
+              <AlertCircle className="h-4 w-4 text-orange-600" />
+              <AlertDescription className="text-sm">
+                <div className="space-y-1">
+                  <p className="font-semibold text-orange-900">
+                    Overage Billing Active
+                  </p>
+                  <p className="text-orange-700">
+                    You've used {assessmentsOverage} extra assessment{assessmentsOverage !== 1 ? 's' : ''} this month
+                    at ${overagePricePerAssessment.toFixed(2)} each.
+                  </p>
+                  <p className="text-orange-900 font-medium">
+                    Current overage charges: ${overageChargesCurrentPeriod.toFixed(2)}
+                  </p>
+                  {assessmentsLimit && (
+                    <p className="text-sm text-orange-600 mt-2">
+                      💡 Tip: Upgrade to a higher tier to reduce your per-assessment cost
+                    </p>
+                  )}
+                </div>
+              </AlertDescription>
+            </Alert>
+          )}
         </div>
       </CardContent>
     </Card>
