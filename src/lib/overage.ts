@@ -1,4 +1,4 @@
-import { SUBSCRIPTION_TIERS } from '@/lib/stripe';
+import { SUBSCRIPTION_TIERS } from '@/lib/stripe-config';
 
 export interface OverageResult {
   isOverage: boolean;

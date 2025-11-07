@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase';
-import { SUBSCRIPTION_TIERS } from '@/lib/stripe';
+import { SUBSCRIPTION_TIERS } from '@/lib/stripe-config';
 
 export interface Tenant {
   id: string;
