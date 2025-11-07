@@ -41,6 +41,16 @@ export default async function handler(
       return res.status(409).json({ error: 'Subdomain already taken' });
     }
 
+    // Get the authenticated user's ID by email (using service role)
+    const { data: users, error: userError } = await supabase.auth.admin.listUsers();
+
+    const user = users?.users.find(u => u.email === email);
+
+    if (!user) {
+      console.error('Could not find user with email:', email);
+      return res.status(401).json({ error: 'User not found' });
+    }
+
     // Create tenant
     const { data: tenant, error: tenantError } = await supabase
       .from('tenants')
@@ -48,7 +58,8 @@ export default async function handler(
         subdomain,
         company_name: companyName,
         email,
-        subscription_status: null, // No subscription yet - will be set after trial
+        owner_id: user.id, // Link tenant to OAuth user
+        subscription_status: 'trialing', // Start with trial status
       })
       .select()
       .single();
