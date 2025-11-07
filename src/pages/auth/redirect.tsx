@@ -12,20 +12,7 @@ const AuthRedirect = () => {
         // Get the stored subdomain from localStorage
         const storedSubdomain = localStorage.getItem('auth_redirect_subdomain');
 
-        if (!storedSubdomain) {
-          // Fallback: try to get subdomain from current hostname
-          const hostname = window.location.hostname;
-          const subdomain = hostname.split('.')[0];
-
-          if (subdomain && subdomain !== 'localhost' && subdomain !== 'www') {
-            router.push(`/${subdomain}/admin`);
-          } else {
-            router.push('/');
-          }
-          return;
-        }
-
-        // Check if user has completed trial setup
+        // Check if user is authenticated
         const supabase = createClient();
         const { data: { user } } = await supabase.auth.getUser();
 
@@ -35,17 +22,41 @@ const AuthRedirect = () => {
           return;
         }
 
+        // Check if user has a tenant
+        const { data: tenantMember } = await supabase
+          .from('tenant_members')
+          .select('tenant_id, tenants(subdomain)')
+          .eq('user_email', user.email)
+          .single();
+
+        if (!tenantMember) {
+          // New OAuth user without a tenant - redirect to complete signup
+          console.log('[OAuth] New user without tenant - redirecting to complete signup');
+          localStorage.removeItem('auth_redirect_subdomain');
+          router.push('/auth/complete-signup');
+          return;
+        }
+
+        // User has a tenant - use that subdomain
+        const userTenant = (tenantMember as any).tenants;
+        const subdomain = storedSubdomain || userTenant.subdomain;
+
+        if (!subdomain) {
+          router.push('/');
+          return;
+        }
+
         // Get tenant billing status
         const { data: tenant, error } = await supabase
           .from('tenants')
           .select('subdomain, subscription_status, stripe_customer_id')
-          .eq('subdomain', storedSubdomain)
+          .eq('subdomain', subdomain)
           .single();
 
         if (error || !tenant) {
           console.error('Failed to fetch tenant:', error);
           localStorage.removeItem('auth_redirect_subdomain');
-          router.push(`/${storedSubdomain}/admin`);
+          router.push(`/${subdomain}/admin`);
           return;
         }
 
@@ -62,7 +73,7 @@ const AuthRedirect = () => {
           console.log('No active subscription or payment method - redirecting to plan selection');
           // Clear localStorage AFTER determining redirect path
           localStorage.removeItem('auth_redirect_subdomain');
-          router.push(`/${storedSubdomain}/admin/billing/select-plan`);
+          router.push(`/${subdomain}/admin/billing/select-plan`);
           return;
         }
 
@@ -70,7 +81,7 @@ const AuthRedirect = () => {
         console.log('Active subscription detected - redirecting to dashboard');
         // Clear localStorage AFTER determining redirect path
         localStorage.removeItem('auth_redirect_subdomain');
-        router.push(`/${storedSubdomain}/admin`);
+        router.push(`/${subdomain}/admin`);
 
       } catch (error) {
         console.error('Error during redirect:', error);
