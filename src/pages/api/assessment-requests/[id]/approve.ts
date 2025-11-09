@@ -74,20 +74,30 @@ export default async function handler(
     console.log(`[ASSESSMENT REQUEST] Approved request ${id} for ${requestRecord.user_email}`);
     console.log(`[ASSESSMENT REQUEST] Assessment link: ${assessmentLink}`);
 
-    // TODO: Send approval email to user with assessment link
-    // This would integrate with your existing email service
-    // await sendApprovalEmail({
-    //   email: requestRecord.user_email,
-    //   firstName: requestRecord.user_first_name,
-    //   lastName: requestRecord.user_last_name,
-    //   company: requestRecord.user_company,
-    //   assessmentLink,
-    //   tenantName: tenantContext.tenant.company_name
-    // });
+    // Send approval email to candidate with assessment link (async, don't wait)
+    const { sendApprovalEmail } = await import('@/lib/email/email-service');
+
+    sendApprovalEmail({
+      candidateFirstName: requestRecord.user_first_name,
+      candidateLastName: requestRecord.user_last_name,
+      candidateEmail: requestRecord.user_email,
+      companyName: tenantContext.tenant.company_name,
+      assessmentLink,
+      approvedAt: new Date().toISOString(),
+      expiresInDays: 30,
+    }).then((result) => {
+      if (result.success) {
+        console.log('[ASSESSMENT REQUEST] Approval email sent successfully');
+      } else {
+        console.error('[ASSESSMENT REQUEST] Failed to send approval email:', result.error);
+      }
+    }).catch(err => {
+      console.error('[ASSESSMENT REQUEST] Approval email exception:', err);
+    });
 
     res.status(200).json({
       success: true,
-      message: 'Assessment request approved',
+      message: 'Assessment request approved and email sent',
       assessmentLink,
       requestId: id
     });

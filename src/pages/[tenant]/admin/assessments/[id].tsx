@@ -6,7 +6,7 @@ import AdminLayout from '@/components/admin/layout/AdminLayout';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { getTenantFromRequest } from '@/utils/tenant-helpers';
 import { useTenant } from '@/contexts/TenantContext';
-import { ArrowLeft, ExternalLink, Clock, Target, TrendingUp } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Clock, Target, TrendingUp, Mail, X } from 'lucide-react';
 import ProblemSummaryCard from '@/components/admin/assessments/detail/ProblemSummaryCard';
 import RecommendedToolsGrid from '@/components/admin/assessments/detail/RecommendedToolsGrid';
 import FinancialSummaryCards from '@/components/admin/assessments/detail/FinancialSummaryCards';
@@ -21,6 +21,14 @@ const AdminAssessmentDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isApproving, setIsApproving] = useState(false);
+
+  // Send report modal state
+  const [showSendModal, setShowSendModal] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [sendMode, setSendMode] = useState<'original' | 'different'>('original');
+  const [newEmail, setNewEmail] = useState('');
+  const [newFirstName, setNewFirstName] = useState('');
+  const [newLastName, setNewLastName] = useState('');
 
   useEffect(() => {
     if (id && typeof id === 'string' && tenantContext) {
@@ -64,6 +72,63 @@ const AdminAssessmentDetailPage = () => {
       alert(`Failed to approve: ${err.message}`);
     } finally {
       setIsApproving(false);
+    }
+  };
+
+  const handleSendReport = async () => {
+    if (!assessment?.report?.id || !tenantContext) return;
+
+    setIsSending(true);
+
+    try {
+      const payload: any = {
+        reportId: assessment.report.id,
+      };
+
+      // If sending to different email, include new details
+      if (sendMode === 'different') {
+        if (!newEmail || !newEmail.includes('@')) {
+          alert('Please enter a valid email address');
+          setIsSending(false);
+          return;
+        }
+        payload.userEmail = newEmail;
+        payload.firstName = newFirstName || 'there';
+        payload.lastName = newLastName || '';
+      }
+
+      const response = await fetch('/api/reports/send-report-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-tenant-subdomain': tenantContext.tenant.subdomain,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send report');
+      }
+
+      const recipientEmail = sendMode === 'different' ? newEmail : assessment.user_email;
+      alert(`Report sent successfully to ${recipientEmail}!`);
+
+      // Close modal and reset
+      setShowSendModal(false);
+      setSendMode('original');
+      setNewEmail('');
+      setNewFirstName('');
+      setNewLastName('');
+
+      // Refresh assessment data to update email_sent_at
+      await fetchAssessment(id as string);
+    } catch (err: any) {
+      console.error('Error sending report:', err);
+      alert(`Failed to send report: ${err.message}`);
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -175,14 +240,23 @@ const AdminAssessmentDetailPage = () => {
             </div>
           </div>
           {assessment.report?.status === 'completed' && assessment.report?.access_token && (
-            <Link
-              href={`/report/view/${assessment.report.access_token}`}
-              target="_blank"
-              className="inline-flex items-center gap-2 bg-gray-900 text-white font-medium py-2 px-4 rounded-md hover:bg-gray-800 transition-colors"
-            >
-              <ExternalLink className="h-5 w-5" />
-              View Report
-            </Link>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setShowSendModal(true)}
+                className="inline-flex items-center gap-2 bg-blue-600 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+              >
+                <Mail className="h-5 w-5" />
+                Send Report
+              </button>
+              <Link
+                href={`/report/view/${assessment.report.access_token}`}
+                target="_blank"
+                className="inline-flex items-center gap-2 bg-gray-900 text-white font-medium py-2 px-4 rounded-md hover:bg-gray-800 transition-colors"
+              >
+                <ExternalLink className="h-5 w-5" />
+                View Report
+              </Link>
+            </div>
           )}
         </div>
 
@@ -368,6 +442,136 @@ const AdminAssessmentDetailPage = () => {
           </div>
         </details>
       </div>
+
+      {/* Send Report Modal */}
+      {showSendModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold text-gray-900">Send Report</h2>
+              <button
+                onClick={() => {
+                  setShowSendModal(false);
+                  setSendMode('original');
+                  setNewEmail('');
+                  setNewFirstName('');
+                  setNewLastName('');
+                }}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Mode Selection */}
+            <div className="space-y-3 mb-6">
+              <label className="flex items-start gap-3 p-3 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <input
+                  type="radio"
+                  name="sendMode"
+                  value="original"
+                  checked={sendMode === 'original'}
+                  onChange={(e) => setSendMode(e.target.value as 'original' | 'different')}
+                  className="mt-1"
+                />
+                <div className="flex-1">
+                  <div className="font-medium text-gray-900">Resend to Original Email</div>
+                  <div className="text-sm text-gray-600 mt-1">
+                    Send to: <strong>{assessment.user_email}</strong>
+                  </div>
+                </div>
+              </label>
+
+              <label className="flex items-start gap-3 p-3 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <input
+                  type="radio"
+                  name="sendMode"
+                  value="different"
+                  checked={sendMode === 'different'}
+                  onChange={(e) => setSendMode(e.target.value as 'original' | 'different')}
+                  className="mt-1"
+                />
+                <div className="flex-1">
+                  <div className="font-medium text-gray-900">Send to Different Email</div>
+                  <div className="text-sm text-gray-600 mt-1">
+                    Enter a new recipient's details
+                  </div>
+                </div>
+              </label>
+            </div>
+
+            {/* Different Email Form */}
+            {sendMode === 'different' && (
+              <div className="space-y-3 mb-6 p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    placeholder="recipient@company.com"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      value={newFirstName}
+                      onChange={(e) => setNewFirstName(e.target.value)}
+                      placeholder="John"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      value={newLastName}
+                      onChange={(e) => setNewLastName(e.target.value)}
+                      placeholder="Doe"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  setShowSendModal(false);
+                  setSendMode('original');
+                  setNewEmail('');
+                  setNewFirstName('');
+                  setNewLastName('');
+                }}
+                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 transition-colors"
+                disabled={isSending}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSendReport}
+                disabled={isSending}
+                className="flex-1 px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed"
+              >
+                {isSending ? 'Sending...' : 'Send Report'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </AdminLayout>
     </ProtectedRoute>
   );

@@ -347,13 +347,15 @@ export default async function handler(
     // Send report ready email (only if not already sent)
     if (!report.email_sent_at || force) {
       console.log('[PIPELINE] Sending report ready email...');
-      
+
       const emailResult = await sendReportReadyEmail({
         reportId,
         userEmail: quizData.user_email,
         firstName: quizData.user_first_name || 'there',
         lastName: quizData.user_last_name || '',
         company: quizData.user_company,
+        industry: quizData.industry,
+        companySize: quizData.company_size,
         accessToken: report.access_token,
         req
       });

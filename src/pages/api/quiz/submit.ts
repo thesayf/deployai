@@ -247,18 +247,88 @@ export default async function handler(
               assessments_overage,
             });
 
+            // Calculate usage percentage for threshold emails
+            const assessmentsLimit = tenantContext.tenant.assessments_limit || 0;
+            const percentageUsed = assessmentsLimit > 0
+              ? Math.round((assessments_used / assessmentsLimit) * 100)
+              : 0;
+
+            // Send usage warning emails at key thresholds (async, don't wait)
+            if (assessmentsLimit > 0 && tenantContext.tenant.contact_email) {
+              const { SUBSCRIPTION_TIERS } = await import('@/lib/stripe-config');
+              const currentTier = tenantContext.tenant.subscription_tier || 'starter';
+              const overagePrice = SUBSCRIPTION_TIERS[currentTier as keyof typeof SUBSCRIPTION_TIERS]?.overagePrice || 4;
+
+              // Import email service functions
+              const {
+                sendUsageWarningEmail,
+                sendLimitReachedEmail,
+                sendFirstOverageEmail,
+                sendAssessmentCompletedNotification,
+              } = await import('@/lib/email/email-service');
+
+              // 80% threshold
+              if (assessments_used === Math.ceil(assessmentsLimit * 0.8)) {
+                console.log('[USAGE] 80% threshold reached - sending warning email');
+                sendUsageWarningEmail({
+                  tenantId: tenantContext.tenant.id,
+                  companyName: tenantContext.tenant.company_name,
+                  ownerEmail: tenantContext.tenant.contact_email,
+                  assessmentsUsed: assessments_used,
+                  assessmentsLimit: assessmentsLimit,
+                  percentageUsed: 80,
+                  currentTier: currentTier,
+                  overagePrice: overagePrice,
+                  subdomain: tenantContext.tenant.subdomain,
+                }).catch(err => console.error('[USAGE] Failed to send 80% warning:', err));
+              }
+
+              // 90% threshold
+              if (assessments_used === Math.ceil(assessmentsLimit * 0.9)) {
+                console.log('[USAGE] 90% threshold reached - sending warning email');
+                sendUsageWarningEmail({
+                  tenantId: tenantContext.tenant.id,
+                  companyName: tenantContext.tenant.company_name,
+                  ownerEmail: tenantContext.tenant.contact_email,
+                  assessmentsUsed: assessments_used,
+                  assessmentsLimit: assessmentsLimit,
+                  percentageUsed: 90,
+                  currentTier: currentTier,
+                  overagePrice: overagePrice,
+                  subdomain: tenantContext.tenant.subdomain,
+                }).catch(err => console.error('[USAGE] Failed to send 90% warning:', err));
+              }
+
+              // 100% threshold (limit reached)
+              if (assessments_used === assessmentsLimit) {
+                console.log('[USAGE] 100% threshold reached - sending limit reached email');
+                sendLimitReachedEmail({
+                  tenantId: tenantContext.tenant.id,
+                  companyName: tenantContext.tenant.company_name,
+                  ownerEmail: tenantContext.tenant.contact_email,
+                  assessmentsLimit: assessmentsLimit,
+                  currentTier: currentTier,
+                  overagePrice: overagePrice,
+                  subdomain: tenantContext.tenant.subdomain,
+                }).catch(err => console.error('[USAGE] Failed to send limit reached:', err));
+              }
+            }
+
             // If this is an overage, create Stripe invoice item
             if (is_overage && tenantContext.tenant.stripe_customer_id) {
               console.log('[OVERAGE] Overage detected - creating Stripe invoice item');
 
               // Import overage service
               const { createOverageInvoiceItem } = await import('@/services/stripe-overage');
+              const { SUBSCRIPTION_TIERS } = await import('@/lib/stripe-config');
+              const currentTier = tenantContext.tenant.subscription_tier || 'starter';
+              const overagePrice = SUBSCRIPTION_TIERS[currentTier as keyof typeof SUBSCRIPTION_TIERS]?.overagePrice || 4;
 
               // Create invoice item
               const invoiceResult = await createOverageInvoiceItem({
                 tenantId: tenantContext.tenant.id,
                 stripeCustomerId: tenantContext.tenant.stripe_customer_id,
-                tier: tenantContext.tenant.subscription_tier || 'starter',
+                tier: currentTier,
                 assessmentId: quizId,
                 assessmentNumber: assessments_used,
                 billingPeriodStart: tenantContext.tenant.current_period_start || new Date().toISOString(),
@@ -268,10 +338,23 @@ export default async function handler(
               if (invoiceResult.success) {
                 console.log('[OVERAGE] Stripe invoice item created:', invoiceResult.invoiceItemId);
 
-                // TODO: Send overage notification email (first overage only)
-                if (assessments_overage === 1) {
-                  console.log('[OVERAGE] First overage - should send notification email');
-                  // We'll implement email notification in next phase
+                // Send first overage notification email
+                if (assessments_overage === 1 && tenantContext.tenant.contact_email) {
+                  console.log('[OVERAGE] First overage - sending notification email');
+                  const { sendFirstOverageEmail } = await import('@/lib/email/email-service');
+
+                  sendFirstOverageEmail({
+                    tenantId: tenantContext.tenant.id,
+                    companyName: tenantContext.tenant.company_name,
+                    ownerEmail: tenantContext.tenant.contact_email,
+                    assessmentsLimit: tenantContext.tenant.assessments_limit || 0,
+                    assessmentsUsed: assessments_used,
+                    overageCount: assessments_overage,
+                    overagePrice: overagePrice,
+                    currentOverageCharge: assessments_overage * overagePrice,
+                    currentTier: currentTier,
+                    subdomain: tenantContext.tenant.subdomain,
+                  }).catch(err => console.error('[OVERAGE] Failed to send first overage email:', err));
                 }
               } else {
                 console.error('[OVERAGE] Failed to create invoice item:', invoiceResult.error);
@@ -282,6 +365,40 @@ export default async function handler(
         }
       } catch (error) {
         console.error('[OVERAGE] Error in overage billing logic:', error);
+        // Don't fail the assessment submission
+      }
+    }
+
+    // Send admin notification email (async, don't wait)
+    if (tenantContext && tenantContext.tenant.contact_email) {
+      try {
+        const { sendAssessmentCompletedNotification } = await import('@/lib/email/email-service');
+        const { data: usageData } = await supabase
+          .from('tenants')
+          .select('assessments_used, assessments_overage')
+          .eq('id', tenantContext.tenant.id)
+          .single();
+
+        sendAssessmentCompletedNotification({
+          tenantId: tenantContext.tenant.id,
+          adminEmail: tenantContext.tenant.contact_email,
+          companyName: tenantContext.tenant.company_name,
+          candidateFirstName: quizData.first_name,
+          candidateLastName: quizData.last_name,
+          candidateEmail: quizData.email,
+          candidateCompany: quizData.company,
+          industry: quizData.industry,
+          companySize: quizData.company_size,
+          completedAt: new Date().toISOString(),
+          assessmentId: quizResponse.id,
+          reportId: report.id,
+          subdomain: tenantContext.tenant.subdomain,
+          assessmentsUsed: usageData?.assessments_used || 0,
+          assessmentsLimit: tenantContext.tenant.assessments_limit || 0,
+          currentTier: tenantContext.tenant.subscription_tier || 'starter',
+        }).catch(err => console.error('[ADMIN-NOTIFICATION] Failed to send assessment completed email:', err));
+      } catch (error) {
+        console.error('[ADMIN-NOTIFICATION] Error sending admin notification:', error);
         // Don't fail the assessment submission
       }
     }

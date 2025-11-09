@@ -88,12 +88,34 @@ export default async function handler(
 
     console.log(`[ASSESSMENT REQUEST] Created request ${requestRecord.id} for ${email}`);
 
-    // TODO: Send notification email to admin
-    // This would integrate with your existing email service
-    // await sendAdminNotification(tenantContext, requestRecord);
+    // Send confirmation email to candidate (async, don't wait)
+    const {
+      sendRequestConfirmationEmail,
+      sendAdminNotificationEmail,
+    } = await import('@/lib/email/email-service');
 
-    // TODO: Send confirmation email to user
-    // await sendUserConfirmation(requestRecord);
+    sendRequestConfirmationEmail({
+      candidateFirstName: firstName,
+      candidateLastName: lastName,
+      candidateEmail: email,
+      companyName: tenantContext.tenant.company_name,
+      requestedAt: requestRecord.created_at,
+    }).catch(err => console.error('[ASSESSMENT REQUEST] Failed to send candidate confirmation:', err));
+
+    // Send notification email to tenant admin (async, don't wait)
+    if (tenantContext.tenant.contact_email) {
+      sendAdminNotificationEmail({
+        adminEmail: tenantContext.tenant.contact_email,
+        companyName: tenantContext.tenant.company_name,
+        candidateFirstName: firstName,
+        candidateLastName: lastName,
+        candidateEmail: email,
+        candidateCompany: company,
+        requestId: requestRecord.id,
+        requestedAt: requestRecord.created_at,
+        subdomain: tenantContext.tenant.subdomain,
+      }).catch(err => console.error('[ASSESSMENT REQUEST] Failed to send admin notification:', err));
+    }
 
     res.status(200).json({
       success: true,

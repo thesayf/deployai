@@ -173,28 +173,252 @@ async function processWebhookEvent(event: Stripe.Event) {
 }
 
 /**
- * Handle event-specific logic
+ * Handle event-specific logic including email notifications
  */
 async function handleSpecificEvent(event: Stripe.Event, customerId: string) {
-  switch (event.type) {
-    case 'customer.subscription.trial_will_end':
-      console.log(`[WEBHOOK] Trial ending soon for customer: ${customerId}`);
-      // TODO: Send email notification to user
-      break;
+  // Get tenant data for email notifications
+  const supabase = await createClient();
+  const { data: tenant, error: tenantError } = await supabase
+    .from('tenants')
+    .select('id, company_name, contact_email, subdomain, tier')
+    .eq('stripe_customer_id', customerId)
+    .single();
 
-    case 'invoice.payment_failed':
-      console.log(`[WEBHOOK] Payment failed for customer: ${customerId}`);
-      // TODO: Send payment failure notification
+  if (tenantError || !tenant) {
+    console.error(`[WEBHOOK] Failed to fetch tenant for customer ${customerId}:`, tenantError);
+    return;
+  }
+
+  // Import email functions dynamically
+  const {
+    sendTrialEndingEmail,
+    sendPaymentFailedEmail,
+    sendPaymentSucceededEmail,
+    sendSubscriptionActivatedEmail,
+    sendSubscriptionUpdatedEmail,
+    sendSubscriptionCanceledEmail,
+  } = await import('@/lib/email/email-service');
+
+  switch (event.type) {
+    case 'customer.subscription.trial_will_end': {
+      console.log(`[WEBHOOK] Trial ending soon for customer: ${customerId}`);
+      const subscription = event.data.object as Stripe.Subscription;
+
+      if (!subscription.trial_end) {
+        console.error('[WEBHOOK] No trial_end found in subscription');
+        break;
+      }
+
+      const trialEndsAt = new Date(subscription.trial_end * 1000).toISOString();
+      const daysRemaining = Math.ceil((subscription.trial_end * 1000 - Date.now()) / (1000 * 60 * 60 * 24));
+
+      // Get assessments count
+      const { count: assessmentsUsed } = await supabase
+        .from('quiz_responses')
+        .select('*', { count: 'exact', head: true })
+        .eq('tenant_id', tenant.id)
+        .not('completed_at', 'is', null);
+
+      sendTrialEndingEmail({
+        tenantId: tenant.id,
+        companyName: tenant.company_name,
+        ownerEmail: tenant.contact_email,
+        trialEndsAt,
+        daysRemaining: Math.max(daysRemaining, 0),
+        assessmentsUsed: assessmentsUsed || 0,
+        currentTier: tenant.tier,
+        subdomain: tenant.subdomain,
+      }).catch(err => console.error('[WEBHOOK] Failed to send trial ending email:', err));
       break;
+    }
+
+    case 'invoice.payment_failed': {
+      console.log(`[WEBHOOK] Payment failed for customer: ${customerId}`);
+      const invoice = event.data.object as Stripe.Invoice;
+
+      const gracePeriodDays = 7; // Standard grace period
+      const retryDate = invoice.next_payment_attempt
+        ? new Date(invoice.next_payment_attempt * 1000).toISOString()
+        : undefined;
+
+      sendPaymentFailedEmail({
+        tenantId: tenant.id,
+        companyName: tenant.company_name,
+        ownerEmail: tenant.contact_email,
+        amountDue: invoice.amount_due,
+        currency: invoice.currency,
+        failedAt: new Date(invoice.status_transitions?.finalized_at ? invoice.status_transitions.finalized_at * 1000 : Date.now()).toISOString(),
+        retryDate,
+        gracePeriodDays,
+        currentTier: tenant.tier,
+        subdomain: tenant.subdomain,
+      }).catch(err => console.error('[WEBHOOK] Failed to send payment failed email:', err));
+      break;
+    }
+
+    case 'invoice.payment_succeeded': {
+      console.log(`[WEBHOOK] Payment succeeded for customer: ${customerId}`);
+      const invoice = event.data.object as Stripe.Invoice;
+
+      // Skip if draft or void
+      if (invoice.status !== 'paid') {
+        break;
+      }
+
+      // Get subscription to determine assessments included
+      const subscription = await stripe.subscriptions.retrieve(invoice.subscription as string);
+      const assessmentsIncluded = parseInt(subscription.metadata?.assessments_limit || '0');
+
+      // Get current assessments used
+      const { count: assessmentsUsed } = await supabase
+        .from('quiz_responses')
+        .select('*', { count: 'exact', head: true })
+        .eq('tenant_id', tenant.id)
+        .not('completed_at', 'is', null);
+
+      // Calculate overage charges (if any line items are for overages)
+      let overageCharges = 0;
+      if (invoice.lines?.data) {
+        const overageLines = invoice.lines.data.filter(line =>
+          line.description?.toLowerCase().includes('overage') ||
+          line.metadata?.type === 'overage'
+        );
+        overageCharges = overageLines.reduce((sum, line) => sum + (line.amount || 0), 0);
+      }
+
+      const nextBillingDate = subscription.current_period_end
+        ? new Date(subscription.current_period_end * 1000).toISOString()
+        : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+
+      sendPaymentSucceededEmail({
+        tenantId: tenant.id,
+        companyName: tenant.company_name,
+        ownerEmail: tenant.contact_email,
+        amountPaid: invoice.amount_paid,
+        currency: invoice.currency,
+        paidAt: new Date(invoice.status_transitions?.paid_at ? invoice.status_transitions.paid_at * 1000 : Date.now()).toISOString(),
+        currentTier: tenant.tier,
+        nextBillingDate,
+        assessmentsIncluded,
+        assessmentsUsed: assessmentsUsed || 0,
+        overageCharges: overageCharges > 0 ? overageCharges : undefined,
+        invoiceUrl: invoice.hosted_invoice_url || undefined,
+        subdomain: tenant.subdomain,
+      }).catch(err => console.error('[WEBHOOK] Failed to send payment succeeded email:', err));
+      break;
+    }
+
+    case 'customer.subscription.created': {
+      console.log(`[WEBHOOK] Subscription created for customer: ${customerId}`);
+      const subscription = event.data.object as Stripe.Subscription;
+
+      // Only send email if subscription is active (not in trial)
+      if (subscription.status !== 'active' || subscription.trial_end) {
+        break;
+      }
+
+      const planName = subscription.items.data[0]?.price.nickname || tenant.tier;
+      const planPrice = subscription.items.data[0]?.price.unit_amount || 0;
+      const currency = subscription.items.data[0]?.price.currency || 'usd';
+      const assessmentsIncluded = parseInt(subscription.metadata?.assessments_limit || '0');
+      const overagePrice = parseInt(subscription.metadata?.overage_price || '0');
+      const billingCycle = subscription.items.data[0]?.price.recurring?.interval || 'month';
+      const nextBillingDate = new Date(subscription.current_period_end * 1000).toISOString();
+
+      sendSubscriptionActivatedEmail({
+        tenantId: tenant.id,
+        companyName: tenant.company_name,
+        ownerEmail: tenant.contact_email,
+        planName,
+        planPrice,
+        currency,
+        assessmentsIncluded,
+        overagePrice,
+        billingCycle,
+        nextBillingDate,
+        activatedAt: new Date(subscription.created * 1000).toISOString(),
+        subdomain: tenant.subdomain,
+      }).catch(err => console.error('[WEBHOOK] Failed to send subscription activated email:', err));
+      break;
+    }
+
+    case 'customer.subscription.updated': {
+      console.log(`[WEBHOOK] Subscription updated for customer: ${customerId}`);
+      const subscription = event.data.object as Stripe.Subscription;
+      const previousAttributes = (event.data as any).previous_attributes;
+
+      // Only send email if the plan actually changed (not just status updates)
+      if (!previousAttributes?.items?.data || previousAttributes.items.data.length === 0) {
+        break;
+      }
+
+      const oldPlan = previousAttributes.items.data[0];
+      const newPlan = subscription.items.data[0];
+
+      const oldPlanName = oldPlan.price.nickname || 'Previous Plan';
+      const newPlanName = newPlan.price.nickname || tenant.tier;
+      const newPlanPrice = newPlan.price.unit_amount || 0;
+      const currency = newPlan.price.currency || 'usd';
+      const assessmentsIncluded = parseInt(subscription.metadata?.assessments_limit || '0');
+      const overagePrice = parseInt(subscription.metadata?.overage_price || '0');
+      const nextBillingDate = new Date(subscription.current_period_end * 1000).toISOString();
+
+      // Determine if upgrade or downgrade
+      const isUpgrade = newPlanPrice > (oldPlan.price.unit_amount || 0);
+
+      sendSubscriptionUpdatedEmail({
+        tenantId: tenant.id,
+        companyName: tenant.company_name,
+        ownerEmail: tenant.contact_email,
+        oldPlanName,
+        newPlanName,
+        newPlanPrice,
+        currency,
+        assessmentsIncluded,
+        overagePrice,
+        effectiveDate: new Date().toISOString(),
+        nextBillingDate,
+        isUpgrade,
+        subdomain: tenant.subdomain,
+      }).catch(err => console.error('[WEBHOOK] Failed to send subscription updated email:', err));
+      break;
+    }
+
+    case 'customer.subscription.deleted': {
+      console.log(`[WEBHOOK] Subscription cancelled for customer: ${customerId}`);
+      const subscription = event.data.object as Stripe.Subscription;
+
+      const planName = subscription.items.data[0]?.price.nickname || tenant.tier;
+      const canceledAt = new Date(subscription.canceled_at ? subscription.canceled_at * 1000 : Date.now()).toISOString();
+      const accessEndsAt = new Date(subscription.current_period_end * 1000).toISOString();
+      const daysRemaining = Math.ceil((subscription.current_period_end * 1000 - Date.now()) / (1000 * 60 * 60 * 24));
+
+      // Get total assessments completed
+      const { count: assessmentsCompleted } = await supabase
+        .from('quiz_responses')
+        .select('*', { count: 'exact', head: true })
+        .eq('tenant_id', tenant.id)
+        .not('completed_at', 'is', null);
+
+      sendSubscriptionCanceledEmail({
+        tenantId: tenant.id,
+        companyName: tenant.company_name,
+        ownerEmail: tenant.contact_email,
+        planName,
+        canceledAt,
+        accessEndsAt,
+        daysRemaining: Math.max(daysRemaining, 0),
+        assessmentsCompleted: assessmentsCompleted || 0,
+        subdomain: tenant.subdomain,
+      }).catch(err => console.error('[WEBHOOK] Failed to send subscription canceled email:', err));
+      // Sync function already handles clearing subscription data
+      break;
+    }
 
     case 'invoice.payment_action_required':
       console.log(`[WEBHOOK] Payment action required (SCA) for customer: ${customerId}`);
-      // TODO: Send SCA authentication request
-      break;
-
-    case 'customer.subscription.deleted':
-      console.log(`[WEBHOOK] Subscription cancelled for customer: ${customerId}`);
-      // Sync function already handles clearing subscription data
+      // SCA is typically handled through Stripe's hosted pages
+      // We could send an email here if we want to notify users about required authentication
       break;
 
     default:

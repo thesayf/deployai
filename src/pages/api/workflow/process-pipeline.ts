@@ -374,13 +374,15 @@ const { handler } = servePagesRouter<WorkflowPayload>(
     if (!report.email_sent_at || force) {
       await context.run("send-email", async () => {
         console.log('[Workflow] Sending report ready email...');
-        
+
         const emailResult = await sendReportReadyEmail({
           reportId,
           userEmail: quizData.user_email,
           firstName: quizData.user_first_name || 'there',
           lastName: quizData.user_last_name || '',
           company: quizData.user_company,
+          industry: quizData.industry,
+          companySize: quizData.company_size,
           accessToken: report.access_token,
           req: { headers: { host: process.env.NEXT_PUBLIC_APP_URL?.replace(/https?:\/\//, '') || 'localhost:3002' } } as any
         });

@@ -128,6 +128,22 @@ export default async function handler(
 
     console.log('[SIGNUP] Signup complete for:', email);
 
+    // Step 4.5: Send welcome email (async, don't wait for it)
+    const { sendWelcomeEmail } = await import('@/lib/email/email-service');
+    sendWelcomeEmail({
+      email,
+      companyName,
+      subdomain,
+    }).then((result) => {
+      if (result.success) {
+        console.log('[SIGNUP] Welcome email sent successfully');
+      } else {
+        console.error('[SIGNUP] Failed to send welcome email:', result.error);
+      }
+    }).catch((err) => {
+      console.error('[SIGNUP] Welcome email exception:', err);
+    });
+
     // Step 5: Generate session for auto-login
     const { data: sessionData, error: sessionError } = await supabaseAdmin.auth.admin.generateLink({
       type: 'magiclink',

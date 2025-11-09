@@ -243,15 +243,19 @@ export default async function handler(
           firstName: userData.user_first_name || 'there',
           lastName: userData.user_last_name || '',
           company: userData.user_company,
+          industry: userData.industry,
+          companySize: userData.company_size,
           hasAccessToken: !!reportWithUser.access_token
         });
-        
+
         const emailResult = await sendReportReadyEmail({
           reportId,
           userEmail,
           firstName: userData.user_first_name || 'there',
           lastName: userData.user_last_name || '',
           company: userData.user_company,
+          industry: userData.industry,
+          companySize: userData.company_size,
           accessToken: reportWithUser.access_token,
           req
         });

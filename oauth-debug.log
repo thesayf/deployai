@@ -1,0 +1,183 @@
+
+
+[2025-11-07T16:08:33.599Z] Starting tenant creation
+{
+  "email": "mrrorihinds@gmail.com",
+  "companyName": "RoriHinds§",
+  "subdomain": "efwefewfew"
+}
+
+
+[2025-11-07T16:08:33.728Z] Subdomain check result
+{
+  "existingTenant": null,
+  "checkError": {
+    "code": "PGRST116",
+    "details": "The result contains 0 rows",
+    "hint": null,
+    "message": "JSON object requested, multiple (or no) rows returned"
+  }
+}
+
+
+[2025-11-07T16:08:33.729Z] Looking up user
+{
+  "email": "mrrorihinds@gmail.com"
+}
+
+
+[2025-11-07T16:08:33.819Z] List users result
+{
+  "userCount": 7,
+  "userError": null
+}
+
+
+[2025-11-07T16:08:33.820Z] Found user
+{
+  "userId": "fc23e6d5-95b8-4d9e-ba4c-118d4e08c71c",
+  "email": "mrrorihinds@gmail.com"
+}
+
+
+[2025-11-07T16:08:33.820Z] Attempting tenant creation
+{
+  "subdomain": "efwefewfew",
+  "company_name": "RoriHinds§",
+  "email": "mrrorihinds@gmail.com",
+  "owner_id": "fc23e6d5-95b8-4d9e-ba4c-118d4e08c71c",
+  "subscription_status": "trialing",
+  "subscription_tier": "starter",
+  "assessments_limit": 25,
+  "assessments_used": 0,
+  "trial_end_date": "2025-11-21T16:08:33.820Z"
+}
+
+
+[2025-11-07T16:08:33.902Z] Tenant creation result
+{
+  "success": false,
+  "tenant": null,
+  "error": {
+    "code": "PGRST204",
+    "details": null,
+    "hint": null,
+    "message": "Could not find the 'email' column of 'tenants' in the schema cache"
+  }
+}
+
+
+[2025-11-07T16:08:33.903Z] Tenant creation FAILED
+{
+  "message": "Could not find the 'email' column of 'tenants' in the schema cache",
+  "details": null,
+  "hint": null,
+  "code": "PGRST204",
+  "fullError": {
+    "code": "PGRST204",
+    "details": null,
+    "hint": null,
+    "message": "Could not find the 'email' column of 'tenants' in the schema cache"
+  }
+}
+
+
+[2025-11-07T16:09:59.868Z] Starting tenant creation
+{
+  "email": "mrrorihinds@gmail.com",
+  "companyName": "egwgwg",
+  "subdomain": "egwgwg"
+}
+
+
+[2025-11-07T16:09:59.967Z] Subdomain check result
+{
+  "existingTenant": null,
+  "checkError": {
+    "code": "PGRST116",
+    "details": "The result contains 0 rows",
+    "hint": null,
+    "message": "JSON object requested, multiple (or no) rows returned"
+  }
+}
+
+
+[2025-11-07T16:09:59.968Z] Looking up user
+{
+  "email": "mrrorihinds@gmail.com"
+}
+
+
+[2025-11-07T16:10:00.063Z] List users result
+{
+  "userCount": 7,
+  "userError": null
+}
+
+
+[2025-11-07T16:10:00.064Z] Found user
+{
+  "userId": "fc23e6d5-95b8-4d9e-ba4c-118d4e08c71c",
+  "email": "mrrorihinds@gmail.com"
+}
+
+
+[2025-11-07T16:10:00.064Z] Attempting tenant creation
+{
+  "subdomain": "egwgwg",
+  "company_name": "egwgwg",
+  "contact_email": "mrrorihinds@gmail.com",
+  "billing_email": "mrrorihinds@gmail.com",
+  "owner_id": "fc23e6d5-95b8-4d9e-ba4c-118d4e08c71c",
+  "subscription_status": "trialing",
+  "subscription_tier": "starter",
+  "assessments_limit": 25,
+  "assessments_used": 0,
+  "trial_end_date": "2025-11-21T16:10:00.064Z"
+}
+
+
+[2025-11-07T16:10:00.166Z] Tenant creation result
+{
+  "success": true,
+  "tenant": {
+    "id": "c2e21c00-7a61-4858-bb24-2da838a86679",
+    "subdomain": "egwgwg",
+    "company_name": "egwgwg",
+    "contact_email": "mrrorihinds@gmail.com",
+    "custom_title": null,
+    "custom_logo_url": null,
+    "stripe_customer_id": null,
+    "subscription_tier": "starter",
+    "subscription_status": "trialing",
+    "assessments_used": 0,
+    "assessments_limit": 25,
+    "created_at": "2025-11-07T16:10:00.138683+00:00",
+    "updated_at": "2025-11-07T16:10:00.138683+00:00",
+    "stripe_subscription_id": null,
+    "price_id": null,
+    "trial_end_date": "2025-11-21T16:10:00.064+00:00",
+    "current_period_start": null,
+    "current_period_end": null,
+    "cancel_at_period_end": false,
+    "bonus_assessments": 0,
+    "payment_method_brand": null,
+    "payment_method_last4": null,
+    "last_sync_at": null,
+    "stripe_sync_error": null,
+    "payment_method_exp_month": null,
+    "payment_method_exp_year": null,
+    "owner_id": "fc23e6d5-95b8-4d9e-ba4c-118d4e08c71c",
+    "billing_email": "mrrorihinds@gmail.com",
+    "assessments_overage": 0,
+    "overage_charges_current_period": 0,
+    "last_overage_notification_sent_at": null
+  },
+  "error": null
+}
+
+
+[2025-11-07T16:10:00.167Z] Tenant created successfully
+{
+  "tenantId": "c2e21c00-7a61-4858-bb24-2da838a86679"
+}

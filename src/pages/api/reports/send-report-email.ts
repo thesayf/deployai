@@ -43,7 +43,9 @@ export default async function handler(
           user_email,
           user_first_name,
           user_last_name,
-          user_company
+          user_company,
+          industry,
+          company_size
         )
       `)
       .eq('id', reportId)
@@ -53,20 +55,20 @@ export default async function handler(
       console.error('[API] Failed to fetch report:', reportError);
       return res.status(404).json({ error: 'Report not found' });
     }
-    
+
     console.log('[API] Report access token fetched successfully');
-    
+
     // Extract user data from the joined query
-    const userData = Array.isArray(report.quiz_responses) 
-      ? report.quiz_responses[0] 
+    const userData = Array.isArray(report.quiz_responses)
+      ? report.quiz_responses[0]
       : report.quiz_responses;
-    
+
     // Use provided data or fallback to DB data
     const finalEmail = userEmail || userData?.user_email;
     const finalFirstName = firstName || userData?.user_first_name || 'there';
     const finalLastName = lastName || userData?.user_last_name || '';
     const finalCompany = company || userData?.user_company;
-    
+
     if (!finalEmail) {
       console.error('[API] No email address available');
       return res.status(400).json({ error: 'No email address found for this report' });
@@ -79,6 +81,8 @@ export default async function handler(
       firstName: finalFirstName,
       lastName: finalLastName,
       company: finalCompany,
+      industry: userData?.industry,
+      companySize: userData?.company_size,
       accessToken: report.access_token,
       req
     });
