@@ -212,12 +212,12 @@ const AdminAssessmentDetailPage = () => {
     );
   }
 
-  // Parse AI analysis data
+  // Parse AI analysis data - now directly from report
+  const stage1 = assessment?.report?.stage1_problem_analysis;
+  const stage2 = assessment?.report?.stage2_tool_research;
+  const stage3 = assessment?.report?.stage3_tool_selection;
+  const stage4 = assessment?.report?.stage4_report_content;
   const finalReport = assessment?.report?.final_report;
-  const stage1 = finalReport?.stage1;
-  const stage2 = finalReport?.stage2;
-  const stage3 = finalReport?.stage3;
-  const stage4 = finalReport?.stage4;
 
   return (
     <ProtectedRoute>
@@ -403,13 +403,13 @@ const AdminAssessmentDetailPage = () => {
 
         {stage2 && (
           <RecommendedToolsGrid
-            recommendedSolutions={stage2.marketIntelligence?.recommendedSolutions}
+            recommendedSolutions={stage2.recommendedSolutions}
           />
         )}
 
         {stage2 && (
           <RevenueOpportunityCards
-            recommendedSolutions={stage2.marketIntelligence?.recommendedSolutions}
+            recommendedSolutions={stage2.recommendedSolutions}
           />
         )}
 

@@ -20,6 +20,11 @@ export interface Assessment {
     status: string;
     access_token: string;
     email_sent_at: string | null;
+    stage1_problem_analysis?: any;
+    stage2_tool_research?: any;
+    stage3_tool_selection?: any;
+    stage4_report_content?: any;
+    final_report?: any;
   };
 }
 
@@ -161,6 +166,12 @@ class AssessmentService {
         status: report.report_status || 'pending',
         access_token: report.access_token,
         email_sent_at: report.email_sent_at,
+        // Include all stage data for admin view
+        stage1_problem_analysis: report.stage1_problem_analysis || null,
+        stage2_tool_research: report.stage2_tool_research || null,
+        stage3_tool_selection: report.stage3_tool_selection || null,
+        stage4_report_content: report.stage4_report_content || null,
+        final_report: report.final_report || null,
       } : undefined,
     };
   }
