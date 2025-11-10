@@ -9,7 +9,9 @@ import {
   ChevronRight,
   Download,
   ExternalLink,
-  RefreshCw
+  RefreshCw,
+  Mail,
+  X
 } from 'lucide-react';
 
 const AssessmentTable: React.FC = () => {
@@ -21,6 +23,11 @@ const AssessmentTable: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [sortBy, setSortBy] = useState<'created_at' | 'company' | 'status'>('created_at');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+
+  // Send assessment modal
+  const [showSendModal, setShowSendModal] = useState(false);
+  const [selectedAssessment, setSelectedAssessment] = useState<Assessment | null>(null);
+  const [isSending, setIsSending] = useState(false);
 
   const itemsPerPage = 20;
 
@@ -153,12 +160,49 @@ const AssessmentTable: React.FC = () => {
     }
   };
 
+  const handleSendAssessment = async () => {
+    if (!selectedAssessment || !tenantContext) return;
+
+    setIsSending(true);
+
+    try {
+      const response = await fetch(`/api/assessment-requests/${selectedAssessment.id}/approve`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-tenant-subdomain': tenantContext.tenant.subdomain,
+        },
+        body: JSON.stringify({
+          notes: `Sent from waitlist on ${new Date().toLocaleString()}`,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send assessment');
+      }
+
+      // Close modal and refresh
+      setShowSendModal(false);
+      setSelectedAssessment(null);
+      await refresh();
+
+      alert(`Assessment sent successfully to ${selectedAssessment.user_email}!`);
+    } catch (err: any) {
+      console.error('Error sending assessment:', err);
+      alert(`Failed to send assessment: ${err.message}`);
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   const getStatusBadge = useCallback((assessment: Assessment) => {
     // Priority 1: Check request_status (highest priority)
     if (assessment.request_status === 'requested') {
       return (
-        <span className="bg-orange-500 text-white px-2 py-1 text-xs font-bold rounded flex items-center gap-1">
-          ⚠️ REQUESTED
+        <span className="bg-amber-100 text-amber-900 border border-amber-300 px-2 py-1 text-xs font-bold rounded flex items-center gap-1">
+          ⏳ Waitlist
         </span>
       );
     }
@@ -261,7 +305,7 @@ const AssessmentTable: React.FC = () => {
             className="px-4 py-2 border border-gray-300 font-medium bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="all">All Status</option>
-            <option value="requested">⚠️ Requested</option>
+            <option value="requested">⏳ Waitlist</option>
             <option value="completed">Completed</option>
             <option value="generating">Generating</option>
             <option value="processing">Processing</option>
@@ -372,20 +416,35 @@ const AssessmentTable: React.FC = () => {
                     </td>
                     <td className="px-4 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-2">
-                        <Link
-                          href={`/${tenantContext?.tenant.subdomain}/admin/assessments/${assessment.id}`}
-                          className="font-medium text-sm text-blue-600 hover:text-blue-800 hover:underline"
-                        >
-                          View
-                        </Link>
-                        {assessment.report?.status === 'completed' && assessment.report?.access_token && (
-                          <Link
-                            href={`/report/view/${assessment.report.access_token}`}
-                            target="_blank"
-                            className="p-1 border border-gray-200 rounded hover:bg-gray-50 transition-colors"
+                        {assessment.request_status === 'requested' ? (
+                          <button
+                            onClick={() => {
+                              setSelectedAssessment(assessment);
+                              setShowSendModal(true);
+                            }}
+                            className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded transition-colors"
                           >
-                            <ExternalLink className="h-4 w-4" />
-                          </Link>
+                            <Mail className="h-3 w-3" />
+                            Send Assessment - ${tenantContext?.tenant.subscription_tier === 'starter' ? '4' : tenantContext?.tenant.subscription_tier === 'professional' ? '3' : '2'}
+                          </button>
+                        ) : (
+                          <>
+                            <Link
+                              href={`/${tenantContext?.tenant.subdomain}/admin/assessments/${assessment.id}`}
+                              className="font-medium text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                            >
+                              View
+                            </Link>
+                            {assessment.report?.status === 'completed' && assessment.report?.access_token && (
+                              <Link
+                                href={`/report/view/${assessment.report.access_token}`}
+                                target="_blank"
+                                className="p-1 border border-gray-200 rounded hover:bg-gray-50 transition-colors"
+                              >
+                                <ExternalLink className="h-4 w-4" />
+                              </Link>
+                            )}
+                          </>
                         )}
                       </div>
                     </td>
@@ -431,6 +490,98 @@ const AssessmentTable: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Send Assessment Modal */}
+      {showSendModal && selectedAssessment && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold text-gray-900">Send Assessment</h2>
+              <button
+                onClick={() => {
+                  setShowSendModal(false);
+                  setSelectedAssessment(null);
+                }}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Paused Warning */}
+            {tenantContext?.tenant.subscription_status === 'paused' && (
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
+                <div className="flex gap-2">
+                  <span className="text-lg">⏸️</span>
+                  <div>
+                    <p className="text-sm font-medium text-amber-900">Your account is paused</p>
+                    <p className="text-xs text-amber-700 mt-1">
+                      This will send one assessment link without unpausing your account
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Recipient Info */}
+            <div className="bg-gray-50 rounded-lg p-4 mb-4">
+              <div className="space-y-2">
+                <div>
+                  <p className="text-xs text-gray-500">Recipient</p>
+                  <p className="text-sm font-medium text-gray-900">
+                    {selectedAssessment.user_first_name} {selectedAssessment.user_last_name}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">Email</p>
+                  <p className="text-sm font-medium text-gray-900">{selectedAssessment.user_email}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">Company</p>
+                  <p className="text-sm font-medium text-gray-900">{selectedAssessment.user_company || 'N/A'}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Cost Info */}
+            <div className="border-t border-gray-200 pt-4 mb-6">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Cost (overage rate):</span>
+                <span className="text-lg font-bold text-gray-900">
+                  ${tenantContext?.tenant.subscription_tier === 'starter' ? '4.00' : tenantContext?.tenant.subscription_tier === 'professional' ? '3.00' : '2.00'}
+                </span>
+              </div>
+              <p className="text-xs text-gray-500 mt-2">
+                {tenantContext?.tenant.subscription_status === 'paused'
+                  ? 'Your account will remain paused after sending'
+                  : 'One-time charge as overage assessment'}
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  setShowSendModal(false);
+                  setSelectedAssessment(null);
+                }}
+                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 transition-colors"
+                disabled={isSending}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSendAssessment}
+                disabled={isSending}
+                className="flex-1 px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed"
+              >
+                {isSending ? 'Sending...' : `Send for $${tenantContext?.tenant.subscription_tier === 'starter' ? '4' : tenantContext?.tenant.subscription_tier === 'professional' ? '3' : '2'}`}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

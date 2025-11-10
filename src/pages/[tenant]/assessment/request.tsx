@@ -7,7 +7,7 @@ import { Footer } from '@/components/footer/Footer';
 
 const RequestAssessmentPage = () => {
   const router = useRouter();
-  const { tenant } = router.query;
+  const { tenant, reason } = router.query;
   const { tenantContext } = useTenant();
   const [formData, setFormData] = useState({
     email: '',
@@ -18,6 +18,8 @@ const RequestAssessmentPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const isPaused = reason === 'paused';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,10 +75,12 @@ const RequestAssessmentPage = () => {
                     Request Submitted!
                   </h1>
                   <p className="text-lg mb-6">
-                    Your assessment request has been received.
+                    {isPaused ? "You're on the waitlist!" : 'Your assessment request has been received.'}
                   </p>
                   <p className="text-base text-gray-700 mb-8">
-                    A consultant from <strong>{tenantContext?.tenant.company_name}</strong> will review your request and send you an assessment link via email shortly.
+                    {isPaused
+                      ? `You'll be the first to know when ${tenantContext?.tenant.company_name} resumes assessments. We'll send your assessment link directly to your inbox.`
+                      : `A consultant from ${tenantContext?.tenant.company_name} will review your request and send you an assessment link via email shortly.`}
                   </p>
                   <button
                     onClick={() => router.push(`/${tenant}/admin`)}
@@ -103,15 +107,17 @@ const RequestAssessmentPage = () => {
         <main className="flex-1 flex items-center justify-center px-4 py-16">
           <div className="max-w-2xl w-full">
             {/* Warning Banner */}
-            <div className="bg-orange-100 border-[3px] border-black p-6 mb-8 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+            <div className={`${isPaused ? 'bg-blue-100' : 'bg-orange-100'} border-[3px] border-black p-6 mb-8 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]`}>
               <div className="flex items-start gap-4">
-                <div className="text-4xl">⚠️</div>
+                <div className="text-4xl">{isPaused ? '🌟' : '⚠️'}</div>
                 <div>
                   <h2 className="text-xl font-black uppercase mb-2">
-                    Assessment Limit Reached
+                    {isPaused ? "We're Taking a Short Break" : 'Assessment Limit Reached'}
                   </h2>
                   <p className="text-base">
-                    You've used all available assessments for this billing period. Request access below, and your consultant will send you a link.
+                    {isPaused
+                      ? "We're not accepting new assessments right now, but we don't want you to miss out!"
+                      : "You've used all available assessments for this billing period. Request access below, and your consultant will send you a link."}
                   </p>
                 </div>
               </div>
@@ -120,11 +126,32 @@ const RequestAssessmentPage = () => {
             {/* Request Form */}
             <div className="bg-white border-[3px] border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
               <h1 className="text-3xl font-black uppercase mb-6">
-                Request Assessment Access
+                {isPaused ? 'Join the Waitlist' : 'Request Assessment Access'}
               </h1>
               <p className="text-lg mb-8 text-gray-700">
-                Fill out the form below and we'll send you an assessment link shortly.
+                {isPaused
+                  ? 'Join the waitlist and get first access when we resume. Your assessment link will be sent straight to your inbox.'
+                  : 'Fill out the form below and we\'ll send you an assessment link shortly.'}
               </p>
+
+              {isPaused && (
+                <div className="bg-green-50 border-[3px] border-green-500 p-4 mb-6">
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-600">✓</span>
+                      <span className="text-green-900 font-medium">First access when we're back</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-600">✓</span>
+                      <span className="text-green-900 font-medium">Assessment link sent to your inbox</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-600">✓</span>
+                      <span className="text-green-900 font-medium">Takes 30 seconds</span>
+                    </li>
+                  </ul>
+                </div>
+              )}
 
               {error && (
                 <div className="bg-red-100 border-[3px] border-red-500 p-4 mb-6">
@@ -203,22 +230,24 @@ const RequestAssessmentPage = () => {
                   disabled={isSubmitting}
                   className="w-full bg-black text-white px-8 py-4 font-bold text-lg border-[3px] border-black hover:bg-gray-800 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] disabled:active:translate-x-0 disabled:active:translate-y-0"
                 >
-                  {isSubmitting ? 'SUBMITTING...' : 'REQUEST ASSESSMENT LINK'}
+                  {isSubmitting ? 'SUBMITTING...' : (isPaused ? 'JOIN THE WAITLIST' : 'REQUEST ASSESSMENT LINK')}
                 </button>
               </form>
 
-              {/* Upgrade Option */}
-              <div className="mt-8 pt-8 border-t-[3px] border-gray-200">
-                <p className="text-sm text-gray-600 mb-4">
-                  Need more assessments regularly?
-                </p>
-                <button
-                  onClick={() => router.push(`/${tenant}/admin/billing`)}
-                  className="text-black font-bold underline hover:no-underline"
-                >
-                  Upgrade Your Plan →
-                </button>
-              </div>
+              {/* Upgrade Option - Only show if not paused */}
+              {!isPaused && (
+                <div className="mt-8 pt-8 border-t-[3px] border-gray-200">
+                  <p className="text-sm text-gray-600 mb-4">
+                    Need more assessments regularly?
+                  </p>
+                  <button
+                    onClick={() => router.push(`/${tenant}/admin/billing`)}
+                    className="text-black font-bold underline hover:no-underline"
+                  >
+                    Upgrade Your Plan →
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </main>

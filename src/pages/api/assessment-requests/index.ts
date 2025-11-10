@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
 import { getTenantFromRequest, addTenantIdToData } from '@/utils/tenant-helpers';
+import { notifyWaitlistLead } from '@/services/notifications';
 
 interface RequestBody {
   email: string;
@@ -87,6 +88,25 @@ export default async function handler(
     }
 
     console.log(`[ASSESSMENT REQUEST] Created request ${requestRecord.id} for ${email}`);
+
+    // Check if account is paused to determine notification type
+    const { data: tenantData } = await supabase
+      .from('tenants')
+      .select('subscription_status')
+      .eq('id', tenantContext.tenant.id)
+      .single();
+
+    const isPaused = tenantData?.subscription_status === 'paused';
+
+    // If paused, create waitlist lead notification (async, don't wait)
+    if (isPaused) {
+      notifyWaitlistLead(
+        tenantContext.tenant.id,
+        tenantContext.tenant.subdomain,
+        firstName,
+        email
+      ).catch(err => console.error('[ASSESSMENT REQUEST] Failed to create waitlist notification:', err));
+    }
 
     // Send confirmation email to candidate (async, don't wait)
     const {

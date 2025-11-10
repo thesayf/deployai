@@ -91,6 +91,7 @@ const Dashboard: React.FC = () => {
 
   // Calculate trial data
   const isTrialing = dashboardData?.billing?.subscription_status === 'trialing';
+  const isPaused = dashboardData?.billing?.subscription_status === 'paused';
   const trialEndDate = dashboardData?.billing?.trial_end_date;
   const trialDaysRemaining = trialEndDate
     ? Math.max(0, Math.ceil((new Date(trialEndDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
@@ -124,6 +125,29 @@ const Dashboard: React.FC = () => {
           monthlyPrice={monthlyPrice}
           tenant={tenantContext?.tenant.subdomain || ''}
         />
+      )}
+
+      {/* Paused Banner */}
+      {isPaused && (
+        <div className="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-lg shadow-sm">
+          <div className="flex items-start gap-4">
+            <div className="text-4xl">⏸️</div>
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-amber-900 mb-2">
+                Assessments Paused
+              </h3>
+              <p className="text-amber-800 mb-4">
+                Your assessment portal is currently paused. Clients cannot take new assessments until you resume. Your subscription remains active and you won't lose any unused assessments.
+              </p>
+              <a
+                href={`/${tenantContext?.tenant.subdomain}/admin/settings/billing`}
+                className="inline-flex items-center px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white font-medium rounded-md transition-colors"
+              >
+                Resume Assessments
+              </a>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Usage Meter */}

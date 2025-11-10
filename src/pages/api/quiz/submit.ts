@@ -4,6 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import quizData from '@/data/quiz-questions.json';
 import { getTenantFromRequest, addTenantIdToData } from '@/utils/tenant-helpers';
 import { tenantService } from '@/services/tenant';
+import { notifyAssessmentCompleted, notifyUsageWarning } from '@/services/notifications';
 
 export default async function handler(
   req: NextApiRequest,
@@ -281,6 +282,15 @@ export default async function handler(
                   overagePrice: overagePrice,
                   subdomain: tenantContext.tenant.subdomain,
                 }).catch(err => console.error('[USAGE] Failed to send 80% warning:', err));
+
+                // Create usage warning notification (async, don't wait)
+                notifyUsageWarning(
+                  tenantContext.tenant.id,
+                  tenantContext.tenant.subdomain,
+                  80,
+                  assessments_used,
+                  assessmentsLimit
+                ).catch(err => console.error('[USAGE] Failed to create 80% notification:', err));
               }
 
               // 90% threshold
@@ -297,6 +307,15 @@ export default async function handler(
                   overagePrice: overagePrice,
                   subdomain: tenantContext.tenant.subdomain,
                 }).catch(err => console.error('[USAGE] Failed to send 90% warning:', err));
+
+                // Create usage warning notification (async, don't wait)
+                notifyUsageWarning(
+                  tenantContext.tenant.id,
+                  tenantContext.tenant.subdomain,
+                  90,
+                  assessments_used,
+                  assessmentsLimit
+                ).catch(err => console.error('[USAGE] Failed to create 90% notification:', err));
               }
 
               // 100% threshold (limit reached)
@@ -311,6 +330,15 @@ export default async function handler(
                   overagePrice: overagePrice,
                   subdomain: tenantContext.tenant.subdomain,
                 }).catch(err => console.error('[USAGE] Failed to send limit reached:', err));
+
+                // Create usage warning notification (async, don't wait)
+                notifyUsageWarning(
+                  tenantContext.tenant.id,
+                  tenantContext.tenant.subdomain,
+                  100,
+                  assessments_used,
+                  assessmentsLimit
+                ).catch(err => console.error('[USAGE] Failed to create 100% notification:', err));
               }
             }
 
@@ -397,6 +425,15 @@ export default async function handler(
           assessmentsLimit: tenantContext.tenant.assessments_limit || 0,
           currentTier: tenantContext.tenant.subscription_tier || 'starter',
         }).catch(err => console.error('[ADMIN-NOTIFICATION] Failed to send assessment completed email:', err));
+
+        // Create assessment completed notification (async, don't wait)
+        notifyAssessmentCompleted(
+          tenantContext.tenant.id,
+          tenantContext.tenant.subdomain,
+          updatedQuiz.user_first_name || 'Candidate',
+          updatedQuiz.user_company || 'Unknown Company',
+          quizId
+        ).catch(err => console.error('[ADMIN-NOTIFICATION] Failed to create assessment completed notification:', err));
       } catch (error) {
         console.error('[ADMIN-NOTIFICATION] Error sending admin notification:', error);
         // Don't fail the assessment submission

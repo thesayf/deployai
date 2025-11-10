@@ -4,6 +4,7 @@ import Stripe from 'stripe';
 import { stripe } from '@/lib/stripe';
 import { syncStripeDataToSupabase } from '@/lib/stripe/sync';
 import { createClient } from '@/utils/supabase/server';
+import { notifyTrialEnding, notifyPaymentFailed } from '@/services/notifications';
 
 // Disable body parsing for webhook signature verification
 export const config = {
@@ -229,6 +230,13 @@ async function handleSpecificEvent(event: Stripe.Event, customerId: string) {
         currentTier: tenant.tier,
         subdomain: tenant.subdomain,
       }).catch(err => console.error('[WEBHOOK] Failed to send trial ending email:', err));
+
+      // Create trial ending notification (async, don't wait)
+      notifyTrialEnding(
+        tenant.id,
+        tenant.subdomain,
+        Math.max(daysRemaining, 0)
+      ).catch(err => console.error('[WEBHOOK] Failed to create trial ending notification:', err));
       break;
     }
 
@@ -253,6 +261,13 @@ async function handleSpecificEvent(event: Stripe.Event, customerId: string) {
         currentTier: tenant.tier,
         subdomain: tenant.subdomain,
       }).catch(err => console.error('[WEBHOOK] Failed to send payment failed email:', err));
+
+      // Create payment failed notification (async, don't wait)
+      notifyPaymentFailed(
+        tenant.id,
+        tenant.subdomain,
+        invoice.amount_due / 100 // Convert cents to dollars
+      ).catch(err => console.error('[WEBHOOK] Failed to create payment failed notification:', err));
       break;
     }
 

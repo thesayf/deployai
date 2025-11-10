@@ -52,6 +52,51 @@ export default async function handler(
       });
     }
 
+    // Check if account is paused - if so, increment overage and log
+    const { data: tenant, error: tenantError } = await supabase
+      .from('tenants')
+      .select('subscription_status, subscription_tier, assessments_overage, overage_charges_current_period')
+      .eq('id', tenantContext.tenant.id)
+      .single();
+
+    if (tenantError || !tenant) {
+      return res.status(500).json({ error: 'Failed to fetch tenant data' });
+    }
+
+    // Determine overage price based on tier
+    const overagePrice = tenant.subscription_tier === 'starter' ? 4 : tenant.subscription_tier === 'professional' ? 3 : 2;
+
+    // If account is paused, treat as overage
+    if (tenant.subscription_status === 'paused') {
+      // Increment overage count and charges
+      const { error: overageError } = await supabase
+        .from('tenants')
+        .update({
+          assessments_overage: (tenant.assessments_overage || 0) + 1,
+          overage_charges_current_period: (tenant.overage_charges_current_period || 0) + overagePrice,
+        })
+        .eq('id', tenantContext.tenant.id);
+
+      if (overageError) {
+        console.error('Failed to update overage:', overageError);
+        return res.status(500).json({ error: 'Failed to process overage charge' });
+      }
+
+      // Log overage in history table if it exists
+      try {
+        await supabase.from('overage_history').insert({
+          tenant_id: tenantContext.tenant.id,
+          assessment_id: id,
+          charge_amount: overagePrice,
+          created_at: new Date().toISOString(),
+        });
+      } catch (err) {
+        console.warn('[OVERAGE] Failed to log overage history (table may not exist):', err);
+      }
+
+      console.log(`[OVERAGE] Charged $${overagePrice} for paused account sending assessment ${id}`);
+    }
+
     // Update request_status to 'approved'
     const { error: updateError } = await supabase
       .from('quiz_responses')

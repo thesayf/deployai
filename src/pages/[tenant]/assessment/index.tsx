@@ -62,11 +62,11 @@ const TenantAssessmentLanding = () => {
           },
         });
 
-        const { canCreate } = await response.json();
+        const { canCreate, reason } = await response.json();
 
         if (!canCreate) {
-          // At limit - redirect to request page
-          router.push(`/${tenant}/assessment/request`);
+          // Cannot create - redirect to request page with reason
+          router.push(`/${tenant}/assessment/request?reason=${reason || 'limit_reached'}`);
           return;
         }
 

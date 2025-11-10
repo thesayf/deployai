@@ -20,6 +20,29 @@ export default async function handler(
 
     const supabase = supabaseAdmin();
 
+    // Get tenant details to check status
+    const { data: tenant, error: tenantError } = await supabase
+      .from('tenants')
+      .select('subscription_status, assessments_used, assessments_limit, bonus_assessments')
+      .eq('id', tenantContext.tenant.id)
+      .single();
+
+    if (tenantError || !tenant) {
+      console.error('Error fetching tenant:', tenantError);
+      return res.status(500).json({ error: 'Failed to fetch tenant' });
+    }
+
+    // Check if paused
+    if (tenant.subscription_status === 'paused') {
+      return res.status(200).json({
+        canCreate: false,
+        reason: 'paused',
+        assessmentsUsed: tenant.assessments_used,
+        assessmentsLimit: tenant.assessments_limit,
+        subscriptionStatus: tenant.subscription_status
+      });
+    }
+
     // Use the database function to check if tenant can create assessment
     const { data: canCreate, error } = await supabase.rpc('can_create_assessment', {
       p_tenant_id: tenantContext.tenant.id
@@ -32,8 +55,10 @@ export default async function handler(
 
     res.status(200).json({
       canCreate: !!canCreate,
-      assessmentsUsed: tenantContext.tenant.assessments_used,
-      assessmentsLimit: tenantContext.tenant.assessments_limit
+      reason: canCreate ? null : 'limit_reached',
+      assessmentsUsed: tenant.assessments_used,
+      assessmentsLimit: tenant.assessments_limit,
+      subscriptionStatus: tenant.subscription_status
     });
   } catch (error) {
     console.error('Error in can-create-assessment:', error);

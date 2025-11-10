@@ -1,5 +1,6 @@
 import React from 'react';
-import { Menu, Bell, UserCircle } from 'lucide-react';
+import { Menu, UserCircle } from 'lucide-react';
+import { NotificationBell } from '../NotificationBell';
 
 interface AdminHeaderProps {
   title?: string;
@@ -30,13 +31,7 @@ const AdminHeader: React.FC<AdminHeaderProps> = ({ title, tenant, onMenuClick })
           {/* Right side actions */}
           <div className="flex items-center gap-3">
             {/* Notifications */}
-            <button className="relative flex items-center justify-center h-10 w-10 rounded-md border border-gray-200 bg-white hover:bg-gray-50 transition-colors">
-              <Bell className="h-5 w-5 text-gray-600" />
-              {/* Notification badge */}
-              <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center bg-red-500 text-xs font-medium text-white rounded-full">
-                3
-              </span>
-            </button>
+            <NotificationBell />
 
             {/* User menu */}
             <div className="flex items-center h-10 gap-2 border border-gray-200 bg-gray-50 px-3 rounded-lg">

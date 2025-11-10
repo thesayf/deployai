@@ -103,6 +103,7 @@ export default function BillingSettings() {
   const [error, setError] = useState<string | null>(null);
   const [invoices, setInvoices] = useState<any[]>([]);
   const [loadingInvoices, setLoadingInvoices] = useState(false);
+  const [pausingAccount, setPausingAccount] = useState(false);
 
   useEffect(() => {
     if (tenant) {
@@ -191,6 +192,42 @@ export default function BillingSettings() {
       }
     } catch (err) {
       console.error('Failed to open customer portal:', err);
+    }
+  };
+
+  const handlePauseResume = async () => {
+    const isPaused = billingData?.subscription_status === 'paused';
+    const action = isPaused ? 'resume' : 'pause';
+
+    if (!confirm(`Are you sure you want to ${action} assessments? ${isPaused ? 'New assessments will be allowed.' : 'No new assessments can be taken until you resume.'}`)) {
+      return;
+    }
+
+    setPausingAccount(true);
+
+    try {
+      const response = await fetch('/api/tenant/pause-assessments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-tenant-subdomain': tenant as string,
+        },
+        body: JSON.stringify({
+          pause: !isPaused,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update status');
+      }
+
+      // Refresh billing data
+      await fetchBillingData();
+    } catch (err) {
+      console.error('Failed to pause/resume:', err);
+      alert('Failed to update status. Please try again.');
+    } finally {
+      setPausingAccount(false);
     }
   };
 
@@ -336,6 +373,64 @@ export default function BillingSettings() {
                         {cardExpiry || 'N/A'}
                       </span>
                     </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Pause/Resume Assessments */}
+            {(billingData.subscription_status === 'active' || billingData.subscription_status === 'paused') && (
+              <Card>
+                <CardHeader className="pb-4">
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-1">
+                      <CardTitle className="text-xl font-semibold">Assessment Controls</CardTitle>
+                      <p className="text-sm text-gray-500">
+                        {billingData.subscription_status === 'paused'
+                          ? 'Assessments are currently paused - no new assessments can be taken'
+                          : 'Control when clients can take assessments'}
+                      </p>
+                    </div>
+                    <Button
+                      onClick={handlePauseResume}
+                      disabled={pausingAccount}
+                      variant={billingData.subscription_status === 'paused' ? 'default' : 'outline'}
+                      size="sm"
+                      className="h-9 px-4"
+                    >
+                      {pausingAccount
+                        ? 'Updating...'
+                        : billingData.subscription_status === 'paused'
+                          ? 'Resume Assessments'
+                          : 'Pause Assessments'}
+                    </Button>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="pt-0">
+                  <div className="border-t pt-5 space-y-4">
+                    {billingData.subscription_status === 'paused' ? (
+                      <>
+                        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                          <div className="flex gap-2">
+                            <AlertCircle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-sm font-medium text-amber-900">Assessments Paused</p>
+                              <p className="text-sm text-amber-700 mt-1">
+                                Your assessment portal is currently paused. Clients cannot take new assessments until you resume.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-600">
+                          Click "Resume Assessments" to allow clients to take assessments again. Your subscription will remain active and you won't lose any unused assessments.
+                        </p>
+                      </>
+                    ) : (
+                      <p className="text-sm text-gray-600">
+                        Pause assessments to temporarily prevent new clients from taking assessments. This is useful if you need to update your services or take a break. Your subscription will remain active.
+                      </p>
+                    )}
                   </div>
                 </CardContent>
               </Card>
