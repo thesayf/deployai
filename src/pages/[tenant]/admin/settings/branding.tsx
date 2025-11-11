@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import AdminLayout from '@/components/admin/layout/AdminLayout';
-import ProtectedRoute from '@/components/admin/ProtectedRoute';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { useTenant } from '@/contexts/TenantContext';
 import { Upload, X, Plus, Eye, Save, AlertCircle } from 'lucide-react';
 
