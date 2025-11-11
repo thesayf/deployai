@@ -11,9 +11,9 @@ export default async function handler(
   }
 
   try {
-    const { logo_url, brand_color, tagline, client_logos } = req.body;
+    const { logo_url, brand_color, brand_colors, tagline, client_logos } = req.body;
 
-    console.log('[Branding] Request received:', { logo_url, brand_color, tagline, client_logos });
+    console.log('[Branding] Request received:', { logo_url, brand_color, brand_colors, tagline, client_logos });
 
     // Get tenant context (requires admin authentication)
     const tenantContext = await getTenantFromRequest(req);
@@ -39,6 +39,7 @@ export default async function handler(
     const updateData = {
       logo_url: logo_url || null,
       brand_color: brand_color || '#FF6B35',
+      brand_colors: brand_colors || { primary: '#635BFF', secondary: '#00D4FF', accent: '#FFB800', neutral: '#F6F9FC' },
       tagline: tagline || null,
       client_logos: client_logos || [],
       updated_at: new Date().toISOString(),

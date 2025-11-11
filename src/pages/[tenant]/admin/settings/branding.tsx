@@ -17,6 +17,12 @@ export default function BrandingSettingsPage() {
 
   const [logoUrl, setLogoUrl] = useState('');
   const [brandColor, setBrandColor] = useState('#FF6B35');
+  const [brandColors, setBrandColors] = useState({
+    primary: '#635BFF',
+    secondary: '#00D4FF',
+    accent: '#FFB800',
+    neutral: '#F6F9FC'
+  });
   const [tagline, setTagline] = useState('');
   const [clientLogos, setClientLogos] = useState<ClientLogo[]>([]);
   const [loading, setLoading] = useState(false);
@@ -33,6 +39,12 @@ export default function BrandingSettingsPage() {
     if (tenantContext?.tenant) {
       setLogoUrl(tenantContext.tenant.logo_url || '');
       setBrandColor(tenantContext.tenant.brand_color || '#FF6B35');
+      setBrandColors((tenantContext.tenant as any).brand_colors || {
+        primary: '#635BFF',
+        secondary: '#00D4FF',
+        accent: '#FFB800',
+        neutral: '#F6F9FC'
+      });
       setTagline(tenantContext.tenant.tagline || '');
       setClientLogos(tenantContext.tenant.client_logos || []);
     }
@@ -77,6 +89,7 @@ export default function BrandingSettingsPage() {
           user_email: userEmail,
           logo_url: logoUrl,
           brand_color: brandColor,
+          brand_colors: brandColors,
           tagline: tagline,
           client_logos: clientLogos,
         }),
@@ -170,43 +183,59 @@ export default function BrandingSettingsPage() {
             </div>
           </div>
 
-          {/* Brand Color */}
+          {/* Brand Color Palette */}
           <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Brand Color</h2>
-            <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <div>
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">Brand Color Palette</h2>
+            <p className="text-sm text-gray-600 mb-6">
+              Define your brand colors to create a cohesive, professional look across your assessment page
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {[
+                { key: 'primary' as const, label: 'Primary', description: 'Main brand color for buttons and key elements' },
+                { key: 'secondary' as const, label: 'Secondary', description: 'Supporting color for highlights and accents' },
+                { key: 'accent' as const, label: 'Accent', description: 'Pop color for call-to-actions and emphasis' },
+                { key: 'neutral' as const, label: 'Neutral', description: 'Light background color for sections' }
+              ].map((color) => (
+                <div key={color.key}>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Primary Color
+                    {color.label}
                   </label>
                   <div className="flex items-center gap-3">
                     <input
                       type="color"
-                      value={brandColor}
-                      onChange={(e) => setBrandColor(e.target.value)}
+                      value={brandColors[color.key]}
+                      onChange={(e) => setBrandColors({ ...brandColors, [color.key]: e.target.value })}
                       className="h-12 w-20 rounded border border-gray-300 cursor-pointer"
                     />
                     <input
                       type="text"
-                      value={brandColor}
-                      onChange={(e) => setBrandColor(e.target.value)}
-                      placeholder="#FF6B35"
+                      value={brandColors[color.key]}
+                      onChange={(e) => setBrandColors({ ...brandColors, [color.key]: e.target.value })}
+                      placeholder="#635BFF"
                       className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 font-mono text-sm w-32"
                     />
                   </div>
                   <p className="mt-1 text-xs text-gray-500">
-                    Used for buttons, icons, and accents
+                    {color.description}
                   </p>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-700 mb-2">Preview:</p>
-                  <button
-                    className="px-6 py-3 text-white font-bold border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                    style={{ backgroundColor: brandColor }}
-                  >
-                    Sample Button
-                  </button>
-                </div>
+              ))}
+            </div>
+
+            {/* Color Palette Preview */}
+            <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+              <p className="text-sm font-medium text-gray-700 mb-3">Palette Preview:</p>
+              <div className="flex gap-2">
+                {Object.entries(brandColors).map(([key, value]) => (
+                  <div key={key} className="flex-1">
+                    <div
+                      className="h-16 w-full border-[2px] border-black rounded"
+                      style={{ backgroundColor: value }}
+                    />
+                    <p className="text-xs text-gray-600 mt-1 capitalize">{key}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
