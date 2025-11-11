@@ -186,6 +186,7 @@ const TenantAssessmentLanding = () => {
           brandColor={tenantContext?.tenant.brand_color}
           logoUrl={tenantContext?.tenant.logo_url}
           tagline={tenantContext?.tenant.tagline}
+          clientLogos={tenantContext?.tenant.client_logos}
         />
 
         {/* Methodology Credibility */}

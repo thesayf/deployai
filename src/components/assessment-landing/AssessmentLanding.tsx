@@ -5,12 +5,18 @@ import { openEmailModal } from '@/store/slices/quizSlice';
 import { Button } from '@/components/shared/Button';
 import { Clock, Target, TrendingUp, CheckCircle, ArrowRight } from 'lucide-react';
 
+interface ClientLogo {
+  url: string;
+  alt: string;
+}
+
 interface AssessmentLandingProps {
   onStartAssessment?: () => void;
   companyName?: string;
   brandColor?: string;
   logoUrl?: string;
   tagline?: string;
+  clientLogos?: ClientLogo[];
 }
 
 export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
@@ -18,7 +24,8 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
   companyName = 'Your Organization',
   brandColor = '#FF6B35',
   logoUrl,
-  tagline
+  tagline,
+  clientLogos = []
 }) => {
   const dispatch = useAppDispatch();
 
@@ -225,6 +232,35 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
           </div>
         </div>
       </section>
+
+      {/* Social Proof Section - Only show if client logos exist */}
+      {clientLogos && clientLogos.length > 0 && (
+        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 border-t-[3px] border-black">
+          <div className="max-w-6xl mx-auto">
+            <h3 className="text-2xl font-black text-gray-900 mb-2 text-center">
+              Trusted By
+            </h3>
+            <p className="text-gray-600 mb-12 text-center">
+              Join businesses who have transformed with AI
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+              {clientLogos.map((logo, index) => (
+                <div
+                  key={index}
+                  className="grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
+                >
+                  <img
+                    src={logo.url}
+                    alt={logo.alt}
+                    className="h-12 md:h-16 w-auto object-contain"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Final CTA Section */}
       <section

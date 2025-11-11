@@ -20,6 +20,7 @@ export interface Tenant {
   logo_url?: string;
   brand_color?: string;
   tagline?: string;
+  client_logos?: Array<{ url: string; alt: string }>;
 }
 
 export interface TenantMember {
