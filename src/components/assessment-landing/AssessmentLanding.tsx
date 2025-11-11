@@ -305,24 +305,24 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
       {/* Final CTA Section */}
       <section
         className="py-20 px-4 sm:px-6 lg:px-8 border-t-[3px] border-black"
-        style={{ backgroundColor: `${primaryColor}15` }} // 15% opacity
+        style={{ backgroundColor: colors.neutral }}
       >
         <div className="max-w-4xl mx-auto text-center">
           <h3 className="text-3xl md:text-4xl font-black text-gray-900 mb-6">
             Ready to Transform Your Business with AI?
           </h3>
-          <p className="text-xl text-gray-700 mb-8">
+          <p className="text-xl text-gray-700 mb-8 font-medium">
             Take the first step today. Your personalized roadmap is just 3 minutes away.
           </p>
           <button
             onClick={handleStartAssessment}
-            className="inline-flex items-center justify-center px-8 py-4 text-white font-bold text-lg border-[3px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
-            style={{ backgroundColor: primaryColor }}
+            className="inline-flex items-center justify-center px-8 py-4 text-white font-black text-lg border-[3px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+            style={{ backgroundColor: colors.primary }}
           >
             Start Your Free Assessment
             <ArrowRight className="ml-2 h-5 w-5" />
           </button>
-          <p className="mt-4 text-sm text-gray-600">
+          <p className="mt-4 text-sm text-gray-600 font-medium">
             Takes less than 3 minutes • No signup required • Instant results
           </p>
         </div>
