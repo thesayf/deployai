@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
-import { getTenantFromRequest } from '@/utils/tenant-helpers';
+import { createClient } from '@/utils/supabase/server';
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,15 +12,46 @@ export default async function handler(
 
   try {
     const { logo_url, brand_color, tagline, client_logos } = req.body;
+    const subdomain = req.headers['x-tenant-subdomain'] as string;
 
-    // Get tenant context (admin only)
-    const tenantContext = await getTenantFromRequest(req);
-
-    if (!tenantContext || !tenantContext.member) {
-      return res.status(401).json({ error: 'Unauthorized' });
+    if (!subdomain) {
+      return res.status(400).json({ error: 'Tenant subdomain required' });
     }
 
-    const supabase = supabaseAdmin();
+    // Get authenticated user from session
+    const supabase = createClient(req, res);
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      console.error('Auth error:', authError);
+      return res.status(401).json({ error: 'Unauthorized - not authenticated' });
+    }
+
+    // Get tenant and verify user is a member
+    const adminSupabase = supabaseAdmin();
+    const { data: tenant, error: tenantError } = await adminSupabase
+      .from('tenants')
+      .select('id')
+      .eq('subdomain', subdomain)
+      .single();
+
+    if (tenantError || !tenant) {
+      console.error('Tenant error:', tenantError);
+      return res.status(404).json({ error: 'Tenant not found' });
+    }
+
+    // Verify user is a member of this tenant
+    const { data: member, error: memberError } = await adminSupabase
+      .from('tenant_members')
+      .select('id, role')
+      .eq('tenant_id', tenant.id)
+      .eq('user_email', user.email)
+      .single();
+
+    if (memberError || !member) {
+      console.error('Member error:', memberError);
+      return res.status(401).json({ error: 'Unauthorized - not a member of this tenant' });
+    }
 
     // Validate brand color if provided
     if (brand_color && !/^#[0-9A-Fa-f]{6}$/.test(brand_color)) {
@@ -33,7 +64,7 @@ export default async function handler(
     }
 
     // Update branding settings
-    const { error } = await supabase
+    const { error } = await adminSupabase
       .from('tenants')
       .update({
         logo_url: logo_url || null,
@@ -42,7 +73,7 @@ export default async function handler(
         client_logos: client_logos || [],
         updated_at: new Date().toISOString(),
       })
-      .eq('id', tenantContext.tenant.id);
+      .eq('id', tenant.id);
 
     if (error) {
       console.error('Error updating branding settings:', error);
