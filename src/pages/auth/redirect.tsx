@@ -22,6 +22,9 @@ const AuthRedirect = () => {
           return;
         }
 
+        // Store user email for API authentication
+        localStorage.setItem('userEmail', user.email!);
+
         // Check if user has a tenant
         const { data: tenantMember } = await supabase
           .from('tenant_members')

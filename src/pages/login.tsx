@@ -79,7 +79,8 @@ export default function LoginPage() {
         return;
       }
 
-      // Step 3: Store subdomain and redirect
+      // Step 3: Store user email and subdomain
+      localStorage.setItem('userEmail', authData.user.email!);
       localStorage.setItem('auth_redirect_subdomain', tenant.subdomain);
 
       // Redirect to their tenant's admin area
