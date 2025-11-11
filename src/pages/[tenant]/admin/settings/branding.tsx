@@ -64,6 +64,9 @@ export default function BrandingSettingsPage() {
       setError(null);
       setSuccess(null);
 
+      // Get user email from localStorage for authentication
+      const userEmail = localStorage.getItem('userEmail');
+
       const response = await fetch('/api/tenant/update-branding', {
         method: 'POST',
         headers: {
@@ -71,6 +74,7 @@ export default function BrandingSettingsPage() {
           'x-tenant-subdomain': tenant as string,
         },
         body: JSON.stringify({
+          user_email: userEmail,
           logo_url: logoUrl,
           brand_color: brandColor,
           tagline: tagline,

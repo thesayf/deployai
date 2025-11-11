@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
-import { createClient } from '@/utils/supabase/server';
+import { getTenantFromRequest } from '@/utils/tenant-helpers';
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,45 +12,16 @@ export default async function handler(
 
   try {
     const { logo_url, brand_color, tagline, client_logos } = req.body;
-    const subdomain = req.headers['x-tenant-subdomain'] as string;
 
-    if (!subdomain) {
-      return res.status(400).json({ error: 'Tenant subdomain required' });
-    }
+    console.log('[Branding] Request received:', { logo_url, brand_color, tagline, client_logos });
 
-    // Get authenticated user from session
-    const supabase = createClient(req, res);
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    // Get tenant context (requires admin authentication)
+    const tenantContext = await getTenantFromRequest(req);
 
-    if (authError || !user) {
-      console.error('Auth error:', authError);
-      return res.status(401).json({ error: 'Unauthorized - not authenticated' });
-    }
+    console.log('[Branding] Tenant context:', { tenantContext });
 
-    // Get tenant and verify user is a member
-    const adminSupabase = supabaseAdmin();
-    const { data: tenant, error: tenantError } = await adminSupabase
-      .from('tenants')
-      .select('id')
-      .eq('subdomain', subdomain)
-      .single();
-
-    if (tenantError || !tenant) {
-      console.error('Tenant error:', tenantError);
-      return res.status(404).json({ error: 'Tenant not found' });
-    }
-
-    // Verify user is a member of this tenant
-    const { data: member, error: memberError } = await adminSupabase
-      .from('tenant_members')
-      .select('id, role')
-      .eq('tenant_id', tenant.id)
-      .eq('user_email', user.email)
-      .single();
-
-    if (memberError || !member) {
-      console.error('Member error:', memberError);
-      return res.status(401).json({ error: 'Unauthorized - not a member of this tenant' });
+    if (!tenantContext || !tenantContext.member) {
+      return res.status(401).json({ error: 'Unauthorized' });
     }
 
     // Validate brand color if provided
@@ -64,22 +35,30 @@ export default async function handler(
     }
 
     // Update branding settings
-    const { error } = await adminSupabase
+    const supabase = supabaseAdmin();
+    const updateData = {
+      logo_url: logo_url || null,
+      brand_color: brand_color || '#FF6B35',
+      tagline: tagline || null,
+      client_logos: client_logos || [],
+      updated_at: new Date().toISOString(),
+    };
+
+    console.log('[Branding] Updating tenant:', { tenantId: tenantContext.tenant.id, updateData });
+
+    const { error } = await supabase
       .from('tenants')
-      .update({
-        logo_url: logo_url || null,
-        brand_color: brand_color || '#FF6B35',
-        tagline: tagline || null,
-        client_logos: client_logos || [],
-        updated_at: new Date().toISOString(),
-      })
-      .eq('id', tenant.id);
+      .update(updateData)
+      .eq('id', tenantContext.tenant.id);
+
+    console.log('[Branding] Update result:', { error });
 
     if (error) {
       console.error('Error updating branding settings:', error);
-      return res.status(500).json({ error: 'Failed to update branding settings' });
+      return res.status(500).json({ error: 'Failed to update branding settings', details: error.message });
     }
 
+    console.log('[Branding] Success!');
     res.status(200).json({ success: true, message: 'Branding settings updated successfully' });
   } catch (error) {
     console.error('Error in update-branding API:', error);

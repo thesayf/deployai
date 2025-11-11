@@ -29,7 +29,8 @@ export const NotificationBell: React.FC = () => {
 
     try {
       setLoading(true);
-      const response = await fetch('/api/notifications?limit=10', {
+      const userEmail = localStorage.getItem('userEmail');
+      const response = await fetch(`/api/notifications?limit=10&user_email=${encodeURIComponent(userEmail || '')}`, {
         headers: {
           'x-tenant-subdomain': tenantContext.tenant.subdomain,
         },
@@ -52,13 +53,17 @@ export const NotificationBell: React.FC = () => {
     if (!tenantContext) return;
 
     try {
+      const userEmail = localStorage.getItem('userEmail');
       const response = await fetch('/api/notifications/mark-read', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'x-tenant-subdomain': tenantContext.tenant.subdomain,
         },
-        body: JSON.stringify({ notificationId }),
+        body: JSON.stringify({
+          user_email: userEmail,
+          notificationId
+        }),
       });
 
       if (!response.ok) throw new Error('Failed to mark as read');
