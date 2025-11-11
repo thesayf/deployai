@@ -16,6 +16,10 @@ export interface Tenant {
   assessments_limit?: number;
   created_at: string;
   updated_at: string;
+  // Branding fields for white-label customization
+  logo_url?: string;
+  brand_color?: string;
+  tagline?: string;
 }
 
 export interface TenantMember {

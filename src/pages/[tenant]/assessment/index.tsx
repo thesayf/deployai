@@ -180,21 +180,13 @@ const TenantAssessmentLanding = () => {
         <meta property="og:type" content="website" />
       </Head>
 
-      {/* Logo Header */}
-      <div className="bg-[#212121] pt-6 pb-4 md:py-6">
-        <div className="container mx-auto px-6 flex justify-center">
-          <Image
-            src="/logo.png"
-            alt={tenantContext?.tenant.company_name || 'AI Assessment'}
-            width={220}
-            height={80}
-            className="h-10 md:h-12 w-auto brightness-0 invert"
-          />
-        </div>
-      </div>
-
-      <main className="bg-[#212121]">
-        <AssessmentLanding />
+      <main>
+        <AssessmentLanding
+          companyName={tenantContext?.tenant.company_name}
+          brandColor={tenantContext?.tenant.brand_color}
+          logoUrl={tenantContext?.tenant.logo_url}
+          tagline={tenantContext?.tenant.tagline}
+        />
 
         {/* Methodology Credibility */}
         <div className="bg-white py-12">
