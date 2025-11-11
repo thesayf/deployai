@@ -42,8 +42,11 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-gray-50 to-white py-20 px-4 sm:px-6 lg:px-8">
+      {/* Hero Section - Bold colored background */}
+      <section
+        className="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 border-b-[6px] border-black"
+        style={{ backgroundColor: primaryColor }}
+      >
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -54,25 +57,27 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
             {/* Logo or Company Name */}
             {logoUrl ? (
               <div className="flex justify-center mb-8">
-                <img
-                  src={logoUrl}
-                  alt={companyName}
-                  className="h-16 md:h-20 object-contain"
-                />
+                <div className="bg-white p-4 border-[3px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+                  <img
+                    src={logoUrl}
+                    alt={companyName}
+                    className="h-16 md:h-20 object-contain"
+                  />
+                </div>
               </div>
             ) : (
-              <h1 className="text-3xl md:text-4xl font-black text-gray-900 mb-4">
+              <h1 className="text-3xl md:text-4xl font-black text-white mb-4">
                 {companyName}
               </h1>
             )}
 
             {/* Main Headline */}
-            <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-6 leading-tight">
+            <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight drop-shadow-[4px_4px_0px_rgba(0,0,0,1)]">
               AI Readiness Assessment
             </h2>
 
             {/* Tagline */}
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-white mb-10 leading-relaxed max-w-3xl mx-auto font-bold">
               {tagline || 'Discover exactly where AI can transform your business in under 3 minutes'}
             </p>
 
@@ -85,16 +90,10 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-center gap-3 p-4 bg-white border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                  style={{
-                    borderColor: index === 1 ? primaryColor : 'black'
-                  }}
+                  className="flex items-center justify-center gap-3 p-4 bg-white border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                 >
-                  <item.icon
-                    className="h-5 w-5 flex-shrink-0"
-                    style={{ color: primaryColor }}
-                  />
-                  <span className="font-bold text-gray-900 text-sm md:text-base">
+                  <item.icon className="h-6 w-6 flex-shrink-0 text-black" />
+                  <span className="font-black text-gray-900 text-sm md:text-base">
                     {item.label}
                   </span>
                 </div>
@@ -104,14 +103,13 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
             {/* CTA Button */}
             <button
               onClick={handleStartAssessment}
-              className="inline-flex items-center justify-center px-8 py-4 text-white font-bold text-lg border-[3px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
-              style={{ backgroundColor: primaryColor }}
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-black font-black text-lg border-[3px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
             >
               Start Your Free Assessment
               <ArrowRight className="ml-2 h-5 w-5" />
             </button>
 
-            <p className="mt-4 text-sm text-gray-500">
+            <p className="mt-4 text-sm text-white font-bold">
               No credit card required • Completely free • Instant results
             </p>
           </motion.div>
@@ -119,12 +117,12 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-yellow-100 border-b-[6px] border-black">
         <div className="max-w-6xl mx-auto">
           <h3 className="text-3xl md:text-4xl font-black text-gray-900 mb-4 text-center">
             How Your Assessment Works
           </h3>
-          <p className="text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto">
+          <p className="text-lg text-gray-900 font-bold mb-12 text-center max-w-3xl mx-auto">
             We'll analyze your business to identify exactly where AI can deliver the highest impact and ROI for your specific situation
           </p>
 
@@ -154,7 +152,7 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white border-[3px] border-black p-8 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+                className="bg-white border-[4px] border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
               >
                 <div
                   className="w-16 h-16 border-[3px] border-black flex items-center justify-center mb-6"
@@ -162,16 +160,13 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
                 >
                   <item.icon className="h-8 w-8 text-white" />
                 </div>
-                <div
-                  className="text-sm font-black mb-2"
-                  style={{ color: primaryColor }}
-                >
+                <div className="text-sm font-black mb-2 text-black">
                   STEP {item.step}
                 </div>
                 <h4 className="text-xl font-black text-gray-900 mb-3">
                   {item.title}
                 </h4>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-700 leading-relaxed font-medium">
                   {item.description}
                 </p>
               </motion.div>
@@ -181,12 +176,12 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
       </section>
 
       {/* What You'll Discover Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white border-b-[6px] border-black">
         <div className="max-w-6xl mx-auto">
           <h3 className="text-3xl md:text-4xl font-black text-gray-900 mb-4 text-center">
             What You'll Discover
           </h3>
-          <p className="text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto">
+          <p className="text-lg text-gray-900 font-bold mb-12 text-center max-w-3xl mx-auto">
             Your personalized assessment reveals actionable insights tailored to your business
           </p>
 
@@ -211,18 +206,20 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
             ].map((item, index) => (
               <div
                 key={index}
-                className="p-6 bg-gray-50 border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                className="p-6 bg-white border-[4px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
               >
                 <div className="flex items-start gap-3">
-                  <CheckCircle
-                    className="h-6 w-6 flex-shrink-0 mt-1"
-                    style={{ color: primaryColor }}
-                  />
+                  <div
+                    className="w-8 h-8 flex-shrink-0 border-[2px] border-black flex items-center justify-center"
+                    style={{ backgroundColor: primaryColor }}
+                  >
+                    <CheckCircle className="h-5 w-5 text-white" />
+                  </div>
                   <div>
                     <h4 className="text-lg font-black text-gray-900 mb-2">
                       {item.title}
                     </h4>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-gray-700 leading-relaxed font-medium">
                       {item.description}
                     </p>
                   </div>
@@ -235,24 +232,27 @@ export const AssessmentLanding: React.FC<AssessmentLandingProps> = ({
 
       {/* Social Proof Section - Only show if client logos exist */}
       {clientLogos && clientLogos.length > 0 && (
-        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 border-t-[3px] border-black">
+        <section
+          className="py-16 px-4 sm:px-6 lg:px-8 border-t-[3px] border-black"
+          style={{ backgroundColor: primaryColor }}
+        >
           <div className="max-w-6xl mx-auto">
-            <h3 className="text-2xl font-black text-gray-900 mb-2 text-center">
+            <h3 className="text-2xl md:text-3xl font-black text-white mb-2 text-center">
               Trusted By
             </h3>
-            <p className="text-gray-600 mb-12 text-center">
+            <p className="text-white font-bold mb-12 text-center">
               Join businesses who have transformed with AI
             </p>
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
               {clientLogos.map((logo, index) => (
                 <div
                   key={index}
-                  className="grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
+                  className="bg-white p-4 border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                 >
                   <img
                     src={logo.url}
                     alt={logo.alt}
-                    className="h-12 md:h-16 w-auto object-contain"
+                    className="h-10 md:h-12 w-auto object-contain grayscale opacity-70"
                     loading="lazy"
                   />
                 </div>
