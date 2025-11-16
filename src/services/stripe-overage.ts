@@ -129,7 +129,7 @@ export async function getOverageChargesForPeriod(
     });
 
     const overageItems = invoiceItems.data.filter(
-      (item) => item.metadata.type === 'overage'
+      (item) => item.metadata?.type === 'overage'
     );
 
     const totalCents = overageItems.reduce((sum, item) => sum + item.amount, 0);

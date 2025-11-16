@@ -281,7 +281,16 @@ async function handleSpecificEvent(event: Stripe.Event, customerId: string) {
       }
 
       // Get subscription to determine assessments included
-      const subscription = await stripe.subscriptions.retrieve(invoice.subscription as string);
+      const invoiceData = invoice as any; // Type assertion for subscription field
+      if (!invoiceData.subscription) {
+        console.log('[WEBHOOK] No subscription found on invoice');
+        break;
+      }
+      const subscriptionId = typeof invoiceData.subscription === 'string'
+        ? invoiceData.subscription
+        : invoiceData.subscription.id;
+      const subscriptionResponse = await stripe.subscriptions.retrieve(subscriptionId);
+      const subscription = subscriptionResponse as any; // Type assertion for Stripe subscription fields
       const assessmentsIncluded = parseInt(subscription.metadata?.assessments_limit || '0');
 
       // Get current assessments used
@@ -325,7 +334,7 @@ async function handleSpecificEvent(event: Stripe.Event, customerId: string) {
 
     case 'customer.subscription.created': {
       console.log(`[WEBHOOK] Subscription created for customer: ${customerId}`);
-      const subscription = event.data.object as Stripe.Subscription;
+      const subscription = event.data.object as any; // Type assertion for Stripe subscription fields
 
       // Only send email if subscription is active (not in trial)
       if (subscription.status !== 'active' || subscription.trial_end) {
@@ -359,7 +368,7 @@ async function handleSpecificEvent(event: Stripe.Event, customerId: string) {
 
     case 'customer.subscription.updated': {
       console.log(`[WEBHOOK] Subscription updated for customer: ${customerId}`);
-      const subscription = event.data.object as Stripe.Subscription;
+      const subscription = event.data.object as any; // Type assertion for Stripe subscription fields
       const previousAttributes = (event.data as any).previous_attributes;
 
       // Only send email if the plan actually changed (not just status updates)
@@ -401,7 +410,7 @@ async function handleSpecificEvent(event: Stripe.Event, customerId: string) {
 
     case 'customer.subscription.deleted': {
       console.log(`[WEBHOOK] Subscription cancelled for customer: ${customerId}`);
-      const subscription = event.data.object as Stripe.Subscription;
+      const subscription = event.data.object as any; // Type assertion for Stripe subscription fields
 
       const planName = subscription.items.data[0]?.price.nickname || tenant.tier;
       const canceledAt = new Date(subscription.canceled_at ? subscription.canceled_at * 1000 : Date.now()).toISOString();
