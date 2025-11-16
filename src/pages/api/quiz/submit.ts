@@ -60,7 +60,7 @@ export default async function handler(
           success: false,
           reportId: '',
           processingTime: '',
-          error: `Assessment limit reached. You have used ${tenantContext.tenant.assessments_used} of ${tenantContext.tenant.assessments_limit || 'unlimited'} assessments.`,
+          error: 'We\'re unable to process your assessment at this time. Please contact support for assistance.',
         });
       }
     }

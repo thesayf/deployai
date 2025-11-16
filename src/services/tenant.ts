@@ -155,13 +155,9 @@ class TenantService {
   }
 
   private checkAssessmentAvailability(tenant: Tenant): boolean {
-    // Check if subscription is active or trialing
-    if (tenant.subscription_status !== 'active' && tenant.subscription_status !== 'trialing') {
-      return false;
-    }
-
     // CHANGED: Always allow assessments - overages will be billed automatically
     // This ensures the assessment link never breaks, even if limit is exceeded
+    // Subscription status doesn't matter - null/active/trialing/canceled all allowed
     return true;
   }
 

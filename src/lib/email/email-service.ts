@@ -344,7 +344,7 @@ export async function sendWelcomeEmail({
     });
 
     const result = await resend.emails.send({
-      from: getEmailSender('fallback'),
+      from: getEmailSender('assessment'),
       to: email,
       subject: `Welcome to deployAI - Your Account is Ready!`,
       html: emailHtml,
@@ -398,7 +398,7 @@ export async function sendPasswordResetEmail({
     });
 
     const result = await resend.emails.send({
-      from: getEmailSender('fallback'),
+      from: getEmailSender('assessment'),
       to: email,
       subject: 'Reset Your Password - deployAI',
       html: emailHtml,
@@ -451,7 +451,7 @@ export async function sendEmailVerificationEmail({
     });
 
     const result = await resend.emails.send({
-      from: getEmailSender('fallback'),
+      from: getEmailSender('assessment'),
       to: email,
       subject: 'Verify Your Email Address - deployAI',
       html: emailHtml,
@@ -510,7 +510,7 @@ export async function sendTeamInvitationEmail({
     });
 
     const result = await resend.emails.send({
-      from: getEmailSender('fallback'),
+      from: getEmailSender('assessment'),
       to: invitedEmail,
       subject: `${inviterName} invited you to join ${companyName} on deployAI`,
       html: emailHtml,
@@ -587,7 +587,7 @@ export async function sendUsageWarningEmail({
     const threshold = percentageUsed >= 90 ? 90 : 80;
 
     const result = await resend.emails.send({
-      from: getEmailSender('fallback'),
+      from: getEmailSender('assessment'),
       to: ownerEmail,
       subject: `${threshold}% Assessment Limit Reached - ${companyName}`,
       html: emailHtml,
@@ -655,7 +655,7 @@ export async function sendLimitReachedEmail({
     });
 
     const result = await resend.emails.send({
-      from: getEmailSender('fallback'),
+      from: getEmailSender('assessment'),
       to: ownerEmail,
       subject: `Assessment Limit Reached - ${companyName}`,
       html: emailHtml,
@@ -733,7 +733,7 @@ export async function sendFirstOverageEmail({
     });
 
     const result = await resend.emails.send({
-      from: getEmailSender('fallback'),
+      from: getEmailSender('assessment'),
       to: ownerEmail,
       subject: `Overage Billing Active - ${companyName}`,
       html: emailHtml,
@@ -787,7 +787,7 @@ export async function sendRequestConfirmationEmail({
     });
 
     const result = await resend.emails.send({
-      from: getEmailSender('fallback'),
+      from: getEmailSender('assessment'),
       to: candidateEmail,
       subject: `Assessment Request Received - ${companyName}`,
       html: emailHtml,
@@ -857,7 +857,7 @@ export async function sendAdminNotificationEmail({
     });
 
     const result = await resend.emails.send({
-      from: getEmailSender('fallback'),
+      from: getEmailSender('assessment'),
       to: adminEmail,
       subject: `New Assessment Request from ${candidateFirstName} ${candidateLastName}`,
       html: emailHtml,
@@ -917,7 +917,7 @@ export async function sendApprovalEmail({
     });
 
     const result = await resend.emails.send({
-      from: getEmailSender('fallback'),
+      from: getEmailSender('assessment'),
       to: candidateEmail,
       subject: `Your Assessment is Ready - ${companyName}`,
       html: emailHtml,
@@ -986,7 +986,7 @@ export async function sendTrialEndingEmail({
     });
 
     const result = await resend.emails.send({
-      from: FROM_EMAIL,
+      from: getEmailSender('assessment'),
       to: ownerEmail,
       subject: `⏰ Your trial ends in ${daysRemaining} days - Select your plan`,
       html: htmlContent,
@@ -998,7 +998,7 @@ export async function sendTrialEndingEmail({
     });
 
     console.log('[TRIAL-ENDING-EMAIL] Sent successfully:', result.data?.id);
-    return { success: true, data: result.data };
+    return { success: true };
   } catch (error) {
     console.error('[TRIAL-ENDING-EMAIL] Exception:', error);
     return {
@@ -1054,7 +1054,7 @@ export async function sendPaymentFailedEmail({
     });
 
     const result = await resend.emails.send({
-      from: FROM_EMAIL,
+      from: getEmailSender('assessment'),
       to: ownerEmail,
       subject: `⚠️ Payment Failed - Action Required`,
       html: htmlContent,
@@ -1066,7 +1066,7 @@ export async function sendPaymentFailedEmail({
     });
 
     console.log('[PAYMENT-FAILED-EMAIL] Sent successfully:', result.data?.id);
-    return { success: true, data: result.data };
+    return { success: true };
   } catch (error) {
     console.error('[PAYMENT-FAILED-EMAIL] Exception:', error);
     return {
@@ -1129,7 +1129,7 @@ export async function sendPaymentSucceededEmail({
     });
 
     const result = await resend.emails.send({
-      from: FROM_EMAIL,
+      from: getEmailSender('assessment'),
       to: ownerEmail,
       subject: `✅ Payment Received - ${companyName}`,
       html: htmlContent,
@@ -1141,7 +1141,7 @@ export async function sendPaymentSucceededEmail({
     });
 
     console.log('[PAYMENT-SUCCEEDED-EMAIL] Sent successfully:', result.data?.id);
-    return { success: true, data: result.data };
+    return { success: true };
   } catch (error) {
     console.error('[PAYMENT-SUCCEEDED-EMAIL] Exception:', error);
     return {
@@ -1203,7 +1203,7 @@ export async function sendSubscriptionActivatedEmail({
     });
 
     const result = await resend.emails.send({
-      from: FROM_EMAIL,
+      from: getEmailSender('assessment'),
       to: ownerEmail,
       subject: `🎉 Welcome to deployAI - Your ${planName} subscription is active`,
       html: htmlContent,
@@ -1215,7 +1215,7 @@ export async function sendSubscriptionActivatedEmail({
     });
 
     console.log('[SUBSCRIPTION-ACTIVATED-EMAIL] Sent successfully:', result.data?.id);
-    return { success: true, data: result.data };
+    return { success: true };
   } catch (error) {
     console.error('[SUBSCRIPTION-ACTIVATED-EMAIL] Exception:', error);
     return {
@@ -1285,7 +1285,7 @@ export async function sendSubscriptionUpdatedEmail({
 
     const changeType = isUpgrade ? 'Upgrade' : 'Update';
     const result = await resend.emails.send({
-      from: FROM_EMAIL,
+      from: getEmailSender('assessment'),
       to: ownerEmail,
       subject: `${isUpgrade ? '🚀' : '🔄'} Subscription ${changeType} Confirmed - ${newPlanName}`,
       html: htmlContent,
@@ -1297,7 +1297,7 @@ export async function sendSubscriptionUpdatedEmail({
     });
 
     console.log('[SUBSCRIPTION-UPDATED-EMAIL] Sent successfully:', result.data?.id);
-    return { success: true, data: result.data };
+    return { success: true };
   } catch (error) {
     console.error('[SUBSCRIPTION-UPDATED-EMAIL] Exception:', error);
     return {
@@ -1356,7 +1356,7 @@ export async function sendSubscriptionCanceledEmail({
     });
 
     const result = await resend.emails.send({
-      from: FROM_EMAIL,
+      from: getEmailSender('assessment'),
       to: ownerEmail,
       subject: `👋 Subscription Canceled - We're sorry to see you go`,
       html: htmlContent,
@@ -1368,7 +1368,7 @@ export async function sendSubscriptionCanceledEmail({
     });
 
     console.log('[SUBSCRIPTION-CANCELED-EMAIL] Sent successfully:', result.data?.id);
-    return { success: true, data: result.data };
+    return { success: true };
   } catch (error) {
     console.error('[SUBSCRIPTION-CANCELED-EMAIL] Exception:', error);
     return {
@@ -1442,7 +1442,7 @@ export async function sendAssessmentCompletedNotification({
     });
 
     const result = await resend.emails.send({
-      from: FROM_EMAIL,
+      from: getEmailSender('assessment'),
       to: adminEmail,
       subject: `✅ New Assessment Completed - ${candidateFirstName} ${candidateLastName}`,
       html: htmlContent,
@@ -1454,7 +1454,7 @@ export async function sendAssessmentCompletedNotification({
     });
 
     console.log('[ASSESSMENT-COMPLETED-NOTIFICATION] Sent successfully:', result.data?.id);
-    return { success: true, data: result.data };
+    return { success: true };
   } catch (error) {
     console.error('[ASSESSMENT-COMPLETED-NOTIFICATION] Exception:', error);
     return {
@@ -1521,7 +1521,7 @@ export async function sendWeeklySummaryEmail({
     });
 
     const result = await resend.emails.send({
-      from: FROM_EMAIL,
+      from: getEmailSender('assessment'),
       to: adminEmail,
       subject: `📊 Weekly Summary - ${assessmentsCompleted} assessment${assessmentsCompleted !== 1 ? 's' : ''} this week`,
       html: htmlContent,
@@ -1533,7 +1533,7 @@ export async function sendWeeklySummaryEmail({
     });
 
     console.log('[WEEKLY-SUMMARY-EMAIL] Sent successfully:', result.data?.id);
-    return { success: true, data: result.data };
+    return { success: true };
   } catch (error) {
     console.error('[WEEKLY-SUMMARY-EMAIL] Exception:', error);
     return {
@@ -1600,7 +1600,7 @@ export async function sendMonthlyDigestEmail({
     });
 
     const result = await resend.emails.send({
-      from: FROM_EMAIL,
+      from: getEmailSender('assessment'),
       to: adminEmail,
       subject: `📈 Monthly Digest - ${month} ${year} Report`,
       html: htmlContent,
@@ -1612,7 +1612,7 @@ export async function sendMonthlyDigestEmail({
     });
 
     console.log('[MONTHLY-DIGEST-EMAIL] Sent successfully:', result.data?.id);
-    return { success: true, data: result.data };
+    return { success: true };
   } catch (error) {
     console.error('[MONTHLY-DIGEST-EMAIL] Exception:', error);
     return {
@@ -1663,7 +1663,7 @@ export async function sendFeedbackRequestEmail({
     });
 
     const result = await resend.emails.send({
-      from: FROM_EMAIL,
+      from: getEmailSender('assessment'),
       to: candidateEmail,
       subject: `💭 Share your thoughts on your AI assessment - ${companyName}`,
       html: htmlContent,
@@ -1674,7 +1674,7 @@ export async function sendFeedbackRequestEmail({
     });
 
     console.log('[FEEDBACK-REQUEST-EMAIL] Sent successfully:', result.data?.id);
-    return { success: true, data: result.data };
+    return { success: true };
   } catch (error) {
     console.error('[FEEDBACK-REQUEST-EMAIL] Exception:', error);
     return {
@@ -1724,7 +1724,7 @@ export async function sendAssessmentReminderEmail({
     });
 
     const result = await resend.emails.send({
-      from: FROM_EMAIL,
+      from: getEmailSender('assessment'),
       to: candidateEmail,
       subject: `⏰ Complete Your AI Assessment - ${companyName}`,
       html: htmlContent,
@@ -1735,7 +1735,7 @@ export async function sendAssessmentReminderEmail({
     });
 
     console.log('[ASSESSMENT-REMINDER-EMAIL] Sent successfully:', result.data?.id);
-    return { success: true, data: result.data };
+    return { success: true };
   } catch (error) {
     console.error('[ASSESSMENT-REMINDER-EMAIL] Exception:', error);
     return {

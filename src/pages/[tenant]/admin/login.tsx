@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
 import { Mail, Globe, ArrowRight, AlertCircle } from 'lucide-react';
 import { signInWithGoogleClient, signInWithEmailClient, signUpWithEmailClient } from '@/lib/auth-actions';
 
@@ -134,12 +135,12 @@ const LoginPage: React.FC<LoginPageProps> = ({ tenant }) => {
                     Password
                   </label>
                   {!isSignUp && (
-                    <a
+                    <Link
                       href="/auth/forgot-password"
                       className="text-sm font-medium text-orange-500 hover:text-orange-600"
                     >
                       Forgot password?
-                    </a>
+                    </Link>
                   )}
                 </div>
                 <input

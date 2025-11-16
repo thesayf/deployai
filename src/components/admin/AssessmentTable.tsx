@@ -11,7 +11,9 @@ import {
   ExternalLink,
   RefreshCw,
   Mail,
-  X
+  X,
+  RotateCw,
+  Send
 } from 'lucide-react';
 
 const AssessmentTable: React.FC = () => {
@@ -28,6 +30,10 @@ const AssessmentTable: React.FC = () => {
   const [showSendModal, setShowSendModal] = useState(false);
   const [selectedAssessment, setSelectedAssessment] = useState<Assessment | null>(null);
   const [isSending, setIsSending] = useState(false);
+
+  // Retry/Resend state
+  const [retryingId, setRetryingId] = useState<string | null>(null);
+  const [resendingId, setResendingId] = useState<string | null>(null);
 
   const itemsPerPage = 20;
 
@@ -194,6 +200,76 @@ const AssessmentTable: React.FC = () => {
       alert(`Failed to send assessment: ${err.message}`);
     } finally {
       setIsSending(false);
+    }
+  };
+
+  const handleRetry = async (assessmentId: string) => {
+    if (!tenantContext) return;
+
+    if (!confirm('Are you sure you want to regenerate this report? This will restart the AI processing.')) {
+      return;
+    }
+
+    setRetryingId(assessmentId);
+
+    try {
+      const response = await fetch(`/api/admin/assessments/${assessmentId}/retry`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-tenant-subdomain': tenantContext.tenant.subdomain,
+        },
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to retry report generation');
+      }
+
+      await refresh();
+
+      alert(result.message || 'Report regeneration started successfully!');
+    } catch (err: any) {
+      console.error('Error retrying report:', err);
+      alert(`Failed to retry report: ${err.message}`);
+    } finally {
+      setRetryingId(null);
+    }
+  };
+
+  const handleResendEmail = async (assessmentId: string, userEmail: string) => {
+    if (!tenantContext) return;
+
+    if (!confirm(`Are you sure you want to resend the report email to ${userEmail}?`)) {
+      return;
+    }
+
+    setResendingId(assessmentId);
+
+    try {
+      const response = await fetch(`/api/admin/assessments/${assessmentId}/resend-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-tenant-subdomain': tenantContext.tenant.subdomain,
+        },
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to resend email');
+      }
+
+      await refresh();
+
+      alert(result.message || `Email resent successfully to ${userEmail}!`);
+    } catch (err: any) {
+      console.error('Error resending email:', err);
+      alert(`Failed to resend email: ${err.message}`);
+    } finally {
+      setResendingId(null);
     }
   };
 
@@ -435,14 +511,41 @@ const AssessmentTable: React.FC = () => {
                             >
                               View
                             </Link>
-                            {assessment.report?.status === 'completed' && assessment.report?.access_token && (
-                              <Link
-                                href={`/report/view/${assessment.report.access_token}`}
-                                target="_blank"
-                                className="p-1 border border-gray-200 rounded hover:bg-gray-50 transition-colors"
+
+                            {/* Retry button for failed reports */}
+                            {assessment.report?.status === 'failed' && (
+                              <button
+                                onClick={() => handleRetry(assessment.id)}
+                                disabled={retryingId === assessment.id}
+                                className="flex items-center gap-1 px-2 py-1 bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                title="Retry report generation"
                               >
-                                <ExternalLink className="h-4 w-4" />
-                              </Link>
+                                <RotateCw className={`h-3 w-3 ${retryingId === assessment.id ? 'animate-spin' : ''}`} />
+                                {retryingId === assessment.id ? 'Retrying...' : 'Retry'}
+                              </button>
+                            )}
+
+                            {/* Resend email button for completed reports */}
+                            {assessment.report?.status === 'completed' && (
+                              <>
+                                <Link
+                                  href={`/report/view/${assessment.report.access_token}`}
+                                  target="_blank"
+                                  className="p-1 border border-gray-200 rounded hover:bg-gray-50 transition-colors"
+                                  title="View report"
+                                >
+                                  <ExternalLink className="h-4 w-4" />
+                                </Link>
+                                <button
+                                  onClick={() => handleResendEmail(assessment.id, assessment.user_email)}
+                                  disabled={resendingId === assessment.id}
+                                  className="flex items-center gap-1 px-2 py-1 bg-green-500 hover:bg-green-600 text-white text-xs font-semibold rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                  title="Resend report email"
+                                >
+                                  <Send className={`h-3 w-3 ${resendingId === assessment.id ? 'animate-pulse' : ''}`} />
+                                  {resendingId === assessment.id ? 'Sending...' : 'Resend'}
+                                </button>
+                              </>
                             )}
                           </>
                         )}
