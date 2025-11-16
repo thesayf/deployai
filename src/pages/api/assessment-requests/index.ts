@@ -119,7 +119,7 @@ export default async function handler(
       candidateLastName: lastName,
       candidateEmail: email,
       companyName: tenantContext.tenant.company_name,
-      requestedAt: requestRecord.created_at,
+      requestedAt: (requestRecord as any).created_at,
     }).catch(err => console.error('[ASSESSMENT REQUEST] Failed to send candidate confirmation:', err));
 
     // Send notification email to tenant admin (async, don't wait)
