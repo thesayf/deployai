@@ -418,7 +418,7 @@ export default async function handler(
           industry: (quizData as any).industry,
           companySize: (quizData as any).company_size,
           completedAt: new Date().toISOString(),
-          assessmentId: quizResponse.id,
+          assessmentId: quizId,
           reportId: report.id,
           subdomain: tenantContext.tenant.subdomain,
           assessmentsUsed: usageData?.assessments_used || 0,
