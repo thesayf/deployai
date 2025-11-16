@@ -6,12 +6,15 @@ export interface Tenant {
   subdomain: string;
   company_name: string;
   email: string;
+  contact_email?: string;
   custom_title?: string;
   custom_logo_url?: string;
   stripe_customer_id?: string;
   subscription_tier?: 'starter' | 'professional' | 'scale';
   subscription_status: string;
   trial_end_date?: string | null;
+  current_period_start?: string;
+  current_period_end?: string;
   assessments_used: number;
   assessments_limit?: number;
   created_at: string;
