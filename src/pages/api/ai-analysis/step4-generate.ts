@@ -243,8 +243,8 @@ export default async function handler(
           firstName: userData.user_first_name || 'there',
           lastName: userData.user_last_name || '',
           company: userData.user_company,
-          industry: userData.industry,
-          companySize: userData.company_size,
+          industry: (userData as any).industry,
+          companySize: (userData as any).company_size,
           hasAccessToken: !!reportWithUser.access_token
         });
 
@@ -254,8 +254,8 @@ export default async function handler(
           firstName: userData.user_first_name || 'there',
           lastName: userData.user_last_name || '',
           company: userData.user_company,
-          industry: userData.industry,
-          companySize: userData.company_size,
+          industry: (userData as any).industry,
+          companySize: (userData as any).company_size,
           accessToken: reportWithUser.access_token,
           req
         });
