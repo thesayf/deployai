@@ -49,33 +49,43 @@ export default function SignupPage() {
     setLoading(true);
     setError(null);
 
+    console.log('[SIGNUP Frontend] 🚀 Starting signup submission');
+    console.log('[SIGNUP Frontend] Form data:', { email, companyName, subdomain, hasPassword: !!password });
+
     // Validation
     if (!email || !password || !companyName || !subdomain) {
+      console.log('[SIGNUP Frontend] ❌ Validation failed: Missing fields');
       setError('All fields are required');
       setLoading(false);
       return;
     }
 
     if (password.length < 6) {
+      console.log('[SIGNUP Frontend] ❌ Validation failed: Password too short');
       setError('Password must be at least 6 characters');
       setLoading(false);
       return;
     }
 
     if (subdomain.length < 3) {
+      console.log('[SIGNUP Frontend] ❌ Validation failed: Subdomain too short');
       setError('Subdomain must be at least 3 characters');
       setLoading(false);
       return;
     }
 
     if (!/^[a-z0-9]+$/.test(subdomain)) {
+      console.log('[SIGNUP Frontend] ❌ Validation failed: Invalid subdomain format');
       setError('Subdomain can only contain lowercase letters and numbers');
       setLoading(false);
       return;
     }
 
+    console.log('[SIGNUP Frontend] ✅ Validation passed');
+
     try {
       // Step 1: Create tenant and user
+      console.log('[SIGNUP Frontend] 📡 Calling /api/auth/signup');
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -87,14 +97,20 @@ export default function SignupPage() {
         }),
       });
 
+      console.log('[SIGNUP Frontend] Response status:', response.status);
       const data = await response.json();
+      console.log('[SIGNUP Frontend] Response data:', data);
 
       if (!response.ok) {
+        console.log('[SIGNUP Frontend] ❌ API returned error');
         throw new Error(data.error || 'Signup failed');
       }
 
+      console.log('[SIGNUP Frontend] ✅ Signup API succeeded');
+
       // Step 2: Auto-login the user
       if (!data.requiresLogin) {
+        console.log('[SIGNUP Frontend] 🔐 Attempting auto-login');
         const supabase = createClient();
         const { error: signInError } = await supabase.auth.signInWithPassword({
           email,
@@ -102,26 +118,33 @@ export default function SignupPage() {
         });
 
         if (signInError) {
-          console.error('Auto-login failed:', signInError);
+          console.error('[SIGNUP Frontend] ❌ Auto-login failed:', signInError);
+          console.log('[SIGNUP Frontend] Redirecting to manual login');
           // Fall back to manual login
           router.push(`/${subdomain}/admin/login`);
           return;
         }
 
+        console.log('[SIGNUP Frontend] ✅ Auto-login successful');
         // Store subdomain for redirect logic
         localStorage.setItem('auth_redirect_subdomain', subdomain);
+      } else {
+        console.log('[SIGNUP Frontend] Manual login required');
       }
 
       // Redirect to appropriate page
       if (data.redirectUrl) {
+        console.log('[SIGNUP Frontend] 🚀 Redirecting to:', data.redirectUrl);
         router.push(data.redirectUrl);
       } else {
         // Fallback
+        console.log('[SIGNUP Frontend] Using fallback redirect');
         router.push(`/${subdomain}/admin/login`);
       }
 
     } catch (err: any) {
-      console.error('Signup error:', err);
+      console.error('[SIGNUP Frontend] 💥 ERROR:', err);
+      console.error('[SIGNUP Frontend] Error details:', err.message);
       setError(err.message || 'An unexpected error occurred');
     } finally {
       setLoading(false);
