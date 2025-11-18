@@ -48,11 +48,14 @@ const AuthRedirect = () => {
           return;
         }
 
-        // User has a tenant - use that subdomain
+        // User has a tenant - use that subdomain (prioritize user's actual tenant over stored value)
         const userTenant = (tenantMember as any).tenants;
         console.log('[AUTH REDIRECT] User tenant:', userTenant);
-        const subdomain = storedSubdomain || userTenant.subdomain;
+        const subdomain = userTenant.subdomain || storedSubdomain;
         console.log('[AUTH REDIRECT] Final subdomain to use:', subdomain);
+
+        // Clear the stored subdomain since we found the user's actual tenant
+        localStorage.removeItem('auth_redirect_subdomain');
 
         if (!subdomain) {
           router.push('/');
