@@ -15,4 +15,7 @@ console.log('[STRIPE INIT] Key mode:', process.env.STRIPE_SECRET_KEY?.startsWith
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2025-09-30.clover',
   typescript: true,
+  maxNetworkRetries: 3,
+  timeout: 30000, // 30 seconds
+  httpClient: Stripe.createFetchHttpClient(),
 });
