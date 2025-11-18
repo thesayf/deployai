@@ -11,30 +11,38 @@ const AuthRedirect = () => {
       try {
         // Get the stored subdomain from localStorage
         const storedSubdomain = localStorage.getItem('auth_redirect_subdomain');
+        console.log('[AUTH REDIRECT] 🚀 Starting redirect');
+        console.log('[AUTH REDIRECT] Stored subdomain:', storedSubdomain);
 
         // Check if user is authenticated
         const supabase = createClient();
         const { data: { user } } = await supabase.auth.getUser();
 
         if (!user) {
+          console.log('[AUTH REDIRECT] ❌ No user found, redirecting to home');
           localStorage.removeItem('auth_redirect_subdomain');
           router.push('/');
           return;
         }
 
+        console.log('[AUTH REDIRECT] ✅ User authenticated:', user.email);
+
         // Store user email for API authentication
         localStorage.setItem('userEmail', user.email!);
 
         // Check if user has a tenant
-        const { data: tenantMember } = await supabase
+        console.log('[AUTH REDIRECT] 🔍 Checking for tenant membership');
+        const { data: tenantMember, error: memberError } = await supabase
           .from('tenant_members')
           .select('tenant_id, tenants(subdomain)')
           .eq('user_email', user.email)
           .single();
 
+        console.log('[AUTH REDIRECT] Tenant member query result:', { tenantMember, memberError });
+
         if (!tenantMember) {
           // New OAuth user without a tenant - redirect to complete signup
-          console.log('[OAuth] New user without tenant - redirecting to complete signup');
+          console.log('[AUTH REDIRECT] ❌ New user without tenant - redirecting to complete signup');
           localStorage.removeItem('auth_redirect_subdomain');
           router.push('/auth/complete-signup');
           return;
@@ -42,7 +50,9 @@ const AuthRedirect = () => {
 
         // User has a tenant - use that subdomain
         const userTenant = (tenantMember as any).tenants;
+        console.log('[AUTH REDIRECT] User tenant:', userTenant);
         const subdomain = storedSubdomain || userTenant.subdomain;
+        console.log('[AUTH REDIRECT] Final subdomain to use:', subdomain);
 
         if (!subdomain) {
           router.push('/');
@@ -73,7 +83,8 @@ const AuthRedirect = () => {
         // Route based on subscription status
         if (!hasActiveSubscription || !hasPaymentMethod) {
           // New user OR expired trial → Plan Selection
-          console.log('No active subscription or payment method - redirecting to plan selection');
+          console.log('[AUTH REDIRECT] ⚠️ No active subscription or payment method - redirecting to plan selection');
+          console.log('[AUTH REDIRECT] Redirecting to:', `/${subdomain}/admin/billing/select-plan`);
           // Clear localStorage AFTER determining redirect path
           localStorage.removeItem('auth_redirect_subdomain');
           router.push(`/${subdomain}/admin/billing/select-plan`);
@@ -81,7 +92,8 @@ const AuthRedirect = () => {
         }
 
         // Existing customer with active subscription → Dashboard
-        console.log('Active subscription detected - redirecting to dashboard');
+        console.log('[AUTH REDIRECT] ✅ Active subscription detected - redirecting to dashboard');
+        console.log('[AUTH REDIRECT] Redirecting to:', `/${subdomain}/admin`);
         // Clear localStorage AFTER determining redirect path
         localStorage.removeItem('auth_redirect_subdomain');
         router.push(`/${subdomain}/admin`);
