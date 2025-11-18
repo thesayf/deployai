@@ -103,44 +103,60 @@ export default function SelectPlan() {
     setError(null);
 
     try {
+      console.log('[SELECT PLAN] 🚀 Starting plan selection for:', planId);
       const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
 
       if (!user) {
+        console.log('[SELECT PLAN] ❌ No user found');
         setError('Please sign in to continue');
         return;
       }
 
+      console.log('[SELECT PLAN] ✅ User authenticated:', user.email);
+
       if (!tenantData) {
+        console.log('[SELECT PLAN] ❌ No tenant data loaded');
         setError('Tenant information not loaded');
         return;
       }
 
+      console.log('[SELECT PLAN] Tenant data:', tenantData);
+
       // Create trial checkout session with selected plan
+      const requestBody = {
+        tenantId: tenantData.id,
+        email: user.email || tenantData.billing_email,
+        planId: planId,
+        successUrl: `${window.location.origin}/${tenant}/admin/billing/success`,
+        cancelUrl: `${window.location.origin}/${tenant}/admin/billing/select-plan`,
+      };
+
+      console.log('[SELECT PLAN] 📡 Calling create-trial-session with:', requestBody);
+
       const response = await fetch('/api/stripe/create-trial-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          tenantId: tenantData.id,
-          email: user.email || tenantData.billing_email,
-          planId: planId,
-          successUrl: `${window.location.origin}/${tenant}/admin/billing/success`,
-          cancelUrl: `${window.location.origin}/${tenant}/admin/billing/select-plan`,
-        }),
+        body: JSON.stringify(requestBody),
       });
 
+      console.log('[SELECT PLAN] Response status:', response.status);
       const data = await response.json();
+      console.log('[SELECT PLAN] Response data:', data);
 
       if (!response.ok) {
+        console.log('[SELECT PLAN] ❌ API error:', data);
         throw new Error(data.error || 'Failed to create checkout session');
       }
 
       // Redirect to Stripe Checkout
       if (data.checkoutUrl) {
+        console.log('[SELECT PLAN] ✅ Redirecting to Stripe:', data.checkoutUrl);
         window.location.href = data.checkoutUrl;
       }
     } catch (err: any) {
-      console.error('Plan selection error:', err);
+      console.error('[SELECT PLAN] 💥 ERROR:', err);
+      console.error('[SELECT PLAN] Error details:', err.message);
       setError(err.message || 'Something went wrong. Please try again.');
     } finally {
       setIsLoading(null);
