@@ -84,20 +84,20 @@ export default async function handler(
 
     console.log(`[WEBHOOK] Received event: ${event.type} (${event.id})`);
 
-    // Step 4: Return 200 immediately (Stripe requirement)
-    // Process async to avoid timeout
+    // Step 4: Process event synchronously (Vercel serverless functions terminate after response)
+    try {
+      await processWebhookEvent(event);
+      console.log(`[WEBHOOK] Successfully processed ${event.type} (${event.id})`);
+    } catch (error: any) {
+      console.error(`[WEBHOOK ERROR] Event ${event.id} (${event.type}):`, error);
+      // Don't fail the webhook - Stripe will retry automatically
+    }
+
+    // Step 5: Return 200 after processing
     res.status(200).json({
       received: true,
       event_id: event.id,
       event_type: event.type
-    });
-
-    // Step 5: Process event asynchronously
-    setImmediate(() => {
-      processWebhookEvent(event).catch(error => {
-        console.error(`[WEBHOOK ERROR] Event ${event.id} (${event.type}):`, error);
-        // TODO: Add dead letter queue or retry mechanism
-      });
     });
 
   } catch (error: any) {
