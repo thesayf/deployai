@@ -84,7 +84,7 @@ export default function SelectPlan() {
 
       const { data, error } = await supabase
         .from('tenants')
-        .select('id, subdomain, billing_email, company_name')
+        .select('id, subdomain, billing_email, company_name, subscription_status, stripe_customer_id')
         .eq('subdomain', tenant)
         .single();
 
@@ -191,6 +191,48 @@ export default function SelectPlan() {
           </motion.div>
         </div>
       </SectionWrapper>
+
+      {/* Payment Failed Banner */}
+      {tenantData?.subscription_status === 'past_due' && (
+        <SectionWrapper variant="default" spacing="small">
+          <div className="max-w-3xl mx-auto p-6 border-[3px] border-black bg-red-50 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <div className="flex items-start gap-4">
+              <div className="text-4xl">⚠️</div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-black text-red-900 mb-2 uppercase">
+                  Payment Failed
+                </h3>
+                <p className="text-red-800 font-semibold mb-4">
+                  Your recent payment could not be processed. Please update your payment method below to restore access to your account.
+                </p>
+                <p className="text-sm text-red-700">
+                  Select your plan below to update your payment information and continue using DeployAI.
+                </p>
+              </div>
+            </div>
+          </div>
+        </SectionWrapper>
+      )}
+
+      {/* Unpaid/Canceled Banner */}
+      {(tenantData?.subscription_status === 'unpaid' || tenantData?.subscription_status === 'canceled') && (
+        <SectionWrapper variant="default" spacing="small">
+          <div className="max-w-3xl mx-auto p-6 border-[3px] border-black bg-amber-50 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <div className="flex items-start gap-4">
+              <div className="text-4xl">🔒</div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-black text-amber-900 mb-2 uppercase">
+                  Subscription {tenantData?.subscription_status === 'canceled' ? 'Canceled' : 'Suspended'}
+                </h3>
+                <p className="text-amber-800 font-semibold mb-4">
+                  Your subscription has been {tenantData?.subscription_status === 'canceled' ? 'canceled' : 'suspended due to failed payments'}.
+                  Reactivate below to regain access to your assessments and data.
+                </p>
+              </div>
+            </div>
+          </div>
+        </SectionWrapper>
+      )}
 
       {/* Error Message */}
       {error && (
