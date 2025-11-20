@@ -16,7 +16,7 @@ import { getBaseUrl } from './environment';
  * - Prod: https://socialfinancelimited.deployai.studio/assessment
  */
 export function getTenantAssessmentUrl(subdomain: string, req?: any): string {
-  const baseUrl = getBaseUrl(req);
+  const baseUrl = getBaseUrl(req).trim();
 
   // In production with custom domain
   if (baseUrl.includes('deployai.studio')) {
@@ -38,7 +38,7 @@ export function getTenantAssessmentUrl(subdomain: string, req?: any): string {
  * - Prod: https://socialfinancelimited.deployai.studio
  */
 export function getTenantBaseUrl(subdomain: string, req?: any): string {
-  const baseUrl = getBaseUrl(req);
+  const baseUrl = getBaseUrl(req).trim();
 
   // In production with custom domain
   if (baseUrl.includes('deployai.studio')) {

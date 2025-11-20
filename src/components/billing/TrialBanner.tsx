@@ -27,19 +27,27 @@ export function TrialBanner({
 
   if (isExpiringSoon) {
     // Red/urgent banner for trial ending soon
+    const trialEndDateObj = new Date(trialEndDate);
+    const isTrialExpired = trialEndDateObj < new Date();
+
     return (
       <Alert className="bg-red-50 border-red-300">
         <AlertCircle className="h-5 w-5 text-red-600" />
         <AlertTitle className="text-xl font-bold text-red-900">
-          Trial Ending Soon!
+          {isTrialExpired ? 'Trial Expired!' : 'Trial Ending Soon!'}
         </AlertTitle>
         <AlertDescription className="mt-2 space-y-3">
           <p className="font-semibold text-red-800">
-            Only {daysRemaining} day{daysRemaining !== 1 ? 's' : ''} left in your trial!
+            {isTrialExpired
+              ? 'Your trial has ended. Your payment method will be charged shortly.'
+              : `Only ${daysRemaining} day${daysRemaining !== 1 ? 's' : ''} left in your trial!`
+            }
           </p>
           <p className="text-sm text-red-700">
-            You'll be charged ${monthlyPrice} on {format(new Date(trialEndDate), 'MMM d, yyyy')}.
-            Cancel anytime before then to avoid charges.
+            {isTrialExpired
+              ? `Your card will be charged ${monthlyPrice} to continue access. Update your payment method or cancel to avoid charges.`
+              : `You'll be charged $${monthlyPrice} on ${format(trialEndDateObj, 'MMM d, yyyy')}. Cancel anytime before then to avoid charges.`
+            }
           </p>
           <div className="flex gap-3 mt-3">
             <Button
