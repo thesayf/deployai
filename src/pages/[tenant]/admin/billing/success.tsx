@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 
 export default function BillingSuccess() {
   const router = useRouter();
@@ -59,7 +60,8 @@ export default function BillingSuccess() {
   }, [router, tenant, syncing]);
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+    <ProtectedRoute requiresSubscription={false}>
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
         <div className="border-[3px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-white p-8 md:p-12 text-center">
           {/* Success icon */}
@@ -116,6 +118,7 @@ export default function BillingSuccess() {
           </button>
         </div>
       </div>
-    </div>
+      </div>
+    </ProtectedRoute>
   );
 }

@@ -6,6 +6,7 @@ import { Check } from 'lucide-react';
 import { Button } from '@/components/shared/Button';
 import { SectionWrapper } from '@/components/section-wrapper';
 import { siteConfig } from '@/config/site';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 
 interface PlanConfig {
   id: 'starter' | 'professional' | 'scale';
@@ -168,7 +169,7 @@ export default function SelectPlan() {
   };
 
   return (
-    <>
+    <ProtectedRoute requiresSubscription={false}>
       {/* Hero Section */}
       <SectionWrapper variant="dark" spacing="none">
         <div className="py-12 md:min-h-[60vh] md:flex md:items-center md:py-0">
@@ -308,6 +309,6 @@ export default function SelectPlan() {
           </div>
         </div>
       </SectionWrapper>
-    </>
+    </ProtectedRoute>
   );
 }
