@@ -179,15 +179,33 @@ export default function SelectPlan() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wide">
-              {siteConfig.trialDays}-Day Free Trial • No Credit Card Required
-            </p>
-            <h1 className="text-3xl md:text-5xl font-black mb-4 leading-tight text-white">
-              Choose the Perfect Plan for Your Business
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300 font-semibold max-w-2xl mx-auto">
-              Start your free trial today. Full access to all features. Cancel anytime.
-            </p>
+            {tenantData?.subscription_status === 'past_due' ||
+             tenantData?.subscription_status === 'unpaid' ||
+             tenantData?.subscription_status === 'canceled' ? (
+              <>
+                <p className="text-sm font-semibold text-red-400 mb-4 uppercase tracking-wide">
+                  Reactivate Your Subscription
+                </p>
+                <h1 className="text-3xl md:text-5xl font-black mb-4 leading-tight text-white">
+                  Update Your Payment Method
+                </h1>
+                <p className="text-lg md:text-xl text-gray-300 font-semibold max-w-2xl mx-auto">
+                  Select your plan below to update your payment information and restore access.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wide">
+                  {siteConfig.trialDays}-Day Free Trial • No Credit Card Required
+                </p>
+                <h1 className="text-3xl md:text-5xl font-black mb-4 leading-tight text-white">
+                  Choose the Perfect Plan for Your Business
+                </h1>
+                <p className="text-lg md:text-xl text-gray-300 font-semibold max-w-2xl mx-auto">
+                  Start your free trial today. Full access to all features. Cancel anytime.
+                </p>
+              </>
+            )}
           </motion.div>
         </div>
       </SectionWrapper>
