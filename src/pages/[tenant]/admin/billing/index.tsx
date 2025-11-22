@@ -226,11 +226,15 @@ export default function BillingDashboard() {
   };
 
   const handleUpgrade = async (tier: string) => {
-    // For active users, open the custom upgrade modal
+    // For active users with subscriptions, open the custom upgrade modal
     // For trial users, use the start-plan endpoint (handled in button click)
-    if (!isTrialing) {
+    if (!isTrialing && billingData.stripe_subscription_id) {
       setUpgradeModalOpen(true);
+    } else if (!isTrialing && !billingData.stripe_subscription_id) {
+      // User is not on trial but has no subscription - shouldn't happen
+      alert('Please set up your subscription first.');
     }
+    // For trial users, do nothing - they should use "Start Your Plan" buttons
   };
 
   const handleUpgradeSubmit = async (newTier: string) => {
