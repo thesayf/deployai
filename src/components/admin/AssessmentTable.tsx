@@ -494,17 +494,44 @@ const AssessmentTable: React.FC = () => {
                       <div className="flex items-center gap-2">
                         {assessment.request_status === 'requested' ? (
                           <button
-                            onClick={() => {
+                            onClick={async () => {
                               // Check if trial user at limit
                               const isTrialing = tenantContext?.tenant.subscription_status === 'trialing';
                               const assessmentsUsed = tenantContext?.tenant.assessments_used || 0;
                               const assessmentsLimit = tenantContext?.tenant.assessments_limit || 0;
                               const atLimit = assessmentsUsed >= assessmentsLimit;
+                              const currentTier = tenantContext?.tenant.subscription_tier || 'starter';
+                              const tierName = currentTier.charAt(0).toUpperCase() + currentTier.slice(1);
+                              const tierPrice = currentTier === 'starter' ? 199 : currentTier === 'professional' ? 499 : 997;
+                              const trialEndDate = tenantContext?.tenant.trial_end_date ? new Date(tenantContext.tenant.trial_end_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
 
                               if (isTrialing && atLimit) {
-                                // Show upgrade message for trial users at limit
-                                if (confirm('Trial Limit Reached\n\nYou\'ve used all your trial assessments. Please upgrade your plan to send more assessments.\n\nClick OK to go to billing page.')) {
-                                  window.location.href = `/${tenantContext?.tenant.subdomain}/admin/billing`;
+                                // Show detailed upgrade message for trial users at limit
+                                const message = `Trial Limit Reached\n\nYou've used all ${assessmentsLimit} assessments on your ${tierName} plan trial.\n\nStart your ${tierName} plan ($${tierPrice}/month) now to continue sending assessments?\n\n✓ You can upgrade to a higher plan anytime\n✓ First charge will be on ${trialEndDate}\n\nClick OK to start your plan and send this assessment.`;
+
+                                if (confirm(message)) {
+                                  try {
+                                    // Call API to convert trial to active
+                                    const response = await fetch('/api/tenant/start-plan', {
+                                      method: 'POST',
+                                      headers: {
+                                        'Content-Type': 'application/json',
+                                        'x-tenant-subdomain': tenantContext?.tenant.subdomain as string,
+                                      },
+                                    });
+
+                                    if (!response.ok) {
+                                      const data = await response.json();
+                                      alert(`Failed to start plan: ${data.error}`);
+                                      return;
+                                    }
+
+                                    // Refresh tenant context to update status
+                                    window.location.reload();
+                                  } catch (err) {
+                                    console.error('Failed to start plan:', err);
+                                    alert('Failed to start plan. Please try again.');
+                                  }
                                 }
                                 return;
                               }
