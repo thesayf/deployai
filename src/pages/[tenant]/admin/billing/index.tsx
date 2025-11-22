@@ -371,8 +371,8 @@ export default function BillingDashboard() {
 
             <PricingCard
               name={TIER_DETAILS.scale.name}
-              price="Custom"
-              priceLabel="/month"
+              price={isYearly ? 797 : TIER_DETAILS.scale.monthly}
+              priceLabel={isYearly ? '/month (billed yearly)' : '/month'}
               badgeText={TIER_DETAILS.scale.badgeText}
               badgeColor={TIER_DETAILS.scale.badgeColor}
               badgeDotColor={TIER_DETAILS.scale.badgeDotColor}
