@@ -28,11 +28,14 @@ export default async function handler(
 
     const { tenant } = tenantContext;
 
-    if (!tenant.stripe_subscription_id) {
+    // Type assertion for Stripe fields
+    const tenantData = tenant as any;
+
+    if (!tenantData.stripe_subscription_id) {
       return res.status(400).json({ error: 'No active subscription found' });
     }
 
-    console.log(`[UPGRADE] Upgrading ${tenant.subdomain} from ${tenant.subscription_tier} to ${newTier}`);
+    console.log(`[UPGRADE] Upgrading ${tenantData.subdomain} from ${tenantData.subscription_tier} to ${newTier}`);
 
     // Get the new price ID
     const newPriceId = SUBSCRIPTION_TIERS[newTier as keyof typeof SUBSCRIPTION_TIERS].priceId;
@@ -42,7 +45,7 @@ export default async function handler(
     }
 
     // Retrieve the current subscription
-    const subscription = await stripe.subscriptions.retrieve(tenant.stripe_subscription_id);
+    const subscription = await stripe.subscriptions.retrieve(tenantData.stripe_subscription_id);
 
     if (!subscription || subscription.items.data.length === 0) {
       return res.status(400).json({ error: 'Subscription not found or has no items' });
@@ -50,7 +53,7 @@ export default async function handler(
 
     // Update the subscription with the new price
     // Stripe automatically handles proration
-    const updatedSubscription = await stripe.subscriptions.update(tenant.stripe_subscription_id, {
+    const updatedSubscription = await stripe.subscriptions.update(tenantData.stripe_subscription_id, {
       items: [
         {
           id: subscription.items.data[0].id,
@@ -60,7 +63,7 @@ export default async function handler(
       proration_behavior: 'always_invoice', // Create invoice immediately with proration
       metadata: {
         ...subscription.metadata,
-        previous_tier: tenant.subscription_tier || 'starter',
+        previous_tier: tenantData.subscription_tier || 'starter',
         new_tier: newTier,
       },
     });
