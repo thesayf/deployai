@@ -23,10 +23,10 @@ export default async function handler(
       return res.status(400).json({ error: 'Invalid request ID' });
     }
 
-    // Get tenant context (admin only)
+    // Get tenant context
     const tenantContext = await getTenantFromRequest(req);
 
-    if (!tenantContext || !tenantContext.member) {
+    if (!tenantContext) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
