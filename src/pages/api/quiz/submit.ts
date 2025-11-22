@@ -56,23 +56,12 @@ export default async function handler(
     // Check if tenant can use assessment
     if (tenantContext) {
       if (!tenantContext.canUseAssessment) {
-        // Check if on trial
-        const isOnTrial = tenantContext.tenant.subscription_status === 'trialing';
-
-        if (isOnTrial) {
-          return res.status(403).json({
-            success: false,
-            reportId: '',
-            processingTime: '',
-            error: 'You\'ve reached your trial assessment limit. Start your subscription to continue using DeployAI and unlock unlimited assessments.',
-          });
-        }
-
+        // Generic error message for end users (doesn't reveal subscription details)
         return res.status(403).json({
           success: false,
           reportId: '',
           processingTime: '',
-          error: 'We\'re unable to process your assessment at this time. Please contact support for assistance.',
+          error: 'This assessment is temporarily unavailable. Please contact the organization for assistance.',
         });
       }
     }
