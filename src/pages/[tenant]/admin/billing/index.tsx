@@ -13,6 +13,7 @@ import { Switch } from '@/components/ui/switch';
 import { Clock, CreditCard, AlertCircle, RefreshCw } from 'lucide-react';
 import { PricingCard } from '@/components/billing/PricingCard';
 import { BillingHistoryTable } from '@/components/billing/BillingHistoryTable';
+import { UpgradeModal } from '@/components/billing/UpgradeModal';
 
 interface BillingData {
   stripe_customer_id: string | null;
@@ -109,6 +110,7 @@ export default function BillingDashboard() {
   const [invoices, setInvoices] = useState<any[]>([]);
   const [loadingInvoices, setLoadingInvoices] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
 
   // Use SWR for automatic caching and revalidation
   const { data: billingData, error, isLoading, mutate } = useSWR<BillingData>(
@@ -224,10 +226,40 @@ export default function BillingDashboard() {
   };
 
   const handleUpgrade = async (tier: string) => {
-    // For active users, use Stripe Customer Portal to manage subscription changes
+    // For active users, open the custom upgrade modal
     // For trial users, use the start-plan endpoint (handled in button click)
     if (!isTrialing) {
-      handleManageSubscription();
+      setUpgradeModalOpen(true);
+    }
+  };
+
+  const handleUpgradeSubmit = async (newTier: string) => {
+    try {
+      const response = await fetch('/api/stripe/create-upgrade-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ newTier }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to upgrade subscription');
+      }
+
+      // Close the modal
+      setUpgradeModalOpen(false);
+
+      // Show success message
+      alert('✓ Upgrade successful! Your plan has been updated and you will be charged a prorated amount.');
+
+      // Refresh billing data to show updated subscription
+      setTimeout(() => {
+        mutate();
+      }, 1500);
+    } catch (err: any) {
+      console.error('Failed to upgrade subscription:', err);
+      alert(`Failed to upgrade: ${err.message || 'Please try again.'}`);
     }
   };
 
@@ -456,6 +488,14 @@ export default function BillingDashboard() {
           {/* Billing History Table */}
           <BillingHistoryTable invoices={invoices} loading={loadingInvoices} />
         </div>
+
+        {/* Upgrade Modal */}
+        <UpgradeModal
+          open={upgradeModalOpen}
+          onClose={() => setUpgradeModalOpen(false)}
+          currentTier={currentTier || 'starter'}
+          onUpgrade={handleUpgradeSubmit}
+        />
       </AdminLayout>
     </ProtectedRoute>
   );
