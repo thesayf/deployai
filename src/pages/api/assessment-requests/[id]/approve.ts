@@ -55,12 +55,24 @@ export default async function handler(
     // Check if account is paused - if so, increment overage and log
     const { data: tenant, error: tenantError } = await supabase
       .from('tenants')
-      .select('subscription_status, subscription_tier, assessments_overage, overage_charges_current_period')
+      .select('subscription_status, subscription_tier, assessments_overage, overage_charges_current_period, assessments_used, assessments_limit')
       .eq('id', tenantContext.tenant.id)
       .single();
 
     if (tenantError || !tenant) {
       return res.status(500).json({ error: 'Failed to fetch tenant data' });
+    }
+
+    // Block trial users at their limit from sending assessments
+    if (tenant.subscription_status === 'trialing') {
+      const assessmentsUsed = tenant.assessments_used || 0;
+      const assessmentsLimit = tenant.assessments_limit || 0;
+
+      if (assessmentsUsed >= assessmentsLimit) {
+        return res.status(403).json({
+          error: 'Trial limit reached. Please upgrade your plan to send more assessments.'
+        });
+      }
     }
 
     // Determine overage price based on tier

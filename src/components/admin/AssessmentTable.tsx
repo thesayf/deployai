@@ -495,6 +495,21 @@ const AssessmentTable: React.FC = () => {
                         {assessment.request_status === 'requested' ? (
                           <button
                             onClick={() => {
+                              // Check if trial user at limit
+                              const isTrialing = tenantContext?.tenant.subscription_status === 'trialing';
+                              const assessmentsUsed = tenantContext?.tenant.assessments_used || 0;
+                              const assessmentsLimit = tenantContext?.tenant.assessments_limit || 0;
+                              const atLimit = assessmentsUsed >= assessmentsLimit;
+
+                              if (isTrialing && atLimit) {
+                                // Show upgrade message for trial users at limit
+                                if (confirm('Trial Limit Reached\n\nYou\'ve used all your trial assessments. Please upgrade your plan to send more assessments.\n\nClick OK to go to billing page.')) {
+                                  window.location.href = `/${tenantContext?.tenant.subdomain}/admin/billing`;
+                                }
+                                return;
+                              }
+
+                              // Normal flow for paid users or trial users under limit
                               setSelectedAssessment(assessment);
                               setShowSendModal(true);
                             }}
