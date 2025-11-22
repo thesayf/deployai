@@ -158,9 +158,22 @@ class TenantService {
   }
 
   private checkAssessmentAvailability(tenant: Tenant): boolean {
-    // CHANGED: Always allow assessments - overages will be billed automatically
-    // This ensures the assessment link never breaks, even if limit is exceeded
-    // Subscription status doesn't matter - null/active/trialing/canceled all allowed
+    // If on trial, enforce hard limit (no overage allowed)
+    if (tenant.subscription_status === 'trialing') {
+      const limit = tenant.assessments_limit || 0;
+      const used = tenant.assessments_used || 0;
+
+      if (used >= limit) {
+        console.log('[TRIAL LIMIT] Trial user has reached their limit:', { used, limit });
+        return false; // Block assessment during trial
+      }
+
+      return true; // Allow if under limit
+    }
+
+    // For active/paid subscriptions: Always allow assessments
+    // Overages will be billed automatically via Stripe invoice items
+    // This ensures the assessment link never breaks for paying customers
     return true;
   }
 

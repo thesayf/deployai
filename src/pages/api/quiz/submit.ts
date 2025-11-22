@@ -56,6 +56,18 @@ export default async function handler(
     // Check if tenant can use assessment
     if (tenantContext) {
       if (!tenantContext.canUseAssessment) {
+        // Check if on trial
+        const isOnTrial = tenantContext.tenant.subscription_status === 'trialing';
+
+        if (isOnTrial) {
+          return res.status(403).json({
+            success: false,
+            reportId: '',
+            processingTime: '',
+            error: 'You\'ve reached your trial assessment limit. Start your subscription to continue using DeployAI and unlock unlimited assessments.',
+          });
+        }
+
         return res.status(403).json({
           success: false,
           reportId: '',
@@ -342,8 +354,8 @@ export default async function handler(
               }
             }
 
-            // If this is an overage, create Stripe invoice item
-            if (is_overage && tenantContext.tenant.stripe_customer_id) {
+            // If this is an overage, create Stripe invoice item (only for active subscriptions, not trials)
+            if (is_overage && tenantContext.tenant.stripe_customer_id && tenantContext.tenant.subscription_status !== 'trialing') {
               console.log('[OVERAGE] Overage detected - creating Stripe invoice item');
 
               // Import overage service
