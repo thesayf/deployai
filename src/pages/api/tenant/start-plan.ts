@@ -36,12 +36,16 @@ export default async function handler(
       return res.status(400).json({ error: 'Account is not on trial' });
     }
 
-    // Convert trial to active
+    // Convert trial to active and reset assessment count
     // The subscription already exists in Stripe from signup, we just update status
     const { error: updateError } = await supabase
       .from('tenants')
       .update({
         subscription_status: 'active',
+        assessments_used: 0, // Reset count for new billing cycle
+        assessments_overage: 0, // Reset overage count
+        overage_charges_current_period: 0, // Reset overage charges
+        current_period_start: new Date().toISOString(), // Start new period now
         updated_at: new Date().toISOString(),
       })
       .eq('id', tenantContext.tenant.id);
@@ -52,10 +56,11 @@ export default async function handler(
     }
 
     console.log(`[START PLAN] Converted trial to active for tenant ${tenantContext.tenant.id} (${tenantContext.tenant.subdomain})`);
+    console.log(`[START PLAN] Reset assessment count to 0, started new billing period`);
 
     res.status(200).json({
       success: true,
-      message: 'Plan started successfully',
+      message: 'Plan started successfully. Your assessment count has been reset.',
     });
   } catch (error) {
     console.error('Error starting plan:', error);

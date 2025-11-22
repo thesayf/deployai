@@ -526,7 +526,12 @@ const AssessmentTable: React.FC = () => {
                                       return;
                                     }
 
-                                    // Refresh tenant context to update status
+                                    const data = await response.json();
+
+                                    // Show success message
+                                    alert(`✓ Plan Started!\n\n${data.message}\n\nYou can now send assessments.`);
+
+                                    // Refresh page to update tenant context
                                     window.location.reload();
                                   } catch (err) {
                                     console.error('Failed to start plan:', err);
