@@ -7,7 +7,7 @@ interface SettingsNavProps {
 }
 
 const SETTINGS_TABS = [
-  { id: 'billing', label: 'Billing & Subscription', href: '/admin/settings/billing' },
+  { id: 'billing', label: 'Billing & Subscription', href: '/admin/billing' },
 ];
 
 export function SettingsNav({ currentTab }: SettingsNavProps) {

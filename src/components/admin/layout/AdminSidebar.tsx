@@ -43,9 +43,9 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ isOpen, onClose, tenant }) 
     },
     {
       name: 'Settings',
-      href: `/${subdomain}/admin/settings/billing`,
+      href: `/${subdomain}/admin/billing`,
       icon: Settings,
-      current: router.pathname.startsWith('/[tenant]/admin/settings')
+      current: router.pathname.startsWith('/[tenant]/admin/billing') || router.pathname.startsWith('/[tenant]/admin/settings')
     },
   ];
 
