@@ -55,13 +55,13 @@ export default async function handler(
 
       if (subscriptions.data.length > 0) {
         // Log all subscriptions
-        subscriptions.data.forEach((sub, index) => {
+        subscriptions.data.forEach((sub: any, index) => {
           console.log(`[UPGRADE] Subscription ${index + 1}:`, {
             id: sub.id,
             status: sub.status,
             created: new Date(sub.created * 1000).toISOString(),
-            current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
-            items: sub.items.data.map(item => ({
+            current_period_end: sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : 'N/A',
+            items: sub.items.data.map((item: any) => ({
               price_id: item.price.id,
               product: item.price.product,
             })),
