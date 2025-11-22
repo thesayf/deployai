@@ -237,7 +237,11 @@ export default function BillingDashboard() {
     try {
       const response = await fetch('/api/stripe/create-upgrade-session', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-tenant-subdomain': tenant as string,
+        },
+        credentials: 'include',
         body: JSON.stringify({ newTier }),
       });
 

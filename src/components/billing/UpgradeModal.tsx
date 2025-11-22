@@ -142,8 +142,13 @@ export function UpgradeModal({ open, onClose, currentTier, onUpgrade }: UpgradeM
                 </ul>
 
                 <Button
-                  className="w-full"
-                  variant={isCurrent ? 'outline' : 'default'}
+                  className={`w-full ${
+                    isCurrent
+                      ? 'bg-gray-200 text-gray-600 cursor-not-allowed'
+                      : isDowngrade
+                      ? 'bg-gray-600 hover:bg-gray-700 text-white'
+                      : 'bg-blue-600 hover:bg-blue-700 text-white'
+                  }`}
                   disabled={isCurrent || loading !== null}
                   onClick={() => handleUpgrade(plan.id)}
                 >
