@@ -13,7 +13,6 @@ import { Switch } from '@/components/ui/switch';
 import { Clock, CreditCard, AlertCircle, RefreshCw } from 'lucide-react';
 import { PricingCard } from '@/components/billing/PricingCard';
 import { BillingHistoryTable } from '@/components/billing/BillingHistoryTable';
-import { UpgradeModal } from '@/components/billing/UpgradeModal';
 
 interface BillingData {
   stripe_customer_id: string | null;
@@ -110,7 +109,6 @@ export default function BillingDashboard() {
   const [invoices, setInvoices] = useState<any[]>([]);
   const [loadingInvoices, setLoadingInvoices] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [upgradeModalOpen, setUpgradeModalOpen] = useState(false);
 
   // Use SWR for automatic caching and revalidation
   const { data: billingData, error, isLoading, mutate } = useSWR<BillingData>(
@@ -503,13 +501,6 @@ export default function BillingDashboard() {
           <BillingHistoryTable invoices={invoices} loading={loadingInvoices} />
         </div>
 
-        {/* Upgrade Modal */}
-        <UpgradeModal
-          open={upgradeModalOpen}
-          onClose={() => setUpgradeModalOpen(false)}
-          currentTier={currentTier || 'starter'}
-          onUpgrade={handleUpgradeSubmit}
-        />
       </AdminLayout>
     </ProtectedRoute>
   );
