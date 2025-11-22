@@ -226,15 +226,12 @@ export default function BillingDashboard() {
   };
 
   const handleUpgrade = async (tier: string) => {
-    // For active users with subscriptions, open the custom upgrade modal
-    // For trial users, use the start-plan endpoint (handled in button click)
-    if (!isTrialing && billingData && billingData.stripe_subscription_id) {
+    // Only open upgrade modal for active (non-trial) users
+    // The API will validate if they have an active Stripe subscription
+    if (!isTrialing) {
       setUpgradeModalOpen(true);
-    } else if (!isTrialing && billingData && !billingData.stripe_subscription_id) {
-      // User is not on trial but has no subscription - shouldn't happen
-      alert('Please set up your subscription first.');
     }
-    // For trial users, do nothing - they should use "Start Your Plan" buttons
+    // For trial users, do nothing - they should use "Start Your Plan" or "Upgrade and Start This Plan" buttons
   };
 
   const handleUpgradeSubmit = async (newTier: string) => {
