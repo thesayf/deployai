@@ -31,8 +31,26 @@ export default async function handler(
     // Type assertion for Stripe fields
     const tenantData = tenant as any;
 
-    if (!tenantData.stripe_subscription_id) {
-      return res.status(400).json({ error: 'No active subscription found' });
+    let subscriptionId = tenantData.stripe_subscription_id;
+
+    // If no subscription_id but we have a customer_id, fetch it from Stripe
+    if (!subscriptionId && tenantData.stripe_customer_id) {
+      console.log(`[UPGRADE] No subscription_id found, fetching from Stripe for customer: ${tenantData.stripe_customer_id}`);
+
+      const subscriptions = await stripe.subscriptions.list({
+        customer: tenantData.stripe_customer_id,
+        limit: 1,
+        status: 'all',
+      });
+
+      if (subscriptions.data.length > 0) {
+        subscriptionId = subscriptions.data[0].id;
+        console.log(`[UPGRADE] Found subscription: ${subscriptionId}`);
+      }
+    }
+
+    if (!subscriptionId) {
+      return res.status(400).json({ error: 'No active subscription found. Please contact support.' });
     }
 
     console.log(`[UPGRADE] Upgrading ${tenantData.subdomain} from ${tenantData.subscription_tier} to ${newTier}`);
@@ -45,7 +63,7 @@ export default async function handler(
     }
 
     // Retrieve the current subscription
-    const subscription = await stripe.subscriptions.retrieve(tenantData.stripe_subscription_id);
+    const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
     if (!subscription || subscription.items.data.length === 0) {
       return res.status(400).json({ error: 'Subscription not found or has no items' });
@@ -53,7 +71,7 @@ export default async function handler(
 
     // Update the subscription with the new price
     // Stripe automatically handles proration
-    const updatedSubscription = await stripe.subscriptions.update(tenantData.stripe_subscription_id, {
+    const updatedSubscription = await stripe.subscriptions.update(subscriptionId, {
       items: [
         {
           id: subscription.items.data[0].id,

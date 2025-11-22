@@ -226,15 +226,23 @@ export default function BillingDashboard() {
   };
 
   const handleUpgrade = async (tier: string) => {
-    // Only open upgrade modal for active (non-trial) users
-    // The API will validate if they have an active Stripe subscription
-    if (!isTrialing) {
-      setUpgradeModalOpen(true);
-    }
-    // For trial users, do nothing - they should use "Start Your Plan" or "Upgrade and Start This Plan" buttons
-  };
+    // Skip for trial users - they should use "Start Your Plan" buttons
+    if (isTrialing) return;
 
-  const handleUpgradeSubmit = async (newTier: string) => {
+    // Get tier details for confirmation
+    const tierDetails = TIER_DETAILS[tier as keyof typeof TIER_DETAILS];
+    if (!tierDetails) return;
+
+    // Confirm upgrade with user
+    const isDowngrade =
+      (currentTier === 'professional' && tier === 'starter') ||
+      (currentTier === 'scale' && (tier === 'starter' || tier === 'professional'));
+
+    const action = isDowngrade ? 'downgrade' : 'upgrade';
+    const message = `Are you sure you want to ${action} to the ${tierDetails.name} plan ($${tierDetails.monthly}/month)?`;
+
+    if (!confirm(message)) return;
+
     try {
       const response = await fetch('/api/stripe/create-upgrade-session', {
         method: 'POST',
@@ -243,28 +251,29 @@ export default function BillingDashboard() {
           'x-tenant-subdomain': tenant as string,
         },
         credentials: 'include',
-        body: JSON.stringify({ newTier }),
+        body: JSON.stringify({ newTier: tier }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to upgrade subscription');
+        throw new Error(data.error || 'Failed to change subscription');
       }
 
-      // Close the modal
-      setUpgradeModalOpen(false);
-
       // Show success message
-      alert('✓ Upgrade successful! Your plan has been updated and you will be charged a prorated amount.');
+      alert(`✓ Success! Your plan has been ${action}d to ${tierDetails.name}. ${
+        isDowngrade
+          ? 'Changes will apply at the end of your billing period.'
+          : 'You will be charged a prorated amount for the remainder of this period.'
+      }`);
 
       // Refresh billing data to show updated subscription
       setTimeout(() => {
         mutate();
       }, 1500);
     } catch (err: any) {
-      console.error('Failed to upgrade subscription:', err);
-      alert(`Failed to upgrade: ${err.message || 'Please try again.'}`);
+      console.error('Failed to change subscription:', err);
+      alert(`Failed to ${action}: ${err.message || 'Please try again.'}`);
     }
   };
 
