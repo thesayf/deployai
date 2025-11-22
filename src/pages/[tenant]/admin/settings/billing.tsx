@@ -37,13 +37,13 @@ const TIER_DETAILS = {
     name: 'Starter Plan',
     monthly: 199,
     yearly: 1910,
-    assessments: 5,
+    assessments: 25,
     overagePrice: 4,
     badgeText: 'FREE',
     badgeColor: 'bg-orange-500 text-white',
     badgeDotColor: 'bg-orange-500',
     features: [
-      '5 AI assessments per month',
+      '25 AI assessments per month',
       'Full platform access',
       'Custom AI agent branding',
       'White-label assessment portal',
@@ -53,16 +53,16 @@ const TIER_DETAILS = {
     ],
   },
   professional: {
-    name: 'Growth Plan',
+    name: 'Professional Plan',
     monthly: 499,
     yearly: 4790,
-    assessments: 20,
+    assessments: 100,
     overagePrice: 3,
     badgeText: 'PRO',
     badgeColor: 'bg-orange-500 text-white',
     badgeDotColor: 'bg-orange-500',
     features: [
-      '20 AI assessments per month',
+      '100 AI assessments per month',
       'Everything in Starter',
       'Priority email support',
       'Advanced analytics dashboard',
@@ -73,16 +73,16 @@ const TIER_DETAILS = {
     ],
   },
   scale: {
-    name: 'Enterprise Plan',
+    name: 'Scale Plan',
     monthly: 997,
     yearly: 9570,
-    assessments: null,
+    assessments: 400,
     overagePrice: 2,
     badgeText: 'ADVANCE',
     badgeColor: 'bg-green-500 text-white',
     badgeDotColor: 'bg-green-500',
     features: [
-      'Unlimited AI assessments',
+      '400 AI assessments per month',
       'Everything in Professional',
       'Dedicated account manager',
       'Phone support',
@@ -347,6 +347,69 @@ export default function BillingSettings() {
                 </Card>
               )}
             </div>
+
+            {/* Upgrade Options for Trial Users */}
+            {isTrialing && (
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Choose Your Plan</h3>
+                  <p className="text-muted-foreground">
+                    Select a plan to start after your trial ends, or upgrade immediately
+                  </p>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-6">
+                  {Object.entries(TIER_DETAILS).map(([tierId, tier]) => {
+                    const isCurrentTier = currentTier === tierId;
+                    return (
+                      <Card key={tierId} className={isCurrentTier ? 'border-2 border-orange-500' : ''}>
+                        <CardHeader className="pb-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <CardTitle className="text-lg font-bold">{tier.name}</CardTitle>
+                            {isCurrentTier && (
+                              <span className="text-xs font-semibold bg-orange-500 text-white px-2 py-1 rounded">
+                                CURRENT
+                              </span>
+                            )}
+                          </div>
+                          <div className="mb-4">
+                            <div className="flex items-baseline gap-1">
+                              <span className="text-3xl font-black">${tier.monthly}</span>
+                              <span className="text-sm text-gray-600">/month</span>
+                            </div>
+                            <p className="text-sm text-gray-600 mt-1">
+                              {tier.assessments} assessments per month
+                            </p>
+                            <p className="text-xs text-gray-500 mt-1">
+                              ${tier.overagePrice} per additional assessment
+                            </p>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <ul className="space-y-2 mb-6 min-h-[200px]">
+                            {tier.features.map((feature, idx) => (
+                              <li key={idx} className="flex items-start text-sm">
+                                <span className="text-green-500 mr-2 flex-shrink-0">✓</span>
+                                <span className="text-gray-700">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          <Button
+                            onClick={handleOpenUpgradeModal}
+                            variant={isCurrentTier ? "default" : "outline"}
+                            className="w-full"
+                            size="sm"
+                          >
+                            {isCurrentTier ? 'Start Your Plan' : 'Upgrade and Start This Plan'}
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Payment Method Card */}
             {billingData.payment_method_brand && (
