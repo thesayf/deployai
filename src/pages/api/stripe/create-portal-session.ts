@@ -29,8 +29,12 @@ export default async function handler(
     const sessionParams: any = {
       customer: customerId,
       return_url: returnUrl,
-      configuration: process.env.STRIPE_PORTAL_CONFIG_ID, // Test mode portal config
     };
+
+    // Only add configuration if it's set
+    if (process.env.STRIPE_PORTAL_CONFIG_ID) {
+      sessionParams.configuration = process.env.STRIPE_PORTAL_CONFIG_ID;
+    }
 
     // Add flow_data to open directly to subscription update
     if (flowType === 'subscription_update' && subscriptionId) {
