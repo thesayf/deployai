@@ -31,27 +31,61 @@ export default async function handler(
     // Type assertion for Stripe fields
     const tenantData = tenant as any;
 
+    console.log(`[UPGRADE] ===== UPGRADE REQUEST DEBUG =====`);
+    console.log(`[UPGRADE] Subdomain: ${tenantData.subdomain}`);
+    console.log(`[UPGRADE] Current tier: ${tenantData.subscription_tier}`);
+    console.log(`[UPGRADE] Subscription status: ${tenantData.subscription_status}`);
+    console.log(`[UPGRADE] Stripe customer ID: ${tenantData.stripe_customer_id || 'MISSING'}`);
+    console.log(`[UPGRADE] Stripe subscription ID (DB): ${tenantData.stripe_subscription_id || 'MISSING'}`);
+    console.log(`[UPGRADE] Requested new tier: ${newTier}`);
+
     let subscriptionId = tenantData.stripe_subscription_id;
 
     // If no subscription_id but we have a customer_id, fetch it from Stripe
     if (!subscriptionId && tenantData.stripe_customer_id) {
-      console.log(`[UPGRADE] No subscription_id found, fetching from Stripe for customer: ${tenantData.stripe_customer_id}`);
+      console.log(`[UPGRADE] No subscription_id in DB, fetching from Stripe for customer: ${tenantData.stripe_customer_id}`);
 
       const subscriptions = await stripe.subscriptions.list({
         customer: tenantData.stripe_customer_id,
-        limit: 1,
+        limit: 10, // Get more to see all subscriptions
         status: 'all',
       });
 
+      console.log(`[UPGRADE] Found ${subscriptions.data.length} subscription(s) in Stripe`);
+
       if (subscriptions.data.length > 0) {
-        subscriptionId = subscriptions.data[0].id;
-        console.log(`[UPGRADE] Found subscription: ${subscriptionId}`);
+        // Log all subscriptions
+        subscriptions.data.forEach((sub, index) => {
+          console.log(`[UPGRADE] Subscription ${index + 1}:`, {
+            id: sub.id,
+            status: sub.status,
+            created: new Date(sub.created * 1000).toISOString(),
+            current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
+            items: sub.items.data.map(item => ({
+              price_id: item.price.id,
+              product: item.price.product,
+            })),
+          });
+        });
+
+        // Use the first active subscription, or the first one if none are active
+        const activeSubscription = subscriptions.data.find(sub => sub.status === 'active' || sub.status === 'trialing');
+        subscriptionId = activeSubscription ? activeSubscription.id : subscriptions.data[0].id;
+
+        console.log(`[UPGRADE] Selected subscription: ${subscriptionId} (status: ${activeSubscription ? activeSubscription.status : subscriptions.data[0].status})`);
+      } else {
+        console.log(`[UPGRADE] ERROR: No subscriptions found in Stripe for customer ${tenantData.stripe_customer_id}`);
       }
     }
 
     if (!subscriptionId) {
+      console.log(`[UPGRADE] ERROR: No subscription ID available after all checks`);
+      console.log(`[UPGRADE] - Has customer_id: ${!!tenantData.stripe_customer_id}`);
+      console.log(`[UPGRADE] - Has subscription_id in DB: ${!!tenantData.stripe_subscription_id}`);
       return res.status(400).json({ error: 'No active subscription found. Please contact support.' });
     }
+
+    console.log(`[UPGRADE] ===== END DEBUG =====`);
 
     console.log(`[UPGRADE] Upgrading ${tenantData.subdomain} from ${tenantData.subscription_tier} to ${newTier}`);
 
