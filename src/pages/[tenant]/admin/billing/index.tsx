@@ -34,12 +34,12 @@ const TIER_DETAILS = {
     name: 'Starter Plan',
     monthly: 199,
     yearly: 1910,
-    assessments: 5,
+    assessments: 25,
     badgeText: 'FREE',
     badgeColor: 'bg-orange-500 text-white',
     badgeDotColor: 'bg-orange-500',
     features: [
-      '5 AI assessments per month',
+      '25 AI assessments per month',
       'Full platform access',
       'Custom AI agent branding',
       'White-label assessment portal',
@@ -49,15 +49,15 @@ const TIER_DETAILS = {
     ],
   },
   professional: {
-    name: 'Growth Plan',
+    name: 'Professional Plan',
     monthly: 499,
     yearly: 4790,
-    assessments: 20,
+    assessments: 100,
     badgeText: 'PRO',
     badgeColor: 'bg-orange-500 text-white',
     badgeDotColor: 'bg-orange-500',
     features: [
-      '20 AI assessments per month',
+      '100 AI assessments per month',
       'Everything in Starter',
       'Priority email support',
       'Advanced analytics dashboard',
@@ -68,15 +68,15 @@ const TIER_DETAILS = {
     ],
   },
   scale: {
-    name: 'Enterprise Plan',
+    name: 'Scale Plan',
     monthly: 997,
     yearly: 9570,
-    assessments: null,
+    assessments: 400,
     badgeText: 'ADVANCE',
     badgeColor: 'bg-green-500 text-white',
     badgeDotColor: 'bg-green-500',
     features: [
-      'Unlimited AI assessments',
+      '400 AI assessments per month',
       'Everything in Professional',
       'Dedicated account manager',
       'Phone support',
@@ -335,9 +335,15 @@ export default function BillingDashboard() {
               features={TIER_DETAILS.starter.features}
               isCurrentPlan={currentTier === 'starter'}
               onAction={() => handleUpgrade('starter')}
-              actionText={currentTier === 'starter' ? 'Current Plan' : isTrialing ? 'Start Trial' : 'Downgrade'}
+              actionText={
+                currentTier === 'starter'
+                  ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
+                  : isTrialing
+                    ? 'Upgrade and Start This Plan'
+                    : 'Downgrade'
+              }
               actionVariant={currentTier === 'starter' ? 'outline' : 'default'}
-              isDisabled={currentTier === 'starter'}
+              isDisabled={!isTrialing && currentTier === 'starter'}
             />
 
             <PricingCard
@@ -352,9 +358,15 @@ export default function BillingDashboard() {
               isDark={true}
               isRecommended={true}
               onAction={() => handleUpgrade('professional')}
-              actionText={currentTier === 'professional' ? 'Current Plan' : 'Upgrade Plan'}
+              actionText={
+                currentTier === 'professional'
+                  ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
+                  : isTrialing
+                    ? 'Upgrade and Start This Plan'
+                    : 'Upgrade Plan'
+              }
               actionVariant="default"
-              isDisabled={currentTier === 'professional'}
+              isDisabled={!isTrialing && currentTier === 'professional'}
             />
 
             <PricingCard
@@ -367,9 +379,15 @@ export default function BillingDashboard() {
               features={TIER_DETAILS.scale.features}
               isCurrentPlan={currentTier === 'scale'}
               onAction={() => router.push('/contact')}
-              actionText={currentTier === 'scale' ? 'Current Plan' : 'Contact Us'}
+              actionText={
+                currentTier === 'scale'
+                  ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
+                  : isTrialing
+                    ? 'Upgrade and Start This Plan'
+                    : 'Contact Us'
+              }
               actionVariant={currentTier === 'scale' ? 'outline' : 'default'}
-              isDisabled={currentTier === 'scale'}
+              isDisabled={!isTrialing && currentTier === 'scale'}
             />
           </div>
 
