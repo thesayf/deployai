@@ -223,9 +223,12 @@ export default function BillingDashboard() {
     }
   };
 
-  const handleUpgrade = (tier: string) => {
-    // Navigate to plan selection or trigger upgrade flow
-    router.push(`/${tenant}/admin/billing/plans?selected=${tier}`);
+  const handleUpgrade = async (tier: string) => {
+    // For active users, use Stripe Customer Portal to manage subscription changes
+    // For trial users, use the start-plan endpoint (handled in button click)
+    if (!isTrialing) {
+      handleManageSubscription();
+    }
   };
 
   if (isLoading) {
