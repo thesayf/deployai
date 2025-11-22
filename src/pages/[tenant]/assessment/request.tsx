@@ -109,15 +109,15 @@ const RequestAssessmentPage = () => {
             {/* Warning Banner */}
             <div className={`${isPaused ? 'bg-blue-100' : 'bg-orange-100'} border-[3px] border-black p-6 mb-8 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]`}>
               <div className="flex items-start gap-4">
-                <div className="text-4xl">{isPaused ? '🌟' : '⚠️'}</div>
+                <div className="text-4xl">{isPaused ? '🌟' : '📋'}</div>
                 <div>
                   <h2 className="text-xl font-black uppercase mb-2">
-                    {isPaused ? "We're Taking a Short Break" : 'Assessment Limit Reached'}
+                    {isPaused ? "We're Taking a Short Break" : 'Request Assessment Access'}
                   </h2>
                   <p className="text-base">
                     {isPaused
                       ? "We're not accepting new assessments right now, but we don't want you to miss out!"
-                      : "You've used all available assessments for this billing period. Request access below, and your consultant will send you a link."}
+                      : "We're not accepting new assessment requests at the moment. Fill out the form below to request access, and we'll be in touch shortly."}
                   </p>
                 </div>
               </div>
