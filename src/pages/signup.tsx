@@ -317,7 +317,7 @@ export default function SignupPage() {
             <p className="text-xs text-gray-600">Day Trial</p>
           </div>
           <div className="bg-white/50 backdrop-blur rounded-lg p-3">
-            <p className="text-2xl font-bold text-gray-900">5</p>
+            <p className="text-2xl font-bold text-gray-900">10</p>
             <p className="text-xs text-gray-600">Free Assessments</p>
           </div>
           <div className="bg-white/50 backdrop-blur rounded-lg p-3">

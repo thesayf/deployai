@@ -33,6 +33,7 @@ export type SubscriptionTier = keyof typeof SUBSCRIPTION_TIERS;
 
 // Trial configuration
 export const TRIAL_PERIOD_DAYS = 14;
+export const TRIAL_ASSESSMENT_LIMIT = 10; // Fixed limit for all trial periods regardless of chosen tier
 
 // Single assessment price
 export const SINGLE_ASSESSMENT_PRICE = 99;

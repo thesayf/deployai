@@ -1,4 +1,4 @@
-import { stripe, SUBSCRIPTION_TIERS, type SubscriptionTier } from '@/lib/stripe';
+import { stripe, SUBSCRIPTION_TIERS, TRIAL_ASSESSMENT_LIMIT, type SubscriptionTier } from '@/lib/stripe';
 import { createClient } from '@/utils/supabase/server';
 import { createClient as createServiceClient } from '@supabase/supabase-js';
 
@@ -184,12 +184,17 @@ export async function syncStripeDataToSupabase(customerId: string, isWebhook: bo
     }
 
     // Step 8: Prepare update data
+    // Use trial limit for trialing subscriptions to prevent abuse
+    const effectiveLimit = subscription.status === 'trialing'
+      ? TRIAL_ASSESSMENT_LIMIT
+      : tierInfo.limit;
+
     const updateData = {
       stripe_subscription_id: subscription.id,
       subscription_status: subscription.status,
       subscription_tier: tierInfo.tier,
       price_id: priceId,
-      assessments_limit: tierInfo.limit,
+      assessments_limit: effectiveLimit,
       current_period_start: currentPeriodStart.toISOString(),
       current_period_end: currentPeriodEnd.toISOString(),
       cancel_at_period_end: subscription.cancel_at_period_end || false,
@@ -214,12 +219,18 @@ export async function syncStripeDataToSupabase(customerId: string, isWebhook: bo
     }
 
     changes.push(`Updated subscription status to ${subscription.status}`);
-    changes.push(`Set tier to ${tierInfo.tier} with limit ${tierInfo.limit || 'unlimited'}`);
+    if (subscription.status === 'trialing') {
+      changes.push(`Set trial limit to ${TRIAL_ASSESSMENT_LIMIT} (tier: ${tierInfo.tier}, will upgrade to ${tierInfo.limit} on conversion)`);
+    } else {
+      changes.push(`Set tier to ${tierInfo.tier} with limit ${tierInfo.limit || 'unlimited'}`);
+    }
 
     console.log(`[STRIPE SYNC] Successfully synced tenant ${tenant.subdomain}:`, {
       status: subscription.status,
       tier: tierInfo.tier,
-      limit: tierInfo.limit,
+      effectiveLimit: effectiveLimit,
+      tierLimit: tierInfo.limit,
+      isTrialing: subscription.status === 'trialing',
       newPeriod: isNewPeriod
     });
 
