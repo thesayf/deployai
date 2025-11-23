@@ -425,13 +425,13 @@ export default function BillingDashboard() {
               badgeDotColor={TIER_DETAILS.scale.badgeDotColor}
               features={TIER_DETAILS.scale.features}
               isCurrentPlan={currentTier === 'scale'}
-              onAction={() => router.push('/contact')}
+              onAction={() => handleUpgrade('scale')}
               actionText={
                 currentTier === 'scale'
                   ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
                   : isTrialing
                     ? 'Upgrade and Start This Plan'
-                    : 'Contact Us'
+                    : 'Upgrade Plan'
               }
               actionVariant={currentTier === 'scale' ? 'outline' : 'default'}
               isDisabled={!isTrialing && currentTier === 'scale'}
