@@ -137,6 +137,29 @@ const Dashboard: React.FC = () => {
         />
       )}
 
+      {/* Payment Failed Banner */}
+      {(tenantContext?.tenant.subscription_status === 'past_due' || tenantContext?.tenant.subscription_status === 'unpaid') && (
+        <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-lg shadow-sm">
+          <div className="flex items-start gap-4">
+            <div className="text-4xl">⚠️</div>
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-red-900 mb-2">
+                Payment Failed
+              </h3>
+              <p className="text-red-800 mb-4">
+                We couldn't process your payment. Please update your payment method to restore access to your account and avoid service interruption.
+              </p>
+              <a
+                href={`/${tenantContext?.tenant.subdomain}/admin/billing`}
+                className="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md transition-colors"
+              >
+                Update Payment Method
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Paused Banner */}
       {isPaused && (
         <div className="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-lg shadow-sm">

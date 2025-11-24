@@ -494,18 +494,15 @@ const AssessmentTable: React.FC = () => {
                       <div className="flex items-center gap-2">
                         {assessment.request_status === 'requested' ? (
                           (() => {
-                            // Check if trial user at limit
-                            const isTrialing = tenantContext?.tenant.subscription_status === 'trialing';
+                            const subscriptionStatus = tenantContext?.tenant.subscription_status;
+                            const isTrialing = subscriptionStatus === 'trialing';
+                            const isPastDue = subscriptionStatus === 'past_due' || subscriptionStatus === 'unpaid';
                             const assessmentsUsed = tenantContext?.tenant.assessments_used || 0;
                             const assessmentsLimit = tenantContext?.tenant.assessments_limit || 0;
                             const atLimit = assessmentsUsed >= assessmentsLimit;
 
-                            // Check if trial has ended
-                            const trialEndDate = tenantContext?.tenant.trial_end_date ? new Date(tenantContext.tenant.trial_end_date) : null;
-                            const trialEnded = trialEndDate ? trialEndDate < new Date() : false;
-
-                            if (isTrialing && (atLimit || trialEnded)) {
-                              // Trial user at limit or trial ended - show upgrade button
+                            // Payment failed - show update payment button
+                            if (isPastDue) {
                               return (
                                 <button
                                   onClick={() => {
@@ -514,7 +511,22 @@ const AssessmentTable: React.FC = () => {
                                   className="flex items-center gap-1 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded transition-colors"
                                 >
                                   <Mail className="h-3 w-3" />
-                                  {trialEnded ? 'Trial Ended - Upgrade Now' : 'Trial Assessments Exhausted - Upgrade'}
+                                  Payment Failed - Update Payment
+                                </button>
+                              );
+                            }
+
+                            // Trial user at assessment limit - show upgrade button
+                            if (isTrialing && atLimit) {
+                              return (
+                                <button
+                                  onClick={() => {
+                                    window.location.href = `/${tenantContext?.tenant.subdomain}/admin/billing`;
+                                  }}
+                                  className="flex items-center gap-1 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded transition-colors"
+                                >
+                                  <Mail className="h-3 w-3" />
+                                  Trial Assessments Exhausted - Upgrade
                                 </button>
                               );
                             }

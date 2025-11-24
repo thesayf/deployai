@@ -64,46 +64,36 @@ export function TrialBanner({
     );
   }
 
-  // Priority 2: Trial ending soon
+  // Priority 2: Trial ending soon (3 days or less)
   if (isExpiringSoon) {
-    // Red/urgent banner for trial ending soon
-    const trialEndDateObj = new Date(trialEndDate);
-    const isTrialExpired = trialEndDateObj < new Date();
-
     return (
-      <Alert className="bg-red-50 border-red-300">
-        <AlertCircle className="h-5 w-5 text-red-600" />
-        <AlertTitle className="text-xl font-bold text-red-900">
-          {isTrialExpired ? 'Trial Expired!' : 'Trial Ending Soon!'}
+      <Alert className="bg-amber-50 border-amber-300">
+        <AlertCircle className="h-5 w-5 text-amber-600" />
+        <AlertTitle className="text-xl font-bold text-amber-900">
+          Trial Ending Soon!
         </AlertTitle>
         <AlertDescription className="mt-2 space-y-3">
-          <p className="font-semibold text-red-800">
-            {isTrialExpired
-              ? 'Your trial has ended. Your payment method will be charged shortly.'
-              : `Only ${daysRemaining} day${daysRemaining !== 1 ? 's' : ''} left in your trial!`
-            }
+          <p className="font-semibold text-amber-800">
+            Only {daysRemaining} day{daysRemaining !== 1 ? 's' : ''} left in your trial!
           </p>
-          <p className="text-sm text-red-700">
-            {isTrialExpired
-              ? `Your card will be charged ${monthlyPrice} to continue access. Update your payment method or cancel to avoid charges.`
-              : `You'll be charged $${monthlyPrice} on ${format(trialEndDateObj, 'MMM d, yyyy')}. Cancel anytime before then to avoid charges.`
-            }
+          <p className="text-sm text-amber-700">
+            You'll be charged ${monthlyPrice}/month on {format(new Date(trialEndDate), 'MMM d, yyyy')}. Cancel anytime before then to avoid charges.
           </p>
           <div className="flex gap-3 mt-3">
             <Button
               onClick={() => router.push(`/${tenant}/admin/billing`)}
               size="sm"
               variant="default"
-              className="bg-red-600 hover:bg-red-700"
+              className="bg-amber-600 hover:bg-amber-700"
             >
               Manage Subscription
             </Button>
             <Button
-              onClick={() => router.push(`/${tenant}/admin/billing/plans`)}
+              onClick={() => router.push(`/${tenant}/admin/billing`)}
               size="sm"
               variant="outline"
             >
-              View Plans
+              View Billing
             </Button>
           </div>
         </AlertDescription>
