@@ -94,7 +94,7 @@ export function PricingCard({
             className={cn(
               'w-full',
               isDark && actionVariant === 'default' && 'bg-white text-gray-900 hover:bg-gray-100',
-              isCurrentPlan && isDisabled && 'bg-gray-100 text-gray-600 hover:bg-gray-100 cursor-not-allowed'
+              isDisabled && 'cursor-not-allowed opacity-50'
             )}
           >
             {actionText}
