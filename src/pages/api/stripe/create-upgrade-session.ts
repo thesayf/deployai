@@ -105,7 +105,7 @@ export default async function handler(
 
     // Update the subscription with the new price
     // Stripe automatically handles proration
-    const updatedSubscription = await stripe.subscriptions.update(subscriptionId, {
+    const updateParams: any = {
       items: [
         {
           id: subscription.items.data[0].id,
@@ -118,7 +118,16 @@ export default async function handler(
         previous_tier: tenantData.subscription_tier || 'starter',
         new_tier: newTier,
       },
-    });
+    };
+
+    // If currently trialing, end the trial and convert to active subscription
+    if (subscription.status === 'trialing') {
+      console.log(`[UPGRADE] Converting trial to active subscription`);
+      updateParams.trial_end = 'now'; // End trial immediately
+      updateParams.billing_cycle_anchor = 'now'; // Start billing cycle now
+    }
+
+    const updatedSubscription = await stripe.subscriptions.update(subscriptionId, updateParams);
 
     console.log(`[UPGRADE] Updated subscription: ${updatedSubscription.id}`);
 
