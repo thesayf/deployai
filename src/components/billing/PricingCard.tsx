@@ -93,10 +93,14 @@ export function PricingCard({
             variant={actionVariant}
             className={cn(
               'w-full font-semibold',
-              // Current plan during trial = solid dark button
-              isCurrentPlan && !isDisabled && actionVariant === 'default' && 'bg-gray-900 text-white hover:bg-gray-800',
-              // Dark card special styling
-              isDark && actionVariant === 'default' && !isCurrentPlan && 'bg-white text-gray-900 hover:bg-gray-100',
+              // Current plan on dark card = white button with good contrast
+              isCurrentPlan && isDark && !isDisabled && 'bg-white text-gray-900 hover:bg-gray-100 border-0',
+              // Current plan on light card = dark button
+              isCurrentPlan && !isDark && !isDisabled && 'bg-gray-900 text-white hover:bg-gray-800 border-0',
+              // Dark card, not current plan, default variant = white button
+              !isCurrentPlan && isDark && actionVariant === 'default' && 'bg-white text-gray-900 hover:bg-gray-100 border-0',
+              // Light card, not current plan, default variant = use default button styling
+              !isCurrentPlan && !isDark && actionVariant === 'default' && 'bg-primary text-primary-foreground hover:bg-primary/90',
               // Disabled state
               isDisabled && 'cursor-not-allowed opacity-50'
             )}
