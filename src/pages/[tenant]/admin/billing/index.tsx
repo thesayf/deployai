@@ -224,14 +224,47 @@ export default function BillingDashboard() {
   };
 
   const handleUpgrade = async (tier: string) => {
-    // Skip for trial users - they should use "Start Your Plan" buttons
-    if (isTrialing) return;
-
     // Get tier details for confirmation
     const tierDetails = TIER_DETAILS[tier as keyof typeof TIER_DETAILS];
     if (!tierDetails) return;
 
-    // Confirm upgrade with user
+    // For trial users: Start their paid subscription
+    if (isTrialing) {
+      const message = `Start your ${tierDetails.name} subscription now? You'll be charged $${isYearly ? tierDetails.yearly / 12 : tierDetails.monthly}/month.`;
+      if (!confirm(message)) return;
+
+      // Trial users need to go through checkout to convert to paid
+      try {
+        const response = await fetch('/api/stripe/create-upgrade-session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-tenant-subdomain': tenant as string,
+          },
+          credentials: 'include',
+          body: JSON.stringify({ newTier: tier }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to start subscription');
+        }
+
+        alert(`✓ Success! Your ${tierDetails.name} subscription has been activated.`);
+
+        // Refresh billing data
+        setTimeout(() => {
+          mutate();
+        }, 1500);
+      } catch (err: any) {
+        console.error('Failed to start subscription:', err);
+        alert(`Failed to start subscription: ${err.message || 'Please try again.'}`);
+      }
+      return;
+    }
+
+    // For active subscriptions: Confirm upgrade/downgrade
     const isDowngrade =
       (currentTier === 'professional' && tier === 'starter') ||
       (currentTier === 'scale' && (tier === 'starter' || tier === 'professional'));

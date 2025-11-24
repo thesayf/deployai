@@ -77,17 +77,11 @@ const RequestAssessmentPage = () => {
                   <p className="text-lg mb-6">
                     {isPaused ? "You're on the waitlist!" : 'Your assessment request has been received.'}
                   </p>
-                  <p className="text-base text-gray-700 mb-8">
+                  <p className="text-base text-gray-700">
                     {isPaused
                       ? `You'll be the first to know when ${tenantContext?.tenant.company_name} resumes assessments. We'll send your assessment link directly to your inbox.`
                       : `A consultant from ${tenantContext?.tenant.company_name} will review your request and send you an assessment link via email shortly.`}
                   </p>
-                  <button
-                    onClick={() => router.push(`/${tenant}/admin`)}
-                    className="bg-black text-white px-8 py-4 font-bold text-lg border-[3px] border-black hover:bg-gray-800 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px]"
-                  >
-                    Return to Dashboard
-                  </button>
                 </div>
               </div>
             </div>

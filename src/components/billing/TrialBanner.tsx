@@ -24,7 +24,47 @@ export function TrialBanner({
   const router = useRouter();
   const assessmentsRemaining = assessmentsLimit - assessmentsUsed;
   const isExpiringSoon = daysRemaining <= 3;
+  const assessmentsExhausted = assessmentsRemaining <= 0;
 
+  // Priority 1: Assessments exhausted (regardless of days remaining)
+  if (assessmentsExhausted) {
+    return (
+      <Alert className="bg-red-50 border-red-300">
+        <AlertCircle className="h-5 w-5 text-red-600" />
+        <AlertTitle className="text-xl font-bold text-red-900">
+          ⚠️ Trial Assessments Exhausted!
+        </AlertTitle>
+        <AlertDescription className="mt-2 space-y-3">
+          <p className="font-semibold text-red-800">
+            You've used all {assessmentsLimit} trial assessments. Upgrade now to continue.
+          </p>
+          <p className="text-sm text-red-700">
+            Your trial period has {daysRemaining} day{daysRemaining !== 1 ? 's' : ''} remaining,
+            but you need to upgrade to a paid plan to create more assessments.
+          </p>
+          <div className="flex gap-3 mt-3">
+            <Button
+              onClick={() => router.push(`/${tenant}/admin/billing`)}
+              size="sm"
+              variant="default"
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Upgrade Now
+            </Button>
+            <Button
+              onClick={() => router.push(`/${tenant}/admin/billing`)}
+              size="sm"
+              variant="outline"
+            >
+              View Plans
+            </Button>
+          </div>
+        </AlertDescription>
+      </Alert>
+    );
+  }
+
+  // Priority 2: Trial ending soon
   if (isExpiringSoon) {
     // Red/urgent banner for trial ending soon
     const trialEndDateObj = new Date(trialEndDate);
