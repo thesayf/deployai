@@ -414,8 +414,30 @@ export default function BillingDashboard() {
             </Alert>
           )}
 
-          {/* 3-Column Pricing Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+          {/* Payment Failed Banner - Block plan selection */}
+          {(billingData.subscription_status === 'past_due' || billingData.subscription_status === 'unpaid') && (
+            <Alert className="bg-red-50 border-red-600">
+              <AlertCircle className="h-5 w-5 text-red-600" />
+              <AlertTitle className="text-lg font-semibold text-red-900">⚠️ Payment Failed</AlertTitle>
+              <AlertDescription className="mt-2 space-y-3">
+                <p className="font-medium text-red-800">
+                  Your payment method was declined. Please update your payment method to restore access.
+                </p>
+                <p className="text-sm text-red-700">
+                  You cannot change plans until your payment is resolved.
+                </p>
+                <Button
+                  onClick={handleManageSubscription}
+                  className="bg-red-600 hover:bg-red-700 text-white mt-2"
+                >
+                  Update Payment Method
+                </Button>
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {/* 3-Column Pricing Cards - Disabled for past_due */}
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 ${(billingData.subscription_status === 'past_due' || billingData.subscription_status === 'unpaid') ? 'opacity-50 pointer-events-none' : ''}`}>
             <PricingCard
               name={TIER_DETAILS.starter.name}
               price={isYearly ? 159 : TIER_DETAILS.starter.monthly}
