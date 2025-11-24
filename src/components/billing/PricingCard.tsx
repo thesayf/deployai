@@ -92,8 +92,12 @@ export function PricingCard({
             disabled={isDisabled}
             variant={actionVariant}
             className={cn(
-              'w-full',
-              isDark && actionVariant === 'default' && 'bg-white text-gray-900 hover:bg-gray-100',
+              'w-full font-semibold',
+              // Current plan during trial = solid dark button
+              isCurrentPlan && !isDisabled && actionVariant === 'default' && 'bg-gray-900 text-white hover:bg-gray-800',
+              // Dark card special styling
+              isDark && actionVariant === 'default' && !isCurrentPlan && 'bg-white text-gray-900 hover:bg-gray-100',
+              // Disabled state
               isDisabled && 'cursor-not-allowed opacity-50'
             )}
           >
