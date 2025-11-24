@@ -533,7 +533,6 @@ const AssessmentTable: React.FC = () => {
                               </button>
                             );
                           })()
-                        </button>
                         ) : (
                           <>
                             <Link
