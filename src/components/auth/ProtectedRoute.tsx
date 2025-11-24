@@ -46,7 +46,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
         const hasActiveSubscription =
           tenant?.subscription_status === 'active' ||
-          tenant?.subscription_status === 'trialing';
+          tenant?.subscription_status === 'trialing' ||
+          tenant?.subscription_status === 'past_due' || // Allow past_due to access billing page
+          tenant?.subscription_status === 'unpaid'; // Allow unpaid to access billing page
 
         const hasPaymentMethod = !!tenant?.stripe_customer_id;
 
