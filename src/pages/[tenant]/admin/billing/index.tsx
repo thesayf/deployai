@@ -346,6 +346,17 @@ export default function BillingDashboard() {
     ? (billingData.assessments_used / billingData.assessments_limit) * 100
     : 0;
 
+  // Helper to determine tier relationship
+  const tierRanking = { starter: 1, professional: 2, scale: 3 };
+  const isDowngrade = (targetTier: string) => {
+    if (!currentTier) return false;
+    return tierRanking[targetTier as keyof typeof tierRanking] < tierRanking[currentTier];
+  };
+  const isUpgrade = (targetTier: string) => {
+    if (!currentTier) return false;
+    return tierRanking[targetTier as keyof typeof tierRanking] > tierRanking[currentTier];
+  };
+
   return (
     <ProtectedRoute>
       <AdminLayout title="Billing & Subscription">
@@ -419,10 +430,10 @@ export default function BillingDashboard() {
                 currentTier === 'starter'
                   ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
                   : isTrialing
-                    ? 'Upgrade and Start This Plan'
+                    ? (isDowngrade('starter') ? 'Downgrade and Start' : 'Start This Plan')
                     : 'Downgrade'
               }
-              actionVariant={currentTier === 'starter' ? 'outline' : 'default'}
+              actionVariant={currentTier === 'starter' ? 'default' : 'outline'}
               isDisabled={!isTrialing && currentTier === 'starter'}
             />
 
@@ -442,10 +453,10 @@ export default function BillingDashboard() {
                 currentTier === 'professional'
                   ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
                   : isTrialing
-                    ? 'Upgrade and Start This Plan'
-                    : 'Upgrade Plan'
+                    ? (isDowngrade('professional') ? 'Downgrade and Start' : isUpgrade('professional') ? 'Upgrade and Start' : 'Start This Plan')
+                    : (isUpgrade('professional') ? 'Upgrade' : 'Downgrade')
               }
-              actionVariant="default"
+              actionVariant={currentTier === 'professional' ? 'default' : isUpgrade('professional') ? 'default' : 'outline'}
               isDisabled={!isTrialing && currentTier === 'professional'}
             />
 
@@ -463,10 +474,10 @@ export default function BillingDashboard() {
                 currentTier === 'scale'
                   ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
                   : isTrialing
-                    ? 'Upgrade and Start This Plan'
-                    : 'Upgrade Plan'
+                    ? (isDowngrade('scale') ? 'Downgrade and Start' : 'Upgrade and Start')
+                    : 'Upgrade'
               }
-              actionVariant={currentTier === 'scale' ? 'outline' : 'default'}
+              actionVariant={currentTier === 'scale' ? 'default' : isUpgrade('scale') ? 'default' : 'outline'}
               isDisabled={!isTrialing && currentTier === 'scale'}
             />
           </div>
