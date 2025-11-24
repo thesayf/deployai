@@ -42,6 +42,10 @@ const Dashboard: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // DEBUG: Log database connection info
+    console.log('🔍 [DEBUG] Dashboard Loading...');
+    console.log('🔍 [DEBUG] Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+    console.log('🔍 [DEBUG] Tenant Context:', tenantContext);
     fetchDashboardData();
   }, [tenantContext]);
 
@@ -50,6 +54,9 @@ const Dashboard: React.FC = () => {
 
     try {
       setLoading(true);
+      console.log('🔍 [DEBUG] Fetching dashboard for subdomain:', tenantContext.tenant.subdomain);
+      console.log('🔍 [DEBUG] Tenant ID:', tenantContext.tenant.id);
+
       const response = await fetch(`/api/admin/dashboard`, {
         headers: {
           'x-tenant-subdomain': tenantContext.tenant.subdomain,
@@ -61,6 +68,9 @@ const Dashboard: React.FC = () => {
       }
 
       const data = await response.json();
+      console.log('🔍 [DEBUG] Dashboard data received:', data);
+      console.log('🔍 [DEBUG] Usage:', data.usage);
+      console.log('🔍 [DEBUG] Billing:', data.billing);
       setDashboardData(data);
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
