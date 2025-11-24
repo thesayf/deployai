@@ -310,7 +310,7 @@ export default function BillingDashboard() {
 
   if (isLoading) {
     return (
-      <ProtectedRoute>
+      <ProtectedRoute requiresSubscription={false}>
         <AdminLayout title="Billing">
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="text-xl font-medium text-muted-foreground">Loading...</div>
@@ -322,7 +322,7 @@ export default function BillingDashboard() {
 
   if (error || !billingData) {
     return (
-      <ProtectedRoute>
+      <ProtectedRoute requiresSubscription={false}>
         <AdminLayout title="Billing">
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
@@ -366,7 +366,7 @@ export default function BillingDashboard() {
   };
 
   return (
-    <ProtectedRoute>
+    <ProtectedRoute requiresSubscription={false}>
       <AdminLayout title="Billing & Subscription">
         <div className="space-y-8">
           {/* Page Header with Toggle */}
