@@ -493,63 +493,47 @@ const AssessmentTable: React.FC = () => {
                     <td className="px-4 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-2">
                         {assessment.request_status === 'requested' ? (
-                          <button
-                            onClick={async () => {
-                              // Check if trial user at limit
-                              const isTrialing = tenantContext?.tenant.subscription_status === 'trialing';
-                              const assessmentsUsed = tenantContext?.tenant.assessments_used || 0;
-                              const assessmentsLimit = tenantContext?.tenant.assessments_limit || 0;
-                              const atLimit = assessmentsUsed >= assessmentsLimit;
-                              const currentTier = tenantContext?.tenant.subscription_tier || 'starter';
-                              const tierName = currentTier.charAt(0).toUpperCase() + currentTier.slice(1);
-                              const tierPrice = currentTier === 'starter' ? 199 : currentTier === 'professional' ? 499 : 997;
-                              const trialEndDate = tenantContext?.tenant.trial_end_date ? new Date(tenantContext.tenant.trial_end_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+                          (() => {
+                            // Check if trial user at limit
+                            const isTrialing = tenantContext?.tenant.subscription_status === 'trialing';
+                            const assessmentsUsed = tenantContext?.tenant.assessments_used || 0;
+                            const assessmentsLimit = tenantContext?.tenant.assessments_limit || 0;
+                            const atLimit = assessmentsUsed >= assessmentsLimit;
 
-                              if (isTrialing && atLimit) {
-                                // Show detailed upgrade message for trial users at limit
-                                const message = `Trial Limit Reached\n\nYou've used all ${assessmentsLimit} assessments on your ${tierName} plan trial.\n\nStart your ${tierName} plan ($${tierPrice}/month) now to continue sending assessments?\n\n✓ You can upgrade to a higher plan anytime\n✓ First charge will be on ${trialEndDate}\n\nClick OK to start your plan and send this assessment.`;
+                            // Check if trial has ended
+                            const trialEndDate = tenantContext?.tenant.trial_end_date ? new Date(tenantContext.tenant.trial_end_date) : null;
+                            const trialEnded = trialEndDate ? trialEndDate < new Date() : false;
 
-                                if (confirm(message)) {
-                                  try {
-                                    // Call API to convert trial to active
-                                    const response = await fetch('/api/tenant/start-plan', {
-                                      method: 'POST',
-                                      headers: {
-                                        'Content-Type': 'application/json',
-                                        'x-tenant-subdomain': tenantContext?.tenant.subdomain as string,
-                                      },
-                                    });
+                            if (isTrialing && (atLimit || trialEnded)) {
+                              // Trial user at limit or trial ended - show upgrade button
+                              return (
+                                <button
+                                  onClick={() => {
+                                    window.location.href = `/${tenantContext?.tenant.subdomain}/admin/billing`;
+                                  }}
+                                  className="flex items-center gap-1 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded transition-colors"
+                                >
+                                  <Mail className="h-3 w-3" />
+                                  {trialEnded ? 'Trial Ended - Upgrade Now' : 'Trial Assessments Exhausted - Upgrade'}
+                                </button>
+                              );
+                            }
 
-                                    if (!response.ok) {
-                                      const data = await response.json();
-                                      alert(`Failed to start plan: ${data.error}`);
-                                      return;
-                                    }
-
-                                    const data = await response.json();
-
-                                    // Show success message
-                                    alert(`✓ Plan Started!\n\n${data.message}\n\nYou can now send assessments.`);
-
-                                    // Refresh page to update tenant context
-                                    window.location.reload();
-                                  } catch (err) {
-                                    console.error('Failed to start plan:', err);
-                                    alert('Failed to start plan. Please try again.');
-                                  }
-                                }
-                                return;
-                              }
-
-                              // Normal flow for paid users or trial users under limit
-                              setSelectedAssessment(assessment);
-                              setShowSendModal(true);
-                            }}
-                            className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded transition-colors"
-                          >
-                            <Mail className="h-3 w-3" />
-                            Send Assessment - ${tenantContext?.tenant.subscription_tier === 'starter' ? '4' : tenantContext?.tenant.subscription_tier === 'professional' ? '3' : '2'}
-                          </button>
+                            // Normal flow - show send assessment button
+                            return (
+                              <button
+                                onClick={() => {
+                                  setSelectedAssessment(assessment);
+                                  setShowSendModal(true);
+                                }}
+                                className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded transition-colors"
+                              >
+                                <Mail className="h-3 w-3" />
+                                Send Assessment - ${tenantContext?.tenant.subscription_tier === 'starter' ? '4' : tenantContext?.tenant.subscription_tier === 'professional' ? '3' : '2'}
+                              </button>
+                            );
+                          })()
+                        </button>
                         ) : (
                           <>
                             <Link
