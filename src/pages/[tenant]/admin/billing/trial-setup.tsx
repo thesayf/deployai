@@ -88,7 +88,7 @@ export default function TrialSetup() {
               <div className="flex items-start gap-3">
                 <div className="text-2xl">✓</div>
                 <div>
-                  <h3 className="font-black text-lg uppercase mb-1">5 AI Assessments</h3>
+                  <h3 className="font-black text-lg uppercase mb-1">10 AI Assessments</h3>
                   <p className="text-gray-700">Get detailed business insights and recommendations</p>
                 </div>
               </div>
@@ -151,7 +151,7 @@ export default function TrialSetup() {
           {/* Fine print */}
           <p className="text-sm text-gray-600 text-center mt-8">
             You'll be redirected to Stripe to securely enter your payment details.
-            Your trial starts immediately and auto-converts to the Starter plan ($199/month)
+            Your trial starts immediately and auto-converts to your chosen plan
             after 14 days unless cancelled.
           </p>
         </div>

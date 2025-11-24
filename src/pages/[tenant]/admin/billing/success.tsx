@@ -86,7 +86,7 @@ export default function BillingSuccess() {
           <div className="space-y-4 mb-8">
             <div className="border-[3px] border-black p-4 bg-[#FFF5F0]">
               <p className="font-bold text-lg">
-                ✓ 5 AI assessments available
+                ✓ 10 AI assessments during trial
               </p>
             </div>
 
@@ -98,7 +98,7 @@ export default function BillingSuccess() {
 
             <div className="border-[3px] border-black p-4 bg-[#F0FFF5]">
               <p className="font-bold text-lg">
-                ✓ Auto-converts to Starter plan ($199/mo) after trial
+                ✓ Auto-converts to your chosen plan after trial
               </p>
             </div>
           </div>
