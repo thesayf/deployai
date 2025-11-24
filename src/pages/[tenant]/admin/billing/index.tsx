@@ -334,6 +334,14 @@ export default function BillingDashboard() {
     );
   }
 
+  // DEBUG: Log billing data to console
+  console.log('🔍 BILLING DATA:', {
+    subscription_status: billingData.subscription_status,
+    subscription_tier: billingData.subscription_tier,
+    stripe_subscription_id: billingData.stripe_subscription_id,
+    subdomain: tenant,
+  });
+
   const isTrialing = billingData.subscription_status === 'trialing';
   const currentTier = billingData.subscription_tier as keyof typeof TIER_DETAILS | null;
 
