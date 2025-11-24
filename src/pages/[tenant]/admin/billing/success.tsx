@@ -2,12 +2,14 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import { SUBSCRIPTION_TIERS } from '@/lib/stripe-config';
 
 export default function BillingSuccess() {
   const router = useRouter();
   const { tenant } = router.query;
   const [countdown, setCountdown] = useState(5);
   const [syncing, setSyncing] = useState(true);
+  const [subscriptionTier, setSubscriptionTier] = useState<string | null>(null);
 
   useEffect(() => {
     // Poll for subscription sync completion
@@ -17,13 +19,14 @@ export default function BillingSuccess() {
       const supabase = createClient();
       const { data } = await supabase
         .from('tenants')
-        .select('subscription_status, stripe_subscription_id')
+        .select('subscription_status, stripe_subscription_id, subscription_tier')
         .eq('subdomain', tenant)
         .single();
 
       // If subscription is synced, stop polling
       if (data?.subscription_status && data?.stripe_subscription_id) {
         setSyncing(false);
+        setSubscriptionTier(data.subscription_tier);
       }
     };
 
@@ -98,7 +101,9 @@ export default function BillingSuccess() {
 
             <div className="border-[3px] border-black p-4 bg-[#F0FFF5]">
               <p className="font-bold text-lg">
-                ✓ Auto-converts to your chosen plan after trial
+                ✓ Auto-converts to {subscriptionTier && SUBSCRIPTION_TIERS[subscriptionTier as keyof typeof SUBSCRIPTION_TIERS]
+                  ? `${SUBSCRIPTION_TIERS[subscriptionTier as keyof typeof SUBSCRIPTION_TIERS].name} Plan ($${SUBSCRIPTION_TIERS[subscriptionTier as keyof typeof SUBSCRIPTION_TIERS].price}/mo)`
+                  : 'your chosen plan'} after trial
               </p>
             </div>
           </div>
