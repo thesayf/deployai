@@ -66,6 +66,8 @@ export default async function handler(
     }
 
     // Create quiz_response with request_status = 'requested'
+    // NOTE: Do NOT set started_at here - it should be set when client clicks the approved link
+    // This ensures the assessment count is incremented at the right time (in verify.ts)
     const insertData = addTenantIdToData({
       user_email: email.toLowerCase(),
       user_first_name: firstName,
@@ -73,7 +75,6 @@ export default async function handler(
       user_company: company,
       request_status: 'requested',
       responses: {},
-      started_at: new Date().toISOString(),
     }, tenantContext.tenant.id);
 
     const { data: requestRecord, error: insertError } = await supabase
