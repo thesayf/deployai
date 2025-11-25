@@ -33,7 +33,7 @@ export default async function handler(
 
     // Only add configuration if it's set
     if (process.env.STRIPE_PORTAL_CONFIG_ID) {
-      sessionParams.configuration = process.env.STRIPE_PORTAL_CONFIG_ID;
+      sessionParams.configuration = process.env.STRIPE_PORTAL_CONFIG_ID.trim();
     }
 
     // Add flow_data to open directly to subscription update
