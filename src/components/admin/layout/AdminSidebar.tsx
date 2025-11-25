@@ -6,6 +6,7 @@ import {
   FileText,
   BarChart3,
   Settings,
+  Palette,
   X,
   LogOut
 } from 'lucide-react';
@@ -42,10 +43,16 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ isOpen, onClose, tenant }) 
       current: router.pathname === '/[tenant]/admin/analytics'
     },
     {
+      name: 'Branding',
+      href: `/${subdomain}/admin/settings/branding`,
+      icon: Palette,
+      current: router.pathname === '/[tenant]/admin/settings/branding'
+    },
+    {
       name: 'Settings',
       href: `/${subdomain}/admin/billing`,
       icon: Settings,
-      current: router.pathname.startsWith('/[tenant]/admin/billing') || router.pathname.startsWith('/[tenant]/admin/settings')
+      current: router.pathname.startsWith('/[tenant]/admin/billing')
     },
   ];
 
