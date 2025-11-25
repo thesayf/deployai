@@ -54,8 +54,18 @@ export default async function handler(
     return res.status(200).json({ url: session.url });
   } catch (error: any) {
     console.error('[PORTAL ERROR]', error);
+
+    // Log more details for Stripe errors
+    if (error.type === 'StripeInvalidRequestError') {
+      console.error('[PORTAL ERROR] Stripe code:', error.code);
+      console.error('[PORTAL ERROR] Stripe param:', error.param);
+      console.error('[PORTAL ERROR] Stripe raw:', error.raw);
+    }
+
     return res.status(500).json({
       error: error.message || 'Failed to create portal session',
+      code: error.code,
+      type: error.type,
     });
   }
 }
