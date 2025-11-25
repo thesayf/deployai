@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { Switch } from '@/components/ui/switch';
-import { Clock, CreditCard, AlertCircle, RefreshCw, Pause, Play } from 'lucide-react';
+import { Clock, CreditCard, AlertCircle, RefreshCw, Pause, Play, Settings, XCircle } from 'lucide-react';
 import { PricingCard } from '@/components/billing/PricingCard';
 import { BillingHistoryTable } from '@/components/billing/BillingHistoryTable';
 
@@ -687,6 +687,42 @@ export default function BillingDashboard() {
               </Card>
             )}
           </div>
+
+          {/* Subscription Management Card - Full Width */}
+          {billingData.stripe_customer_id && !isTrialing && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <Settings className="h-5 w-5" />
+                  Manage Subscription
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                  <div className="space-y-1">
+                    <p className="text-sm text-muted-foreground">
+                      Access Stripe's customer portal to update your payment method, view invoices, or cancel your subscription.
+                    </p>
+                    {billingData.cancel_at_period_end && (
+                      <p className="text-sm text-amber-600 font-medium">
+                        Your subscription is set to cancel at the end of the current billing period.
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex gap-3">
+                    <Button onClick={handleManageSubscription} variant="outline">
+                      <CreditCard className="h-4 w-4 mr-2" />
+                      Update Payment
+                    </Button>
+                    <Button onClick={handleManageSubscription} variant="outline" className="text-red-600 hover:text-red-700 hover:bg-red-50">
+                      <XCircle className="h-4 w-4 mr-2" />
+                      Cancel Subscription
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Billing History Table */}
           <BillingHistoryTable invoices={invoices} loading={loadingInvoices} />
