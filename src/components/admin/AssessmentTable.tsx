@@ -334,6 +334,7 @@ const AssessmentTable: React.FC = () => {
             <RefreshCw className={`h-5 w-5 ${isLoading ? 'animate-spin' : ''}`} />
             Refresh
           </button>
+          {/* TEMPORARILY DISABLED: Export buttons - Not implemented for launch
           <button
             onClick={() => handleExport('csv')}
             className="flex items-center gap-2 bg-white font-medium py-2 px-4 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
@@ -348,6 +349,7 @@ const AssessmentTable: React.FC = () => {
             <Download className="h-5 w-5" />
             Export JSON
           </button>
+          */}
         </div>
       </div>
 
@@ -532,16 +534,23 @@ const AssessmentTable: React.FC = () => {
                             }
 
                             // Normal flow - show send assessment button
+                            // If under limit, it's free (deducts from plan). If at/over limit, show overage price
+                            const overagePrice = tenantContext?.tenant.subscription_tier === 'starter' ? '4' : tenantContext?.tenant.subscription_tier === 'professional' ? '3' : '2';
+
                             return (
                               <button
                                 onClick={() => {
                                   setSelectedAssessment(assessment);
                                   setShowSendModal(true);
                                 }}
-                                className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded transition-colors"
+                                className={`flex items-center gap-1 px-3 py-1.5 text-white text-xs font-semibold rounded transition-colors ${
+                                  atLimit
+                                    ? 'bg-orange-600 hover:bg-orange-700'
+                                    : 'bg-blue-600 hover:bg-blue-700'
+                                }`}
                               >
                                 <Mail className="h-3 w-3" />
-                                Send Assessment - ${tenantContext?.tenant.subscription_tier === 'starter' ? '4' : tenantContext?.tenant.subscription_tier === 'professional' ? '3' : '2'}
+                                {atLimit ? `Send Assessment - $${overagePrice}` : 'Send Assessment'}
                               </button>
                             );
                           })()
@@ -690,40 +699,74 @@ const AssessmentTable: React.FC = () => {
             </div>
 
             {/* Cost Info */}
-            <div className="border-t border-gray-200 pt-4 mb-6">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Cost (overage rate):</span>
-                <span className="text-lg font-bold text-gray-900">
-                  ${tenantContext?.tenant.subscription_tier === 'starter' ? '4.00' : tenantContext?.tenant.subscription_tier === 'professional' ? '3.00' : '2.00'}
-                </span>
-              </div>
-              <p className="text-xs text-gray-500 mt-2">
-                {tenantContext?.tenant.subscription_status === 'paused'
-                  ? 'Your account will remain paused after sending'
-                  : 'One-time charge as overage assessment'}
-              </p>
-            </div>
+            {(() => {
+              const assessmentsUsed = tenantContext?.tenant.assessments_used || 0;
+              const assessmentsLimit = tenantContext?.tenant.assessments_limit || 0;
+              const atLimit = assessmentsUsed >= assessmentsLimit;
+              const overagePrice = tenantContext?.tenant.subscription_tier === 'starter' ? '4.00' : tenantContext?.tenant.subscription_tier === 'professional' ? '3.00' : '2.00';
+              const isPaused = tenantContext?.tenant.subscription_status === 'paused';
+
+              return (
+                <div className="border-t border-gray-200 pt-4 mb-6">
+                  {atLimit ? (
+                    <>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-600">Cost (overage rate):</span>
+                        <span className="text-lg font-bold text-orange-600">${overagePrice}</span>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-2">
+                        You've used all {assessmentsLimit} assessments this month. This will be charged as an overage.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-600">Cost:</span>
+                        <span className="text-lg font-bold text-green-600">Free</span>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-2">
+                        Included in your plan ({assessmentsUsed} of {assessmentsLimit} used this month)
+                        {isPaused && ' • Your account will remain paused after sending'}
+                      </p>
+                    </>
+                  )}
+                </div>
+              );
+            })()}
 
             {/* Action Buttons */}
-            <div className="flex gap-3">
-              <button
-                onClick={() => {
-                  setShowSendModal(false);
-                  setSelectedAssessment(null);
-                }}
-                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 transition-colors"
-                disabled={isSending}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSendAssessment}
-                disabled={isSending}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed"
-              >
-                {isSending ? 'Sending...' : `Send for $${tenantContext?.tenant.subscription_tier === 'starter' ? '4' : tenantContext?.tenant.subscription_tier === 'professional' ? '3' : '2'}`}
-              </button>
-            </div>
+            {(() => {
+              const assessmentsUsed = tenantContext?.tenant.assessments_used || 0;
+              const assessmentsLimit = tenantContext?.tenant.assessments_limit || 0;
+              const atLimit = assessmentsUsed >= assessmentsLimit;
+              const overagePrice = tenantContext?.tenant.subscription_tier === 'starter' ? '4' : tenantContext?.tenant.subscription_tier === 'professional' ? '3' : '2';
+
+              return (
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => {
+                      setShowSendModal(false);
+                      setSelectedAssessment(null);
+                    }}
+                    className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 transition-colors"
+                    disabled={isSending}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSendAssessment}
+                    disabled={isSending}
+                    className={`flex-1 px-4 py-2 text-white font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                      atLimit
+                        ? 'bg-orange-600 hover:bg-orange-700'
+                        : 'bg-blue-600 hover:bg-blue-700'
+                    }`}
+                  >
+                    {isSending ? 'Sending...' : atLimit ? `Send for $${overagePrice}` : 'Send Assessment'}
+                  </button>
+                </div>
+              );
+            })()}
           </div>
         </div>
       )}
