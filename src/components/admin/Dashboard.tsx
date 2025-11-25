@@ -226,16 +226,19 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Statistics */}
+      {/* TEMPORARILY DISABLED: Statistics - Available in Analytics page
       <DashboardStats stats={dashboardData.stats} />
+      */}
 
-      {/* Recent Assessments and Trend */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Recent Assessments */}
+      <div className="grid grid-cols-1 gap-6">
         <RecentAssessments
           assessments={dashboardData.recentAssessments}
           tenantSubdomain={tenantContext?.tenant.subdomain || ''}
         />
+        {/* TEMPORARILY DISABLED: Monthly Trend - Available in Analytics page
         <MonthlyTrend data={dashboardData.monthlyTrend} />
+        */}
       </div>
     </div>
   );
