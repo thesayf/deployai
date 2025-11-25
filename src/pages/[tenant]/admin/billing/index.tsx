@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
 import { Switch } from '@/components/ui/switch';
-import { Clock, CreditCard, AlertCircle, RefreshCw } from 'lucide-react';
+import { Clock, CreditCard, AlertCircle, RefreshCw, Pause, Play } from 'lucide-react';
 import { PricingCard } from '@/components/billing/PricingCard';
 import { BillingHistoryTable } from '@/components/billing/BillingHistoryTable';
 
@@ -109,6 +109,7 @@ export default function BillingDashboard() {
   const [invoices, setInvoices] = useState<any[]>([]);
   const [loadingInvoices, setLoadingInvoices] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isPausingAssessments, setIsPausingAssessments] = useState(false);
 
   // Use SWR for automatic caching and revalidation
   const { data: billingData, error, isLoading, mutate } = useSWR<BillingData>(
@@ -167,6 +168,52 @@ export default function BillingDashboard() {
     setIsRefreshing(true);
     await mutate();
     setTimeout(() => setIsRefreshing(false), 500);
+  };
+
+  const handleTogglePause = async () => {
+    if (!tenant) return;
+
+    const currentlyPaused = billingData?.subscription_status === 'paused';
+    const action = currentlyPaused ? 'resume' : 'pause';
+
+    // Confirm before pausing
+    if (!currentlyPaused) {
+      const confirmed = confirm(
+        'Are you sure you want to pause assessments?\n\n' +
+        '• Your clients won\'t be able to take new assessments\n' +
+        '• Clients can still request assessments (queued for later)\n' +
+        '• Your subscription billing continues as normal\n' +
+        '• You can resume anytime'
+      );
+      if (!confirmed) return;
+    }
+
+    setIsPausingAssessments(true);
+    try {
+      const response = await fetch('/api/tenant/pause-assessments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-tenant-subdomain': tenant as string,
+        },
+        credentials: 'include',
+        body: JSON.stringify({ pause: !currentlyPaused }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || `Failed to ${action} assessments`);
+      }
+
+      // Refresh billing data to show updated status
+      await mutate();
+    } catch (err: any) {
+      console.error(`Failed to ${action} assessments:`, err);
+      alert(`Failed to ${action} assessments: ${err.message || 'Please try again.'}`);
+    } finally {
+      setIsPausingAssessments(false);
+    }
   };
 
   const handleForceSync = async () => {
@@ -343,6 +390,7 @@ export default function BillingDashboard() {
   });
 
   const isTrialing = billingData.subscription_status === 'trialing';
+  const isPaused = billingData.subscription_status === 'paused';
   const currentTier = billingData.subscription_tier as keyof typeof TIER_DETAILS | null;
 
   // Calculate trial days remaining
@@ -421,6 +469,23 @@ export default function BillingDashboard() {
               </AlertDescription>
             </Alert>
           )}
+
+          {/* TEMPORARILY DISABLED: Paused Banner - Re-enable when pause feature is fixed
+          {isPaused && (
+            <Alert className="bg-amber-50 border-amber-400">
+              <Pause className="h-4 w-4 text-amber-600" />
+              <AlertTitle className="text-lg font-semibold text-amber-900">Assessments Paused</AlertTitle>
+              <AlertDescription className="mt-2 space-y-2">
+                <p className="font-medium text-amber-800">
+                  Your assessment portal is currently paused. Clients cannot take new assessments.
+                </p>
+                <p className="text-sm text-amber-700">
+                  Your subscription remains active and billing continues as normal. Resume anytime below.
+                </p>
+              </AlertDescription>
+            </Alert>
+          )}
+          */}
 
           {/* Payment Failed Banner - Block plan selection */}
           {(billingData.subscription_status === 'past_due' || billingData.subscription_status === 'unpaid') && (
@@ -540,6 +605,58 @@ export default function BillingDashboard() {
                     </AlertDescription>
                   </Alert>
                 )}
+
+                {/* TEMPORARILY DISABLED: Pause Toggle - Re-enable when pause feature is fixed
+                {(billingData.subscription_status === 'active' ||
+                  billingData.subscription_status === 'trialing' ||
+                  billingData.subscription_status === 'paused') && (
+                  <div className="pt-4 border-t">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        {isPaused ? (
+                          <div className="p-2 bg-amber-100 rounded">
+                            <Pause className="h-5 w-5 text-amber-600" />
+                          </div>
+                        ) : (
+                          <div className="p-2 bg-green-100 rounded">
+                            <Play className="h-5 w-5 text-green-600" />
+                          </div>
+                        )}
+                        <div>
+                          <p className="font-semibold text-sm">
+                            {isPaused ? 'Assessments Paused' : 'Assessments Active'}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {isPaused
+                              ? 'Clients can request but not take assessments'
+                              : 'Clients can take assessments normally'}
+                          </p>
+                        </div>
+                      </div>
+                      <Button
+                        onClick={handleTogglePause}
+                        disabled={isPausingAssessments}
+                        variant={isPaused ? 'default' : 'outline'}
+                        size="sm"
+                        className={isPaused ? 'bg-green-600 hover:bg-green-700' : ''}
+                      >
+                        {isPausingAssessments ? (
+                          <RefreshCw className="h-4 w-4 animate-spin mr-2" />
+                        ) : isPaused ? (
+                          <Play className="h-4 w-4 mr-2" />
+                        ) : (
+                          <Pause className="h-4 w-4 mr-2" />
+                        )}
+                        {isPausingAssessments
+                          ? 'Processing...'
+                          : isPaused
+                            ? 'Resume'
+                            : 'Pause'}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                */}
               </CardContent>
             </Card>
 
