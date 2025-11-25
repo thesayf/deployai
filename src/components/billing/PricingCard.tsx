@@ -16,8 +16,8 @@ interface PricingCardProps {
   isCurrentPlan: boolean;
   isDark?: boolean;
   isRecommended?: boolean;
-  onAction: () => void;
-  actionText: string;
+  onAction?: () => void;
+  actionText?: string;
   actionVariant?: 'default' | 'outline' | 'secondary';
   isDisabled?: boolean;
 }
@@ -87,26 +87,28 @@ export function PricingCard({
         </CardHeader>
 
         <CardContent className="space-y-6">
-          <Button
-            onClick={onAction}
-            disabled={isDisabled}
-            variant={actionVariant}
-            className={cn(
-              'w-full font-semibold',
-              // Current plan on dark card = white button with good contrast
-              isCurrentPlan && isDark && !isDisabled && 'bg-white text-gray-900 hover:bg-gray-100 border-0',
-              // Current plan on light card = dark button
-              isCurrentPlan && !isDark && !isDisabled && 'bg-gray-900 text-white hover:bg-gray-800 border-0',
-              // Dark card, not current plan, default variant = white button
-              !isCurrentPlan && isDark && actionVariant === 'default' && 'bg-white text-gray-900 hover:bg-gray-100 border-0',
-              // Light card, not current plan, default variant = use default button styling
-              !isCurrentPlan && !isDark && actionVariant === 'default' && 'bg-primary text-primary-foreground hover:bg-primary/90',
-              // Disabled state
-              isDisabled && 'cursor-not-allowed opacity-50'
-            )}
-          >
-            {actionText}
-          </Button>
+          {actionText && (
+            <Button
+              onClick={onAction}
+              disabled={isDisabled}
+              variant={actionVariant}
+              className={cn(
+                'w-full font-semibold',
+                // Current plan on dark card = white button with good contrast
+                isCurrentPlan && isDark && !isDisabled && 'bg-white text-gray-900 hover:bg-gray-100 border-0',
+                // Current plan on light card = dark button
+                isCurrentPlan && !isDark && !isDisabled && 'bg-gray-900 text-white hover:bg-gray-800 border-0',
+                // Dark card, not current plan, default variant = white button
+                !isCurrentPlan && isDark && actionVariant === 'default' && 'bg-white text-gray-900 hover:bg-gray-100 border-0',
+                // Light card, not current plan, default variant = use default button styling
+                !isCurrentPlan && !isDark && actionVariant === 'default' && 'bg-primary text-primary-foreground hover:bg-primary/90',
+                // Disabled state
+                isDisabled && 'cursor-not-allowed opacity-50'
+              )}
+            >
+              {actionText}
+            </Button>
+          )}
 
           <ul className="space-y-2">
             {features.map((feature, index) => (

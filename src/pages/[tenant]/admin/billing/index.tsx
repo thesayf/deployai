@@ -522,16 +522,16 @@ export default function BillingDashboard() {
               badgeDotColor={TIER_DETAILS.starter.badgeDotColor}
               features={TIER_DETAILS.starter.features}
               isCurrentPlan={currentTier === 'starter'}
-              onAction={() => handleUpgrade('starter')}
+              onAction={isTrialing ? () => handleUpgrade('starter') : undefined}
               actionText={
                 currentTier === 'starter'
                   ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
                   : isTrialing
-                    ? (isDowngrade('starter') ? 'Downgrade and Start' : 'Start This Plan')
-                    : 'Downgrade'
+                    ? 'Start This Plan'
+                    : undefined
               }
               actionVariant={currentTier === 'starter' ? 'default' : 'outline'}
-              isDisabled={!isTrialing && currentTier === 'starter'}
+              isDisabled={isTrialing && currentTier === 'starter'}
             />
 
             <PricingCard
@@ -545,16 +545,16 @@ export default function BillingDashboard() {
               isCurrentPlan={currentTier === 'professional'}
               isDark={true}
               isRecommended={true}
-              onAction={() => handleUpgrade('professional')}
+              onAction={isTrialing ? () => handleUpgrade('professional') : undefined}
               actionText={
                 currentTier === 'professional'
                   ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
                   : isTrialing
-                    ? (isDowngrade('professional') ? 'Downgrade and Start' : isUpgrade('professional') ? 'Upgrade and Start' : 'Start This Plan')
-                    : (isUpgrade('professional') ? 'Upgrade' : 'Downgrade')
+                    ? 'Start This Plan'
+                    : undefined
               }
-              actionVariant={currentTier === 'professional' ? 'default' : isUpgrade('professional') ? 'default' : 'outline'}
-              isDisabled={!isTrialing && currentTier === 'professional'}
+              actionVariant={currentTier === 'professional' ? 'default' : 'default'}
+              isDisabled={isTrialing && currentTier === 'professional'}
             />
 
             <PricingCard
@@ -566,18 +566,25 @@ export default function BillingDashboard() {
               badgeDotColor={TIER_DETAILS.scale.badgeDotColor}
               features={TIER_DETAILS.scale.features}
               isCurrentPlan={currentTier === 'scale'}
-              onAction={() => handleUpgrade('scale')}
+              onAction={isTrialing ? () => handleUpgrade('scale') : undefined}
               actionText={
                 currentTier === 'scale'
                   ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
                   : isTrialing
-                    ? (isDowngrade('scale') ? 'Downgrade and Start' : 'Upgrade and Start')
-                    : 'Upgrade'
+                    ? 'Start This Plan'
+                    : undefined
               }
-              actionVariant={currentTier === 'scale' ? 'default' : isUpgrade('scale') ? 'default' : 'outline'}
-              isDisabled={!isTrialing && currentTier === 'scale'}
+              actionVariant={currentTier === 'scale' ? 'default' : 'default'}
+              isDisabled={isTrialing && currentTier === 'scale'}
             />
           </div>
+
+          {/* Plan change note for active subscribers */}
+          {!isTrialing && billingData.stripe_customer_id && (
+            <p className="text-center text-sm text-muted-foreground mt-4">
+              Want to change your plan? Use the <button onClick={handleManageSubscription} className="text-blue-600 hover:underline font-medium">Manage Subscription</button> section below.
+            </p>
+          )}
 
           {/* Usage & Payment Method - 2 Column Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
