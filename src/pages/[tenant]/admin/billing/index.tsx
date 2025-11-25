@@ -435,6 +435,7 @@ export default function BillingDashboard() {
                 Keep track of your subscription details, update your billing information, and control your account's payment
               </p>
             </div>
+{/* TEMPORARILY DISABLED: Yearly/Monthly toggle - Not offering yearly pricing yet
             <div className="flex items-center gap-3 bg-white border rounded-lg px-4 py-2">
               <span className={!isYearly ? 'font-semibold text-sm' : 'text-sm text-muted-foreground'}>
                 Monthly
@@ -449,6 +450,7 @@ export default function BillingDashboard() {
                 </span>
               )}
             </div>
+            */}
           </div>
 
           {/* Trial Status Banner */}
@@ -513,8 +515,8 @@ export default function BillingDashboard() {
           <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 ${(billingData.subscription_status === 'past_due' || billingData.subscription_status === 'unpaid') ? 'opacity-50 pointer-events-none' : ''}`}>
             <PricingCard
               name={TIER_DETAILS.starter.name}
-              price={isYearly ? 159 : TIER_DETAILS.starter.monthly}
-              priceLabel={isYearly ? '/month (billed yearly)' : '/month'}
+              price={TIER_DETAILS.starter.monthly}
+              priceLabel="/month"
               badgeText={TIER_DETAILS.starter.badgeText}
               badgeColor={TIER_DETAILS.starter.badgeColor}
               badgeDotColor={TIER_DETAILS.starter.badgeDotColor}
@@ -534,8 +536,8 @@ export default function BillingDashboard() {
 
             <PricingCard
               name={TIER_DETAILS.professional.name}
-              price={isYearly ? 399 : TIER_DETAILS.professional.monthly}
-              priceLabel={isYearly ? '/month (billed yearly)' : '/month'}
+              price={TIER_DETAILS.professional.monthly}
+              priceLabel="/month"
               badgeText={TIER_DETAILS.professional.badgeText}
               badgeColor={TIER_DETAILS.professional.badgeColor}
               badgeDotColor={TIER_DETAILS.professional.badgeDotColor}
@@ -557,8 +559,8 @@ export default function BillingDashboard() {
 
             <PricingCard
               name={TIER_DETAILS.scale.name}
-              price={isYearly ? 797 : TIER_DETAILS.scale.monthly}
-              priceLabel={isYearly ? '/month (billed yearly)' : '/month'}
+              price={TIER_DETAILS.scale.monthly}
+              priceLabel="/month"
               badgeText={TIER_DETAILS.scale.badgeText}
               badgeColor={TIER_DETAILS.scale.badgeColor}
               badgeDotColor={TIER_DETAILS.scale.badgeDotColor}
