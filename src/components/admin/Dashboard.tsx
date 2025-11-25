@@ -199,16 +199,18 @@ const Dashboard: React.FC = () => {
         <div className="lg:col-span-2">
           <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 h-full flex flex-col">
             <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <button className="bg-gray-900 text-white font-medium py-2 px-4 rounded-md hover:bg-gray-800 transition-colors">
                 Copy Assessment Link
               </button>
+              {/* TEMPORARILY DISABLED: Export Data and View Reports - Not implemented for launch
               <button className="bg-white font-medium py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
                 Export Data
               </button>
               <button className="bg-white font-medium py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
                 View Reports
               </button>
+              */}
             </div>
 
             {/* Assessment Link */}
