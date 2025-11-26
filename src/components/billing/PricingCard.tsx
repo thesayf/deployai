@@ -40,7 +40,14 @@ export function PricingCard({
 }: PricingCardProps) {
   return (
     <div className="relative pt-6">
-      {isRecommended && (
+      {/* Show "Your Plan" badge for current plan, otherwise "Most Popular" for recommended */}
+      {isCurrentPlan ? (
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+          <Badge className="bg-green-600 text-white px-4 py-1.5 text-sm font-semibold shadow-md whitespace-nowrap">
+            Your Plan
+          </Badge>
+        </div>
+      ) : isRecommended && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
           <Badge className="bg-primary text-primary-foreground px-4 py-1.5 text-sm font-semibold shadow-md whitespace-nowrap">
             Most Popular
@@ -53,7 +60,9 @@ export function PricingCard({
           isDark
             ? 'bg-gray-800 text-white border-gray-700'
             : 'bg-white border-gray-200',
-          isRecommended && 'border-2 border-primary shadow-xl'
+          // Highlight current plan with green border, otherwise use primary for recommended
+          isCurrentPlan && 'border-2 border-green-600 shadow-xl',
+          !isCurrentPlan && isRecommended && 'border-2 border-primary shadow-xl'
         )}
       >
         <div className="absolute top-4 right-4 flex items-center gap-1.5">

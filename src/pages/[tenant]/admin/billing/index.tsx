@@ -523,14 +523,8 @@ export default function BillingDashboard() {
               features={TIER_DETAILS.starter.features}
               isCurrentPlan={currentTier === 'starter'}
               onAction={isTrialing ? () => handleUpgrade('starter') : undefined}
-              actionText={
-                currentTier === 'starter'
-                  ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
-                  : isTrialing
-                    ? 'Start This Plan'
-                    : undefined
-              }
-              actionVariant={currentTier === 'starter' ? 'default' : 'outline'}
+              actionText={isTrialing ? 'Start This Plan' : undefined}
+              actionVariant="outline"
               isDisabled={isTrialing && currentTier === 'starter'}
             />
 
@@ -546,14 +540,8 @@ export default function BillingDashboard() {
               isDark={true}
               isRecommended={true}
               onAction={isTrialing ? () => handleUpgrade('professional') : undefined}
-              actionText={
-                currentTier === 'professional'
-                  ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
-                  : isTrialing
-                    ? 'Start This Plan'
-                    : undefined
-              }
-              actionVariant={currentTier === 'professional' ? 'default' : 'default'}
+              actionText={isTrialing ? 'Start This Plan' : undefined}
+              actionVariant="default"
               isDisabled={isTrialing && currentTier === 'professional'}
             />
 
@@ -567,14 +555,8 @@ export default function BillingDashboard() {
               features={TIER_DETAILS.scale.features}
               isCurrentPlan={currentTier === 'scale'}
               onAction={isTrialing ? () => handleUpgrade('scale') : undefined}
-              actionText={
-                currentTier === 'scale'
-                  ? (isTrialing ? 'Start Your Plan' : 'Current Plan')
-                  : isTrialing
-                    ? 'Start This Plan'
-                    : undefined
-              }
-              actionVariant={currentTier === 'scale' ? 'default' : 'default'}
+              actionText={isTrialing ? 'Start This Plan' : undefined}
+              actionVariant="default"
               isDisabled={isTrialing && currentTier === 'scale'}
             />
           </div>
