@@ -568,10 +568,8 @@ export default function BillingDashboard() {
             </p>
           )}
 
-          {/* Usage & Payment Method - 2 Column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Usage Card */}
-            <Card>
+          {/* Usage Card */}
+          <Card>
               <CardHeader>
                 <CardTitle className="text-xl">Usage This Month</CardTitle>
               </CardHeader>
@@ -649,35 +647,7 @@ export default function BillingDashboard() {
                 )}
                 */}
               </CardContent>
-            </Card>
-
-            {/* Payment Method Card */}
-            {billingData.payment_method_brand && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl">Payment Method</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="border-2 border-gray-300 p-3 rounded bg-gray-50">
-                        <CreditCard className="h-6 w-6 text-gray-700" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-base uppercase">
-                          {billingData.payment_method_brand} •••• {billingData.payment_method_last4}
-                        </p>
-                        <p className="text-sm text-muted-foreground">Primary payment method</p>
-                      </div>
-                    </div>
-                    <Button onClick={handleManageSubscription} variant="outline" size="sm">
-                      Update
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
+          </Card>
 
           {/* Subscription Management Card - Full Width */}
           {billingData.stripe_customer_id && !isTrialing && (
