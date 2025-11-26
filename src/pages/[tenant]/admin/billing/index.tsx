@@ -658,7 +658,22 @@ export default function BillingDashboard() {
                   Manage Subscription
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="space-y-4">
+                {/* Current Payment Method */}
+                {billingData.payment_method_brand && (
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border">
+                    <div className="p-2 bg-white border rounded">
+                      <CreditCard className="h-5 w-5 text-gray-600" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-sm uppercase">
+                        {billingData.payment_method_brand} •••• {billingData.payment_method_last4}
+                      </p>
+                      <p className="text-xs text-muted-foreground">Primary payment method</p>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                   <div className="space-y-1">
                     <p className="text-sm text-muted-foreground">
