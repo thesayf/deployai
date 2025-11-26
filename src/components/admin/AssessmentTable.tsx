@@ -703,7 +703,7 @@ const AssessmentTable: React.FC = () => {
               const assessmentsUsed = tenantContext?.tenant.assessments_used || 0;
               const assessmentsLimit = tenantContext?.tenant.assessments_limit || 0;
               const atLimit = assessmentsUsed >= assessmentsLimit;
-              const overagePrice = tenantContext?.tenant.subscription_tier === 'starter' ? '4.00' : tenantContext?.tenant.subscription_tier === 'professional' ? '3.00' : '2.00';
+              const overagePrice = '40.00'; // Flat $40 overage rate for all tiers
               const isPaused = tenantContext?.tenant.subscription_status === 'paused';
 
               return (
