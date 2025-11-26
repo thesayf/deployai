@@ -41,7 +41,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = async () => {
     await supabase.auth.signOut();
-    router.push('/');
+    // Redirect to the main homepage, not tenant-specific page
+    window.location.href = '/';
   };
 
   return (
