@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Space Grotesk for logo - geometric, modern */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap');
+
+/* Logo font class */
+.font-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.02em;
+}
+
 /* Smoother scroll behavior */
 html {
   scroll-behavior: smooth;

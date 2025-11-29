@@ -7,7 +7,7 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>White-Label AI Assessment Platform for Consultants | DeployAI</title>
+        <title>White-Label AI Assessment Platform for Consultants | ConsultKit</title>
         <meta
           name="description"
           content="Help your clients discover AI opportunities with fully branded assessments. Automated reports, lead generation, and revenue insights. 14-day free trial."
@@ -18,12 +18,14 @@ const HomePage: React.FC = () => {
 
       <main className="min-h-screen bg-white">
         {/* Navigation */}
-        <nav className="border-b-[3px] border-black bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav className="border-b-[3px] border-black bg-white px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-center h-16">
-              <div className="text-2xl font-black text-gray-900">
-                DeployAI
-              </div>
+              <img
+                src="/Untitled design.png"
+                alt="ConsultKit"
+                className="h-10 md:h-12"
+              />
               <div className="flex items-center gap-4">
                 <Link
                   href="/login"
@@ -329,7 +331,9 @@ const HomePage: React.FC = () => {
           <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-4 gap-8">
               <div>
-                <h3 className="text-2xl font-black mb-4">DeployAI</h3>
+                <div className="font-logo text-3xl font-bold text-white mb-4">
+                  ConsultKit
+                </div>
                 <p className="text-gray-400">
                   White-label AI assessment platform for consultants
                 </p>
@@ -356,7 +360,7 @@ const HomePage: React.FC = () => {
               </div>
             </div>
             <div className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
-              <p>&copy; 2025 DeployAI. All rights reserved.</p>
+              <p>&copy; 2025 ConsultKit. All rights reserved.</p>
             </div>
           </div>
         </footer>
