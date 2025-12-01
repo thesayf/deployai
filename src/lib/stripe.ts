@@ -13,7 +13,7 @@ console.log('[STRIPE INIT] Key mode:', process.env.STRIPE_SECRET_KEY?.startsWith
 
 // Stripe client - SERVER-SIDE ONLY! Do not import this file on the client.
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-06-20',
+  apiVersion: '2024-06-20' as Stripe.LatestApiVersion,
   typescript: true,
   maxNetworkRetries: 3,
   timeout: 30000, // 30 seconds
