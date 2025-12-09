@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabaseAdmin } from '@/lib/supabase';
-import { getTenantFromRequest } from '@/utils/tenant-helpers';
 
 // Realistic test data templates
 const TEST_COMPANIES = [
@@ -112,7 +111,7 @@ export default async function handler(
 
     console.log(`[Test Assessment] Test company: ${testData.company}, Email: ${testData.email}`);
 
-    // Step 1: Create quiz response
+    // Step 1: Create quiz response (bypass all billing checks for tests)
     const { data: quizData, error: quizError } = await supabase
       .from('quiz_responses')
       .insert({
@@ -153,7 +152,7 @@ export default async function handler(
 
     console.log(`[Test Assessment] Quiz created: ${quizData.id}`);
 
-    // Step 2: Create ai_report entry
+    // Step 2: Create ai_report entry directly (bypass billing)
     const { data: reportData, error: reportError } = await supabase
       .from('ai_reports')
       .insert({
@@ -173,55 +172,38 @@ export default async function handler(
 
     console.log(`[Test Assessment] Report created: ${reportData.id}`);
 
-    // Step 3: Trigger the workflow via the submit endpoint
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL ||
+    // Step 3: Trigger the workflow DIRECTLY (bypass submit endpoint and billing checks)
+    try {
+      const { triggerWorkflow } = await import('@/lib/workflow/client');
+
+      let baseUrl = process.env.NEXT_PUBLIC_APP_URL ||
                    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
-    const submitResponse = await fetch(`${baseUrl}/api/quiz/submit`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-tenant-subdomain': tenantSubdomain
-      },
-      body: JSON.stringify({
-        quizId: quizData.id,
-        finalResponses: {
-          industry: testData.industry,
-          efficiencyRating: testData.efficiencyRating,
-          companySize: testData.size,
-          repetitiveTasks: testData.repetitiveTasks,
-          weeklyTimeBreakdown: testData.weeklyTimeBreakdown,
-          businessChallenges: testData.businessChallenges,
-          monthlyCostBreakdown: testData.monthlyCostBreakdown,
-          currentSystems: testData.currentSystems,
-          systemsReality: testData.systemsReality,
-          idealSystemVision: testData.idealSystemVision,
-          moneyLeaks: testData.moneyLeaks,
-          desiredOutcome: testData.desiredOutcome,
-          teamCapability: testData.teamCapability,
-          monthlyBudget: testData.monthlyBudget,
-          timeline: testData.timeline
-        }
-      })
-    });
+      if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
+        baseUrl = `https://${baseUrl}`;
+      }
 
-    const submitResult = await submitResponse.json();
+      const workflowUrl = `${baseUrl}/api/workflow/process-pipeline`;
+      console.log(`[Test Assessment] Triggering workflow: ${workflowUrl}`);
 
-    if (!submitResponse.ok) {
-      console.error('[Test Assessment] Submit failed:', submitResult);
-      return res.status(500).json({
-        error: 'Failed to submit quiz',
-        details: submitResult.error,
-        quizId: quizData.id
-      });
+      const triggerResult = await triggerWorkflow(
+        workflowUrl,
+        { reportId: reportData.id },
+        `test-report-${reportData.id}`
+      );
+
+      console.log(`[Test Assessment] Workflow triggered:`, triggerResult);
+    } catch (workflowError) {
+      console.error('[Test Assessment] Workflow trigger failed:', workflowError);
+      // Don't fail - the cron backup will pick it up
     }
 
-    console.log(`[Test Assessment] Successfully submitted! Quiz: ${quizData.id}, Report: ${submitResult.reportId || reportData.id}`);
+    console.log(`[Test Assessment] Successfully created! Quiz: ${quizData.id}, Report: ${reportData.id}`);
 
     return res.status(200).json({
       success: true,
       quizId: quizData.id,
-      reportId: submitResult.reportId || reportData.id,
+      reportId: reportData.id,
       testCompany: testData.company,
       testEmail: testData.email,
       redirectUrl: `/${tenantSubdomain}/admin/assessments/${quizData.id}`
