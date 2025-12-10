@@ -313,20 +313,104 @@ const AdminAssessmentDetailPage = () => {
           </div>
         )}
 
-        {/* AI Opportunity Scores */}
-        {stage1 && (
+        {/* AI Opportunity Scores - only show if scores exist (old format) */}
+        {stage1?.scores && Object.keys(stage1.scores).length > 0 && (
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg shadow-sm p-6">
             <div className="flex items-center gap-2 mb-4">
               <Target className="h-5 w-5 text-blue-600" />
               <h2 className="text-lg font-semibold text-gray-900">AI Opportunity Scores</h2>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {stage1.scores && Object.entries(stage1.scores).map(([key, value]) => (
+              {Object.entries(stage1.scores).map(([key, value]) => (
                 <div key={key} className="bg-white border border-gray-200 rounded-lg p-4">
                   <p className="text-sm font-medium text-gray-500 capitalize mb-1">
                     {key.replace(/([A-Z])/g, ' $1').trim()}
                   </p>
                   <p className="text-2xl font-bold text-gray-900">{String(value)}/10</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Business Context Summary - new format */}
+        {stage1?.businessContext && (
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg shadow-sm p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Target className="h-5 w-5 text-blue-600" />
+              <h2 className="text-lg font-semibold text-gray-900">Business Context</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {stage1.businessContext.industry && (
+                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                  <p className="text-sm font-medium text-gray-500 mb-1">Industry</p>
+                  <p className="font-medium text-gray-900">{stage1.businessContext.industry}</p>
+                </div>
+              )}
+              {stage1.businessContext.urgency && (
+                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                  <p className="text-sm font-medium text-gray-500 mb-1">Urgency</p>
+                  <p className={`font-medium ${
+                    stage1.businessContext.urgency === 'immediate' ? 'text-red-600' :
+                    stage1.businessContext.urgency === 'within-month' ? 'text-orange-600' : 'text-blue-600'
+                  }`}>{stage1.businessContext.urgency}</p>
+                </div>
+              )}
+              {stage1.businessContext.monthlyBudget && (
+                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                  <p className="text-sm font-medium text-gray-500 mb-1">Monthly Budget</p>
+                  <p className="font-medium text-green-700">{stage1.businessContext.monthlyBudget}</p>
+                </div>
+              )}
+              {stage1.businessContext.techCapability && (
+                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                  <p className="text-sm font-medium text-gray-500 mb-1">Tech Capability</p>
+                  <p className="font-medium text-gray-900">{stage1.businessContext.techCapability}</p>
+                </div>
+              )}
+              {stage1.businessContext.currentSystems && (
+                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                  <p className="text-sm font-medium text-gray-500 mb-1">Current Systems</p>
+                  <p className="font-medium text-gray-900">{stage1.businessContext.currentSystems}</p>
+                </div>
+              )}
+            </div>
+            {stage1.businessContext.businessObjectives && (
+              <div className="mt-4 bg-white border border-gray-200 rounded-lg p-4">
+                <p className="text-sm font-medium text-gray-500 mb-1">Business Objectives</p>
+                <p className="text-gray-700">{stage1.businessContext.businessObjectives}</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Top Opportunities from Stage 1 - new format */}
+        {stage1?.topOpportunities && Array.isArray(stage1.topOpportunities) && stage1.topOpportunities.length > 0 && (
+          <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Top Opportunities Identified</h2>
+            <div className="space-y-4">
+              {stage1.topOpportunities.map((opp: any, idx: number) => (
+                <div key={idx} className="border-l-4 border-blue-400 bg-blue-50 p-4 rounded-r-lg">
+                  <p className="font-medium text-gray-900 mb-2">{opp?.problemArea || 'Opportunity identified'}</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    {opp?.annualCost && (
+                      <div>
+                        <span className="text-red-600 font-medium">Annual Cost: </span>
+                        <span className="text-gray-700">{opp.annualCost}</span>
+                      </div>
+                    )}
+                    {opp?.expectedOutcome && (
+                      <div>
+                        <span className="text-green-600 font-medium">Expected Outcome: </span>
+                        <span className="text-gray-700 text-xs">{opp.expectedOutcome}</span>
+                      </div>
+                    )}
+                  </div>
+                  {opp?.aiSolutionType && (
+                    <div className="mt-2 text-xs text-gray-600">
+                      <span className="font-medium">Solution Type: </span>{opp.aiSolutionType}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -387,12 +471,161 @@ const AdminAssessmentDetailPage = () => {
                   <p className="font-medium text-gray-900">{assessment.company_size || 'Unknown'}</p>
                 </div>
               </div>
+              {/* Additional quiz data */}
+              {assessment.responses?.budget && (
+                <div>
+                  <p className="text-sm text-gray-500">Budget</p>
+                  <p className="font-medium text-green-700">{assessment.responses.budget}</p>
+                </div>
+              )}
+              {assessment.responses?.timeline && (
+                <div>
+                  <p className="text-sm text-gray-500">Timeline</p>
+                  <p className="font-medium text-blue-700">{assessment.responses.timeline}</p>
+                </div>
+              )}
+              {assessment.responses?.systems && assessment.responses.systems.length > 0 && (
+                <div>
+                  <p className="text-sm text-gray-500">Current Systems</p>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {assessment.responses.systems.map((system: string, idx: number) => (
+                      <span key={idx} className="inline-block bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">
+                        {system}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {assessment.responses?.goals && assessment.responses.goals.length > 0 && (
+                <div>
+                  <p className="text-sm text-gray-500">Goals</p>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {assessment.responses.goals.map((goal: string, idx: number) => (
+                      <span key={idx} className="inline-block bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded">
+                        {goal}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Sales Intelligence Components */}
-        {stage1 && (
+        {/* Lead Value Summary - from stage4 data */}
+        {stage4?.executiveSummary && (
+          <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg shadow-sm p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <TrendingUp className="h-5 w-5 text-green-600" />
+              <h2 className="text-lg font-semibold text-gray-900">Lead Value Summary</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white border border-green-200 rounded-lg p-4">
+                <p className="text-sm font-medium text-gray-500 mb-1">Readiness Level</p>
+                <p className={`text-xl font-bold ${
+                  stage4.executiveSummary.readinessLevel === 'High' ? 'text-green-600' :
+                  stage4.executiveSummary.readinessLevel === 'Medium' ? 'text-yellow-600' : 'text-red-600'
+                }`}>
+                  {stage4.executiveSummary.readinessLevel}
+                </p>
+                {stage4.executiveSummary.readinessExplanation && (
+                  <p className="text-xs text-gray-500 mt-1">{stage4.executiveSummary.readinessExplanation}</p>
+                )}
+              </div>
+              <div className="bg-white border border-green-200 rounded-lg p-4">
+                <p className="text-sm font-medium text-gray-500 mb-1">Annual Opportunity</p>
+                <p className="text-xl font-bold text-green-700">{stage4.executiveSummary.estimatedAnnualOpportunity}</p>
+              </div>
+              <div className="bg-white border border-green-200 rounded-lg p-4">
+                <p className="text-sm font-medium text-gray-500 mb-1">Projected ROI</p>
+                <p className="text-xl font-bold text-blue-700">{stage4.executiveSummary.immediateROI}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Key Problems from Report */}
+        {stage4?.keyProblems && Array.isArray(stage4.keyProblems) && stage4.keyProblems.length > 0 && (
+          <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Key Problems Identified</h2>
+            <div className="space-y-4">
+              {stage4.keyProblems.map((problem: any, idx: number) => (
+                <div key={idx} className="border-l-4 border-orange-400 bg-orange-50 p-4 rounded-r-lg">
+                  <p className="font-medium text-gray-900 mb-2">{problem?.problem || 'Problem identified'}</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    {problem?.currentCost && (
+                      <div>
+                        <span className="text-red-600 font-medium">Current Cost: </span>
+                        <span className="text-gray-700">{problem.currentCost}</span>
+                      </div>
+                    )}
+                    {problem?.potentialGain && (
+                      <div>
+                        <span className="text-green-600 font-medium">Potential Gain: </span>
+                        <span className="text-gray-700">{problem.potentialGain}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Recommended Solutions from Report */}
+        {stage4?.recommendedSolutions && Array.isArray(stage4.recommendedSolutions) && stage4.recommendedSolutions.length > 0 && (
+          <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Recommended Solutions</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {stage4.recommendedSolutions.map((solution: any, idx: number) => (
+                <div key={idx} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
+                      #{idx + 1}
+                    </span>
+                    <h3 className="font-semibold text-gray-900 text-sm">{solution?.solutionName || solution?.name || 'Solution'}</h3>
+                  </div>
+                  <p className="text-xs text-gray-600 mb-3 line-clamp-3">{solution?.description || ''}</p>
+                  {solution?.implementationTime && (
+                    <div className="flex items-center gap-2 text-xs">
+                      <Clock className="h-3 w-3 text-gray-400" />
+                      <span className="text-gray-500">{solution.implementationTime}</span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Where to Start Recommendation */}
+        {stage4?.whereToStart && (
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center gap-2 mb-3">
+              <Target className="h-5 w-5" />
+              <h2 className="text-lg font-semibold">Where to Start</h2>
+            </div>
+            <p className="text-xl font-bold mb-2">{stage4.whereToStart.recommendation}</p>
+            <p className="text-blue-100 text-sm mb-4">{stage4.whereToStart.targetBottleneck}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className="bg-white/10 rounded-lg p-3">
+                <p className="text-blue-200 text-xs mb-1">Timeline</p>
+                <p className="font-medium">{stage4.whereToStart.timelineEstimate}</p>
+              </div>
+              <div className="bg-white/10 rounded-lg p-3">
+                <p className="text-blue-200 text-xs mb-1">Expected ROI</p>
+                <p className="font-medium">{stage4.whereToStart.expectedROI}</p>
+              </div>
+              <div className="bg-white/10 rounded-lg p-3">
+                <p className="text-blue-200 text-xs mb-1">Immediate Impact</p>
+                <p className="font-medium text-xs">{stage4.whereToStart.immediateImpact}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Legacy Sales Intelligence Components - only show if data exists in expected format */}
+        {stage1?.industryProfile && (
           <ProblemSummaryCard
             industryProfile={stage1.industryProfile}
             painPoints={stage1.painPoints}
@@ -401,25 +634,25 @@ const AdminAssessmentDetailPage = () => {
           />
         )}
 
-        {stage2 && (
+        {stage2?.recommendedSolutions && (
           <RecommendedToolsGrid
             recommendedSolutions={stage2.recommendedSolutions}
           />
         )}
 
-        {stage2 && (
+        {stage2?.recommendedSolutions && (
           <RevenueOpportunityCards
             recommendedSolutions={stage2.recommendedSolutions}
           />
         )}
 
-        {stage3 && (
+        {stage3?.financialAnalysis && (
           <FinancialSummaryCards
             financialAnalysis={stage3.financialAnalysis}
           />
         )}
 
-        {stage4 && (
+        {stage4?.strategicRecommendations && (
           <ImplementationRoadmap
             strategicRecommendations={stage4.strategicRecommendations}
           />
