@@ -674,3 +674,45 @@ body {
 @media(min-width:1024px){ .about-book h2 { font-size:48px; line-height:60px; } }
 .about-book .lead { color:#fff; max-width:900px; }
 .about-book .ctas { margin-top:36px; }
+
+/* ============================================================
+   /book — booking page. Reuses shared .ihero / .m12nd / .cal-ph /
+   .bg-royal / .bg-field / .lead / .ctas / pills. Page-scoped below.
+   ============================================================ */
+/* 1 · hero (consultation photo + shared left-dark scrim overlay) */
+.ihero.book-hero { background:var(--navy); }
+.ihero.book-hero .ihero-photo { background-image:url('/site/hero-book.jpg'); background-position:center; }
+.ihero.book-hero h1 { max-width:1180px; }
+.ihero.book-hero .sub { margin-top:30px; max-width:820px; }
+
+/* 2 · agenda — reuses .m12nd; just the heading rhythm */
+.book-agenda h2 { margin-bottom:48px; }
+
+/* 3 · book calendar (royal band, white card holds the inline embed) */
+.book h2 { font-size:34px; line-height:1.25; margin-bottom:24px; }
+@media(min-width:1024px){ .book h2 { font-size:48px; line-height:60px; } }
+.book .lead { color:#fff; max-width:900px; }
+.book .cal-ph { margin:36px 0 0; border-radius:30px; min-height:300px; padding:14px; }
+
+/* 4 · personal consultation (white ground, founder excard) */
+.who .grid { display:grid; grid-template-columns:1fr 1.1fr; gap:64px; align-items:center; }
+@media(max-width:860px){ .who .grid { grid-template-columns:1fr; gap:44px; } }
+.who .fcopy h2 { font-size:34px; line-height:1.25; }
+@media(min-width:1024px){ .who .fcopy h2 { font-size:48px; line-height:60px; } }
+.who .fcopy p { font-size:20px; line-height:32px; margin-top:18px; max-width:520px; }
+.who-team { display:flex; gap:32px; }
+@media(max-width:600px){ .who-team { gap:18px; } }
+.who-team .wt { flex:0 0 168px; max-width:168px; text-align:center; }
+@media(max-width:600px){ .who-team .wt { flex:1 1 0; } }
+.who-team .wt-photo { width:100%; aspect-ratio:1; border-radius:50%; overflow:hidden; margin:0 auto 16px; background:var(--field); border:2px solid var(--lime); }
+.who-team .wt-photo img { width:100%; height:100%; object-fit:cover; object-position:50% 22%; display:block; }
+.who-team .wt-name { font-weight:700; font-size:17px; line-height:24px; }
+.who-team .wt-role { color:var(--ink); opacity:.66; font-size:14px; line-height:20px; margin-top:2px; }
+
+/* 5 · off-ramp (field ground, fit-check route) */
+.honesty h2 { max-width:1000px; margin-bottom:36px; }
+.honesty .lead { max-width:840px; }
+.honesty .lead + .lead { margin-top:18px; }
+.honesty .fineprint { font-size:14px; line-height:24px; color:var(--grey); max-width:840px; margin-top:24px; }
+.honesty .fineprint a { font-weight:700; color:var(--blue); }
+.honesty .ctas { margin-top:32px; }
