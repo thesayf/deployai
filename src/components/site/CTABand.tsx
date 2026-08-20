@@ -14,6 +14,8 @@ type CTABandProps = {
   heading: ReactNode;
   paragraphs: ReactNode[];
   ctas: CtaLink[];
+  /** Optional bold fine-print line rendered under the paragraphs (e.g. "No obligation. A senior consultant, not a sales rep."). */
+  fineNote?: ReactNode;
   /** Right-hand slot; defaults to the inline-calendar placeholder marker. */
   calendarSlot?: ReactNode;
 };
@@ -24,6 +26,7 @@ export function CTABand({
   heading,
   paragraphs,
   ctas,
+  fineNote,
   calendarSlot,
 }: CTABandProps) {
   return (
@@ -36,6 +39,7 @@ export function CTABand({
               {p}
             </p>
           ))}
+          {fineNote && <p className="fine">{fineNote}</p>}
           <div className="ctas">
             {ctas.map((c) => (
               <SiteLink key={c.label} href={c.href} className={cn(c.className)}>

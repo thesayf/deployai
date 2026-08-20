@@ -1,18 +1,17 @@
 import Head from "next/head";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
-import { CredBar } from "@/components/site/CredBar";
 import { CTABand } from "@/components/site/CTABand";
+import { CredBar } from "@/components/site/CredBar";
 import { CalendlyInline } from "@/components/site/CalendlyInline";
-import { Hero } from "@/components/site/home/Hero";
-import { PainCards } from "@/components/site/home/PainCards";
-import { JourneyPath } from "@/components/site/home/JourneyPath";
-import { OffersTabs } from "@/components/site/home/OffersTabs";
-import { ProofStats } from "@/components/site/home/ProofStats";
-import { DataResidency } from "@/components/site/home/DataResidency";
-import { Team } from "@/components/site/home/Team";
-import { HowWeWork } from "@/components/site/home/HowWeWork";
-import { Faq } from "@/components/site/home/Faq";
+import { ServicesHero } from "@/components/site/services/ServicesHero";
+import { WhyStall } from "@/components/site/services/WhyStall";
+import { ServiceGrid } from "@/components/site/services/ServiceGrid";
+import { Breather } from "@/components/site/services/Breather";
+import { Ladder } from "@/components/site/services/Ladder";
+import { MethodStatement } from "@/components/site/services/MethodStatement";
+import { Segment } from "@/components/site/services/Segment";
+import { ServicesFaq } from "@/components/site/services/ServicesFaq";
 
 const credBadges = [
   {
@@ -28,30 +27,27 @@ const credBadges = [
   { alt: "Claude Code Partner", src: "/site/badges/partner-logo.png" },
 ];
 
-export default function Home() {
+export default function Services() {
   return (
     <>
       <Head>
-        <title>
-          Deploy AI Studio — We put AI to work inside your business
-        </title>
+        <title>Services — The AI Deployment Path | Deploy AI Studio</title>
         <meta
           name="description"
-          content="Deploy AI Studio is a boutique applied-AI consultancy. We show you where AI fits inside your business and make it work — fixed price, fixed scope, live in weeks."
+          content="We scope, build, and deliver AI systems, with a timeline that doesn't move. From AI strategy and readiness to agents, integration, and rollout. Fixed price, fixed scope."
         />
       </Head>
       <div className="site">
         <Navbar />
-        <Hero />
+        <ServicesHero />
         <CredBar label="Certified across the Claude stack" badges={credBadges} />
-        <PainCards />
-        <JourneyPath />
-        <OffersTabs />
-        <ProofStats />
-        <DataResidency />
-        <Team />
-        <HowWeWork />
-        <Faq />
+        <WhyStall />
+        <ServiceGrid />
+        <Breather />
+        <Ladder />
+        <MethodStatement />
+        <Segment />
+        <ServicesFaq />
         <CTABand
           heading={
             <>
@@ -59,9 +55,9 @@ export default function Home() {
             </>
           }
           paragraphs={[
-            "The free AI Fit Check takes ten minutes. You get a scored verdict and the one opportunity we would pursue first, sent straight to your inbox. No call required.",
-            "Rather talk it through? Thirty minutes. No pitch. We walk through your current AI setup, name the three things we would fix first, and tell you honestly whether you need us at all.",
+            "Thirty minutes. No pitch. We'll walk through your current AI setup, name the three things we'd fix first, and tell you honestly whether you need us at all. Or take the free Fit Check: ten minutes, a scored verdict and one top opportunity, sent to your inbox.",
           ]}
+          fineNote="No obligation. A senior consultant, not a sales rep."
           ctas={[
             {
               label: "Take the free AI Fit Check",

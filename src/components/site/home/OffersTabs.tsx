@@ -12,7 +12,7 @@ type Offer = {
   dur: string;
   ctaLabel: string;
   rail: string[];
-  art: string;
+  img: string;
 };
 
 const offers: Offer[] = [
@@ -34,7 +34,7 @@ const offers: Offer[] = [
       "Access and data rules in writing",
       "Hands-on training on your workflows",
     ],
-    art: "(e.g. a configured team AI workspace)",
+    img: "/site/offer-launch.jpg",
   },
   {
     id: "t2",
@@ -54,7 +54,7 @@ const offers: Offer[] = [
       "Your access controls preserved",
       "A system tested on your real questions",
     ],
-    art: "(e.g. AI answering from company documents)",
+    img: "/site/offer-connect.jpg",
   },
   {
     id: "t3",
@@ -74,7 +74,7 @@ const offers: Offer[] = [
       "Full auditability and traceability from day one",
       "Integration with the tools you already use",
     ],
-    art: "(e.g. an agent run with audit trail)",
+    img: "/site/offer-automate.jpg",
   },
   {
     id: "t4",
@@ -94,7 +94,7 @@ const offers: Offer[] = [
       "Governance and performance kept in check",
       "A senior team on call",
     ],
-    art: "(e.g. a monthly improvement readout)",
+    img: "/site/offer-retainer.jpg",
   },
 ];
 
@@ -153,11 +153,11 @@ export function OffersTabs() {
                 ))}
               </ul>
               <div className="artslot">
-                <span className="slot-label">
-                  ARTIFACT VISUAL SLOT — real product screenshot when built
-                  <br />
-                  {o.art}
-                </span>
+                <img
+                  className="art-img"
+                  src={o.img}
+                  alt={`Deploy AI working session — ${o.name}`}
+                />
               </div>
             </div>
           </div>

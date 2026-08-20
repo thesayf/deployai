@@ -116,15 +116,23 @@ body {
 @media(max-width:700px){ .creds-row{ gap:24px; } .cred-badge{ height:48px; } .cred-badge-text{ font-size:13px; } }
 
 /* M03 jump-nav (periwinkle cleanser) — from mock-deployment-diagnostic.html */
+.jn-sentinel { height:0; }
 .jn { height:56px; background:var(--peri); display:flex; align-items:center; }
-.jn .wrap { display:flex; gap:48px; align-items:center; width:100%; }
-.jn a { color:#000; font-size:16px; font-weight:700; line-height:24px; letter-spacing:2px; text-transform:uppercase; text-decoration:none; }
-.jn a:hover { color:var(--blue); }
-@media(max-width:900px){ .jn{ height:auto; padding:14px 0; } .jn .wrap{ flex-wrap:wrap; gap:10px 28px; } }
+@media(min-width:901px){ .jn { position:sticky; top:0; z-index:30; } }
+.jn .wrap { display:flex; justify-content:space-between; gap:32px; align-items:center; width:100%; }
+.jn-links { display:flex; gap:48px; align-items:center; }
+.jn-links a { color:#000; font-size:16px; font-weight:700; line-height:24px; letter-spacing:2px; text-transform:uppercase; text-decoration:none; }
+.jn-links a:hover { color:var(--blue); }
+.jn-cta { display:inline-flex; align-items:center; height:34px; padding:0 20px; border:2px solid var(--ink); border-radius:50px; color:var(--ink); font-size:15px; font-weight:700; letter-spacing:1px; text-transform:uppercase; text-decoration:none; white-space:nowrap; opacity:0; transform:translateX(8px); pointer-events:none; transition:opacity .25s ease, transform .25s ease; }
+.jn-cta:hover { background:var(--ink); color:#fff; }
+.jn-stuck .jn-cta { opacity:1; transform:none; pointer-events:auto; }
+@media(max-width:900px){ .jn{ height:auto; padding:14px 0; } .jn .wrap{ flex-wrap:wrap; gap:10px 28px; } .jn-links{ flex-wrap:wrap; gap:10px 28px; } .jn-cta{ display:none; } }
+@media(prefers-reduced-motion:reduce){ .jn-cta{ transition:none; } }
 
 /* 1 · P01 motion hero */
 .hero { position:relative; background:var(--navy); color:#fff; padding-top:320px; padding-bottom:150px; min-height:100vh; min-height:100dvh; box-sizing:border-box; overflow:hidden; }
 .hero-photo { position:absolute; inset:0; background:url('/site/hero-home.jpg') right 22%/cover no-repeat; }
+@media(max-width:640px){ .hero-photo{ background-position:62% 26%; } }
 .hero-scrim { position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,10,37,.94) 0%,rgba(0,10,37,.82) 28%,rgba(0,10,37,.45) 62%,rgba(0,10,37,.12) 100%); }
 .hero .inner { z-index:2; position:relative; }
 .hero-lines { position:absolute; inset:0; width:100%; height:100%; opacity:.35; pointer-events:none; }
@@ -179,7 +187,8 @@ body {
 .tp-help { font-weight:700; font-size:16px; line-height:28px; margin:18px 0 6px; }
 .tp-bullets { margin:0; padding-left:32px; }
 .tp-bullets li { font-size:20px; line-height:32px; color:var(--ink); }
-.artslot { margin-top:18px; border:2px dashed #b3261e; border-radius:10px; min-height:120px; display:flex; align-items:center; justify-content:center; text-align:center; padding:12px; }
+.artslot { margin-top:18px; border-radius:10px; overflow:hidden; }
+.art-img { display:block; width:100%; aspect-ratio:3/2; object-fit:cover; }
 .tp-line { font-weight:700; font-size:20px; line-height:32px; margin:8px 0 16px; }
 .tp-desc { font-size:20px; line-height:32px; color:var(--ink); }
 .tp-dur { font-size:16px; line-height:24px; font-weight:700; color:var(--ink); letter-spacing:2px; text-transform:uppercase; margin-top:22px; }
@@ -204,9 +213,9 @@ body {
 .p9 .prose p { font-size:20px; line-height:32px; color:#fff; margin-bottom:32px; }
 .p9 .statscol { width:680px; flex:0 0 auto; max-width:100%; }
 .p9 .statscol .intro { font-size:26px; line-height:34px; font-weight:700; color:#fff; margin-bottom:32px; }
-.p9 .rows { display:flex; flex-direction:column; gap:24px; }
-.p9 .srow { display:flex; gap:32px; align-items:center; }
-.p9 .srow .n { font-size:48px; line-height:60px; font-weight:300; color:var(--lime); width:136px; flex:0 0 auto; }
+.p9 .rows { display:flex; flex-direction:column; gap:36px; }
+.p9 .srow { display:flex; gap:40px; align-items:flex-start; }
+.p9 .srow .n { font-size:48px; line-height:52px; font-weight:300; color:var(--lime); flex:0 0 auto; min-width:150px; white-space:nowrap; }
 .p9 .srow .d { font-size:20px; line-height:32px; color:#fff; }
 .p9 .fine { margin-top:32px; font-style:italic; font-size:15px; color:#fff; }
 /* P09 on lavender (Slalom ai-transformation): bg #C7B9FF, dark text, black numerals */
@@ -259,8 +268,13 @@ body {
 @media(max-width:860px){ .founder{ grid-template-columns:1fr; } }
 .exp-card { max-width:437px; }
 .photo-slot { background:var(--field); border-radius:30px 30px 0 0; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center; color:var(--grey); font-size:13px; text-align:center; padding:24px; border-bottom:4px solid var(--lime); }
+.photo-slot.filled { padding:0; overflow:hidden; }
+.photo-slot.filled .founder-img { width:100%; height:100%; object-fit:cover; object-position:50% 22%; display:block; }
 .exp-name { font-size:20px; line-height:32px; font-weight:700; margin-top:24px; }
 .exp-role { font-size:20px; line-height:32px; color:var(--ink); }
+.exp-link { text-decoration:none; transition:opacity .2s; }
+.exp-link:hover { opacity:.72; }
+.exp-link .li-logo { width:19px; height:19px; display:block; flex:0 0 auto; }
 .exp-link { display:inline-flex; align-items:center; gap:6px; margin-top:16px; font-weight:700; color:var(--brightblue); font-size:16px; }
 .exp-link .in { display:inline-block; width:18px; height:18px; background:var(--blue); color:#fff; border-radius:3px; font-size:11px; font-weight:700; text-align:center; line-height:18px; }
 .founder h2 { font-size:34px; line-height:1.25; }
@@ -324,6 +338,9 @@ body {
 @media(min-width:1024px){ .final h2{ font-size:48px; line-height:60px; } }
 .final p { font-size:20px; line-height:32px; }
 .cal-ph { background:#fff; border-radius:16px; color:var(--grey); display:flex; align-items:center; justify-content:center; font-size:13px; min-height:260px; box-shadow:0 2px 8px rgba(0,10,37,.15); text-align:center; padding:20px; }
+/* when the real Calendly widget is mounted, the card frames a fixed-height scheduler */
+.cal-embed { width:100%; height:680px; }
+@media(max-width:680px){ .cal-embed{ height:1040px; } }
 .final .ctas { margin-top:28px; }
 
 /* footer */
@@ -335,6 +352,87 @@ body {
 .foot-tag, .foot-tagline { color:var(--ltblue); font-size:14px; letter-spacing:2px; line-height:22px; text-transform:uppercase; margin-top:24px; }
 .foot-bottom { background:var(--indigo); color:#fff; padding:24px 0; font-size:14px; letter-spacing:2px; text-transform:uppercase; }
 .slot-label { font-family:ui-monospace,Menlo,monospace; font-size:11px; color:#b3261e; }
+
+/* ============================================================
+   Services page — ported verbatim from design-board/mock-services.html.
+   Do not re-derive values.
+   ============================================================ */
+/* base eyebrow label (services hero + generic uppercase label) */
+.eyebrow { font-size:16px; font-weight:700; letter-spacing:2px; line-height:24px; text-transform:uppercase; }
+
+/* 1 · M02 inline hero (navy gradient) */
+.ihero { position:relative; background:var(--navy); color:#fff; padding-top:210px; padding-bottom:110px; min-height:100vh; min-height:100dvh; box-sizing:border-box; overflow:hidden; }
+.ihero-photo { position:absolute; inset:0; background:url('/site/hero-services.jpg') right center/cover no-repeat; }
+.ihero-scrim { position:absolute; inset:0; background:linear-gradient(100deg,rgba(0,10,37,.95) 40%,rgba(0,10,37,.72) 62%,rgba(0,10,37,.35) 82%,rgba(0,10,37,.12) 100%); }
+.ihero .wrap { position:relative; z-index:2; }
+@media(max-width:640px){ .ihero-photo{ background-position:70% center; } }
+.ihero .eyebrow { color:var(--lime); margin-bottom:20px; }
+.ihero h1 { max-width:1160px; color:#fff; }
+.ihero .sub { font-size:20px; line-height:32px; color:#fff; margin-top:26px; max-width:680px; }
+
+/* 2 · A1 credential cleanser strip (periwinkle) */
+.credstrip { background:var(--peri); padding:26px 0; }
+.credstrip .in { display:flex; flex-wrap:wrap; gap:10px 40px; align-items:baseline; }
+.credstrip .badges { display:flex; gap:36px; flex:0 0 auto; }
+.credstrip .badges span { font-size:14px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--navy); }
+.credstrip .line { font-size:16px; line-height:24px; color:var(--navy); max-width:820px; }
+
+/* 3 · M04 why plans stall (field) */
+.m04 { display:flex; gap:110px; }
+.m04 .left { width:520px; flex:0 0 auto; max-width:100%; }
+.m04 .left h2 { margin-bottom:24px; }
+.m04 .left p { font-size:20px; line-height:32px; }
+.m04 .rows { display:flex; flex-direction:column; gap:28px; flex:1; }
+.m04 .rows p { font-size:20px; line-height:32px; }
+.m04 .rows b { font-weight:700; }
+@media(max-width:1080px){ .m04{ flex-direction:column; gap:40px; } }
+
+/* 4 · M20 service grid (white) */
+.svc h2 { margin-bottom:6px; }
+.svc .sub { font-size:20px; line-height:32px; color:var(--ink); margin-bottom:44px; }
+.svc .rule { border-top:1px solid #ccc; margin-bottom:44px; }
+.grid20 { display:grid; grid-template-columns:repeat(4,1fr); gap:36px 16px; }
+.grid20 h4 { font-size:20px; line-height:28px; font-weight:700; margin-bottom:12px; }
+.grid20 .xr { border-top:1px solid #ccc; margin-bottom:12px; }
+.grid20 p { font-size:16px; line-height:28px; }
+@media(max-width:1080px){ .grid20{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:620px){ .grid20{ grid-template-columns:1fr; } }
+
+/* 5 · breather (lime strip) */
+.breather { background:var(--lime); padding:26px 0; }
+.breather .in { display:flex; align-items:center; justify-content:center; gap:20px; flex-wrap:wrap; }
+
+/* 6 · M13+M12 offer ladder (white) */
+.ladder-head h2 { margin-bottom:14px; }
+.ladder-head .lead { font-size:20px; line-height:32px; max-width:820px; margin-bottom:48px; }
+.ladder { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.lstep { background:var(--field); border-radius:30px; padding:38px 32px 34px; display:flex; flex-direction:column; transition:.25s; border:1px solid var(--field); }
+.lstep:hover { background:#fff; border-color:#e4e4e4; box-shadow:0 14px 40px rgba(0,10,37,.10); transform:translateY(-4px); }
+.lstep.feature { background:var(--navy); }
+.lstep.feature h6, .lstep.feature .num { color:#fff; }
+.lstep.feature p { color:var(--peri); }
+.lstep.feature .meta { color:var(--lime); }
+.lstep.feature:hover { background:#00113a; border-color:#00113a; }
+.lstep .num { font-family:var(--serif); font-style:italic; font-weight:700; font-size:34px; line-height:1; margin-bottom:26px; color:var(--blue); }
+.lstep h6 { font-size:22px; line-height:30px; font-weight:700; margin-bottom:6px; }
+.lstep .meta { font-size:13px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--blue); margin-bottom:18px; }
+.lstep p { font-size:15.5px; line-height:26px; margin-bottom:26px; }
+.lstep .pill { height:44px; padding:0 22px; font-size:15px; margin-top:auto; align-self:flex-start; }
+@media(max-width:1080px){ .ladder{ grid-template-columns:repeat(2,1fr); gap:20px; } }
+@media(max-width:620px){ .ladder{ grid-template-columns:1fr; } }
+
+/* 7 · M22 method statement (navy, centered) */
+.mstate { max-width:1000px; margin:0 auto; text-align:center; }
+.mstate h2 { font-size:40px; line-height:1.15; margin-bottom:28px; }
+.mstate .body { font-size:20px; line-height:32px; color:var(--peri); max-width:820px; margin:0 auto 36px; }
+@media(min-width:1024px){ .mstate h2{ font-size:58px; line-height:64px; } }
+
+/* 8 · M15 segment (royal) */
+.seg h2 { max-width:640px; margin-bottom:28px; }
+.seg p { font-size:20px; line-height:32px; color:#fff; max-width:820px; margin-bottom:28px; }
+
+/* final CTA — fine-print line (services variant) */
+.final .fine { font-size:16px; line-height:28px; margin-top:18px; font-weight:700; }
 
 /* mobile nav */
 .nav-burger { display:none; flex-direction:column; justify-content:center; gap:5px; width:44px; height:44px; padding:10px; margin:0; background:none; border:0; cursor:pointer; }
@@ -351,3 +449,228 @@ body {
   :where(.site) header.open .nav-burger span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
 }
 @media(prefers-reduced-motion:reduce){ :where(.site) nav,.nav-burger span{ transition:none; } }
+
+/* ============================================================
+   Deployment Diagnostic — page-specific bands (ported from
+   mock-deployment-diagnostic.html). Appended block; do not
+   reorder above rules.
+   ============================================================ */
+
+/* shared lead scale (M22-ours) */
+.lead { font-size:20px; line-height:32px; font-weight:400; }
+
+/* 1 · hero photo swap (reuses .ihero/.ihero-photo/.ihero-scrim) */
+.ihero.diag .ihero-photo { background-image:url('/site/hero-diagnostic.jpg'); }
+.ihero.resid-hero .ihero-photo { background-image:url('/site/hero-data-residency.jpg'); background-position:center; }
+
+/* 4 · on-ramp text lead-in */
+.onramp { padding:72px 0; }
+.onramp .h3t { max-width:1000px; margin-bottom:32px; }
+.onramp .lead { max-width:820px; }
+.onramp .lead + .lead { margin-top:32px; }
+
+/* 5 · what it is: definition prose + M20 six-question diagram */
+.whatis { padding-top:96px; }
+.whatis h2 { margin-bottom:32px; max-width:1160px; }
+.whatis .lead { max-width:820px; margin-bottom:48px; }
+.whatis .eyebrow { margin-bottom:16px; }
+.whatis .wlrule { border-top:1px solid #ccc; margin:0 0 40px; }
+.bp { margin-top:8px; display:flex; justify-content:center; }
+.bp svg { max-width:100%; height:auto; }
+/* SVG <text> can't reach next/font's hashed family via a font-family attribute,
+   so force our real sans here (CSS property overrides the SVG presentation attr). */
+.bp svg text { font-family:var(--sans); }
+
+/* 6 · M12 numbered deliverable cards */
+.m12nd .h3t { margin-bottom:48px; }
+.m12nd .grid3 { display:grid; grid-template-columns:repeat(3,437px); column-gap:16px; row-gap:46px; }
+@media(max-width:1200px){ .m12nd .grid3 { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:640px){ .m12nd .grid3 { grid-template-columns:1fr; } }
+.m12nd .grid3 > div { border-top:1px solid var(--ink); padding-top:20px; }
+.m12nd .num { font-family:var(--serif); font-style:italic; font-weight:700; font-size:16px; line-height:28px; color:var(--blue); margin-bottom:14px; }
+.m12nd h6 { font-size:22px; line-height:30px; font-weight:700; margin-bottom:0; }
+.m12nd .grid3 p { font-size:20px; line-height:32px; }
+
+/* 7 · A2 week by week (statnavy) — P09 row geometry */
+.a2 .h3t { color:#fff; margin-bottom:40px; }
+.a2 .rows { display:flex; flex-direction:column; gap:36px; max-width:1040px; }
+.a2 .srow { display:flex; gap:40px; align-items:flex-start; }
+.a2 .srow .n { font-size:48px; line-height:52px; font-weight:300; color:var(--lime); flex:0 0 auto; min-width:150px; white-space:nowrap; }
+.a2 .srow .d { font-size:20px; line-height:32px; font-weight:400; color:#fff; }
+@media(max-width:700px){ .a2 .srow { flex-direction:column; gap:8px; align-items:flex-start; } .a2 .srow .n{ min-width:0; } }
+
+/* 8 · M22 commitment prose */
+.m22-commit .h3t { max-width:1000px; margin-bottom:32px; }
+.m22-commit .lead { max-width:820px; font-weight:700; }
+.m22-commit .lead + .lead { margin-top:32px; }
+
+/* 9 · A4 the honest part (navy) — centered statement + fine print */
+.a4 .h3t { color:#fff; text-align:center; max-width:1208px; margin:0 auto 48px; }
+.a4 p { color:#fff; font-size:20px; line-height:32px; text-align:center; max-width:820px; margin:0 auto; }
+.a4 p + p { margin-top:24px; color:var(--peri); }
+
+/* ============================================================================
+   Data Residency (mock-data-residency.html) — page-scoped bands.
+   Appended block; reuses shared .ihero/.bg-navy/.bg-field/.acc/.jn/.cred-band.
+   ========================================================================== */
+
+/* 1 · M02 typographic hero — gradient override, no photo/scrim, no badges line */
+.ihero.resid-hero { background:linear-gradient(118deg,#000A25 46%,#0F1C41); }
+.ihero.resid-hero h1 { max-width:1180px; }
+.ihero.resid-hero .sub { margin-top:30px; max-width:820px; }
+
+/* 3 · A9 residency control panel (white): prose + ticked residency-facts list */
+.arch h2 { max-width:1120px; margin-bottom:48px; }
+.arch .grid { display:grid; grid-template-columns:1.05fr .95fr; gap:64px; align-items:center; }
+@media(max-width:960px){ .arch .grid{ grid-template-columns:1fr; gap:48px; } }
+.arch .prose p { font-size:20px; line-height:32px; max-width:600px; }
+.arch .prose p + p { margin-top:24px; }
+.schem { background:var(--field); border-radius:20px; padding:44px 40px; }
+.rcp-title { font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--grey); margin:0; }
+.rcp-list { list-style:none; margin:26px 0 0; padding:0; display:flex; flex-direction:column; gap:22px; }
+.rcp-item { display:flex; gap:16px; align-items:flex-start; }
+.rcp-tick { flex:0 0 auto; width:18px; height:18px; margin-top:4px; stroke:var(--blue); stroke-width:2.5; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+.rcp-line { font-size:15px; font-weight:400; line-height:24px; color:var(--ink); }
+
+/* 4 · A8 Anthropic-commitment citation card on navy (the one dominant accent band) */
+.commit h2 { text-align:center; max-width:1120px; margin:0 auto 48px; }
+@media(min-width:1024px){ .commit h2{ font-size:48px; line-height:60px; } }
+.cite { max-width:860px; margin:0 auto; background:var(--indigo); border-left:4px solid var(--lime); border-radius:0 14px 14px 0; padding:44px 48px; }
+.cite p { font-family:var(--serif); font-style:italic; font-size:26px; line-height:38px; color:#fff; }
+@media(max-width:640px){ .cite p{ font-size:22px; line-height:34px; } .cite{ padding:32px 30px; } }
+.commit .close { text-align:center; max-width:820px; margin:44px auto 0; font-size:18px; line-height:30px; color:var(--peri); }
+
+/* 5 · M20 capabilities columns (white): access posture across four cells */
+.access h2 { max-width:1000px; margin-bottom:32px; }
+.caps { display:grid; grid-template-columns:repeat(4,1fr); gap:48px; }
+.cap h4 { font-size:20px; line-height:28px; font-weight:700; color:var(--navy); padding-bottom:14px; border-bottom:1px solid #ccc; margin-bottom:18px; }
+.cap p { font-size:16px; line-height:28px; font-weight:400; color:var(--ink); }
+@media(max-width:900px){ .caps{ grid-template-columns:repeat(2,1fr); gap:40px; } }
+@media(max-width:560px){ .caps{ grid-template-columns:1fr; gap:34px; } }
+
+/* 6 · M25 differentiators grid (field): three sector cells, line icons */
+.sector { text-align:center; }
+.sector h2 { max-width:1120px; margin:0 auto 24px; }
+.sector .intro { font-size:20px; line-height:32px; font-weight:400; max-width:900px; margin:0 auto 56px; color:var(--ink); }
+.sec-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:48px; max-width:1080px; margin:0 auto; }
+.sec-cell { display:flex; flex-direction:column; align-items:center; text-align:center; }
+.sec-icon { width:80px; height:80px; margin-bottom:32px; border:2px solid var(--navy); border-radius:16px; background:#fff; display:flex; align-items:center; justify-content:center; }
+.sec-icon svg { width:30px; height:30px; stroke:var(--blue); stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+.sec-name { font-size:20px; line-height:28px; font-weight:700; color:var(--navy); margin-bottom:12px; }
+.sec-anchor { font-size:16px; line-height:26px; font-weight:400; color:var(--ink); max-width:300px; }
+@media(max-width:900px){ .sec-grid{ grid-template-columns:1fr; gap:44px; max-width:420px; } .sector .intro{ margin-bottom:44px; } }
+
+/* 7 · M22 positioning statement (white breather) + arrow coda */
+.regime h2 { max-width:1000px; margin-bottom:36px; }
+.regime .lead { max-width:840px; }
+.regime .lead + .lead { margin-top:24px; }
+.regime .ctas { margin-top:32px; }
+
+/* 8 · M16 FAQ accordion (field) — shell reused; heading spacing only */
+.faq h2 { margin-bottom:36px; }
+
+/* =========================================================================
+   Fit Check (mock-fit-check.html) — APPEND-ONLY page block.
+   Reuses shared .ihero/.ihero-photo/.ihero-scrim, .cred-band, .whatis, .lead,
+   .breather, .bg-lavender, .bg-navy, .bg-field, .acc, .final. Page-scoped
+   classes only below (no bare max-width utilities on <section>).
+   ========================================================================= */
+
+/* 1 · hero photo swap (reuses .ihero/.ihero-photo/.ihero-scrim) */
+.ihero.fc-hero .ihero-photo { background-image:url('/site/hero-fit-check.jpg'); }
+.fc-hero .ctas { margin-top:36px; }
+
+/* 2 · M20 five dimensions: hairline cells, 5-up (reuses .whatis framing) */
+.dims { display:grid; grid-template-columns:repeat(5,1fr); gap:28px 24px; }
+@media(max-width:1080px){ .dims{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:620px){ .dims{ grid-template-columns:1fr; } }
+.dims h4 { font-size:20px; line-height:28px; font-weight:700; margin-bottom:12px; }
+.dims .xr { border-top:1px solid #ccc; margin-bottom:12px; width:100%; }
+.dims p { font-size:16px; line-height:28px; }
+
+/* 3 · A5 Fit Check tool: the one lavender accent band, page signature set-piece */
+.tool .eyebrow { margin-bottom:18px; color:var(--navy); }
+.tool .lead { max-width:760px; margin-top:24px; }
+.tool .ctas { margin-top:32px; }
+.quizslot { border-radius:20px; overflow:hidden; margin-top:40px; box-shadow:0 24px 60px rgba(15,28,65,.20); border:1px solid rgba(255,255,255,.5); max-width:1040px; }
+.quiz-shot { display:block; width:100%; height:auto; }
+.resultbox { background:#fff; border-radius:30px; padding:40px 44px; margin-top:24px; max-width:940px; }
+.resultbox p { font-size:18px; line-height:28px; }
+.resultbox p + p { margin-top:18px; }
+.resultbox .ctas { margin-top:28px; }
+.emailslot { border-top:1px solid #e2d8ff; margin-top:28px; padding-top:24px; }
+.emailslot p { margin-bottom:16px; }
+/* centred set-piece treatment — intro cluster + framed shots sit centred, not left with dead space */
+.tool > .wrap > .eyebrow, .tool > .wrap > h2, .tool > .wrap > .lead { text-align:center; }
+.tool > .wrap > .lead { margin-left:auto; margin-right:auto; }
+.tool > .wrap > .ctas { justify-content:center; }
+.quizslot { margin-left:auto; margin-right:auto; }
+.resultbox { margin-left:auto; margin-right:auto; }
+
+/* 4 · M13 offer cards: four verdict bands (plain columns + arrow CTA), 2×2 */
+.m13 .h3t { margin-bottom:28px; }
+.m13 .lead { max-width:900px; }
+.m13 .lead + .lead { margin-top:24px; margin-bottom:56px; }
+.offergrid { display:grid; grid-template-columns:repeat(2,1fr); gap:52px 40px; }
+@media(max-width:760px){ .offergrid{ grid-template-columns:1fr; } }
+.oc h6 { font-size:26px; line-height:34px; font-weight:700; margin-bottom:14px; }
+.oc p { font-size:18px; line-height:28px; }
+.oc .ctas { margin-top:20px; }
+
+/* 5 · A4 honesty block: m22 narrow prose on WHITE + P09 fine-print */
+.honest .h3t { max-width:1000px; margin-bottom:32px; }
+.honest .lead { max-width:820px; }
+.honest .lead + .lead { margin-top:24px; }
+.honest .fineprint { font-style:italic; font-size:16px; line-height:28px; color:var(--grey); max-width:820px; margin:24px 0 0; }
+.honest .ctas { margin-top:32px; }
+
+/* 6 · M15 mid-page CTA band: navy pivot (dark zone 2) */
+.midcta h2 { max-width:1040px; margin-bottom:28px; }
+.midcta .lead { color:#fff; max-width:840px; }
+.midcta .ctas { margin-top:36px; }
+
+/* ============================================================
+   ABOUT PAGE (mock-about.html) — appended block.
+   Reuses shared .ihero/.bg-navy/.bg-field/.bg-royal/.regime/.founder/.acc/.faq/.lead/.ctas/.arrow.
+   Page-scoped modifiers only: .about-hero (typographic navy hero, no photo),
+   .about-cases (M25 case-study flip cards), .about-book (royal final CTA band).
+   ============================================================ */
+
+/* 1 · typographic interior hero (navy gradient, no media slot) */
+.ihero.about-hero { background:var(--navy); display:flex; align-items:flex-end; padding-bottom:110px; }
+.ihero.about-hero .wrap { width:100%; }
+.ihero.about-hero .ihero-photo { background-image:url('/site/hero-about.jpg'); background-position:center; }
+/* lighter scrim than the shared one so the participants read through; left stays dark enough for text */
+.ihero.about-hero .ihero-scrim { background:linear-gradient(to top,rgba(0,10,37,.62) 0%,rgba(0,10,37,.3) 22%,rgba(0,10,37,0) 46%),linear-gradient(100deg,rgba(0,10,37,.8) 0%,rgba(0,10,37,.52) 30%,rgba(0,10,37,.2) 52%,rgba(0,10,37,.04) 72%,rgba(0,10,37,0) 88%); }
+@media(max-width:640px){ .ihero.about-hero .ihero-photo { background-position:64% center; } }
+.ihero.about-hero h1 { max-width:1180px; }
+.ihero.about-hero .sub { margin-top:30px; max-width:820px; }
+.about-hero .badges { margin-top:40px; }
+.about-hero .badges span { font-size:14px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--lime); }
+
+/* 6 · M25 case-study result-card grid (navy) */
+.about-cases h2 { text-align:center; font-size:34px; line-height:1.24; font-weight:300; color:#fff; max-width:891px; margin:0 auto 24px; }
+@media(min-width:1024px){ .about-cases h2 { font-size:48px; line-height:60px; } }
+.about-cases .case-intro { font-size:20px; line-height:32px; font-weight:400; color:rgba(255,255,255,.75); text-align:center; max-width:760px; margin:0 auto 64px; }
+.about-cases .sc-row { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+.about-cases .scard { width:324px; height:716px; background:#0F1C41; border-radius:0 0 30px 30px; overflow:hidden; position:relative; cursor:pointer; transition:background .25s ease; }
+.about-cases .scard .sc-front, .about-cases .scard .sc-back { position:absolute; inset:0; transition:opacity .25s ease; }
+.about-cases .scard .sc-front { opacity:1; }
+.about-cases .scard .sc-back { opacity:0; pointer-events:none; display:flex; flex-direction:column; justify-content:space-between; padding:24px; }
+.about-cases .sc-img { width:324px; height:490px; overflow:hidden; background:#0F1C41; }
+.about-cases .sc-shot { width:100%; height:100%; object-fit:cover; display:block; }
+.about-cases .sc-tag { font-size:14px; line-height:22px; color:#fff; padding:0 24px; margin:24px 0 12px; }
+.about-cases .sc-title { font-size:26px; line-height:32px; font-weight:700; color:#fff; padding:0 24px; }
+.about-cases .sc-desc { font-size:26px; line-height:38px; color:#292929; }
+.about-cases .sc-desc b { font-weight:700; }
+.about-cases .sc-read { font-size:16px; line-height:22px; color:#292929; }
+.about-cases .scard:hover, .about-cases .scard:focus-within, .about-cases .scard.flip { background:#F5F5F5; }
+.about-cases .scard:hover .sc-front, .about-cases .scard:focus-within .sc-front, .about-cases .scard.flip .sc-front { opacity:0; pointer-events:none; }
+.about-cases .scard:hover .sc-back, .about-cases .scard:focus-within .sc-back, .about-cases .scard.flip .sc-back { opacity:1; pointer-events:auto; }
+.about-cases .ctas { justify-content:center; margin-top:56px; }
+
+/* 9 · M17 final CTA (royal band, dual CTA, no calendar embed) */
+.about-book h2 { margin-bottom:24px; }
+@media(min-width:1024px){ .about-book h2 { font-size:48px; line-height:60px; } }
+.about-book .lead { color:#fff; max-width:900px; }
+.about-book .ctas { margin-top:36px; }
