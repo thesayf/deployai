@@ -3,7 +3,7 @@
  *  + the actual stack facts, not generic framing. */
 export function AnthropicRelationship() {
   return (
-    <section className="bg-field regime" id="anthropic">
+    <section className="bg-lavender regime" id="anthropic">
       <div className="wrap">
         <h2>
           The Anthropic <em className="accent">relationship</em>.
