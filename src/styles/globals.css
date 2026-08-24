@@ -845,7 +845,7 @@ body {
 .caseprod .tp-cta .pill:hover { background:var(--royal); border-color:var(--royal); color:#fff; }
 /* rail media slot: one fixed 320x420 white card for ALL tabs — phone centres in
    it, desktop shots centre in it — so the rail silhouette never changes. */
-.cp-slot { width:100%; height:380px; display:flex; align-items:center; justify-content:center; }
+.cp-slot { width:100%; display:flex; justify-content:center; }
 .cp-shot { width:404px; height:252px; border-radius:8px; overflow:hidden; box-shadow:0 22px 48px -18px rgba(0,10,37,.35), 0 0 0 1px rgba(0,10,37,.08); flex:0 0 auto; }
 .cp-shot-inner { width:900px; height:562px; transform:scale(.4489); transform-origin:top left; }
 .cp-phone-thumb { width:210px; height:377px; }
