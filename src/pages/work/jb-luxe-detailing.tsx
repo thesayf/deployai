@@ -171,8 +171,8 @@ export default function JbLuxeCase() {
         />
 
         <CaseQuote
-          quote="It books jobs while I’m asleep and quotes while I’m under a bonnet. My customers think I hired a receptionist. I just switched on the assistant, and revenue has tripled since."
-          name="James Butler"
+          quote="It books jobs while I’m asleep and quotes while I’m under a bonnet. My customers think I hired a receptionist. Since I switched on the assistant revenue has tripled and I’m now looking to expand the business."
+          name="Judah Brown"
           role="Founder, JB Luxe Detailing"
         />
 
