@@ -104,26 +104,53 @@ export default function JbLuxeCase() {
         <CaseProduct
           heading={
             <>
-              See what we <em className="accent">built</em>.
+              The front desk we <em className="accent">built</em>.
             </>
           }
-          intro="Three screens, one system: the assistant customers book through, the CRM that remembers every car, and the diary that fills itself."
+          intro="One system handles the lot: answering customers, keeping their details, and booking the work in."
           surfaces={[
             {
-              label: "The assistant",
-              desc: "Answers, quotes and books, 24/7, in the customer’s own words.",
+              label: "Assistant",
+              desc: "The assistant greets every visitor the moment they land, works out what they drive and what the job needs, then recommends the right package and quotes it on the spot. When the customer is ready, it offers real slots and takes the deposit, whatever the hour.",
+              bullets: [
+                "Every enquiry gets an instant answer, a price, and a slot it can book there and then",
+                "Out-of-hours interest stops going to voicemail, and stops going to someone else",
+                "The average reply went from four hours to thirty seconds",
+                "85% of enquiries are handled start to finish without JB picking up",
+              ],
+              railName: "JB Luxe Assistant",
+              railDesc:
+                "The chat window on the JB Luxe site. It runs the whole conversation, from first question to quoted price to paid deposit, without the customer ever leaving the page.",
               device: "phone",
               node: <ChatMock />,
             },
             {
-              label: "The CRM",
-              desc: "Every customer, car and job in one place. Follow-ups fire themselves.",
+              label: "CRM",
+              desc: "Every customer, car, and past job lives on one record, built up automatically as bookings come in. Quotes stop living in text threads, regulars get a reminder when the next detail is due, and the numbers that matter sit at the top of the page.",
+              bullets: [
+                "One record per customer: their cars, their jobs, and what they paid",
+                "Quotes in one place instead of scattered across text messages",
+                "Booked revenue, details completed, and follow-ups due, all at a glance",
+                "First-time customers get followed up, not forgotten",
+              ],
+              railName: "Customer CRM",
+              railDesc:
+                "The back office behind the bookings. Every customer and car on file, the month's revenue and completed jobs up top, and the follow-ups coming due listed before they're missed.",
               device: "laptop",
               node: <CrmMock />,
             },
             {
-              label: "The diary",
-              desc: "Bookings drop straight into the day, scheduled without a phone call.",
+              label: "Diary",
+              desc: "Confirmed jobs drop straight into the day's schedule, each with its time, duration, and postcode. The assistant only offers slots that genuinely fit, so new bookings land around the work already in the diary and the driving in between.",
+              bullets: [
+                "A deposit and confirmation on every booking before it reaches the diary",
+                "Each job carries its time, duration, and postcode for the day's run",
+                "New bookings only land in slots that fit around existing work",
+                "The paper notebook is gone, and the day is visible from the van",
+              ],
+              railName: "Diary",
+              railDesc:
+                "The day's run as JB sees it. Four jobs across town with times, durations, and postcodes, the current job marked live, and a new booking dropped in by the assistant mid-morning.",
               device: "laptop",
               node: <BookingMock />,
             },
@@ -152,8 +179,7 @@ export default function JbLuxeCase() {
         <CaseCTA
           heading={
             <>
-              Run a business like JB&rsquo;s? Let&rsquo;s talk about{" "}
-              <em>yours</em>.
+              Yours could run like <em className="accent">this</em>.
             </>
           }
         />

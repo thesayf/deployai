@@ -1,19 +1,38 @@
 import { useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { PhoneFrame } from "./PhoneFrame";
-import { LaptopFrame } from "./LaptopFrame";
+import { SiteLink } from "../SiteLink";
 
 type Surface = {
   label: string;
   desc: string;
+  bullets: string[];
+  railName: string;
+  railDesc: string;
   device: "phone" | "laptop";
   node: ReactNode;
 };
 
-/** Product proof (navy + .facet). One static device composition — a laptop
- *  (CRM / Diary) with a phone docked at its corner, both always visible at real
- *  proportions. The selector shifts FOCUS between devices rather than swapping
- *  shapes, and crossfades the laptop's own content. Per ui-ux-designer spec. */
+/** LOCKED 2026-08-24 · Product proof — P05/M07 tabbed solutions (aitx-04).
+ *  This is the reusable case-page product section. Compose it; do not re-derive.
+ *
+ *  Anatomy (all measured against the aitx-04 capture + M07.json):
+ *  - centered display heading (em serif accent) + balanced centered intro;
+ *  - tab bar at the panel's 1344px width, tabs flex:1 (equal thirds), active =
+ *    blue pill;
+ *  - grey field panel (1344 max, 80/96 inset, 30px radius, no border);
+ *  - LEFT: tp-name 26/700 · plain tp-desc 20/32 (62ch) · bold "What changed:"
+ *    help line · 4 disc bullets 20/32 · solid-blue pill CTA with arrow;
+ *  - RIGHT rail 420px: fixed 380px transparent media slot (phone fills it,
+ *    desktop shots centre in it) · "Product screen" eyebrow · bold name ·
+ *    plain description. Desktop screens render in a 900×562 (16:10) viewport
+ *    scaled to 404×252 — real screenshot proportions, never square.
+ *  - Panels render STACKED in one grid cell (.cp-panels), so the tallest sets
+ *    the height for all: switching tabs never moves the page, with any copy.
+ *
+ *  Per-surface contract: { label, desc, bullets[4], railName, railDesc,
+ *  device: "phone"|"laptop", node }. Screens are self-contained mock
+ *  components in the CLIENT'S brand, not ours. */
 export function CaseProduct({
   heading,
   intro,
@@ -23,76 +42,76 @@ export function CaseProduct({
   intro: ReactNode;
   surfaces: Surface[];
 }) {
-  const phoneIdx = surfaces.findIndex((s) => s.device === "phone");
-  const laptopIdxs = surfaces
-    .map((s, i) => ({ s, i }))
-    .filter((x) => x.s.device === "laptop")
-    .map((x) => x.i);
-
   const [active, setActive] = useState(0);
-  const [laptopIdx, setLaptopIdx] = useState(laptopIdxs[0] ?? 0);
-  const activeDevice = surfaces[active]?.device;
-
-  function select(i: number) {
-    setActive(i);
-    if (surfaces[i].device === "laptop") setLaptopIdx(i);
-  }
 
   return (
-    <section className="bg-navy facet caseprod" id="product">
-      <div className="wrap cp-grid">
-        <div className="cp-side">
-          <h2>{heading}</h2>
-          <p className="cp-intro">{intro}</p>
-          <div className="cp-menu" role="tablist">
-            {surfaces.map((s, i) => (
-              <button
-                key={s.label}
-                role="tab"
-                aria-selected={active === i}
-                className={cn("cp-item", active === i && "on")}
-                onClick={() => select(i)}
-              >
-                <span className="cp-item-num">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="cp-item-body">
-                  <span className="cp-item-label">{s.label}</span>
-                  <span className="cp-item-desc">{s.desc}</span>
-                </span>
-              </button>
-            ))}
-          </div>
+    <section className="caseprod" id="product">
+      <div className="wrap">
+        <h2>{heading}</h2>
+        <p className="cp-intro">{intro}</p>
+
+        <div className="tabbar" role="tablist">
+          {surfaces.map((s, i) => (
+            <button
+              key={s.label}
+              className={cn("tabbtn", active === i && "on")}
+              role="tab"
+              aria-selected={active === i}
+              onClick={() => setActive(i)}
+            >
+              {s.label}
+            </button>
+          ))}
         </div>
 
-        <div className="cp-stage">
-          <div className="cp-glow" aria-hidden="true" />
+        {/* all panels render stacked in one grid cell — the tallest sets the
+            height, so switching tabs never moves the page, with any content */}
+        <div className="cp-panels">
+        {surfaces.map((s, i) => (
           <div
-            className={cn(
-              "cp-device laptop",
-              activeDevice === "laptop" ? "focus" : "dim"
-            )}
+            key={s.label}
+            className={cn("tabpanel", active === i && "on")}
+            role="tabpanel"
+            aria-hidden={active !== i}
           >
-            <LaptopFrame>
-              <div className="cp-laptop-content">
-                {laptopIdxs.map((idx) => (
-                  <div key={idx} className={cn(idx === laptopIdx && "on")}>
-                    {surfaces[idx].node}
-                  </div>
+            <div className="cp-copy">
+              <div className="tp-name">{s.label}</div>
+              <p className="tp-desc">{s.desc}</p>
+              <div className="tp-help">What changed:</div>
+              <ul className="tp-bullets">
+                {s.bullets.map((b) => (
+                  <li key={b}>{b}</li>
                 ))}
+              </ul>
+              <div className="tp-cta">
+                <SiteLink className="pill p-blue" href="/book">
+                  Let&rsquo;s talk about yours
+                  {"  →"}
+                </SiteLink>
               </div>
-            </LaptopFrame>
-          </div>
-          <div
-            className={cn(
-              "cp-device phone",
-              activeDevice === "phone" ? "focus" : "dim"
-            )}
-          >
-            <div className="dv-phone-slot">
-              <PhoneFrame>{surfaces[phoneIdx]?.node}</PhoneFrame>
+            </div>
+
+            <div className="cp-rail">
+              {/* fixed-size media slot: identical silhouette on every tab, so the
+                  eyebrow/name/desc below start at the same y whether the screen
+                  is a portrait phone or a landscape desktop shot */}
+              <div className="cp-slot">
+                {s.device === "phone" ? (
+                  <div className="cp-phone-thumb">
+                    <PhoneFrame>{s.node}</PhoneFrame>
+                  </div>
+                ) : (
+                  <div className="cp-shot">
+                    <div className="cp-shot-inner">{s.node}</div>
+                  </div>
+                )}
+              </div>
+              <div className="cp-rail-eyebrow">Product screen</div>
+              <div className="cp-rail-name">{s.railName}</div>
+              <p className="cp-rail-desc">{s.railDesc}</p>
             </div>
           </div>
+        ))}
         </div>
       </div>
     </section>

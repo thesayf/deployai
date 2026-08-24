@@ -1,10 +1,11 @@
 import { SiteLink } from "@/components/site/SiteLink";
 import type { ReactNode } from "react";
 
-/** Final CTA (royal) — could-we-do-this-for-you close. */
+/** Final CTA — could-we-do-this-for-you close. Navy + facet, bookending the
+ *  hero and separating cleanly from the royal footer below. */
 export function CaseCTA({ heading }: { heading: ReactNode }) {
   return (
-    <section className="bg-royal case-cta" id="final">
+    <section className="bg-navy facet case-cta" id="final">
       <div className="wrap">
         <h2>{heading}</h2>
         <div className="ctas">

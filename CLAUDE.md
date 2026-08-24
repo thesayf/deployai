@@ -47,6 +47,7 @@ New site components live in **`src/components/site/`**. Build shared chrome as *
 - **`Accordion`** (M16) — `items: {q, a}[]`; the FAQ.
 - **`Footer`** (M26) — shared footer link graph + legal row.
 - **`CTABand`** (M17) — coral final CTA; heading / body / CTAs / optional calendar slot.
+- **`CaseProduct`** (P05/M07, LOCKED 2026-08-24) — the case-page product-proof tab panel (`site/case/CaseProduct.tsx`). Compose it for every case study; never re-derive the section. Per-surface contract: `{ label, desc, bullets[4], railName, railDesc, device: "phone"|"laptop", node }` where `node` is a self-contained screen mock **in the client's brand**. The measured anatomy (1344 panel, 420 rail, 380 media slot, 16:10 desktop shots via a 900×562 viewport, stacked equal-height panels) is documented in the component header — do not tune it per page.
 
 Page-specific sections live in `src/components/site/<page>/` (e.g. `site/home/Hero.tsx`). Shared atoms (`.pill`/`.p-blue`/`.p-white`/`.p-ghost`/`.p-ink`, `.tert`, `.arrow`, `.pretitle`, `.wrap`, `.narrow`, band grounds `.bg-navy`/`.bg-field`/etc.) are global semantic classes in `globals.css` — reuse them, don't reinvent.
 

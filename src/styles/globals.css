@@ -819,48 +819,40 @@ body {
 .case-story .story-fig img { width:100%; border-radius:20px; display:block; }
 .case-story .story-fig figcaption { font-size:14px; color:var(--grey); margin-top:12px; font-style:italic; }
 
-/* 4 · product proof (navy + .facet): one static laptop+phone composition;
-   the selector shifts focus, it never swaps shapes. Per ui-ux-designer spec. */
-.caseprod { padding-top:84px; padding-bottom:92px; }
-.cp-grid { display:grid; grid-template-columns:minmax(0,400px) minmax(0,1fr); gap:64px; align-items:center; }
-@media(max-width:900px){ .cp-grid { grid-template-columns:1fr; gap:40px; } }
-.cp-side h2 { color:#fff; font-size:clamp(28px,3.8vw,42px); font-weight:300; max-width:16ch; }
-.cp-side .cp-intro { color:rgba(255,255,255,.82); font-size:18px; line-height:28px; max-width:44ch; margin:18px 0 34px; }
-
-/* selector: numeral + label + reserved-height desc */
-.cp-menu { display:flex; flex-direction:column; gap:2px; }
-.cp-item { display:flex; gap:16px; align-items:flex-start; width:100%; text-align:left; appearance:none; background:transparent; cursor:pointer; font:inherit; border:none; border-left:2px solid rgba(255,255,255,.14); padding:16px 0 16px 22px; transition:border-color .18s ease; }
-.cp-item:hover { border-left-color:rgba(255,255,255,.4); }
-.cp-item:hover .cp-item-label { color:rgba(255,255,255,.78); }
-.cp-item.on { border-left-color:var(--lime); }
-.cp-item:focus-visible { outline:none; box-shadow:0 0 0 2px var(--navy),0 0 0 4px var(--ltblue); border-radius:2px; }
-.cp-item-num { font-family:var(--serif); font-style:italic; font-weight:700; font-size:20px; line-height:1; color:rgba(255,255,255,.32); flex:0 0 auto; padding-top:2px; transition:color .18s; }
-.cp-item.on .cp-item-num { color:var(--lime); }
-.cp-item-body { display:flex; flex-direction:column; }
-.cp-item-label { font-size:19px; font-weight:700; color:rgba(255,255,255,.55); transition:color .18s; }
-.cp-item.on .cp-item-label { color:#fff; }
-.cp-item-desc { font-size:14.5px; line-height:21px; color:rgba(255,255,255,.62); margin-top:6px; max-width:36ch; min-height:42px; opacity:0; transition:opacity .25s ease; }
-.cp-item.on .cp-item-desc { opacity:1; }
-
-/* stage: fixed composition */
-.cp-stage { position:relative; width:100%; max-width:740px; height:504px; margin:0 auto; }
-@media(max-width:900px){ .cp-stage { height:auto; min-height:504px; max-width:360px; padding:24px 0; } }
-.cp-glow { position:absolute; inset:-40px; z-index:0; pointer-events:none; background:radial-gradient(560px 460px at 40% 55%, rgba(108,138,253,.2), transparent 68%); }
-.cp-device { position:absolute; transition:transform .4s cubic-bezier(.22,.61,.36,1), opacity .4s ease, filter .4s ease; }
-.cp-device.laptop { left:0; top:50%; transform:translateY(-50%) scale(1); }
-.cp-device.laptop.focus { transform:translateY(-50%) scale(1.02); }
-.cp-device.laptop.dim { transform:translateY(-50%) scale(.965); }
-.cp-device.phone { right:36px; bottom:8px; transform:scale(1); }
-.cp-device.phone.focus { transform:scale(1.05); }
-.cp-device.phone.dim { transform:scale(.92); }
-/* the clicked screen always comes to the front; the others dim + shrink behind it */
-.cp-device.focus { opacity:1; filter:none; z-index:3; }
-.cp-device.dim { opacity:.5; filter:saturate(.6) brightness(.84); z-index:1; }
-.cp-device.focus::after { content:""; position:absolute; pointer-events:none; box-shadow:0 0 0 2px rgba(222,255,77,.5); }
-.cp-device.laptop.focus::after { inset:-8px; border-radius:26px; }
-.cp-device.phone.focus::after { inset:-7px; border-radius:30px; }
-@media(prefers-reduced-motion:reduce){ .cp-device { transition:opacity .15s ease; } }
-@media(max-width:900px){ .cp-device.laptop, .cp-device.phone { position:relative; left:auto; right:auto; top:auto; bottom:auto; transform:none; margin:0 auto; } .cp-device.phone { margin-top:-46px; } .cp-device.dim { opacity:1; filter:none; } }
+/* 4 · product proof — P05/M07 tabbed solutions, exact to aitx-04:
+   centered heading; full-panel-width tabbar; white panel; LEFT wide copy column
+   (name / plain desc / bold help / disc bullets / solid-blue pill CTA);
+   RIGHT narrow 320px rail on white — screenshot card, then uppercase eyebrow
+   (M07: 16/700/24 ls2), bold name, plain description. */
+.caseprod > .wrap > h2 { text-align:center; margin-inline:auto; }
+.caseprod .cp-intro { font-size:20px; line-height:32px; color:var(--ink); max-width:760px; margin:18px auto 0; text-align:center; text-wrap:balance; }
+/* aitx panel: soft grey card, no border, deep inset; tabs spread with compact pills */
+.caseprod .tabbar { max-width:1344px; margin-left:auto; margin-right:auto; }
+/* panels render STACKED in one grid cell: every panel lays out (invisible when
+   inactive), so the tallest always sets the section height — equal heights with
+   any content, no magic min-height. */
+.cp-panels { display:grid; max-width:1344px; margin:16px auto 0; }
+.caseprod .tabpanel { display:grid; grid-area:1/1; visibility:hidden; background:var(--field); border:none; padding:80px 96px; margin-top:0; grid-template-columns:minmax(0,1fr) 420px; gap:72px; align-items:start; }
+.caseprod .tabpanel.on { visibility:visible; }
+@media(max-width:900px){ .caseprod .tabpanel { grid-template-columns:1fr; gap:40px; padding:40px 30px; } }
+.caseprod .tp-desc { margin-top:24px; max-width:62ch; }
+.caseprod .tp-help { font-size:20px; line-height:32px; margin:28px 0 12px; }
+.caseprod .tp-bullets { max-width:62ch; list-style:disc; }
+.caseprod .tp-bullets li { margin-bottom:10px; }
+.caseprod .tp-cta { margin-top:36px; }
+/* aitx CTA is the solid blue pill (overrides the home tabpanel white-pill variant) */
+.caseprod .tp-cta .pill { background:var(--blue); color:#fff; border-color:var(--blue); }
+.caseprod .tp-cta .pill:hover { background:var(--royal); border-color:var(--royal); color:#fff; }
+/* rail media slot: one fixed 320x420 white card for ALL tabs — phone centres in
+   it, desktop shots centre in it — so the rail silhouette never changes. */
+.cp-slot { width:100%; height:380px; display:flex; align-items:center; justify-content:center; }
+.cp-shot { width:404px; height:252px; border-radius:8px; overflow:hidden; box-shadow:0 22px 48px -18px rgba(0,10,37,.35), 0 0 0 1px rgba(0,10,37,.08); flex:0 0 auto; }
+.cp-shot-inner { width:900px; height:562px; transform:scale(.4489); transform-origin:top left; }
+.cp-phone-thumb { width:210px; height:377px; }
+.cp-phone-thumb .dv-phone { transform:scale(.65625); transform-origin:top left; }
+.cp-rail-eyebrow { font-size:16px; line-height:24px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--ink); margin:32px 0 16px; }
+.cp-rail-name { font-size:20px; line-height:26px; font-weight:700; color:var(--ink); }
+.cp-rail-desc { font-size:16px; line-height:28px; color:var(--ink); margin-top:16px; }
 
 /* device: laptop chassis */
 .dv-laptop { width:588px; max-width:100%; background:linear-gradient(180deg,#e9eaee,#c7c9d0); border-radius:20px 20px 8px 8px; padding:14px 14px 0; position:relative; box-shadow:0 60px 110px -32px rgba(0,4,20,.55); }
@@ -877,8 +869,6 @@ body {
 .dv-laptop-chin { height:16px; margin:0 -14px; border-radius:0 0 8px 8px; background:linear-gradient(180deg,#c7c9d0,#aeb0b8); position:relative; }
 .dv-laptop-chin::before { content:""; position:absolute; left:50%; top:5px; transform:translateX(-50%); width:64px; height:5px; border-radius:3px; background:rgba(0,0,0,.14); }
 .cp-laptop-content { position:relative; min-height:410px; }
-.cp-laptop-content > div { position:absolute; inset:0; opacity:0; transition:opacity .28s ease; pointer-events:none; }
-.cp-laptop-content > div.on { opacity:1; pointer-events:auto; }
 
 /* device: phone shell — native size scaled into a small docked footprint */
 .dv-phone { width:320px; background:#0a0c12; border-radius:42px; padding:10px; box-shadow:0 50px 100px -34px rgba(0,4,20,.8), inset 0 0 0 2px rgba(255,255,255,.05); position:relative; }
@@ -906,8 +896,9 @@ body {
 
 /* 7 · CTA (royal) */
 .case-cta .wrap { text-align:center; }
-.case-cta h2 { color:#fff; font-size:clamp(26px,3.8vw,42px); font-weight:300; max-width:22ch; margin:0 auto; }
-.case-cta .ctas { justify-content:center; margin-top:34px; }
+.case-cta h2 { color:#fff; font-size:clamp(30px,4.4vw,54px); line-height:1.14; letter-spacing:-.015em; font-weight:300; max-width:24ch; margin:0 auto; text-wrap:balance; }
+.case-cta .ctas { justify-content:center; margin-top:40px; }
+.case-cta { padding-top:110px; padding-bottom:110px; }
 
 /* Interlude — mid-page CTA band (Slalom pattern). Placed after "At a glance".
    Full-width saturated ground (tone chosen per page), big centred question,
