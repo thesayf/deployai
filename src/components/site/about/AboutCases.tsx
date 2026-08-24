@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { SiteLink } from "@/components/site/SiteLink";
 
 /** 6 · M25 case-study result-card grid (navy, dark zone 2): three real builds.
  *  Front = screenshot slot + tag + client name; back (hover/focus/click) =
@@ -7,12 +8,18 @@ import { cn } from "@/lib/utils";
 type Case = {
   img: string;
   title: string;
+  /** object-position for the 16:9 crop (images differ in orientation). */
+  pos?: string;
+  /** case-study page; when set the card is a link, otherwise it flips only. */
+  href?: string;
   desc: React.ReactNode;
 };
 
 const cases: Case[] = [
   {
     img: "/site/case-jb.jpg",
+    pos: "50% 14%",
+    href: "/work/jb-luxe-detailing",
     title: "JB Luxe Detailing.",
     desc: (
       <>
@@ -33,6 +40,7 @@ const cases: Case[] = [
   },
   {
     img: "/site/case-centric.jpg",
+    pos: "50% 50%",
     title: "Centric.",
     desc: (
       <>
@@ -64,34 +72,53 @@ export function AboutCases() {
           A few of the things we have shipped, with the numbers the clients saw.
         </p>
         <div className="sc-row">
-          {cases.map((c, i) => (
-            <div
-              key={c.title}
-              className={cn("scard", flipped.has(i) && "flip")}
-              tabIndex={0}
-              onClick={() => toggle(i)}
-            >
-              <div className="sc-front">
-                <div className="sc-img">
-                  <img className="sc-shot" src={c.img} alt={c.title} />
+          {cases.map((c, i) => {
+            const inner = (
+              <>
+                <div className="sc-front">
+                  <div className="sc-img">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      className="sc-shot"
+                      src={c.img}
+                      alt={c.title}
+                      style={c.pos ? { objectPosition: c.pos } : undefined}
+                    />
+                  </div>
+                  <p className="sc-tag">Case study</p>
+                  <h3 className="sc-title">{c.title}</h3>
                 </div>
-                <p className="sc-tag">Case study</p>
-                <h3 className="sc-title">{c.title}</h3>
-              </div>
-              <div className="sc-back">
-                <div>
-                  <p
-                    className="sc-tag"
-                    style={{ color: "#292929", padding: 0, margin: "0 0 12px" }}
-                  >
-                    Case study
+                <div className="sc-back">
+                  <div>
+                    <p
+                      className="sc-tag"
+                      style={{ color: "#292929", padding: 0, margin: "0 0 12px" }}
+                    >
+                      Case study
+                    </p>
+                    <p className="sc-desc">{c.desc}</p>
+                  </div>
+                  <p className="sc-read">
+                    {c.href ? "Read the case study →" : "Case study coming soon"}
                   </p>
-                  <p className="sc-desc">{c.desc}</p>
                 </div>
-                <p className="sc-read">Read the case study</p>
+              </>
+            );
+            return c.href ? (
+              <SiteLink key={c.title} href={c.href} className="scard scard-link">
+                {inner}
+              </SiteLink>
+            ) : (
+              <div
+                key={c.title}
+                className={cn("scard", flipped.has(i) && "flip")}
+                tabIndex={0}
+                onClick={() => toggle(i)}
+              >
+                {inner}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <div className="ctas">See more of our work</div>
       </div>

@@ -1,0 +1,21 @@
+import { SiteLink } from "@/components/site/SiteLink";
+import type { ReactNode } from "react";
+
+/** Final CTA (royal) — could-we-do-this-for-you close. */
+export function CaseCTA({ heading }: { heading: ReactNode }) {
+  return (
+    <section className="bg-royal case-cta" id="final">
+      <div className="wrap">
+        <h2>{heading}</h2>
+        <div className="ctas">
+          <SiteLink className="pill p-white" href="/book">
+            Book a call
+          </SiteLink>
+          <SiteLink className="pill p-ghost" href="/fit-check">
+            Take the free AI Fit Check
+          </SiteLink>
+        </div>
+      </div>
+    </section>
+  );
+}

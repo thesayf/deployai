@@ -9,6 +9,7 @@ import { HowWeOperate } from "@/components/site/about/HowWeOperate";
 import { AnthropicRelationship } from "@/components/site/about/AnthropicRelationship";
 import { AboutCases } from "@/components/site/about/AboutCases";
 import { AboutHowWeWork } from "@/components/site/about/AboutHowWeWork";
+import { AboutMidCta } from "@/components/site/about/AboutMidCta";
 import { AboutFaq } from "@/components/site/about/AboutFaq";
 import { AboutBook } from "@/components/site/about/AboutBook";
 
@@ -46,6 +47,7 @@ export default function About() {
         <AnthropicRelationship />
         <AboutCases />
         <AboutHowWeWork />
+        <AboutMidCta />
         <AboutFaq />
         <AboutBook />
         <Footer />
