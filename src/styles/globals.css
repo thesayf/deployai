@@ -889,7 +889,7 @@ body {
 
 /* 5 · P09 results (field, three big numbers) */
 .case-results .wrap { text-align:center; }
-.case-results h2 { font-size:clamp(24px,3.4vw,34px); font-weight:300; max-width:20ch; margin:0 auto 48px; }
+.case-results h2 { font-size:clamp(24px,3.4vw,34px); line-height:1.15; font-weight:300; max-width:32ch; text-wrap:balance; margin:0 auto 48px; }
 .cr-row { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; max-width:960px; margin:0 auto; }
 @media(max-width:720px){ .cr-row { grid-template-columns:1fr; gap:40px; } }
 .cr-stat { text-align:center; }
@@ -908,3 +908,31 @@ body {
 .case-cta .wrap { text-align:center; }
 .case-cta h2 { color:#fff; font-size:clamp(26px,3.8vw,42px); font-weight:300; max-width:22ch; margin:0 auto; }
 .case-cta .ctas { justify-content:center; margin-top:34px; }
+
+/* Interlude — mid-page CTA band (Slalom pattern). Placed after "At a glance".
+   Full-width saturated ground (tone chosen per page), big centred question,
+   one outline pill whose border/text inherit the band's foreground colour so
+   the same markup reads correctly on dark (royal) and light (coral/lime/…) grounds. */
+.bg-blue { background:var(--blue); color:#fff; }
+.bg-blue h2 { color:#fff; }
+.bg-lime { background:var(--lime); color:var(--navy); }
+.bg-peri { background:var(--peri); color:var(--navy); }
+.case-interlude { padding:96px 0; }
+.case-interlude .wrap { text-align:center; max-width:1500px; }
+.case-interlude h2 { color:inherit; font-size:clamp(28px,4vw,52px); font-weight:300; line-height:1.12; letter-spacing:-.015em; max-width:none; text-wrap:balance; margin:0 auto; }
+.case-interlude .pill-arrow {
+  display:inline-flex; align-items:center; gap:11px; margin-top:36px;
+  padding:15px 32px; border-radius:50px;
+  border:1.5px solid currentColor; color:inherit; background:transparent;
+  font-family:var(--sans); font-size:16px; font-weight:700; line-height:1;
+  text-decoration:none; transition:background .2s, color .2s, border-color .2s;
+}
+.case-interlude .pill-arrow svg { width:18px; height:18px; }
+/* hover fills the pill and flips the text against the ground */
+.case-interlude.bg-blue .pill-arrow:hover { background:#fff; color:var(--blue); border-color:#fff; }
+.case-interlude.bg-royal .pill-arrow:hover { background:#fff; color:var(--royal); border-color:#fff; }
+.case-interlude.bg-coral .pill-arrow:hover,
+.case-interlude.bg-lime .pill-arrow:hover,
+.case-interlude.bg-lavender .pill-arrow:hover,
+.case-interlude.bg-peri .pill-arrow:hover { background:var(--navy); color:#fff; border-color:var(--navy); }
+@media(max-width:640px){ .case-interlude { padding:64px 0; } }

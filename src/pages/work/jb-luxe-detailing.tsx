@@ -3,6 +3,7 @@ import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { CaseHero } from "@/components/site/case/CaseHero";
 import { CaseGlance } from "@/components/site/case/CaseGlance";
+import { CaseInterlude } from "@/components/site/case/CaseInterlude";
 import { CaseStory } from "@/components/site/case/CaseStory";
 import { CaseProduct } from "@/components/site/case/CaseProduct";
 import { CaseResults } from "@/components/site/case/CaseResults";
@@ -45,6 +46,13 @@ export default function JbLuxeCase() {
           services={["AI booking assistant", "Customer CRM", "Booking automation"]}
           industry="Automotive · Mobile detailing"
           tech={["React", "Node.js", "GPT-4", "Stripe", "Google Calendar", "Twilio"]}
+        />
+
+        <CaseInterlude
+          tone="blue"
+          heading="Can you keep up when customers won't wait?"
+          label="Let's talk"
+          href="/book"
         />
 
         <CaseStory
