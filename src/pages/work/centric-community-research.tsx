@@ -22,8 +22,7 @@ export default function CentricCase() {
     <>
       <Head>
         <title>
-          Centric Community Research: proposals in days, not weeks | Deploy AI
-          Studio
+          Centric Community Research: tenders out in days | Deploy AI Studio
         </title>
         <meta
           name="description"
@@ -80,9 +79,9 @@ export default function CentricCase() {
                 </>
               ),
               body: [
-                "Dr Shaun Danquah runs Centric Community Research, and when he got in touch the subject was tenders. Every submission meant three to four weeks of manual assembly, a scramble that, in his words, gave him panic attacks. The organisation had the track record to go after serious funding. Getting a credible proposal out of the building inside a deadline was the problem.",
+                "Dr Shaun Danquah runs Centric Community Research, and when he got in touch the subject was tenders. Every submission meant three to four weeks of manual assembly that, in his words, gave him panic attacks. The organisation had the track record to go after serious funding. Getting a credible proposal out of the building inside a deadline was the problem.",
                 "Centric is a community-led research organisation: its research is designed and carried out with the communities being studied, not just about them, and it delivers that work alongside institutional partners, a university health-research institute among them. Its own shorthand for the mission is Moments to Movements. That model is the point of the organisation. It is also what a rushed proposal puts at risk.",
-                "The pressure showed in three places. Insight from more than fifty past community engagement projects was hard to reach when a bid needed it. Field teams called Shaun whenever they needed past research, every five minutes by his own count. And the community input that makes Centric's work credible was the hardest thing to fit inside a deadline. Three symptoms, one cause: the organisation knew far more than it could use.",
+                "The pressure showed in three places. Insight from more than fifty past community engagement projects was hard to reach when a bid needed it. Field teams called Shaun for past research, every five minutes by his own count. And the community input that makes Centric's work credible was the hardest thing to protect on a deadline. All three had the same cause: the organisation knew far more than it could use.",
               ],
             },
             {
@@ -94,8 +93,8 @@ export default function CentricCase() {
               ),
               body: [
                 "Before recommending anything, we followed a proposal being put together. The pattern repeated at every stage: the funder's call lands, the hunt begins through folders and inboxes for past reports, a budget is rebuilt from an old spreadsheet, an engagement plan is rewritten from memory of a bid that already contained it, and reviews are chased as the deadline closes. We logged where the days went, and how often someone stopped writing to go searching.",
-                "The conversations told us as much as the clock did. Field teams knew the material existed, often they had produced it themselves, but finding it meant asking around, and asking around ended at the CEO's desk. Community reviewers came into the process last, when the deadline was tightest and their comments were hardest to act on. The voice the bid depended on was the part the scramble squeezed hardest.",
-                "By the end, the three to four weeks had an anatomy. Most of the time went on retrieval and reassembly: finding what Centric already knew, and rebuilding documents that already existed in earlier bids. The work that actually persuades a funder, fitting the proposal to this community and this call, got whatever time was left. Any fix had to reverse that ratio, not just speed up the typing.",
+                "Field teams knew the material existed, often they had produced it themselves, but finding it meant asking around, and asking around ended at the CEO's desk. Community reviewers came into the process last, when the deadline was tightest and their comments were hardest to act on. The voice the bid depended on was the part the rush squeezed hardest.",
+                "By the end, the three to four weeks had an anatomy. Most of the time went on retrieval and reassembly: finding what Centric already knew, and rebuilding documents that existed in earlier bids. The work that actually persuades a funder, fitting the proposal to this community and this call, got whatever time was left. Any fix had to reverse that ratio.",
               ],
             },
             {
@@ -106,9 +105,9 @@ export default function CentricCase() {
                 </>
               ),
               body: [
-                "With the map, we scoped the engine. Off-the-shelf bid-writing tools were the quick option and fell first: they draft from generic templates, they carry nothing of Centric's projects or its communities, and a proposal that reads like anyone's cuts against the one thing that makes Centric worth funding. Plain document search fell next: files would surface faster, and the team would still assemble every proposal by hand, exactly as before.",
-                "Training a model from scratch was the long way round, months of data work before the first useful draft, for a team that needed relief now. What fitted was a language model working over Centric's own knowledge base, because the audit's finding held: the value was in the fifty-plus projects Centric had already run. It sat in reports and old bids where nobody could find it and nothing could reuse it.",
-                "So that is what we built. An AI-powered platform with the archive at its centre: a knowledge base that makes the fifty-plus projects searchable, a generator that drafts proposals from templates proven in past bids, and a collaborative workspace that keeps community reviewers inside the process rather than at the end of it. The build, start to live, took five weeks.",
+                "What to build came out of that anatomy. Off-the-shelf bid-writing tools were the quick option and fell first: they draft from generic templates, they carry nothing of Centric's projects or its communities, and a proposal that reads like anyone's cuts against the one thing that makes Centric worth funding. Plain document search fell next: files would surface faster, and the team would still assemble every proposal by hand, exactly as before.",
+                "Training a model from scratch was the long way round, months of preparation before the first useful draft, for a team that needed relief now. What fitted was a language model working over Centric's own material, because the finding held: the value was in the fifty-plus projects Centric had already run. It sat in reports and old bids where nobody could find it and nothing could reuse it.",
+                "So that is what we built. A platform with the archive at its centre: a knowledge base that makes those projects searchable, a generator that drafts proposals from templates proven in past bids, and a collaborative workspace that keeps community reviewers inside the process rather than at the end of it. The build, start to live, took five weeks.",
               ],
             },
             {
@@ -121,7 +120,7 @@ export default function CentricCase() {
               body: [
                 "A bid now starts in the Partnership Dashboard, the searchable knowledge base built from Centric's past work. Type what you need, youth engagement in Birmingham, say, and the relevant projects come back as cards: who led them, their status, how strong the partner relationship is, and an ethics flag showing community-led, needs review, or high risk. Field teams answer their own questions now.",
                 "The Proposal Generator turns that past work into a draft. Four steps: choose a template, each listed with its funding range and a match score for this bid, import data from a past project, add the project details, name the collaborators. The model drafts the rest: executive summary, an engagement plan adapted from projects that already worked, budget breakdown, impact metrics, evaluation framework, risk assessment. From first step to full draft is about fifteen minutes.",
-                "The draft then opens in Collaborative Review, where the days now go, and where they belong. Community and institutional partners work in the same live document: highlights and comment threads on the text itself, the budget grid alongside, an ethics checklist covering consent and data cleared before anything ships. A tender that took three or four weeks goes out in days, and the community has been in it from the first draft, not shown a finished document at the last minute.",
+                "The draft then opens in Collaborative Review, where the days now go, and where they belong. Community and institutional partners work in the same live document: highlights and comment threads on the text itself, the budget grid alongside, an ethics checklist covering consent and data, cleared before submission. A tender that took three to four weeks goes out in days, and the community has been in it from the first draft.",
               ],
             },
             {
@@ -132,9 +131,9 @@ export default function CentricCase() {
                 </>
               ),
               body: [
-                "A system that writes first drafts earns trust by being read, so for the first submissions the platform worked on probation. Every generated draft was checked against what the team would have produced themselves. What the draft got right meant one less stage done by hand next time. What it got wrong went back into the templates and the knowledge base, so the same miss could not happen twice.",
-                "Under that sits the discipline any generative system needs in production. A reference set of past proposals that every template change is scored against before it ships. A log of every generation, with the project data and template that produced it, so when a paragraph reads oddly the team can see exactly what fed it. Quality stays a measurement, not an impression.",
-                "The strongest check was designed in, not bolted on. No proposal leaves the platform without passing Collaborative Review, community and institutional reviewers together, with the ethics checklist cleared. That gate is what kept the speed honest: every proposal has gone out with community input built in, which is what the hundred per cent means. Edge cases, a funder's unusual format, a budget outside a template's range, were caught at that gate and folded back into the templates, so the next bid inherited the fix.",
+                "A system that writes first drafts earns trust by being read, so for the first submissions the platform worked on probation. Every generated draft was checked against what the team would have produced themselves. What the draft got right meant one less stage done by hand next time. What it got wrong went back into the templates and the knowledge base.",
+                "What stayed after probation is the discipline any generative system needs in production. A reference set of past proposals that every template change is scored against before it ships. A log of every generation, with the project data and template that produced it, so when a paragraph reads oddly the team can see exactly what fed it. Quality stays a measurement, not an impression.",
+                "The strongest check is the one a bid cannot go around: no proposal leaves the platform without passing Collaborative Review, community and institutional reviewers together, with the ethics checklist cleared. That gate is what kept the speed honest: every proposal has gone out with community input built in, which is what the hundred per cent means. Edge cases, a funder's unusual format, a budget outside a template's range, were caught at that gate and folded into the templates, so the next bid inherited the fix.",
               ],
             },
           ]}
@@ -143,7 +142,8 @@ export default function CentricCase() {
         <CaseProduct
           heading={
             <>
-              Three surfaces, one <em className="accent">bid</em>.
+              How a tender gets out of the{" "}
+              <em className="accent">building</em>.
             </>
           }
           intro="A tender starts in the knowledge base, takes shape in the generator, and leaves through review."
@@ -152,7 +152,7 @@ export default function CentricCase() {
               label: "Knowledge base",
               desc: "Centric's past work, searchable at last: more than fifty projects and the partners behind them. Search by theme or place, get back project cards with lead and status, relationship strength, and an ethics flag before a bid leans on the work.",
               bullets: [
-                "Fifty-plus past projects and partners, searchable by theme or place",
+                "Projects that lived in folders and inboxes, one search away",
                 "Each project card carries its lead, status, and relationship strength",
                 "Ethics flags up front: community-led, needs review, or high risk",
                 "Field teams find research themselves, without calling the CEO",
@@ -170,10 +170,10 @@ export default function CentricCase() {
             },
             {
               label: "Proposals",
-              desc: "Four steps stand between a funding call and a working draft: pick a template with its funding range and match score, import a past project, add the details, name the collaborators. The model drafts the rest in about fifteen minutes.",
+              desc: "Four steps stand between a funding call and a working draft: pick a template with its funding range and match score, import a past project, add the details, name the collaborators. The model writes the rest in about fifteen minutes.",
               bullets: [
                 "Templates carry funding ranges and an AI match score per bid",
-                "Engagement plans adapt from past projects, not from a blank page",
+                "The engagement plan comes from a bid that worked, adapted to this one",
                 "Summary, budget, impact metrics, evaluation framework and risks, drafted together",
                 "£150K+ of proposals generated, with budgets allocated automatically",
               ],
@@ -190,12 +190,12 @@ export default function CentricCase() {
             },
             {
               label: "Review",
-              desc: "The live workspace where a draft becomes a submission. Community and institutional partners read the same document at the same time, comment in threads on the text itself, settle the budget grid, and clear the ethics checklist before anything ships.",
+              desc: "The live workspace where a draft becomes a submission. Community and institutional partners read the same document at the same time, comment in threads pinned to the text, settle the budget grid, and clear the ethics checklist before anything ships.",
               bullets: [
                 "Community and institutional reviewers in the same draft, live",
-                "Inline highlights and comment threads sit on the text itself",
-                "An ethics checklist gates submission: consent, data, items still pending",
-                "Every proposal ships with community input: 100% voice integration",
+                "Comment threads and highlights sit inline on the draft",
+                "An ethics checklist gates submission until consent and data are cleared",
+                "Community input on every proposal that goes out: 100% voice integration",
               ],
               railName: "Collaborative Review",
               railDesc:

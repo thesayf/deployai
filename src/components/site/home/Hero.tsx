@@ -1,10 +1,22 @@
 import { SiteLink } from "../SiteLink";
 
-/** 1 · P01 motion hero (navy). Photo + left-heavy scrim; white text. */
+/** 1 · P01 motion hero (navy). Ambient half-speed video (photo poster as the
+ *  reduced-motion / slow-connection fallback) + left-heavy scrim; white text. */
 export function Hero() {
   return (
     <section className="hero">
       <div className="hero-photo" aria-hidden="true" />
+      <video
+        className="hero-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        poster="/site/hero-home.jpg"
+        aria-hidden="true"
+      >
+        <source src="/site/hero-home.mp4" type="video/mp4" />
+      </video>
       <div className="hero-scrim" aria-hidden="true" />
       <div className="wrap inner">
         <h1>
