@@ -31,6 +31,7 @@ const cases: Case[] = [
   {
     img: "/site/case-showcase.jpg",
     title: "Showcase Cinemas.",
+    href: "/work/showcase-cinemas",
     desc: (
       <>
         A scheduling platform for cinema operations. Scheduling time cut by{" "}
