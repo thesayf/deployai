@@ -55,7 +55,7 @@ const steps: Step[] = [
 
 export function Ladder() {
   return (
-    <section className="ladder-head">
+    <section className="ladder-head" id="where-to-start">
       <div className="wrap">
         <h2>
           How to <em>start</em>.

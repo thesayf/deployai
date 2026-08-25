@@ -51,11 +51,11 @@ export default function DataResidency() {
       <div className="site">
         <Navbar />
         <ResidencyHero />
-        <CredBar label="Certified across the Claude stack" badges={credBadges} />
         <JumpNav
           sections={jumpSections}
           cta={{ label: "Book a call", href: "#final" }}
         />
+        <CredBar label="Certified across the Claude stack" badges={credBadges} />
         <ResidencyControl />
         <Commitments />
         <AccessPosture />

@@ -9,9 +9,9 @@ export function HonestPart() {
           and the diagnostic still did its job.
         </p>
         <p>
-          The fee is not credited against later work. That keeps the recommendation
-          honest: we have no reason to push the biggest build, and if a workflow is not
-          worth automating yet, the report says so.
+          Go ahead with the build within 90 days and the diagnostic fee is credited
+          against it. And if a workflow is not worth automating yet, the report says
+          so.
         </p>
       </div>
     </section>

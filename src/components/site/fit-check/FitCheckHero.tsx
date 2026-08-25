@@ -7,7 +7,6 @@ export function FitCheckHero() {
       <div className="ihero-photo" aria-hidden="true" />
       <div className="ihero-scrim" aria-hidden="true" />
       <div className="wrap">
-        <div className="eyebrow">Free check</div>
         <h1>
           Ten minutes to a scored verdict on where AI <em>fits.</em>
         </h1>

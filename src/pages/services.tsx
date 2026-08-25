@@ -4,11 +4,11 @@ import { Footer } from "@/components/site/Footer";
 import { CTABand } from "@/components/site/CTABand";
 import { CredBar } from "@/components/site/CredBar";
 import { CalendlyInline } from "@/components/site/CalendlyInline";
+import { JumpNav } from "@/components/site/JumpNav";
 import { ServicesHero } from "@/components/site/services/ServicesHero";
 import { WhyStall } from "@/components/site/services/WhyStall";
-import { ServiceGrid } from "@/components/site/services/ServiceGrid";
-import { Breather } from "@/components/site/services/Breather";
-import { Ladder } from "@/components/site/services/Ladder";
+import { ServiceCatalog } from "@/components/site/services/ServiceCatalog";
+import { EvidenceLedger } from "@/components/site/services/EvidenceLedger";
 import { MethodStatement } from "@/components/site/services/MethodStatement";
 import { Segment } from "@/components/site/services/Segment";
 import { ServicesFaq } from "@/components/site/services/ServicesFaq";
@@ -27,6 +27,12 @@ const credBadges = [
   { alt: "Claude Code Partner", src: "/site/badges/partner-logo.png" },
 ];
 
+const jumpSections = [
+  { label: "Services", anchor: "#services" },
+  { label: "Evidence", anchor: "#evidence" },
+  { label: "FAQ", anchor: "#faq" },
+];
+
 export default function Services() {
   return (
     <>
@@ -40,11 +46,11 @@ export default function Services() {
       <div className="site">
         <Navbar />
         <ServicesHero />
+        <JumpNav sections={jumpSections} cta={{ label: "Let's talk", href: "#final" }} />
         <CredBar label="Certified across the Claude stack" badges={credBadges} />
         <WhyStall />
-        <ServiceGrid />
-        <Breather />
-        <Ladder />
+        <ServiceCatalog />
+        <EvidenceLedger />
         <MethodStatement />
         <Segment />
         <ServicesFaq />

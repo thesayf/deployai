@@ -50,8 +50,8 @@ export default function DeploymentDiagnostic() {
       <div className="site">
         <Navbar />
         <DiagnosticHero />
-        <CredBar label="Certified across the Claude stack" badges={credBadges} />
         <JumpNav sections={jumpSections} cta={{ label: "Book a call", href: "#final" }} />
+        <CredBar label="Certified across the Claude stack" badges={credBadges} />
         <OnRamp />
         <WhatItIs />
         <Breather />

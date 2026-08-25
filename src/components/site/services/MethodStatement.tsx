@@ -9,11 +9,11 @@ export function MethodStatement() {
           The constraint is <em>execution</em>.
         </h2>
         <p className="body">
-          Organizations understand the potential of AI. AI systems must integrate with
-          existing infrastructure, operate within governance frameworks, and handle
-          complex processes at scale. We move beyond discovery and pilots to systems that
-          operate in production. Our job doesn&rsquo;t end with deployment: we monitor
-          adoption, optimize performance, and expand successful use cases.
+          Organisations understand the potential. Production is where plans meet
+          infrastructure, governance, and real processes. We build for production from
+          day one: every system ships with evaluations, monitoring, and cost controls.
+          And the job continues after go-live: we watch adoption, measure quality,
+          control spend, and expand what works.
         </p>
         <SiteLink className="pill p-white" href="/deployment-diagnostic">
           See how the Diagnostic works

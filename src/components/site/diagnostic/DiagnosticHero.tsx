@@ -7,7 +7,6 @@ export function DiagnosticHero() {
       <div className="ihero-photo" aria-hidden="true" />
       <div className="ihero-scrim" aria-hidden="true" />
       <div className="wrap">
-        <div className="eyebrow">AI ambition is high. Execution is lagging.</div>
         <h1>
           We find the two to three places where AI creates the fastest ROI, and turn
           ambition into <em>measurable outcomes</em>.
