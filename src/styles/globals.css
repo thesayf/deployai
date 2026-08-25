@@ -769,9 +769,12 @@ body {
    ------------------------------------------------------------ */
 .facet { position:relative; overflow:hidden; isolation:isolate; }
 .facet > .wrap { position:relative; z-index:1; }
+/* Produced artwork layer (the Slalom mechanism): faceted-chevron SVG with
+   soft-blurred plane edges + corner light, drawn in our tones. One asset,
+   composes onto any dark band. */
 .facet::before {
   content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-  background:radial-gradient(1600px 1100px at -8% -18%, rgba(126,156,255,.22), rgba(126,156,255,.06) 30%, transparent 56%);
+  background:url('/site/facet-art.svg') center top / cover no-repeat;
 }
 
 /* ============================================================
@@ -795,18 +798,22 @@ body {
 .case-hero .ch-lab { font-size:16px; color:#fff; }
 
 /* 2 · "At a glance" band (navy, Vision/Impact/Services/Industry+Tech cols) */
-.case-glance { padding-top:60px; padding-bottom:64px; }
-.case-glance .cg-h { color:#fff; font-size:clamp(30px,4.4vw,46px); font-weight:300; margin-bottom:46px; }
-.cg-cols { display:grid; grid-template-columns:repeat(4,1fr); gap:34px; }
-@media(max-width:900px){ .cg-cols { grid-template-columns:repeat(2,1fr); gap:38px 34px; } }
+/* Measured to the Slalom customer-story glance @1440: band 692 airy, heading
+   fully serif-italic 48/60 mb32 starting 96 from the top, four EQUAL columns
+   at 16px gaps, labels 16/24 ls2 with 16 below, body 20/32 pure white. */
+.case-glance { padding-top:96px; padding-bottom:120px; }
+.case-glance .cg-h { color:#fff; font-family:var(--serif); font-style:italic; font-weight:400; font-size:48px; line-height:60px; letter-spacing:0; margin-bottom:32px; }
+.cg-cols { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+@media(max-width:900px){ .cg-cols { grid-template-columns:repeat(2,1fr); gap:38px 24px; } }
 @media(max-width:520px){ .cg-cols { grid-template-columns:1fr; } }
-.cg-col h3 { font-size:16px; letter-spacing:.03em; text-transform:uppercase; color:#fff; font-weight:700; margin:0 0 18px; }
-.cg-col h3.cg-mt { margin-top:30px; }
-.cg-col p { font-size:19px; line-height:30px; color:rgba(255,255,255,.86); margin:0; }
+.cg-col { padding-right:16px; }
+.cg-col h3 { font-size:16px; line-height:24px; letter-spacing:2px; text-transform:uppercase; color:#fff; font-weight:700; margin:0 0 16px; }
+.cg-col h3.cg-mt { margin-top:32px; }
+.cg-col p { font-size:20px; line-height:32px; color:#fff; margin:0; }
 .cg-chips { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; align-items:flex-start; gap:10px; }
-.cg-chips li { font-size:16px; font-weight:500; color:rgba(255,255,255,.92); background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.16); border-radius:8px; padding:8px 15px; }
+.cg-chips li { font-size:16px; font-weight:500; color:#fff; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.16); border-radius:8px; padding:8px 15px; }
 .cg-list { list-style:none; margin:0; padding:0; }
-.cg-list li { font-size:18px; line-height:31px; color:rgba(255,255,255,.86); padding-left:18px; position:relative; }
+.cg-list li { font-size:18px; line-height:30px; color:#fff; padding-left:18px; position:relative; }
 .cg-list li::before { content:"·"; position:absolute; left:3px; color:rgba(255,255,255,.5); font-weight:700; }
 
 /* 3 · M22 story (white, narrow reading column, sentence sub-heads) */

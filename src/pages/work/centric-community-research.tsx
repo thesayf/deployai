@@ -60,7 +60,7 @@ export default function CentricCase() {
 
         <CaseInterlude
           tone="lime"
-          heading="How much of what your organisation knows can anyone actually find?"
+          heading="Are the answers there when your teams need them?"
           label="Let's talk"
           href="/book"
         />

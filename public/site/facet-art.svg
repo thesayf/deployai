@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 820" preserveAspectRatio="xMidYMid slice">
+  <!-- Facet band artwork — large planes whose vertices all sit OFF-canvas, so
+       only long soft edges cross the band (sensed geometry, never a drawn
+       chevron). Transparent ground; composes onto any dark section. -->
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7E9CFF" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#7E9CFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#6DA1FD" stop-opacity=".10"/>
+      <stop offset="1" stop-color="#6DA1FD" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="soft" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="softer" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="26"/></filter>
+  </defs>
+  <g filter="url(#soft)">
+    <polygon points="-200,-200 1640,-200 1640,120 -200,620" fill="url(#g1)"/>
+    <polygon points="-200,540 1640,40 1640,150 -200,650" fill="#7E9CFF" opacity=".05"/>
+    <polygon points="1640,1020 -200,1020 -200,860 1640,380" fill="url(#g2)"/>
+  </g>
+  <ellipse cx="-60" cy="-100" rx="620" ry="400" fill="#7E9CFF" opacity=".10" filter="url(#softer)"/>
+</svg>
