@@ -791,6 +791,12 @@ body {
 .case-hero .ch-lockup { display:flex; align-items:center; gap:12px; margin-bottom:22px; }
 .case-hero .ch-by { font-size:13px; letter-spacing:.03em; color:var(--peri); }
 .case-hero .ch-logo { height:28px; width:auto; }
+/* case heroes flow INTO the navy glance band: a light navy wash cools the
+   photo into the brand world (colours still seep through), and the bottom
+   dissolves to the band's exact navy so the seam melts (Slalom transition). */
+.case-hero .ihero-scrim { background:
+  linear-gradient(180deg, rgba(0,10,37,.30) 0%, rgba(0,10,37,.30) 52%, rgba(0,10,37,.72) 84%, #000A25 100%),
+  linear-gradient(100deg, rgba(0,10,37,.92) 40%, rgba(0,10,37,.6) 62%, rgba(0,10,37,.2) 82%, rgba(0,10,37,.06) 100%); }
 .case-hero .eyebrow { color:var(--lime); margin-bottom:16px; }
 .case-hero h1 { color:#fff; max-width:15ch; font-size:clamp(34px,6vw,62px); line-height:1.03; font-weight:300; }
 .case-hero .ch-metric { display:flex; align-items:baseline; gap:12px; margin-top:28px; }
