@@ -43,6 +43,7 @@ const cases: Case[] = [
     img: "/site/case-centric.jpg",
     pos: "50% 50%",
     title: "Centric.",
+    href: "/work/centric-community-research",
     desc: (
       <>
         A research and proposal platform. Proposals that once took weeks now take{" "}

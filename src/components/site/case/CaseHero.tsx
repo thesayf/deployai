@@ -5,11 +5,14 @@ import type { ReactNode } from "react";
 export function CaseHero({
   title,
   photo,
+  photoPos,
   logo,
   metric,
 }: {
   title: ReactNode;
   photo: string;
+  /** background-position for the photo, e.g. "50% 12%" to keep faces in frame */
+  photoPos?: string;
   logo: string;
   metric: { value: string; label: string };
 }) {
@@ -18,7 +21,10 @@ export function CaseHero({
       <div
         className="ihero-photo"
         aria-hidden="true"
-        style={{ backgroundImage: `url('${photo}')` }}
+        style={{
+          backgroundImage: `url('${photo}')`,
+          ...(photoPos ? { backgroundPosition: photoPos } : {}),
+        }}
       />
       <div className="ihero-scrim" aria-hidden="true" />
       <div className="wrap">
