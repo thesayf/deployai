@@ -9,7 +9,7 @@ export function BookCalendar() {
           Book a <em className="accent">meeting</em>.
         </h2>
         <div className="cal-ph">
-          <CalendlyInline url="https://calendly.com/hello-deployai/introduction-to-consult-kit-clone?hide_event_type_details=1" />
+          <CalendlyInline url="https://calendly.com/hello-deployai/your-assessment-results?hide_event_type_details=1" />
         </div>
         <p className="lead">
           Your meeting confirmation link is sent to your inbox instantly.
