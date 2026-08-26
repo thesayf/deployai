@@ -1,0 +1,15 @@
+"use strict";(()=>{var e={};e.id=1560,e.ids=[1560],e.modules={2885:e=>{e.exports=require("@supabase/supabase-js")},145:e=>{e.exports=require("next/dist/compiled/next-server/pages-api.runtime.prod.js")},6249:(e,t)=>{Object.defineProperty(t,"l",{enumerable:!0,get:function(){return function e(t,r){return r in t?t[r]:"then"in t&&"function"==typeof t.then?t.then(t=>e(t,r)):"function"==typeof t&&"default"===r?t:void 0}}})},567:(e,t,r)=>{r.r(t),r.d(t,{config:()=>d,default:()=>c,routeModule:()=>l});var s={};r.r(s),r.d(s,{default:()=>u});var a=r(1802),o=r(7153),i=r(6249),n=r(3845);async function u(e,t){if("GET"!==e.method)return t.status(405).json({status:"error",error:"Method not allowed"});try{let r;let{id:s}=e.query;if(!s||"string"!=typeof s)return t.status(400).json({status:"error",error:"Invalid quiz ID"});let a=(0,n.p)(),{data:o,error:i}=await a.from("quiz_responses").select(`
+        id,
+        completed_at,
+        ai_reports (
+          id,
+          report_status,
+          access_token,
+          problem_analysis,
+          tool_research,
+          curated_tools,
+          final_report,
+          created_at,
+          updated_at
+        )
+      `).eq("id",s).single();if(i||!o)return t.status(404).json({status:"error",error:"Quiz not found"});if(!o.completed_at)return t.status(200).json({status:"pending"});let u=o.ai_reports?.[0];if(!u)return t.status(200).json({status:"completed",message:"Quiz completed but report not yet generated"});switch(u.report_status){case"generating":default:r="processing";break;case"completed":r="completed";break;case"failed":r="error"}let c={status:r};"completed"===r&&u.access_token?(c.reportId=u.id,c.accessToken=u.access_token):"error"===r&&(c.error="Report generation failed. Please try again."),t.status(200).json(c)}catch(e){console.error("Error checking quiz status:",e),t.status(500).json({status:"error",error:"Failed to check quiz status"})}}let c=(0,i.l)(s,"default"),d=(0,i.l)(s,"config"),l=new a.PagesAPIRouteModule({definition:{kind:o.x.PAGES_API,page:"/api/quiz/status/[id]",pathname:"/api/quiz/status/[id]",bundlePath:"",filename:""},userland:s})},3845:(e,t,r)=>{r.d(t,{O:()=>n,p:()=>u});var s=r(2885);let a="https://nwddsjghbyrerhhnciuk.supabase.co",o="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53ZGRzamdoYnlyZXJoaG5jaXVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM0NzIxMjMsImV4cCI6MjA2OTA0ODEyM30.8aXGuUq7occc15txLZJqQEYiLTKZNJ2Vsqb-oKh-g_U",i=process.env.SUPABASE_SERVICE_ROLE_KEY;if(!a||!o)throw Error("Missing Supabase environment variables");let n=(0,s.createClient)(a,o),u=()=>{if(!i)throw Error("Missing SUPABASE_SERVICE_ROLE_KEY environment variable");return(0,s.createClient)(a,i,{auth:{autoRefreshToken:!1,persistSession:!1},db:{schema:"public"}})}},7153:(e,t)=>{var r;Object.defineProperty(t,"x",{enumerable:!0,get:function(){return r}}),function(e){e.PAGES="PAGES",e.PAGES_API="PAGES_API",e.APP_PAGE="APP_PAGE",e.APP_ROUTE="APP_ROUTE"}(r||(r={}))},1802:(e,t,r)=>{e.exports=r(145)}};var t=require("../../../../webpack-api-runtime.js");t.C(e);var r=t(t.s=567);module.exports=r})();
