@@ -5,8 +5,8 @@ const cards = [
     p: "You have read the case studies. None of them are your business. The ROI is not clear, the scope feels enormous, and the last thing you need is a six-month strategy engagement before a single line of code gets written.",
   },
   {
-    h: "“We bought the seats. Almost nobody uses them.”",
-    p: "The licence was never the product. Working workflows are. AI licences get assigned in a burst of enthusiasm and then sit idle.",
+    h: "“We keep paying more for AI. Is it actually working?”",
+    p: "The tools are in real use and the bills climb every month. What is missing is a straight answer on impact: whether it is paying off, and where the money is going.",
   },
   {
     h: "“Our pilot never made it to production.”",
