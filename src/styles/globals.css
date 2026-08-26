@@ -1022,3 +1022,18 @@ body {
 .legal a { color: #0c62fb; text-decoration: underline; }
 .legal .legal-back { margin-top: 40px; }
 .foot-bottom .foot-link { display: inline; padding: 0; color: inherit; text-decoration: underline; }
+
+/* P04 journey — mobile snake. Desktop keeps the wide SVG; under 720px the
+   vertical S-route swaps in (the wide canvas clips + shrinks text on phones). */
+.journey-m { display: none; }
+.jm-stage { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; }
+.jm-lbl { font-family: var(--sans); font-size: 13.5px; font-weight: 700; fill: #fff; }
+.jm-lbl.jm-tight { font-size: 12.5px; }
+.jm-sub { font-family: var(--sans); font-size: 11.5px; fill: var(--peri); }
+.jm-gate { font-family: var(--sans); font-size: 10px; font-weight: 700; fill: var(--lime); letter-spacing: 1.2px; text-transform: uppercase; }
+.jm-exit { font-family: var(--sans); font-size: 11px; font-style: italic; fill: #8fa0bd; }
+@media (max-width: 719px) {
+  .journey { display: none; }
+  .journey-m { display: block; margin-top: 40px; }
+  .journey-m svg { width: 100%; max-width: 400px; height: auto; display: block; margin: 0 auto; }
+}
