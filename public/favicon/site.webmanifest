@@ -1,5 +1,5 @@
 {
-  "name": "DeployAIStudio",
+  "name": "Deploy AI Studio",
   "short_name": "DeployAI",
   "icons": [
     {
@@ -15,7 +15,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#000A25",
+  "background_color": "#000A25",
   "display": "standalone"
 }

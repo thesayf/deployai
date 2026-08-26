@@ -166,7 +166,7 @@ export const CentricDashboardMockup = () => {
                   
                   {/* Contact & Timeline Row */}
                   <div className="mb-0.5">
-                    <p className="text-[7px] text-zinc-500">Led by Sarah Johnson • Active until Dec 2025</p>
+                    <p className="text-[7px] text-zinc-500">Led by Amara Osei • Active until Dec 2026</p>
                   </div>
                   
                   {/* Bottom Row: Relationship Badge + View Button */}
@@ -222,7 +222,7 @@ export const CentricDashboardMockup = () => {
                   
                   {/* Contact & Timeline Row */}
                   <div className="mb-0.5">
-                    <p className="text-[7px] text-zinc-500">Led by Marcus Williams • Active until Mar 2025</p>
+                    <p className="text-[7px] text-zinc-500">Led by Marcus Williams • Active until Mar 2027</p>
                   </div>
                   
                   {/* Bottom Row: Relationship Badge + View Button */}

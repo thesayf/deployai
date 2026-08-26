@@ -10,7 +10,7 @@ export const CentricProposalMockup = () => {
   const projectTitle = "South London Youth Digital Skills Program";
   const projectLocation = "Lambeth";
   const isImporting = false;
-  const invitedPartners = ["sarah.johnson@community.org", "dr.patel@research.uk"];
+  const invitedPartners = ["a.osei@community.org", "dr.patel@research.uk"];
   
   return (
     <ScreenDemo>
@@ -267,7 +267,7 @@ export const CentricProposalMockup = () => {
                       <label className="text-[6px] text-zinc-600 block">Start Date</label>
                       <input 
                         type="text"
-                        value="01/09/24"
+                        value="01/09/26"
                         className="w-full px-0.5 py-0 text-[6px] border border-zinc-300 rounded bg-white"
                         readOnly
                       />
@@ -276,7 +276,7 @@ export const CentricProposalMockup = () => {
                       <label className="text-[6px] text-zinc-600 block">End Date</label>
                       <input 
                         type="text"
-                        value="01/03/26"
+                        value="01/03/28"
                         className="w-full px-0.5 py-0 text-[6px] border border-zinc-300 rounded bg-white"
                         readOnly
                       />

@@ -29,7 +29,6 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.525.0",
     "next": "14.2.1",
-    "next-mdx-remote": "^5.0.0",
     "openai": "^5.12.2",
     "prettier": "^3.2.5",
     "react": "^18",
