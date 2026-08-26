@@ -1,4 +1,5 @@
 import { Seo } from "@/components/site/Seo";
+import { BreadcrumbJsonLd } from "@/components/site/BreadcrumbJsonLd";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { CaseNext } from "@/components/site/case/CaseNext";
@@ -27,6 +28,7 @@ export default function ShowcaseCase() {
         path="/work/showcase-cinemas"
         ogImage="/site/og-case-showcase.jpg"
       />
+      <BreadcrumbJsonLd name="Showcase Cinemas" path="/work/showcase-cinemas" />
       <div className="site">
         <Navbar />
         <main id="main">

@@ -1,4 +1,5 @@
 import { Seo } from "@/components/site/Seo";
+import { BreadcrumbJsonLd } from "@/components/site/BreadcrumbJsonLd";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { CaseNext } from "@/components/site/case/CaseNext";
@@ -23,6 +24,7 @@ export default function JbLuxeCase() {
         path="/work/jb-luxe-detailing"
         ogImage="/site/og-case-jb.jpg"
       />
+      <BreadcrumbJsonLd name="JB Luxe Detailing" path="/work/jb-luxe-detailing" />
       <div className="site">
         <Navbar />
         <main id="main">

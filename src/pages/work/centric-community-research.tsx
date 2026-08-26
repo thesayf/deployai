@@ -1,4 +1,5 @@
 import { Seo } from "@/components/site/Seo";
+import { BreadcrumbJsonLd } from "@/components/site/BreadcrumbJsonLd";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { CaseNext } from "@/components/site/case/CaseNext";
@@ -27,6 +28,7 @@ export default function CentricCase() {
         path="/work/centric-community-research"
         ogImage="/site/og-case-centric.jpg"
       />
+      <BreadcrumbJsonLd name="Centric Community Research" path="/work/centric-community-research" />
       <div className="site">
         <Navbar />
         <main id="main">
