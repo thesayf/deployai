@@ -43,7 +43,9 @@ export function Accordion({ items }: AccordionProps) {
               <span className="acc-title">{item.q}</span>
             </button>
             <div className="acc-panel">
-              <p>{item.a}</p>
+              <div className="acc-clip">
+                <p>{item.a}</p>
+              </div>
             </div>
           </div>
         );
