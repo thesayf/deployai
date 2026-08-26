@@ -33,7 +33,7 @@ export const footerColumns: { title: string; links: NavItem[] }[] = [
     links: [
       { label: "Data Residency", href: "/data-residency" },
       { label: "Contact", href: "/book" },
-      { label: "LinkedIn", href: "#" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/rudi-hinds-3b25b6137/" },
     ],
   },
 ];

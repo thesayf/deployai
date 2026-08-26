@@ -31,6 +31,7 @@ export default function CentricCase() {
         <Navbar />
 
         <CaseHero
+          client="Centric Community Research"
           title={
             <>
               Tenders out in days, community in the{" "}

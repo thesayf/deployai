@@ -75,7 +75,7 @@ export function JourneyPath() {
             <text x="845" y="188" className="jlabel b">Connect</text>
             <text x="845" y="258" className="jlabel b">Automate</text>
             <text x="1076" y="100" className="jstage" fill="#C7B9FF">04 · Improve</text>
-            <text x="1076" y="123" className="jlabel b">The Advisory Retainer</text>
+            <text x="1076" y="123" className="jlabel b">Ongoing operation</text>
             <text x="1076" y="143" className="jsub">It keeps paying off.</text>
             <text x="250" y="252" textAnchor="middle" className="jgate">Your call</text>
             <text x="560" y="252" textAnchor="middle" className="jgate">Your call</text>

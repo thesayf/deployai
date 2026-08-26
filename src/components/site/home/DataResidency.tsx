@@ -48,7 +48,8 @@ export function DataResidency() {
 
         <div className="gov-frame">
           <div className="gov-frame-label">
-            Trust &amp; Audit <span>· SOC 2 · ISO 27001 / 42001 · NIST AI RMF</span>
+            Trust &amp; Audit{" "}
+            <span>· aligned to SOC 2 · ISO 27001 / 42001 · NIST AI RMF</span>
           </div>
 
           <div className="gov-outcome">

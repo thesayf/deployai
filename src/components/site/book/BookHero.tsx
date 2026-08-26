@@ -9,13 +9,12 @@ export function BookHero() {
       <div className="ihero-scrim" aria-hidden="true" />
       <div className="wrap">
         <h1>
-          If AI is the <em className="accent">wrong</em> answer,
-          <br />
-          we&rsquo;ll tell you.
+          Thirty minutes. No pitch.
+          <br />A straight <em className="accent">answer</em>.
         </h1>
         <p className="sub">
-          The engineer on your call is the one who&rsquo;d build it. That
-          changes everything downstream.
+          You&rsquo;ll be talking to people who do this every day. That changes
+          everything downstream.
         </p>
         <div className="ctas">
           <SiteLink className="pill p-white" href="#book-calendar">

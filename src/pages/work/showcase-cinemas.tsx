@@ -33,6 +33,7 @@ export default function ShowcaseCase() {
         {/* TEMP hero photo: foyer shot standing in until the licensed
             auditorium image is sourced. */}
         <CaseHero
+          client="Showcase Cinemas"
           title={
             <>
               Forty hours of scheduling, down to{" "}

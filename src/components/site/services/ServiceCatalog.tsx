@@ -94,7 +94,7 @@ const services: Service[] = [
     line: "Know exactly where you stand, and what to do first.",
     desc: "For any organisation that wants AI but isn't sure where to begin.",
     bullets: [
-      "Get a clear score across the six dimensions that matter.",
+      "Get a clear score across the dimensions that matter.",
       "See your gaps ranked by the impact of fixing them.",
       "Compare yourself against peers who have done this already.",
       "Leave with a prioritised roadmap your leadership can act on.",

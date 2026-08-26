@@ -13,8 +13,8 @@ export function VerdictBands() {
           one is a next move.
         </p>
         <p className="lead">
-          Nearly half of companies misjudge how ready they are, over or under, and
-          that is what stalls the work. Ten minutes settles it.
+          It is easy to misjudge how ready you are, over or under, and that is
+          what stalls the work. Ten minutes settles it.
         </p>
         <div className="offergrid">
           <div className="oc">

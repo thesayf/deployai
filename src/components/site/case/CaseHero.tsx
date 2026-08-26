@@ -7,6 +7,7 @@ export function CaseHero({
   photo,
   photoPos,
   logo,
+  client,
   metric,
 }: {
   title: ReactNode;
@@ -14,6 +15,8 @@ export function CaseHero({
   /** background-position for the photo, e.g. "50% 12%" to keep faces in frame */
   photoPos?: string;
   logo: string;
+  /** Client name — used as the logo's text alternative. */
+  client?: string;
   metric: { value: string; label: string };
 }) {
   return (
@@ -31,7 +34,7 @@ export function CaseHero({
         <div className="ch-lockup">
           <span className="ch-by">Deploy AI Studio for</span>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="ch-logo" src={logo} alt="" />
+          <img className="ch-logo" src={logo} alt={client ?? ""} />
         </div>
         <h1>{title}</h1>
         <div className="ch-metric">

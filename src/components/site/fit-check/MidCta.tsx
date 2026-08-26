@@ -9,9 +9,8 @@ export function MidCta() {
           Now turn it into a <em>plan.</em>
         </h2>
         <p className="lead">
-          The Fit Check is step one, and you have already taken it. The next step
-          is the Deployment Diagnostic: two to three weeks, fixed fee, ending in a
-          costed plan you can act on.
+          The Fit Check is step one. The next is the Deployment Diagnostic: a
+          short, fixed-fee engagement ending in a costed plan you can act on.
         </p>
         <div className="ctas">
           <SiteLink className="pill p-white" href="/deployment-diagnostic">

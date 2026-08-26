@@ -28,7 +28,10 @@ export function BookWho() {
             <h2>
               A personal <em className="accent">consultation</em>.
             </h2>
-            <p>You speak directly with a senior practitioner from our team.</p>
+            <p>
+              You&rsquo;ll talk with people who put AI into production every
+              day, and know the terrain where most projects stall.
+            </p>
           </div>
           <div className="who-team">
             {team.map((m) => (

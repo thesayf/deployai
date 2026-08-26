@@ -10,7 +10,7 @@ export function FitCheckTool() {
           Ten questions. A straight <em>read.</em>
         </h2>
         <p className="lead">
-          A couple of minutes, answered honestly. You get back a score, the gaps
+          Ten questions, answered honestly. You get back a score, the gaps
           holding you up, and the first workflow worth putting AI on. It lands in
           your inbox.
         </p>

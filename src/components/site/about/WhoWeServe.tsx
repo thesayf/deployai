@@ -8,8 +8,8 @@ export function WhoWeServe() {
         </h2>
         <p className="lead">
           We work with owners, CEOs and COOs of small and mid-sized businesses,
-          roughly 10 to 250 staff, in any region. Leadership teams who need to
-          make real decisions about how they run their company.
+          and teams inside larger ones, in any region. Leadership teams who need
+          to make real decisions about how they run their company.
         </p>
         <p className="lead">
           They are sophisticated organisations that demand technical excellence

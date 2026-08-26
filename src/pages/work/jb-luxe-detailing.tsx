@@ -27,6 +27,7 @@ export default function JbLuxeCase() {
         <Navbar />
 
         <CaseHero
+          client="JB Luxe Detailing"
           title={
             <>
               Booked out, without touching the <em className="accent">phone</em>.

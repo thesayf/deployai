@@ -20,7 +20,7 @@ const items: AccordionItem[] = [
   },
   {
     q: "Do you build it, or just advise?",
-    a: "Both, and you're never locked in. The same team that scopes the work builds it, so the plan is costed against real delivery, not guesswork. But you own the plan. Take it and build in-house if you'd rather. Some people do.",
+    a: "Both, and you're never locked in. The same team that scopes the work builds it, so the plan is costed against real delivery, not guesswork. But you own the plan. Take it and build in-house if you'd rather.",
   },
   {
     q: "Will this replace our own people?",
@@ -32,7 +32,7 @@ const items: AccordionItem[] = [
   },
   {
     q: "What happens after go-live?",
-    a: "Governance drifts and models move. The Advisory Retainer keeps what's live working and keeps improving it every month: new use cases, model and tooling updates, governance upkeep. You keep getting better at this without hiring for it.",
+    a: "Governance drifts and models move. Managed AI Services keeps what's live working and improving: monitoring, model and tooling updates, and governance upkeep under an agreed service level. You keep getting better at this without hiring for it.",
   },
 ];
 

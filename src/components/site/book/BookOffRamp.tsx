@@ -19,12 +19,13 @@ export function BookOffRamp() {
           result comes straight to your inbox.
         </p>
         <p className="fineprint">
-          Cost, timelines, and how we scope the work are laid out on the{" "}
-          <SiteLink href="/services">Services</SiteLink> and{" "}
+          What each service covers is on the{" "}
+          <SiteLink href="/services">Services</SiteLink> page, and how
+          engagements are scoped and priced is explained on the{" "}
           <SiteLink href="/deployment-diagnostic">
             Deployment Diagnostic
           </SiteLink>{" "}
-          pages.
+          page.
         </p>
         <div className="ctas">
           <SiteLink className="pill p-blue" href="/fit-check">
