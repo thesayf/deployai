@@ -1,0 +1,21 @@
+# Deploy AI Studio
+
+> A boutique applied-AI consultancy. We show you where AI fits inside your business and make it work — fixed price, fixed scope.
+
+Deploy AI Studio (legal name: Hinds Tech and Artificial Intelligence LLC) is a Claude-certified AI deployment consultancy. We work with owners and leadership teams of small and mid-sized businesses, and teams inside larger organisations, in any region. Engagements are fixed fee, scoped before work starts; the cost of a deployment comes out of the Deployment Diagnostic as a business case, not a quote on a first call. No prices are published.
+
+## Pages
+
+- [Home](https://www.deployai.studio/): Deploy AI Studio is a boutique applied-AI consultancy. We show you where AI fits inside your business and make it work.
+- [Services](https://www.deployai.studio/services): Eight AI services, one path: prove value, build and modernise, train and enable your teams, and run AI in production. AI Proof of Value, Claude Code Enablement, Legacy Modernisation, AI Readiness Assessment, AI Workshops, AI Adoption & Change Management, Shadow AI Assessment, Managed AI Services.
+- [Deployment Diagnostic](https://www.deployai.studio/deployment-diagnostic): A fixed-fee diagnostic that finds the workflows where AI pays for itself first and ends in a costed deployment plan, not a strategy deck.
+- [Free AI Fit Check](https://www.deployai.studio/fit-check): Ten minutes to a scored verdict on where AI fits your business, and the one workflow to start with.
+- [Book a call](https://www.deployai.studio/book): A free thirty-minute call. Where AI could pay off in your business, and whether we're the right fit. No obligation.
+- [Data Residency & Trust](https://www.deployai.studio/data-residency): Use AI without your data leaving your control: where it lives, what the model vendor can see, who has access, and how to prove it in a security review.
+- [About](https://www.deployai.studio/about): A boutique AI engineering consultancy, founder-led.
+
+## Case studies
+
+- [JB Luxe Detailing](https://www.deployai.studio/work/jb-luxe-detailing): A 24/7 AI booking assistant and CRM for a premium mobile detailer; bookings tripled.
+- [Showcase Cinemas](https://www.deployai.studio/work/showcase-cinemas): A Claude-powered scheduling platform; scheduling time down 95%, revenue per screen up 18%.
+- [Centric Community Research](https://www.deployai.studio/work/centric-community-research): An AI research platform; 50+ projects searchable, proposal drafts in minutes, tenders out in days.

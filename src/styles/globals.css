@@ -60,6 +60,11 @@ body {
 :where(.site) section { padding:48px 0; }
 @media(min-width:1024px){ :where(.site) section{ padding:96px 0; } }
 :where(.site) section[id] { scroll-margin-top:64px; }
+/* 404 band */
+.nf { padding:160px 0 140px; }
+.nf h1 { color:#fff; max-width:1000px; }
+.nf .sub { color:var(--peri); font-size:20px; line-height:32px; margin-top:24px; max-width:640px; }
+.nf .ctas { margin-top:36px; display:flex; gap:24px; align-items:center; flex-wrap:wrap; }
 /* Case onward links — slim white row after the case CTA (arrow atoms). */
 :where(.site) section.case-next { padding:36px 0; }
 .case-next .wrap { display:flex; gap:48px; flex-wrap:wrap; }

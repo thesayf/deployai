@@ -1,6 +1,8 @@
 import Head from "next/head";
 
-const SITE = "https://deployai.studio";
+/** Canonical host is www — production 307s the apex to www, and the apex has a
+ *  known TLS reachability issue from some regions (see oman-reachability memo). */
+const SITE = "https://www.deployai.studio";
 const DEFAULT_OG = "/site/og-default.jpg";
 
 type SeoProps = {

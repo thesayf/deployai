@@ -10,6 +10,7 @@ export default function Document() {
         <link rel="shortcut icon" href="/favicon/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-title" content="DeployAI" />
+        <meta name="theme-color" content="#000A25" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
         
         {/* Google Tag Manager */}

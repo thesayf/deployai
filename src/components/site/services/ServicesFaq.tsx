@@ -52,9 +52,24 @@ const items: AccordionItem[] = [
   },
 ];
 
+/** FAQPage JSON-LD mirroring the rendered Q&As exactly (accuracy-first). */
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((i) => ({
+    "@type": "Question",
+    name: i.q,
+    acceptedAnswer: { "@type": "Answer", text: i.a },
+  })),
+};
+
 export function ServicesFaq() {
   return (
     <section className="bg-field" id="faq">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <div className="wrap faq">
         <h2>
           Frequently asked <em>questions</em>

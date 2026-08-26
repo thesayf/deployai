@@ -1,4 +1,5 @@
 import { Seo } from "@/components/site/Seo";
+import { SiteJsonLd } from "@/components/site/SiteJsonLd";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { CredBar } from "@/components/site/CredBar";
@@ -37,6 +38,7 @@ export default function Home() {
         description="Deploy AI Studio is a boutique applied-AI consultancy. We show you where AI fits inside your business and make it work — fixed price, fixed scope, live in weeks."
         path="/"
       />
+      <SiteJsonLd />
       <div className="site">
         <Navbar />
         <Hero />
