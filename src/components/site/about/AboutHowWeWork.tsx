@@ -3,7 +3,7 @@ import { SiteLink } from "@/components/site/SiteLink";
 /** 7 · M22 narrow pointer / breather (field): how we work — one-line pointer. */
 export function AboutHowWeWork() {
   return (
-    <section className="bg-field regime" id="how">
+    <section className="regime bg-field" id="how">
       <div className="wrap">
         <h2>
           How we <em className="accent">work</em>.

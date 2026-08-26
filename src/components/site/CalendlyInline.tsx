@@ -2,7 +2,10 @@ import { useEffect, useRef } from "react";
 
 type CalendlyGlobal = {
   Calendly?: {
-    initInlineWidget: (opts: { url: string; parentElement: HTMLElement }) => void;
+    initInlineWidget: (opts: {
+      url: string;
+      parentElement: HTMLElement;
+    }) => void;
   };
 };
 

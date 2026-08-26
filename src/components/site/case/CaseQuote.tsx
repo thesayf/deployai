@@ -9,7 +9,7 @@ export function CaseQuote({
   role: string;
 }) {
   return (
-    <section className="bg-coral case-quote" id="quote">
+    <section className="case-quote bg-coral" id="quote">
       <div className="wrap">
         <blockquote>&ldquo;{quote}&rdquo;</blockquote>
         <div className="cq-attr">

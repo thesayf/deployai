@@ -43,37 +43,49 @@ export default function Services() {
       />
       <div className="site">
         <Navbar />
-        <ServicesHero />
-        <JumpNav sections={jumpSections} cta={{ label: "Let's talk", href: "#final" }} />
-        <CredBar label="Certified across the Claude stack" badges={credBadges} />
-        <WhyStall />
-        <ServiceCatalog />
-        <EvidenceLedger />
-        <MethodStatement />
-        <Segment />
-        <ServicesFaq />
-        <CTABand
-          heading={
-            <>
-              Start where it costs you <em>nothing</em>.
-            </>
-          }
-          paragraphs={[
-            "Thirty minutes. No pitch. We'll walk through your current AI setup, name the three things we'd fix first, and tell you honestly whether you need us at all. Or take the free Fit Check: ten minutes, a scored verdict and one top opportunity, sent to your inbox.",
-          ]}
-          fineNote="No obligation. A senior consultant, not a sales rep."
-          ctas={[
-            {
-              label: "Take the free AI Fit Check",
-              href: "/fit-check",
-              className: "pill p-ink",
-            },
-            { label: "Book a 30-minute call", href: "#final", className: "tert ink" },
-          ]}
-          calendarSlot={
-            <CalendlyInline url="https://calendly.com/hello-deployai/introduction-to-consult-kit-clone?hide_event_type_details=1" />
-          }
-        />
+        <main id="main">
+          <ServicesHero />
+          <JumpNav
+            sections={jumpSections}
+            cta={{ label: "Let's talk", href: "#final" }}
+          />
+          <CredBar
+            label="Certified across the Claude stack"
+            badges={credBadges}
+          />
+          <WhyStall />
+          <ServiceCatalog />
+          <EvidenceLedger />
+          <MethodStatement />
+          <Segment />
+          <ServicesFaq />
+          <CTABand
+            heading={
+              <>
+                Start where it costs you <em>nothing</em>.
+              </>
+            }
+            paragraphs={[
+              "Thirty minutes. No pitch. We'll walk through your current AI setup, name the three things we'd fix first, and tell you honestly whether you need us at all. Or take the free Fit Check: ten minutes, a scored verdict and one top opportunity, sent to your inbox.",
+            ]}
+            fineNote="No obligation. A senior consultant, not a sales rep."
+            ctas={[
+              {
+                label: "Take the free AI Fit Check",
+                href: "/fit-check",
+                className: "pill p-ink",
+              },
+              {
+                label: "Book a 30-minute call",
+                href: "#final",
+                className: "tert ink",
+              },
+            ]}
+            calendarSlot={
+              <CalendlyInline url="https://calendly.com/hello-deployai/introduction-to-consult-kit-clone?hide_event_type_details=1" />
+            }
+          />
+        </main>
         <Footer />
       </div>
     </>

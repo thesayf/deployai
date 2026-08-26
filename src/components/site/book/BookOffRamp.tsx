@@ -1,4 +1,5 @@
 import { SiteLink } from "@/components/site/SiteLink";
+import { fitCheckAssessmentUrl } from "@/components/site/nav-config";
 
 /** 5 · off-ramp — "not ready" is a fine answer; route to the free Fit Check. */
 export function BookOffRamp() {
@@ -28,7 +29,7 @@ export function BookOffRamp() {
           page.
         </p>
         <div className="ctas">
-          <SiteLink className="pill p-blue" href="/fit-check">
+          <SiteLink className="pill p-blue" href={fitCheckAssessmentUrl}>
             Take the free AI Fit Check
           </SiteLink>
         </div>

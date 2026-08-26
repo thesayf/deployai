@@ -36,16 +36,21 @@ export default function About() {
       />
       <div className="site">
         <Navbar />
-        <AboutHero />
-        <CredBar label="Certified across the Claude stack" badges={credBadges} />
-        <WhoWeServe />
-        <AboutFounder />
-        <AnthropicRelationship />
-        <AboutCases />
-        <AboutHowWeWork />
-        <AboutMidCta />
-        <AboutFaq />
-        <AboutBook />
+        <main id="main">
+          <AboutHero />
+          <CredBar
+            label="Certified across the Claude stack"
+            badges={credBadges}
+          />
+          <WhoWeServe />
+          <AboutFounder />
+          <AnthropicRelationship />
+          <AboutCases />
+          <AboutHowWeWork />
+          <AboutMidCta />
+          <AboutFaq />
+          <AboutBook />
+        </main>
         <Footer />
       </div>
     </>

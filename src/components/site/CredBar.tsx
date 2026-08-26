@@ -23,7 +23,14 @@ export function CredBar({ label, badges }: CredBarProps) {
         <div className="creds-row">
           {badges.map((b) =>
             b.src ? (
-              <img key={b.alt} className="cred-badge" src={b.src} alt={b.alt} />
+              <img
+                loading="lazy"
+                decoding="async"
+                key={b.alt}
+                className="cred-badge"
+                src={b.src}
+                alt={b.alt}
+              />
             ) : (
               <span key={b.alt} className="cred-badge-text">
                 {b.alt}

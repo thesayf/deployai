@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
  *  hero and separating cleanly from the royal footer below. */
 export function CaseCTA({ heading }: { heading: ReactNode }) {
   return (
-    <section className="bg-navy facet case-cta" id="final">
+    <section className="facet case-cta bg-navy" id="final">
       <div className="wrap">
         <h2>{heading}</h2>
         <div className="ctas">

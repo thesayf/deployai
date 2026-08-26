@@ -6,7 +6,7 @@
  */
 export function SectorRules() {
   return (
-    <section className="bg-field sector" id="sector">
+    <section className="sector bg-field" id="sector">
       <div className="wrap">
         <h2>
           Sector rules are the real <em>constraint</em>, not residency in the

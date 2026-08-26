@@ -9,8 +9,8 @@ export function VerdictBands() {
           What your verdict <em>means</em>
         </h3>
         <p className="lead">
-          Your score puts you in one of four bands. None of them is a grade. Each
-          one is a next move.
+          Your score puts you in one of four bands. None of them is a grade.
+          Each one is a next move.
         </p>
         <p className="lead">
           It is easy to misjudge how ready you are, over or under, and that is
@@ -28,16 +28,16 @@ export function VerdictBands() {
           <div className="oc">
             <h6>Foundations first</h6>
             <p>
-              most of your picture works, and one or two dimensions hold you back.
-              Close the named gap, then retake the check. No fee.
+              most of your picture works, and one or two dimensions hold you
+              back. Close the named gap, then retake the check. No fee.
             </p>
           </div>
           <div className="oc">
             <h6>Ready for a diagnostic</h6>
             <p>
               your foundations hold, and the open question is which workflow AI
-              takes on first. The Deployment Diagnostic answers it in two to three
-              weeks, fixed fee.
+              takes on first. The Deployment Diagnostic answers it in two to
+              three weeks, fixed fee.
             </p>
             <div className="ctas">
               <SiteLink className="arrow" href="/deployment-diagnostic">

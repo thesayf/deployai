@@ -72,6 +72,8 @@ export function CaseCard({ c }: { c: CaseCardData }) {
         <div className="sc-img">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            loading="lazy"
+            decoding="async"
             className="sc-shot"
             src={c.img}
             alt={`${c.client} — ${c.title}`}

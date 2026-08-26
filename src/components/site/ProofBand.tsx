@@ -44,7 +44,9 @@ export function ProofBand({
           </div>
         </div>
       )}
-      <section className={ground === "lavender" ? "bg-lavender" : "bg-statnavy"}>
+      <section
+        className={ground === "lavender" ? "bg-lavender" : "bg-statnavy"}
+      >
         <div className="wrap p9">
           <div className="prose">
             <h2 className="h3t">{heading}</h2>

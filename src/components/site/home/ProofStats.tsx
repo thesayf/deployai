@@ -9,7 +9,8 @@ export function ProofStats() {
       ground="lavender"
       heading={
         <>
-          Everyone&apos;s using AI. Almost nobody&apos;s <em>winning</em> with it.
+          Everyone&apos;s using AI. Almost nobody&apos;s <em>winning</em> with
+          it.
         </>
       }
       prose={[

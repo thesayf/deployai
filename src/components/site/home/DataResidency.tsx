@@ -22,7 +22,13 @@ const pillars = [
 
 function ArrowUp() {
   return (
-    <svg width="24" height="30" viewBox="0 0 24 30" fill="none" aria-hidden="true">
+    <svg
+      width="24"
+      height="30"
+      viewBox="0 0 24 30"
+      fill="none"
+      aria-hidden="true"
+    >
       <g stroke="#0C62FB" strokeWidth="2" fill="none">
         <line x1="12" y1="28" x2="12" y2="6" />
         <path d="M6,13 L12,4 L18,13" />
@@ -38,12 +44,14 @@ export function DataResidency() {
         <h2>
           Your data is governed your <em>way</em>.
         </h2>
-        <p>The first question is almost always the same: where does our data go?</p>
         <p>
-          Before we build anything, we put the answers in writing: where your data
-          lives, what the system can reach, and how you would prove all of it in a
-          security review. We agree the scope and the sign-offs first, and nothing
-          reaches production without your approval.
+          The first question is almost always the same: where does our data go?
+        </p>
+        <p>
+          Before we build anything, we put the answers in writing: where your
+          data lives, what the system can reach, and how you would prove all of
+          it in a security review. We agree the scope and the sign-offs first,
+          and nothing reaches production without your approval.
         </p>
 
         <div className="gov-frame">
@@ -55,9 +63,9 @@ export function DataResidency() {
           <div className="gov-outcome">
             <div className="qn">The deliverable</div>
             <div className="qt">
-              You get a deployment your risk and compliance team can sign off on,
-              not a stack of policy documents. The controls are switched on and
-              evidenced, not just described.
+              You get a deployment your risk and compliance team can sign off
+              on, not a stack of policy documents. The controls are switched on
+              and evidenced, not just described.
             </div>
           </div>
 

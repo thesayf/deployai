@@ -9,9 +9,10 @@ export function CredStrip() {
           <span>Claude Certified Architect</span>
         </div>
         <div className="line">
-          Our Claude Certified team delivers secure deployment, rapid adoption, and
-          measurable business outcomes. One accountable team, start to finish, with
-          defined milestones and a timeline that doesn&rsquo;t move.
+          Our Claude Certified team delivers secure deployment, rapid adoption,
+          and measurable business outcomes. One accountable team, start to
+          finish, with defined milestones and a timeline that doesn&rsquo;t
+          move.
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ export function CaseResults({
   stats: { n: string; label: string }[];
 }) {
   return (
-    <section className="bg-field case-results" id="results">
+    <section className="case-results bg-field" id="results">
       <div className="wrap">
         <h2>{heading}</h2>
         <div className="cr-row">

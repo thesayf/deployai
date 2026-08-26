@@ -46,43 +46,48 @@ export default function DataResidency() {
       />
       <div className="site">
         <Navbar />
-        <ResidencyHero />
-        <JumpNav
-          sections={jumpSections}
-          cta={{ label: "Book a call", href: "#final" }}
-        />
-        <CredBar label="Certified across the Claude stack" badges={credBadges} />
-        <ResidencyControl />
-        <Commitments />
-        <AccessPosture />
-        <SectorRules />
-        <RegulatedRollout />
-        <ResidencyFaq />
-        <CTABand
-          heading={
-            <>
-              Thirty minutes. No <em>pitch</em>.
-            </>
-          }
-          paragraphs={[
-            "Bring your compliance or security lead. We will walk through where your data would live, who could reach it, and what your regulator will want to see, and you will leave knowing whether this works inside your rules.",
-          ]}
-          ctas={[
-            {
-              label: "Book a 30-minute call",
-              href: "#final",
-              className: "pill p-ink",
-            },
-            {
-              label: "Take the free AI Fit Check",
-              href: "/fit-check",
-              className: "tert ink",
-            },
-          ]}
-          calendarSlot={
-            <CalendlyInline url="https://calendly.com/hello-deployai/introduction-to-consult-kit-clone?hide_event_type_details=1" />
-          }
-        />
+        <main id="main">
+          <ResidencyHero />
+          <JumpNav
+            sections={jumpSections}
+            cta={{ label: "Book a call", href: "#final" }}
+          />
+          <CredBar
+            label="Certified across the Claude stack"
+            badges={credBadges}
+          />
+          <ResidencyControl />
+          <Commitments />
+          <AccessPosture />
+          <SectorRules />
+          <RegulatedRollout />
+          <ResidencyFaq />
+          <CTABand
+            heading={
+              <>
+                Thirty minutes. No <em>pitch</em>.
+              </>
+            }
+            paragraphs={[
+              "Bring your compliance or security lead. We will walk through where your data would live, who could reach it, and what your regulator will want to see, and you will leave knowing whether this works inside your rules.",
+            ]}
+            ctas={[
+              {
+                label: "Book a 30-minute call",
+                href: "#final",
+                className: "pill p-ink",
+              },
+              {
+                label: "Take the free AI Fit Check",
+                href: "/fit-check",
+                className: "tert ink",
+              },
+            ]}
+            calendarSlot={
+              <CalendlyInline url="https://calendly.com/hello-deployai/introduction-to-consult-kit-clone?hide_event_type_details=1" />
+            }
+          />
+        </main>
         <Footer />
       </div>
     </>

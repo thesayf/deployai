@@ -10,8 +10,8 @@ export function HowWeWork() {
           <p className="lead">
             Fixed fees, defined scope, no open-ended discovery phase. The fee is
             agreed in writing before we start, and every stage ends with a
-            decision that is yours. You can stop after the diagnostic and take the
-            plan to somebody else. Some people do.
+            decision that is yours. You can stop after the diagnostic and take
+            the plan to somebody else. Some people do.
           </p>
           <p>
             We work alongside your teams to integrate AI into how your business
@@ -19,9 +19,9 @@ export function HowWeWork() {
             speed.
           </p>
           <p>
-            Three things move the cost: the systems we touch, the readiness of your
-            knowledge, and the sector rules you work under. The diagnostic prices
-            all three and shows the return you can expect.
+            Three things move the cost: the systems we touch, the readiness of
+            your knowledge, and the sector rules you work under. The diagnostic
+            prices all three and shows the return you can expect.
           </p>
         </div>
       </div>

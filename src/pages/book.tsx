@@ -32,12 +32,17 @@ export default function Book() {
       />
       <div className="site">
         <Navbar />
-        <BookHero />
-        <CredBar label="Certified across the Claude stack" badges={credBadges} />
-        <BookAgenda />
-        <BookCalendar />
-        <BookWho />
-        <BookOffRamp />
+        <main id="main">
+          <BookHero />
+          <CredBar
+            label="Certified across the Claude stack"
+            badges={credBadges}
+          />
+          <BookAgenda />
+          <BookCalendar />
+          <BookWho />
+          <BookOffRamp />
+        </main>
         <Footer />
       </div>
     </>

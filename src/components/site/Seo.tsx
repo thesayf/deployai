@@ -17,7 +17,12 @@ type SeoProps = {
 
 /** Shared head block: title, description, self-canonical, Open Graph + Twitter
  *  cards. One instance per page, replacing bare next/head title/meta pairs. */
-export function Seo({ title, description, path, ogImage = DEFAULT_OG }: SeoProps) {
+export function Seo({
+  title,
+  description,
+  path,
+  ogImage = DEFAULT_OG,
+}: SeoProps) {
   const url = SITE + (path === "/" ? "" : path);
   return (
     <Head>
@@ -30,6 +35,8 @@ export function Seo({ title, description, path, ogImage = DEFAULT_OG }: SeoProps
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={SITE + ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />

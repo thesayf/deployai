@@ -9,9 +9,9 @@ export function JourneyPath() {
           The AI Deployment <em>Path</em>.
         </h2>
         <p className="method-intro">
-          Four steps, and you choose at each one whether to keep going. It starts
-          free, and it is never open-ended. Here is exactly what working with us
-          looks like.
+          Four steps, and you choose at each one whether to keep going. It
+          starts free, and it is never open-ended. Here is exactly what working
+          with us looks like.
         </p>
         <div className="journey">
           <svg
@@ -19,24 +19,56 @@ export function JourneyPath() {
             role="img"
             aria-label="The AI Deployment Path: Check, then Diagnose, then Deploy, then Improve, with a decision gate at every step"
           >
-            <path d="M40,210 H250" stroke="#DEFF4D" strokeWidth="6" fill="none" />
-            <path d="M250,210 H560" stroke="#1BE1F2" strokeWidth="6" fill="none" />
-            <path d="M560,210 H660" stroke="#0C62FB" strokeWidth="6" fill="none" />
+            <path
+              d="M40,210 H250"
+              stroke="#DEFF4D"
+              strokeWidth="6"
+              fill="none"
+            />
+            <path
+              d="M250,210 H560"
+              stroke="#1BE1F2"
+              strokeWidth="6"
+              fill="none"
+            />
+            <path
+              d="M560,210 H660"
+              stroke="#0C62FB"
+              strokeWidth="6"
+              fill="none"
+            />
             <path
               d="M660,210 C700,210 700,140 740,140 H950 C990,140 990,210 1030,210"
               stroke="#0C62FB"
               strokeWidth="4"
               fill="none"
             />
-            <path d="M660,210 H1030" stroke="#0C62FB" strokeWidth="4" fill="none" />
+            <path
+              d="M660,210 H1030"
+              stroke="#0C62FB"
+              strokeWidth="4"
+              fill="none"
+            />
             <path
               d="M660,210 C700,210 700,280 740,280 H950 C990,280 990,210 1030,210"
               stroke="#0C62FB"
               strokeWidth="4"
               fill="none"
             />
-            <path d="M1030,210 H1090" stroke="#C7B9FF" strokeWidth="6" fill="none" />
-            <circle cx="1135" cy="210" r="42" stroke="#C7B9FF" strokeWidth="6" fill="none" />
+            <path
+              d="M1030,210 H1090"
+              stroke="#C7B9FF"
+              strokeWidth="6"
+              fill="none"
+            />
+            <circle
+              cx="1135"
+              cy="210"
+              r="42"
+              stroke="#C7B9FF"
+              strokeWidth="6"
+              fill="none"
+            />
             {/* clockwise "cycle / ongoing" arrowhead — symmetric chevron straddling the
                 circle's top point (1135,168), tip 6px right, barbs mirrored ±7 in y */}
             <path
@@ -54,32 +86,127 @@ export function JourneyPath() {
               strokeDasharray="7 7"
               fill="none"
             />
-            <path d="M780,320 l-12,-7 M780,320 l-12,7" stroke="#5b6b85" strokeWidth="3" fill="none" />
-            <circle cx="120" cy="210" r="9" fill="#000A25" stroke="#DEFF4D" strokeWidth="4" />
-            <circle cx="405" cy="210" r="9" fill="#000A25" stroke="#1BE1F2" strokeWidth="4" />
-            <circle cx="845" cy="140" r="8" fill="#000A25" stroke="#0C62FB" strokeWidth="4" />
-            <circle cx="845" cy="210" r="8" fill="#000A25" stroke="#0C62FB" strokeWidth="4" />
-            <circle cx="845" cy="280" r="8" fill="#000A25" stroke="#0C62FB" strokeWidth="4" />
-            <circle cx="250" cy="210" r="14" fill="#000A25" stroke="#fff" strokeWidth="5" />
-            <circle cx="560" cy="210" r="14" fill="#000A25" stroke="#fff" strokeWidth="5" />
-            <circle cx="1030" cy="210" r="14" fill="#000A25" stroke="#fff" strokeWidth="5" />
-            <text x="40" y="100" className="jstage" fill="#DEFF4D">01 · Check</text>
-            <text x="40" y="123" className="jlabel b">The AI Fit Check</text>
-            <text x="40" y="143" className="jsub">Is there an opportunity here?</text>
-            <text x="330" y="100" className="jstage" fill="#1BE1F2">02 · Diagnose</text>
-            <text x="330" y="123" className="jlabel b">The Deployment Diagnostic</text>
-            <text x="330" y="143" className="jsub">A costed plan and the ROI to expect.</text>
-            <text x="690" y="72" className="jstage" fill="#6DA1FD">03 · Deploy</text>
-            <text x="690" y="95" className="jlabel b">The Rollout — fixed price, live in weeks</text>
-            <text x="845" y="118" className="jlabel b">Launch</text>
-            <text x="845" y="188" className="jlabel b">Connect</text>
-            <text x="845" y="258" className="jlabel b">Automate</text>
-            <text x="1076" y="100" className="jstage" fill="#C7B9FF">04 · Improve</text>
-            <text x="1076" y="123" className="jlabel b">Ongoing operation</text>
-            <text x="1076" y="143" className="jsub">It keeps paying off.</text>
-            <text x="250" y="252" textAnchor="middle" className="jgate">Your call</text>
-            <text x="560" y="252" textAnchor="middle" className="jgate">Your call</text>
-            <text x="1030" y="252" textAnchor="middle" className="jgate">Your call</text>
+            <path
+              d="M780,320 l-12,-7 M780,320 l-12,7"
+              stroke="#5b6b85"
+              strokeWidth="3"
+              fill="none"
+            />
+            <circle
+              cx="120"
+              cy="210"
+              r="9"
+              fill="#000A25"
+              stroke="#DEFF4D"
+              strokeWidth="4"
+            />
+            <circle
+              cx="405"
+              cy="210"
+              r="9"
+              fill="#000A25"
+              stroke="#1BE1F2"
+              strokeWidth="4"
+            />
+            <circle
+              cx="845"
+              cy="140"
+              r="8"
+              fill="#000A25"
+              stroke="#0C62FB"
+              strokeWidth="4"
+            />
+            <circle
+              cx="845"
+              cy="210"
+              r="8"
+              fill="#000A25"
+              stroke="#0C62FB"
+              strokeWidth="4"
+            />
+            <circle
+              cx="845"
+              cy="280"
+              r="8"
+              fill="#000A25"
+              stroke="#0C62FB"
+              strokeWidth="4"
+            />
+            <circle
+              cx="250"
+              cy="210"
+              r="14"
+              fill="#000A25"
+              stroke="#fff"
+              strokeWidth="5"
+            />
+            <circle
+              cx="560"
+              cy="210"
+              r="14"
+              fill="#000A25"
+              stroke="#fff"
+              strokeWidth="5"
+            />
+            <circle
+              cx="1030"
+              cy="210"
+              r="14"
+              fill="#000A25"
+              stroke="#fff"
+              strokeWidth="5"
+            />
+            <text x="40" y="100" className="jstage" fill="#DEFF4D">
+              01 · Check
+            </text>
+            <text x="40" y="123" className="jlabel b">
+              The AI Fit Check
+            </text>
+            <text x="40" y="143" className="jsub">
+              Is there an opportunity here?
+            </text>
+            <text x="330" y="100" className="jstage" fill="#1BE1F2">
+              02 · Diagnose
+            </text>
+            <text x="330" y="123" className="jlabel b">
+              The Deployment Diagnostic
+            </text>
+            <text x="330" y="143" className="jsub">
+              A costed plan and the ROI to expect.
+            </text>
+            <text x="690" y="72" className="jstage" fill="#6DA1FD">
+              03 · Deploy
+            </text>
+            <text x="690" y="95" className="jlabel b">
+              The Rollout — fixed price, live in weeks
+            </text>
+            <text x="845" y="118" className="jlabel b">
+              Launch
+            </text>
+            <text x="845" y="188" className="jlabel b">
+              Connect
+            </text>
+            <text x="845" y="258" className="jlabel b">
+              Automate
+            </text>
+            <text x="1076" y="100" className="jstage" fill="#C7B9FF">
+              04 · Improve
+            </text>
+            <text x="1076" y="123" className="jlabel b">
+              Ongoing operation
+            </text>
+            <text x="1076" y="143" className="jsub">
+              It keeps paying off.
+            </text>
+            <text x="250" y="252" textAnchor="middle" className="jgate">
+              Your call
+            </text>
+            <text x="560" y="252" textAnchor="middle" className="jgate">
+              Your call
+            </text>
+            <text x="1030" y="252" textAnchor="middle" className="jgate">
+              Your call
+            </text>
             <text x="600" y="352" className="jexit">
               You own the plan. Take it to somebody else. Some people do.
             </text>

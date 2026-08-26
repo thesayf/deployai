@@ -1,9 +1,10 @@
 import { SiteLink } from "../SiteLink";
+import { fitCheckAssessmentUrl } from "../nav-config";
 
 /** 3 · A5 Fit Check tool (Stage-2 quiz UI): the one accent band (lavender), page signature set-piece. */
 export function FitCheckTool() {
   return (
-    <section className="bg-lavender tool" id="fit-check-tool">
+    <section className="tool bg-lavender" id="fit-check-tool">
       <div className="wrap">
         <div className="eyebrow">Free</div>
         <h2>
@@ -11,16 +12,18 @@ export function FitCheckTool() {
         </h2>
         <p className="lead">
           Ten questions, answered honestly. You get back a score, the gaps
-          holding you up, and the first workflow worth putting AI on. It lands in
-          your inbox.
+          holding you up, and the first workflow worth putting AI on. It lands
+          in your inbox.
         </p>
         <div className="ctas">
-          <SiteLink className="pill p-ink" href="#fit-check-tool">
+          <SiteLink className="pill p-ink" href={fitCheckAssessmentUrl}>
             Start the check
           </SiteLink>
         </div>
         <div className="quizslot">
           <img
+            loading="lazy"
+            decoding="async"
             className="quiz-shot"
             src="/site/fitcheck-quiz.jpg"
             alt="A Fit Check question: how comfortable is your team with new technology, with five answer options and a progress bar."
@@ -32,9 +35,9 @@ export function FitCheckTool() {
             file away.
           </p>
           <p>
-            The Deployment Diagnostic turns your verdict into a costed plan: what
-            to build, what it costs, and in what order. Or book a call and we will
-            talk it through first.
+            The Deployment Diagnostic turns your verdict into a costed plan:
+            what to build, what it costs, and in what order. Or book a call and
+            we will talk it through first.
           </p>
           <div className="ctas">
             <SiteLink className="pill p-ink" href="#final">

@@ -23,7 +23,7 @@ export function CaseStory({
             {image && i === 0 && (
               <figure className="story-fig">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={image.src} alt="" />
+                <img loading="lazy" decoding="async" src={image.src} alt="" />
                 {image.caption && <figcaption>{image.caption}</figcaption>}
               </figure>
             )}

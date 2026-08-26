@@ -47,36 +47,52 @@ export default function DeploymentDiagnostic() {
       />
       <div className="site">
         <Navbar />
-        <DiagnosticHero />
-        <JumpNav sections={jumpSections} cta={{ label: "Book a call", href: "#final" }} />
-        <CredBar label="Certified across the Claude stack" badges={credBadges} />
-        <OnRamp />
-        <WhatItIs />
-        <Breather />
-        <Deliverables />
-        <WeekByWeek />
-        <Commitment />
-        <HonestPart />
-        <DiagnosticFaq />
-        <CTABand
-          heading={
-            <>
-              Start where you are. Build what it takes to keep AI moving{" "}
-              <em>across the business.</em>
-            </>
-          }
-          paragraphs={[
-            "Thirty minutes. No pitch.",
-            "We'll walk through your current AI setup, name the three things we'd fix first, and tell you honestly whether you need us at all.",
-          ]}
-          ctas={[
-            { label: "Book the call", href: "#final", className: "pill p-ink" },
-            { label: "Or take the free Fit Check", href: "/fit-check", className: "tert ink" },
-          ]}
-          calendarSlot={
-            <CalendlyInline url="https://calendly.com/hello-deployai/introduction-to-consult-kit-clone?hide_event_type_details=1" />
-          }
-        />
+        <main id="main">
+          <DiagnosticHero />
+          <JumpNav
+            sections={jumpSections}
+            cta={{ label: "Book a call", href: "#final" }}
+          />
+          <CredBar
+            label="Certified across the Claude stack"
+            badges={credBadges}
+          />
+          <OnRamp />
+          <WhatItIs />
+          <Breather />
+          <Deliverables />
+          <WeekByWeek />
+          <Commitment />
+          <HonestPart />
+          <DiagnosticFaq />
+          <CTABand
+            heading={
+              <>
+                Start where you are. Build what it takes to keep AI moving{" "}
+                <em>across the business.</em>
+              </>
+            }
+            paragraphs={[
+              "Thirty minutes. No pitch.",
+              "We'll walk through your current AI setup, name the three things we'd fix first, and tell you honestly whether you need us at all.",
+            ]}
+            ctas={[
+              {
+                label: "Book the call",
+                href: "#final",
+                className: "pill p-ink",
+              },
+              {
+                label: "Or take the free Fit Check",
+                href: "/fit-check",
+                className: "tert ink",
+              },
+            ]}
+            calendarSlot={
+              <CalendlyInline url="https://calendly.com/hello-deployai/introduction-to-consult-kit-clone?hide_event_type_details=1" />
+            }
+          />
+        </main>
         <Footer />
       </div>
     </>

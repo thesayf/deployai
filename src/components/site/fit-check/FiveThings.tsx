@@ -9,9 +9,9 @@ export function FiveThings() {
           Five things the check <em>measures</em>
         </h2>
         <p className="lead">
-          The Fit Check gauges how ready your company is to adopt and scale AI. It
-          scores five things, and each is a question you can answer without calling
-          IT.
+          The Fit Check gauges how ready your company is to adopt and scale AI.
+          It scores five things, and each is a question you can answer without
+          calling IT.
         </p>
         <div className="dims">
           <div>
@@ -25,7 +25,9 @@ export function FiveThings() {
           <div>
             <h4>Workflow clarity</h4>
             <div className="xr" />
-            <p>How much of your everyday work is repeatable enough to automate.</p>
+            <p>
+              How much of your everyday work is repeatable enough to automate.
+            </p>
           </div>
           <div>
             <h4>Team capacity</h4>
@@ -41,7 +43,8 @@ export function FiveThings() {
             <p>
               Have you incorporated risk frameworks, AI usage policies and
               regulatory controls? The full answer on where your data goes is on
-              the <SiteLink href="/data-residency">Data Residency</SiteLink> page.
+              the <SiteLink href="/data-residency">Data Residency</SiteLink>{" "}
+              page.
             </p>
           </div>
           <div>

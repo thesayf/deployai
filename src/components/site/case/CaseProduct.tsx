@@ -67,51 +67,51 @@ export function CaseProduct({
         {/* all panels render stacked in one grid cell — the tallest sets the
             height, so switching tabs never moves the page, with any content */}
         <div className="cp-panels">
-        {surfaces.map((s, i) => (
-          <div
-            key={s.label}
-            className={cn("tabpanel", active === i && "on")}
-            role="tabpanel"
-            aria-hidden={active !== i}
-          >
-            <div className="cp-copy">
-              <div className="tp-name">{s.label}</div>
-              <p className="tp-desc">{s.desc}</p>
-              <div className="tp-help">What changed:</div>
-              <ul className="tp-bullets">
-                {s.bullets.map((b) => (
-                  <li key={b}>{b}</li>
-                ))}
-              </ul>
-              <div className="tp-cta">
-                <SiteLink className="pill p-blue" href="/book">
-                  Let&rsquo;s talk about yours
-                  {"  →"}
-                </SiteLink>
+          {surfaces.map((s, i) => (
+            <div
+              key={s.label}
+              className={cn("tabpanel", active === i && "on")}
+              role="tabpanel"
+              aria-hidden={active !== i}
+            >
+              <div className="cp-copy">
+                <div className="tp-name">{s.label}</div>
+                <p className="tp-desc">{s.desc}</p>
+                <div className="tp-help">What changed:</div>
+                <ul className="tp-bullets">
+                  {s.bullets.map((b) => (
+                    <li key={b}>{b}</li>
+                  ))}
+                </ul>
+                <div className="tp-cta">
+                  <SiteLink className="pill p-blue" href="/book">
+                    Let&rsquo;s talk about yours
+                    {"  →"}
+                  </SiteLink>
+                </div>
               </div>
-            </div>
 
-            <div className="cp-rail">
-              {/* fixed-size media slot: identical silhouette on every tab, so the
+              <div className="cp-rail">
+                {/* fixed-size media slot: identical silhouette on every tab, so the
                   eyebrow/name/desc below start at the same y whether the screen
                   is a portrait phone or a landscape desktop shot */}
-              <div className="cp-slot">
-                {s.device === "phone" ? (
-                  <div className="cp-phone-thumb">
-                    <PhoneFrame>{s.node}</PhoneFrame>
-                  </div>
-                ) : (
-                  <div className="cp-shot">
-                    <div className="cp-shot-inner">{s.node}</div>
-                  </div>
-                )}
+                <div className="cp-slot">
+                  {s.device === "phone" ? (
+                    <div className="cp-phone-thumb">
+                      <PhoneFrame>{s.node}</PhoneFrame>
+                    </div>
+                  ) : (
+                    <div className="cp-shot">
+                      <div className="cp-shot-inner">{s.node}</div>
+                    </div>
+                  )}
+                </div>
+                <div className="cp-rail-eyebrow">Product screen</div>
+                <div className="cp-rail-name">{s.railName}</div>
+                <p className="cp-rail-desc">{s.railDesc}</p>
               </div>
-              <div className="cp-rail-eyebrow">Product screen</div>
-              <div className="cp-rail-name">{s.railName}</div>
-              <p className="cp-rail-desc">{s.railDesc}</p>
             </div>
-          </div>
-        ))}
+          ))}
         </div>
       </div>
     </section>

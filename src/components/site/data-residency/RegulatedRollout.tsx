@@ -14,10 +14,10 @@ export function RegulatedRollout() {
         </h2>
         <p className="lead">
           Security is part of the design, not a review bolted on at the end. We
-          start by mapping where your sensitive data lives and what is allowed to
-          touch it, deploy the model so that boundary is never crossed, and hand you
-          the architecture in writing: what connects to what, who can access it,
-          and where the logs go.
+          start by mapping where your sensitive data lives and what is allowed
+          to touch it, deploy the model so that boundary is never crossed, and
+          hand you the architecture in writing: what connects to what, who can
+          access it, and where the logs go.
         </p>
         <p className="lead">
           Larger and sector-regulated rollouts run on our enterprise track.

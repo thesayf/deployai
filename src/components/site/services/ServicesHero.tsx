@@ -8,12 +8,12 @@ export function ServicesHero() {
       <div className="ihero-scrim" aria-hidden="true" />
       <div className="wrap">
         <h1>
-          We scope, build, and deliver AI systems, with a timeline that doesn&rsquo;t{" "}
-          <em>move</em>.
+          We scope, build, and deliver AI systems, with a timeline that
+          doesn&rsquo;t <em>move</em>.
         </h1>
         <p className="sub">
-          Don&rsquo;t start with AI tools. Start with business outcomes. We help you
-          adopt, implement, and get value from AI, from readiness to ROI.
+          Don&rsquo;t start with AI tools. Start with business outcomes. We help
+          you adopt, implement, and get value from AI, from readiness to ROI.
         </p>
         <div className="ctas">
           <SiteLink className="pill p-white" href="/fit-check">

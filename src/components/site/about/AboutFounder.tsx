@@ -4,7 +4,7 @@
  *  the headshot appears once. Copy gated (verify_stitch + audit_invention PASS). */
 export function AboutFounder() {
   return (
-    <section className="bg-navy qt" id="founder">
+    <section className="qt bg-navy" id="founder">
       <div className="wrap">
         <h2 className="qt-h">
           The humans driving the <em className="accent">tech</em>.
@@ -13,6 +13,8 @@ export function AboutFounder() {
           <div className="qphoto">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              loading="lazy"
+              decoding="async"
               src="/site/team/rudi-hinds.jpg"
               alt="Rudi Hinds, founder of Deploy AI Studio"
             />
@@ -25,7 +27,9 @@ export function AboutFounder() {
             </blockquote>
             <div className="lab">
               <div className="lab-name">Rudi Hinds</div>
-              <div className="lab-role">Founder · Claude Certified Architect</div>
+              <div className="lab-role">
+                Founder · Claude Certified Architect
+              </div>
               <a
                 className="exp-link"
                 href="https://www.linkedin.com/in/rudi-hinds-3b25b6137/"
@@ -35,6 +39,8 @@ export function AboutFounder() {
                 Connect on LinkedIn
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
+                  loading="lazy"
+                  decoding="async"
                   className="li-logo"
                   src="/site/linkedin-logo.svg"
                   alt="LinkedIn"

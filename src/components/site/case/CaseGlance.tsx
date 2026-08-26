@@ -15,7 +15,7 @@ export function CaseGlance({
   tech: string[];
 }) {
   return (
-    <section className="bg-navy case-glance facet" id="glance">
+    <section className="case-glance facet bg-navy" id="glance">
       <div className="wrap">
         <h2 className="cg-h">
           At a <em className="accent">glance</em>.

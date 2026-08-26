@@ -10,10 +10,10 @@ export function MethodStatement() {
         </h2>
         <p className="body">
           Organisations understand the potential. Production is where plans meet
-          infrastructure, governance, and real processes. We build for production from
-          day one: every system ships with evaluations, monitoring, and cost controls.
-          And the job continues after go-live: we watch adoption, measure quality,
-          control spend, and expand what works.
+          infrastructure, governance, and real processes. We build for
+          production from day one: every system ships with evaluations,
+          monitoring, and cost controls. And the job continues after go-live: we
+          watch adoption, measure quality, control spend, and expand what works.
         </p>
         <SiteLink className="pill p-white" href="/deployment-diagnostic">
           See how the Diagnostic works

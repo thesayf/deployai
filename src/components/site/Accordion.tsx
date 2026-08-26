@@ -32,7 +32,12 @@ export function Accordion({ items }: AccordionProps) {
             >
               <span className="acc-icon" aria-hidden="true">
                 <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
-                  <path d="M2 2 L11 11.5 L20 2" stroke="currentColor" strokeWidth="2.5" fill="none" />
+                  <path
+                    d="M2 2 L11 11.5 L20 2"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    fill="none"
+                  />
                 </svg>
               </span>
               <span className="acc-title">{item.q}</span>

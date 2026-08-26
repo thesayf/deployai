@@ -8,12 +8,12 @@ export function DiagnosticHero() {
       <div className="ihero-scrim" aria-hidden="true" />
       <div className="wrap">
         <h1>
-          We find the two to three places where AI creates the fastest ROI, and turn
-          ambition into <em>measurable outcomes</em>.
+          We find the two to three places where AI creates the fastest ROI, and
+          turn ambition into <em>measurable outcomes</em>.
         </h1>
         <p className="sub">
-          A fixed-fee, two to three week diagnostic that ends in a costed deployment
-          plan, not a strategy deck. A score is not a deliverable.
+          A fixed-fee, two to three week diagnostic that ends in a costed
+          deployment plan, not a strategy deck. A score is not a deliverable.
         </p>
         <div className="ctas">
           <SiteLink className="pill p-white" href="#final">

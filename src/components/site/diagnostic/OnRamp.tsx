@@ -4,8 +4,8 @@ export function OnRamp() {
     <section className="onramp bg-field">
       <div className="wrap">
         <h2 className="h3t">
-          AI tools don&rsquo;t create value on their own. Human-in-the-loop workflow
-          design is what turns adoption into <em>outcomes.</em>
+          AI tools don&rsquo;t create value on their own. Human-in-the-loop
+          workflow design is what turns adoption into <em>outcomes.</em>
         </h2>
         <p className="lead">
           The Diagnostic turns your wishlist into a ranked, scored backlog, with

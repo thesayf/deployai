@@ -26,7 +26,9 @@ export function EvidenceLedger() {
           </h2>
         </div>
         <div className="led-rows">
-          <div className="led-head">Measured by the companies that ran them</div>
+          <div className="led-head">
+            Measured by the companies that ran them
+          </div>
           {rows.map((r) => (
             <div className="led-row" key={r.num}>
               <div className="led-num">{r.num}</div>

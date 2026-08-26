@@ -38,7 +38,12 @@ export function BookWho() {
               <div className="wt" key={m.name}>
                 <div className="wt-photo">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={m.src} alt={m.name} />
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    src={m.src}
+                    alt={m.name}
+                  />
                 </div>
                 <div className="wt-name">{m.name}</div>
                 <div className="wt-role">{m.role}</div>

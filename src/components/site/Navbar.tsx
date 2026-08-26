@@ -30,6 +30,9 @@ export function Navbar({
 
   return (
     <header className={cn(variant === "light" && "nav-light", open && "open")}>
+      <a className="skip" href="#main">
+        Skip to content
+      </a>
       <div className="wrap nav-row">
         <div className="logo">
           <SiteLink href="/" aria-label="Deploy AI Studio home">

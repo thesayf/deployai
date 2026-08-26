@@ -3,7 +3,7 @@ import { SiteLink } from "../SiteLink";
 /** 6 · M15 mid-page CTA band: navy pivot (dark zone 2). */
 export function MidCta() {
   return (
-    <section className="bg-navy midcta">
+    <section className="midcta bg-navy">
       <div className="wrap">
         <h2>
           Now turn it into a <em>plan.</em>

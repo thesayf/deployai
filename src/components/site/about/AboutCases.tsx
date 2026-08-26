@@ -4,7 +4,7 @@ import { CaseCard, caseCards } from "@/components/site/CaseCard";
  *  Cards are the shared CaseCard (`.sc-cards` family). */
 export function AboutCases() {
   return (
-    <section className="bg-navy about-cases sc-cards" id="proof">
+    <section className="about-cases sc-cards bg-navy" id="proof">
       <div className="wrap">
         <h2>
           What we&apos;ve <em className="accent">built</em>.

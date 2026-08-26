@@ -12,13 +12,15 @@ export function WhyStall() {
         </div>
         <div className="rows">
           <p>
-            AI works when it&rsquo;s built into the way work gets done, not added on
-            the side. That takes two things at once: foundations that can keep
-            improving, and ways of working designed for people and AI together.
+            AI works when it&rsquo;s built into the way work gets done, not
+            added on the side. That takes two things at once: foundations that
+            can keep improving, and ways of working designed for people and AI
+            together.
           </p>
           <p>
-            We build both and stay accountable for the results. We start where you
-            are and move you forward, from strategy to running AI day to day.
+            We build both and stay accountable for the results. We start where
+            you are and move you forward, from strategy to running AI day to
+            day.
           </p>
         </div>
       </div>

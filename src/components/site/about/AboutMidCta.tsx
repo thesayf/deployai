@@ -5,7 +5,7 @@ import { SiteLink } from "@/components/site/SiteLink";
  *  How-we-work and FAQ so the navy band is sandwiched by field. Copy gated. */
 export function AboutMidCta() {
   return (
-    <section className="bg-navy mid" id="mid-cta">
+    <section className="mid bg-navy" id="mid-cta">
       <div className="wrap">
         <div className="mid-copy">
           <h2>
@@ -25,6 +25,8 @@ export function AboutMidCta() {
       <div className="mid-img">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          loading="lazy"
+          decoding="async"
           src="/site/about-midcta.jpg"
           alt="A team mapping out an AI roadmap in a working session"
         />

@@ -995,3 +995,30 @@ body {
 .case-interlude.bg-lavender .pill-arrow:hover,
 .case-interlude.bg-peri .pill-arrow:hover { background:var(--navy); color:#fff; border-color:var(--navy); }
 @media(max-width:640px){ .case-interlude { padding:64px 0; } }
+
+/* Skip link: visually hidden until keyboard focus (a11y landmark pairing with <main id="main">). */
+.site .skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: #0c62fb;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 0 0 8px 0;
+  font-weight: 600;
+}
+.site .skip:focus {
+  left: 0;
+}
+
+/* Legal / policy page body. */
+.legal-hero .sub { max-width: 620px; }
+.legal { max-width: 720px; margin-inline: auto; padding: 64px 24px 80px; }
+.legal h2 { font-size: 22px; line-height: 1.25; margin: 40px 0 12px; }
+.legal h2:first-child { margin-top: 0; }
+.legal p { font-size: 16px; line-height: 26px; color: #4b5563; margin: 0 0 14px; }
+.legal p strong { color: #292929; }
+.legal a { color: #0c62fb; text-decoration: underline; }
+.legal .legal-back { margin-top: 40px; }
+.foot-bottom .foot-link { display: inline; padding: 0; color: inherit; text-decoration: underline; }

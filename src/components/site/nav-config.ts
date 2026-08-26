@@ -12,6 +12,9 @@ export const primaryNav: NavItem[] = [
 
 export const primaryCta: NavItem = { label: "Free AI Fit Check", href: "/fit-check" };
 
+// Hosted Fit Check assessment (ConsultKit). All "start the check" CTAs point here.
+export const fitCheckAssessmentUrl = "https://www.consultkit.ai/deployai/assessment";
+
 export const footerColumns: { title: string; links: NavItem[] }[] = [
   {
     title: "Start",

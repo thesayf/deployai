@@ -37,36 +37,41 @@ export default function FitCheck() {
       />
       <div className="site">
         <Navbar />
-        <FitCheckHero />
-        <CredBar label="Certified across the Claude stack" badges={credBadges} />
-        <FiveThings />
-        <FitCheckTool />
-        <VerdictBands />
-        <Breather />
-        <Honesty />
-        <MidCta />
-        <FitCheckFaq />
-        <CTABand
-          heading={
-            <>
-              Talk it through, or take the <em>check</em>
-            </>
-          }
-          paragraphs={[
-            "Thirty minutes with an engineer. We will tell you which dimension we would expect to be weakest, and whether you need a full diagnostic or just a few weeks of cleanup. The call is with the founder who does the building.",
-            "Not ready to talk? That is what the check is for. Ten minutes, your verdict on screen.",
-          ]}
-          ctas={[
-            {
-              label: "Back to the Fit Check",
-              href: "#fit-check-tool",
-              className: "pill p-ink",
-            },
-          ]}
-          calendarSlot={
-            <CalendlyInline url="https://calendly.com/hello-deployai/introduction-to-consult-kit-clone?hide_event_type_details=1" />
-          }
-        />
+        <main id="main">
+          <FitCheckHero />
+          <CredBar
+            label="Certified across the Claude stack"
+            badges={credBadges}
+          />
+          <FiveThings />
+          <FitCheckTool />
+          <VerdictBands />
+          <Breather />
+          <Honesty />
+          <MidCta />
+          <FitCheckFaq />
+          <CTABand
+            heading={
+              <>
+                Talk it through, or take the <em>check</em>
+              </>
+            }
+            paragraphs={[
+              "Thirty minutes with an engineer. We will tell you which dimension we would expect to be weakest, and whether you need a full diagnostic or just a few weeks of cleanup. The call is with the founder who does the building.",
+              "Not ready to talk? That is what the check is for. Ten minutes, your verdict on screen.",
+            ]}
+            ctas={[
+              {
+                label: "Back to the Fit Check",
+                href: "#fit-check-tool",
+                className: "pill p-ink",
+              },
+            ]}
+            calendarSlot={
+              <CalendlyInline url="https://calendly.com/hello-deployai/introduction-to-consult-kit-clone?hide_event_type_details=1" />
+            }
+          />
+        </main>
         <Footer />
       </div>
     </>

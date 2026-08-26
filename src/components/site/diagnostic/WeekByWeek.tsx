@@ -17,7 +17,7 @@ const weeks = [
 
 export function WeekByWeek() {
   return (
-    <section className="bg-statnavy a2" id="week-by-week">
+    <section className="a2 bg-statnavy" id="week-by-week">
       <div className="wrap">
         <h2 className="h3t">
           Two to three weeks to a clear <em>deployment plan.</em>

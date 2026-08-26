@@ -8,7 +8,11 @@ type FooterProps = {
   legalName?: string;
 };
 
-export function Footer({ columns = footerColumns, tagline, legalName }: FooterProps) {
+export function Footer({
+  columns = footerColumns,
+  tagline,
+  legalName,
+}: FooterProps) {
   return (
     <footer>
       <div className="foot-top">
@@ -17,7 +21,11 @@ export function Footer({ columns = footerColumns, tagline, legalName }: FooterPr
             <div key={col.title}>
               <div className="foot-title">{col.title}</div>
               {col.links.map((l) => (
-                <SiteLink key={l.href + l.label} className="foot-link" href={l.href}>
+                <SiteLink
+                  key={l.href + l.label}
+                  className="foot-link"
+                  href={l.href}
+                >
                   {l.label}
                 </SiteLink>
               ))}
@@ -30,8 +38,10 @@ export function Footer({ columns = footerColumns, tagline, legalName }: FooterPr
       </div>
       <div className="foot-bottom">
         <div className="wrap">
-          © 2026 {legalName ?? "Hinds Tech and Artificial Intelligence LLC"} ·
-          Privacy
+          © 2026 {legalName ?? "Hinds Tech and Artificial Intelligence LLC"} ·{" "}
+          <SiteLink className="foot-link inline" href="/privacy">
+            Privacy
+          </SiteLink>
         </div>
       </div>
     </footer>

@@ -1,4 +1,5 @@
 import { SiteLink } from "../SiteLink";
+import { fitCheckAssessmentUrl } from "../nav-config";
 
 /** 1 · M02 inline hero (navy gradient + photo/scrim). Ported from mock-fit-check.html. */
 export function FitCheckHero() {
@@ -15,7 +16,7 @@ export function FitCheckHero() {
           place AI would pay off first. Your write-up lands in your inbox.
         </p>
         <div className="ctas">
-          <SiteLink className="pill p-white" href="#fit-check-tool">
+          <SiteLink className="pill p-white" href={fitCheckAssessmentUrl}>
             Start the free Fit Check
           </SiteLink>
           <SiteLink className="tert dark" href="#final">
