@@ -20,8 +20,8 @@ export function HowWeWork() {
           </p>
           <p>
             Three things move the cost: the systems we touch, the readiness of your
-            knowledge, and the sector rules you work under. You get the number on
-            the first call.
+            knowledge, and the sector rules you work under. The diagnostic prices
+            all three and shows the return you can expect.
           </p>
         </div>
       </div>

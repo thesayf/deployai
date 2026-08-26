@@ -12,7 +12,7 @@ export function WhoWeServe() {
           make real decisions about how they run their company.
         </p>
         <p className="lead">
-          They are sophisticated organizations that demand technical excellence
+          They are sophisticated organisations that demand technical excellence
           and strategic insight, and want the responsiveness and partner-level
           attention they require.
         </p>

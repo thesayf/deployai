@@ -59,6 +59,10 @@ body {
 @media(min-width:1024px){ .wrap,.narrow{ padding:0 48px; } }
 :where(.site) section { padding:48px 0; }
 @media(min-width:1024px){ :where(.site) section{ padding:96px 0; } }
+:where(.site) section[id] { scroll-margin-top:64px; }
+/* Case onward links — slim white row after the case CTA (arrow atoms). */
+:where(.site) section.case-next { padding:36px 0; }
+.case-next .wrap { display:flex; gap:48px; flex-wrap:wrap; }
 :where(.site) h1 { font-size:46px; line-height:1.26; font-weight:300; }
 :where(.site) h2 { font-size:34px; line-height:1.24; font-weight:300; }
 @media(min-width:640px){ :where(.site) h1{ font-size:58px; } :where(.site) h2{ font-size:48px; } }
@@ -81,8 +85,10 @@ body {
 .p-ghost { background:none; border-color:#fff; color:#fff; }
 .tert { display:inline-flex; align-items:center; color:var(--blue); font-weight:700; font-size:16px; transition:.2s; text-decoration:none; }
 .tert:hover { color:var(--royal); }
-.tert.dark { color:var(--brightblue); }
-.tert.dark:hover { color:var(--ltblue); }
+/* Dark-ground tert links: white + underline for AA contrast over navy/photo
+   scrims (brightblue measured ~3.9:1 there) and a visible affordance. */
+.tert.dark { color:#fff; text-decoration:underline; text-underline-offset:4px; }
+.tert.dark:hover { color:var(--peri); }
 .tert.ink { color:var(--ink); }
 .tert.ink:hover { text-decoration:underline; }
 .arrow { display:inline-flex; align-items:center; color:var(--blue); font-weight:700; font-size:16px; transition:.2s; text-decoration:none; }
@@ -131,10 +137,8 @@ body {
 
 /* 1 · P01 motion hero */
 .hero { position:relative; background:var(--navy); color:#fff; padding-top:320px; padding-bottom:150px; min-height:100vh; min-height:100dvh; box-sizing:border-box; overflow:hidden; }
-.hero-photo { position:absolute; inset:0; background:url('/site/hero-home.jpg') right 22%/cover no-repeat; }
-@media(max-width:640px){ .hero-photo{ background-position:62% 26%; } }
 .hero-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:right 22%; }
-@media(max-width:640px){ .hero-video { object-position:62% 26%; } .hero .tert.dark { color:#fff; text-decoration:underline; text-underline-offset:4px; } }
+@media(max-width:640px){ .hero-video { object-position:62% 26%; } }
 @media(prefers-reduced-motion:reduce){ .hero-video { display:none; } }
 .hero-scrim { position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,10,37,.94) 0%,rgba(0,10,37,.82) 28%,rgba(0,10,37,.45) 62%,rgba(0,10,37,.12) 100%); }
 .hero .inner { z-index:2; position:relative; }
@@ -179,7 +183,7 @@ body {
 .bg-royal { background:var(--royal); color:#fff; }
 .bg-royal h2 { color:#fff; }
 .tabbar { display:flex; gap:4px; background:var(--field); border-radius:32px; padding:8px; margin-top:44px; flex-wrap:wrap; }
-.tabbtn { flex:1; min-width:140px; border:none; background:none; border-radius:32px; padding:8px 12px; font-family:var(--sans); font-size:16px; font-weight:400; line-height:28px; color:var(--ink); cursor:pointer; transition:.2s; text-align:center; }
+.tabbtn { flex:1 1 auto; min-width:0; white-space:nowrap; border:none; background:none; border-radius:32px; padding:8px 16px; font-family:var(--sans); font-size:16px; font-weight:400; line-height:28px; color:var(--ink); cursor:pointer; transition:.2s; text-align:center; }
 .tabbtn:hover { color:var(--royal); }
 .tabbtn.on { background:var(--blue); color:#fff; }
 .tabbtn:focus-visible { box-shadow:0 0 0 2px #fff,0 0 0 4px var(--ltblue); outline:none; }
@@ -198,7 +202,7 @@ body {
 .tp-cta { margin-top:26px; }
 .tp-cta .pill { background:#fff; color:var(--blue); border-color:var(--blue); }
 .tp-cta .pill:hover { background:var(--blue); color:#fff; border-color:var(--blue); }
-.rail { background:var(--field); border-radius:16px; padding:28px; }
+.rail { background:var(--field); border-radius:16px; padding:28px; align-self:start; }
 .rail .eyebrow { font-size:16px; line-height:24px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--ink); margin-bottom:16px; }
 .rail ul { list-style:none; }
 .rail li { padding:10px 0; border-bottom:1px solid #e4e4e4; font-size:16px; line-height:28px; }
@@ -407,12 +411,6 @@ body {
 .grid20 p { font-size:16px; line-height:28px; }
 @media(max-width:1080px){ .grid20{ grid-template-columns:repeat(2,1fr); } }
 @media(max-width:620px){ .grid20{ grid-template-columns:1fr; } }
-
-/* 4b · P05 rail proof card (services catalogue) — stat + source in the rail,
-   in place of the artslot image. White card on the field rail ground. */
-.rail-proof { margin-top:22px; background:#fff; border-radius:12px; padding:20px 22px; }
-.rail-proof .rp-stat { font-size:20px; line-height:28px; font-weight:700; color:var(--ink); }
-.rail-proof .rp-src { font-size:13px; line-height:20px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--grey); margin-top:8px; }
 
 /* 4d · Stat ledger (lavender ground) — aitx-02 anatomy. */
 .bg-lavender { background:var(--lavender); color:var(--ink); }

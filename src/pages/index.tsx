@@ -1,4 +1,4 @@
-import Head from "next/head";
+import { Seo } from "@/components/site/Seo";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { CredBar } from "@/components/site/CredBar";
@@ -31,15 +31,11 @@ const credBadges = [
 export default function Home() {
   return (
     <>
-      <Head>
-        <title>
-          Deploy AI Studio — We put AI to work inside your business
-        </title>
-        <meta
-          name="description"
-          content="Deploy AI Studio is a boutique applied-AI consultancy. We show you where AI fits inside your business and make it work — fixed price, fixed scope, live in weeks."
-        />
-      </Head>
+      <Seo
+        title="Deploy AI Studio — We put AI to work inside your business"
+        description="Deploy AI Studio is a boutique applied-AI consultancy. We show you where AI fits inside your business and make it work — fixed price, fixed scope, live in weeks."
+        path="/"
+      />
       <div className="site">
         <Navbar />
         <Hero />

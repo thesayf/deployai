@@ -1,4 +1,4 @@
-import Head from "next/head";
+import { Seo } from "@/components/site/Seo";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { JumpNav } from "@/components/site/JumpNav";
@@ -39,15 +39,11 @@ const jumpSections = [
 export default function DataResidency() {
   return (
     <>
-      <Head>
-        <title>
-          Data Residency: use AI without your data leaving your control
-        </title>
-        <meta
-          name="description"
-          content="We bring the model to your data, not your data to the model. It is deployed inside your own environment, your cloud, your region, your governance boundary. Deployed in every major cloud, under your identity and controls, built for regulated sectors."
-        />
-      </Head>
+      <Seo
+        title="Data Residency & Trust | Deploy AI Studio"
+        description="We bring the model to your data, not your data to the model: deployed in your cloud, your region, your governance boundary, built for regulated sectors."
+        path="/data-residency"
+      />
       <div className="site">
         <Navbar />
         <ResidencyHero />

@@ -1,4 +1,4 @@
-import Head from "next/head";
+import { Seo } from "@/components/site/Seo";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { CredBar } from "@/components/site/CredBar";
@@ -25,13 +25,11 @@ const credBadges = [
 export default function Book() {
   return (
     <>
-      <Head>
-        <title>Book a call: a straight answer on AI for your business</title>
-        <meta
-          name="description"
-          content="Book a free thirty-minute call with an experienced engineer. We will look at where AI could create the most value for your business and whether we are the right fit. No obligation, and the booking happens right on this page."
-        />
-      </Head>
+      <Seo
+        title="Book a call | Deploy AI Studio"
+        description="A free thirty-minute call with the engineer who'd build it: where AI could pay off in your business, and whether we're the right fit. No obligation."
+        path="/book"
+      />
       <div className="site">
         <Navbar />
         <BookHero />

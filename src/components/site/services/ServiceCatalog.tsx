@@ -3,178 +3,173 @@ import { cn } from "@/lib/utils";
 import { SiteLink } from "../SiteLink";
 
 /** 4 · P05 tabbed service catalogue (white ground, M07). Seven engagements, one bar.
- *  Same locked P05 anatomy as home OffersTabs; rails carry a proof-stat card
- *  (or capability card) instead of an image, per the aitx solutions precedent. */
+ *  Rubric anatomy (FEATURE-SEGMENT-ANATOMY.md): buyer outcomes hold the main
+ *  column under one fixed benefit stem; delivery process lives in the rail.
+ *  Names are the industry-standard service names, ratified 2026-08-26. */
 type Service = {
   id: string;
+  /** Tab label — canonical name, short form only where the bar demands it. */
   tab: string;
   name: string;
   line: string;
-  desc: string;
+  desc?: string;
+  /** Four verb-first buyer outcomes under the fixed stem. */
   bullets: string[];
   after: string;
   ctaLabel: string;
+  /** Delivery process steps — the detail layer. */
   rail: string[];
-  proof?: { stat: string; source?: string };
 };
+
+const STEM = "This work can help your organisation:";
+const RAIL_LABEL = "How it's delivered";
 
 const services: Service[] = [
   {
     id: "s1",
-    tab: "Proof of Value",
-    name: "Proof of Value",
-    line: "Thirty days to prove one AI use case pays.",
-    desc: "For any organisation asking whether AI can actually do this for them. Most pilots never prove their worth: MIT found only around 5% reach rapid revenue impact. We build a working Claude solution, instrument it against a KPI you choose, and end with a go, pivot, or stop decision. Not a demo. Not a science project.",
+    tab: "AI Proof of Value",
+    name: "AI Proof of Value",
+    line: "Prove one AI use case pays, before you commit to more.",
+    desc: "For any organisation still asking whether AI can do this. Not a demo. Not a science project.",
     bullets: [
-      "Discovery: pick the use case, the sponsor, and the KPI",
-      "Sprint one: stand up the solution, wire in your data",
-      "Sprint two: iterate on real data, run evaluations, measure",
-      "Readout: measured results, a clear decision, a costed route to production",
+      "See a working Claude build run on your own data.",
+      "Measure it against a KPI that you choose.",
+      "End with a clear go, pivot, or stop decision.",
+      "Leave with the code and a costed route to production.",
     ],
-    after: "Then: production build and ongoing operation",
-    ctaLabel: "Let's talk Proof of Value",
+    after: "Then: production build and ongoing operation.",
+    ctaLabel: "Let's talk AI Proof of Value",
     rail: [
-      "A working, instrumented Claude solution",
-      "Measured performance against your KPI",
-      "A decision with the evidence behind it",
-      "The code and the evaluation harness",
-      "A costed route to production",
+      "Discovery: the use case, the sponsor, the KPI",
+      "Sprint one: stand up the build, wire in your data",
+      "Sprint two: iterate on real data, run evaluations",
+      "Readout: the numbers and a costed route to production",
     ],
-    proof: { stat: "20+ minute waits to near-instant, costs down 30%+", source: "StubHub" },
   },
   {
     id: "s2",
-    tab: "Claude Code",
+    tab: "Claude Code Enablement",
     name: "Claude Code Enablement",
     line: "Turn Claude Code licences into measured engineering delivery.",
-    desc: "For engineering organisations where adoption is patchy, security is blocking rollout, or nobody can measure the gain. Faros found AI-adopting developers complete 21% more tasks and merge 98% more pull requests. That return arrives when deployment is secure, conventions are shared, and adoption is tracked.",
+    desc: "For engineering organisations where adoption is patchy, security blocks rollout, or nobody can measure the gain.",
     bullets: [
-      "Technical setup: SSO, provisioning, allowlists, telemetry",
-      "Phased launch: pilot group first, champions in each department",
-      "Training: team sessions, project conventions, custom commands, CI integration",
-      "Scaling: expansion across teams with office hours and support",
+      "Roll out Claude Code securely, with the right access and controls.",
+      "Get developers working to shared conventions across your teams.",
+      "Add custom commands and skills shaped to your stack.",
+      "Track adoption on a dashboard that shows the real return.",
     ],
-    after: "Then: ongoing enablement and measurement at scale",
-    ctaLabel: "Let's talk Claude Code",
+    after: "Then: ongoing enablement and measurement at scale.",
+    ctaLabel: "Let's talk Claude Code Enablement",
     rail: [
-      "A secure, configured deployment",
-      "Developers trained to shared conventions",
-      "Custom commands and skills for your stack",
-      "An adoption dashboard that proves the return",
+      "Technical setup: SSO, provisioning, allowlists, telemetry",
+      "Phased launch: a pilot group first, then champions per team",
+      "Training: sessions, project conventions, custom commands, CI",
+      "Scaling: rollout across teams, with office hours and support",
     ],
-    proof: { stat: "Up to 40% productivity increase", source: "HubSpot" },
   },
   {
     id: "s3",
-    tab: "Modernization",
-    name: "Code Modernization",
-    line: "Migrate the legacy system nobody fully understands.",
-    desc: "For organisations stuck on ageing systems, losing the people who maintain them, or paying maintenance that blocks every move. Understanding old code used to cost more than rewriting it. That equation has flipped: AI reads the whole codebase, extracts the business logic, and documents what static analysis misses.",
+    tab: "Legacy Modernisation",
+    name: "Legacy Modernisation",
+    line: "Get off the legacy system without losing what it knows.",
     bullets: [
-      "Assess: extract the logic, map dependencies, prove one subsystem",
-      "Migrate: structure-preserving translation with generated test suites",
-      "Validate: run old and new in parallel, compare outputs",
-      "Scale: reuse proven conversion patterns across the estate",
+      "Recover the business logic buried in the code, documented at last.",
+      "Move onto a modern stack, tests built as you go.",
+      "Prove the new matches the old, run side by side.",
+      "Cut over in phases, reusing what works across the estate.",
     ],
-    after: "Then: the wider programme and ongoing support",
-    ctaLabel: "Let's talk Modernization",
+    after: "Then: the wider programme and ongoing support.",
+    ctaLabel: "Let's talk Legacy Modernisation",
     rail: [
-      "Business logic recovered and documented",
-      "A tested migration to a modern stack",
-      "Parallel-run proof the new matches the old",
-      "A phased cutover plan",
+      "Assess: extract the logic, map dependencies, prove one subsystem",
+      "Migrate: structure-preserving translation, with generated tests",
+      "Validate: run old and new in parallel, compare outputs",
+      "Scale: reuse proven patterns across the estate",
     ],
-    proof: {
-      stat: "10,000 lines of Scala to Java in 4 days, against 10 estimated engineer-weeks",
-      source: "Stripe",
-    },
   },
   {
     id: "s4",
-    tab: "Readiness",
+    tab: "AI Readiness Assessment",
     name: "AI Readiness Assessment",
     line: "Know exactly where you stand, and what to do first.",
-    desc: "For organisations that want AI but do not know where to begin, or whose board is asking for a strategy. McKinsey found 60% of C-suite executives receive AI advice too vague to use. This assessment scores you across six dimensions and replaces the vague score with a ranked plan.",
+    desc: "For any organisation that wants AI but isn't sure where to begin.",
     bullets: [
-      "Scope: objectives, documentation, interview plan",
+      "Get a clear score across the six dimensions that matter.",
+      "See your gaps ranked by the impact of fixing them.",
+      "Compare yourself against peers who have done this already.",
+      "Leave with a prioritised roadmap your leadership can act on.",
+    ],
+    after: "Then: your first AI Proof of Value.",
+    ctaLabel: "Let's talk AI Readiness Assessment",
+    rail: [
+      "Scope: objectives, documents, interview plan",
       "Discovery: stakeholder interviews, infrastructure and data review",
       "Scoring: each dimension benchmarked, gaps ranked by impact",
-      "Readout: executive summary and a 90-day action plan",
-    ],
-    after: "Then: your first Proof of Value",
-    ctaLabel: "Let's talk Readiness",
-    rail: [
-      "A readiness scorecard across six dimensions",
-      "A gap analysis your board can read",
-      "Peer benchmarking",
-      "A prioritised 90-day roadmap",
+      "Readout: an executive summary and a prioritised action plan",
     ],
   },
   {
     id: "s5",
-    tab: "Adoption",
-    name: "AI Enablement & Change Management",
+    tab: "AI Adoption",
+    name: "AI Adoption & Change Management",
     line: "Turn deployed AI tools into daily habits.",
-    desc: "For organisations that rolled out AI and saw little uptake, or whose people are nervous. The barrier is rarely the technology. Prosci found 43% of AI-adoption failures stem from weak executive sponsorship, and active sponsorship lifts the odds of success by 72%. We build the people side.",
+    desc: "For organisations that rolled out AI and saw little uptake, or whose people feel wary.",
     bullets: [
+      "Get a clear adoption plan built around your actual rollout.",
+      "Train people on their real tasks, role by role.",
+      "Build a champion network and the comms to carry it.",
+      "Measure adoption and keep it climbing after the launch fades.",
+    ],
+    after: "Then: a standing reinforcement programme.",
+    ctaLabel: "Let's talk AI Adoption & Change Management",
+    rail: [
       "Sponsors: secure active, visible executive backing",
       "Segment: map impacted groups, skill gaps, resistance points",
-      "Enable: role-based training on real tasks, champions in each team",
+      "Enable: role-based training on real tasks, champions per team",
       "Reinforce: office hours, adoption measurement, continuous refresh",
-    ],
-    after: "Then: a standing reinforcement programme",
-    ctaLabel: "Let's talk Adoption",
-    rail: [
-      "An adoption plan for your rollout",
-      "Role-based training tied to real work",
-      "A champion network",
-      "Launch communications",
-      "An adoption dashboard",
     ],
   },
   {
     id: "s6",
-    tab: "Shadow AI",
+    tab: "Shadow AI Assessment",
     name: "Shadow AI Assessment",
-    line: "Find the AI your staff already use, and make it safe.",
-    desc: "For organisations that know staff are using AI but cannot see what, or that have no AI policy. LayerX found 82% of sensitive pastes into AI tools come from unmanaged personal accounts. We build the inventory, score the risk, and stand up a sanctioned alternative.",
+    line: "Know what AI your staff already use, and make it safe.",
+    desc: "For organisations that know staff use AI but cannot see it.",
     bullets: [
+      "Get one ranked list of the tools in use, no guesswork.",
+      "Know the risk each carries, by data and business unit.",
+      "Put a usable AI policy and incident playbook in place.",
+      "Give staff a safe, sanctioned option they will prefer.",
+    ],
+    after: "Then: sanctioned rollout and ongoing monitoring.",
+    ctaLabel: "Let's talk Shadow AI Assessment",
+    rail: [
       "Discovery: network, software, and expense signals build the inventory",
       "Amnesty survey: a no-punishment self-report catches the rest",
       "Risk scoring: every tool mapped to business unit and data class",
       "Governance: acceptable-use policy, incident playbook, safe default",
     ],
-    after: "Then: sanctioned rollout and ongoing monitoring",
-    ctaLabel: "Let's talk Shadow AI",
-    rail: [
-      "A ranked inventory of every AI tool in use",
-      "A risk register",
-      "An acceptable-use policy",
-      "An incident-response playbook",
-      "A recommended safe alternative",
-    ],
   },
   {
     id: "s7",
-    tab: "Managed AI",
+    tab: "Managed AI Services",
     name: "Managed AI Services",
-    line: "We keep your production AI working, safe, and improving.",
-    desc: "For organisations running AI in production with nobody to operate it: token costs climbing, quality drifting silently, no team watching. We operate your systems under an agreed service level, with monitoring, evaluation, guardrails, and incident response, so you never have to staff an AI operations team.",
+    line: "Keep your production AI working, safe, and improving.",
+    desc: "For organisations running AI in production with nobody to operate it.",
     bullets: [
-      "Onboard: map models, agents, and pipelines, stand up service levels",
+      "Have it monitored under an agreed service level.",
+      "Control spend and keep guardrails on, without a new hire.",
+      "Get a real response when something breaks, day or night.",
+      "Raise quality over time, even on systems you did not build.",
+    ],
+    after: "Then: the ongoing operation behind every build.",
+    ctaLabel: "Let's talk Managed AI Services",
+    rail: [
+      "Onboard: map models, agents, and pipelines, set service levels",
       "Instrument: tracing, evaluation suites, cost attribution, guardrails",
-      "Operate: real-time alerts, incident management, human review where regulated",
+      "Operate: real-time alerts, incident management, human review where needed",
       "Improve: continuous evaluation, model routing, monthly reviews",
     ],
-    after: "The operate step behind every build",
-    ctaLabel: "Let's talk Managed AI",
-    rail: [
-      "A monitored system under an agreed service level",
-      "Cost control and safety guardrails",
-      "Incident response",
-      "Monthly service reviews",
-    ],
-    proof: { stat: "Works even for systems you did not build" },
   },
 ];
 
@@ -210,8 +205,8 @@ export function ServiceCatalog() {
             <div>
               <div className="tp-name">{s.name}</div>
               <div className="tp-line">{s.line}</div>
-              <p className="tp-desc">{s.desc}</p>
-              <div className="tp-help">How it&rsquo;s delivered:</div>
+              {s.desc && <p className="tp-desc">{s.desc}</p>}
+              <div className="tp-help">{STEM}</div>
               <ul className="tp-bullets">
                 {s.bullets.map((b) => (
                   <li key={b}>{b}</li>
@@ -226,18 +221,12 @@ export function ServiceCatalog() {
               </div>
             </div>
             <div className="rail">
-              <div className="eyebrow">What you get</div>
+              <div className="eyebrow">{RAIL_LABEL}</div>
               <ul>
                 {s.rail.map((r) => (
                   <li key={r}>{r}</li>
                 ))}
               </ul>
-              {s.proof && (
-                <div className="rail-proof">
-                  <div className="rp-stat">{s.proof.stat}</div>
-                  {s.proof.source && <div className="rp-src">{s.proof.source}</div>}
-                </div>
-              )}
             </div>
           </div>
         ))}

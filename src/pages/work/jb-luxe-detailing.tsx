@@ -1,6 +1,7 @@
-import Head from "next/head";
+import { Seo } from "@/components/site/Seo";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
+import { CaseNext } from "@/components/site/case/CaseNext";
 import { CaseHero } from "@/components/site/case/CaseHero";
 import { CaseGlance } from "@/components/site/case/CaseGlance";
 import { CaseInterlude } from "@/components/site/case/CaseInterlude";
@@ -16,16 +17,12 @@ import { BookingMock } from "@/components/site/case/BookingMock";
 export default function JbLuxeCase() {
   return (
     <>
-      <Head>
-        <title>
-          JB Luxe Detailing: a booking assistant that never sleeps | Deploy AI
-          Studio
-        </title>
-        <meta
-          name="description"
-          content="How we built a 24/7 AI booking assistant and a CRM for JB Luxe Detailing, a premium mobile detailer, and tripled its bookings."
-        />
-      </Head>
+      <Seo
+        title="JB Luxe Detailing: a booking assistant that never sleeps"
+        description="How we built a 24/7 AI booking assistant and a CRM for JB Luxe Detailing, a premium mobile detailer, and tripled its bookings."
+        path="/work/jb-luxe-detailing"
+        ogImage="/site/og-case-jb.jpg"
+      />
       <div className="site">
         <Navbar />
 
@@ -184,6 +181,7 @@ export default function JbLuxeCase() {
           }
         />
 
+        <CaseNext next="Showcase Cinemas" nextHref="/work/showcase-cinemas" />
         <Footer />
       </div>
     </>

@@ -1,6 +1,7 @@
-import Head from "next/head";
+import { Seo } from "@/components/site/Seo";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
+import { CaseNext } from "@/components/site/case/CaseNext";
 import { CaseHero } from "@/components/site/case/CaseHero";
 import { CaseGlance } from "@/components/site/case/CaseGlance";
 import { CaseInterlude } from "@/components/site/case/CaseInterlude";
@@ -20,15 +21,12 @@ function Shot({ src, alt }: { src: string; alt: string }) {
 export default function ShowcaseCase() {
   return (
     <>
-      <Head>
-        <title>
-          Showcase Cinemas: AI scheduling across the chain | Deploy AI Studio
-        </title>
-        <meta
-          name="description"
-          content="How we built a Claude-powered scheduling platform for Showcase Cinemas: scheduling time down 95%, revenue per screen up 18%, live in four weeks."
-        />
-      </Head>
+      <Seo
+        title="Showcase Cinemas: AI scheduling across the chain"
+        description="How we built a Claude-powered scheduling platform for Showcase Cinemas: scheduling time down 95%, revenue per screen up 18%, live in four weeks."
+        path="/work/showcase-cinemas"
+        ogImage="/site/og-case-showcase.jpg"
+      />
       <div className="site">
         <Navbar />
 
@@ -233,6 +231,7 @@ export default function ShowcaseCase() {
           }
         />
 
+        <CaseNext next="Centric Community Research" nextHref="/work/centric-community-research" />
         <Footer />
       </div>
     </>

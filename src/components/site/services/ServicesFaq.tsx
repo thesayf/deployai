@@ -4,11 +4,11 @@ import { Accordion, type AccordionItem } from "../Accordion";
 const items: AccordionItem[] = [
   {
     q: "What does this cost?",
-    a: "Every engagement is a fixed fee scoped to headcount and site count, agreed before we start. No hourly billing and no open-ended discovery phase. We do not publish figures because the honest range is wide. You get a real number on the first call, not after three meetings.",
+    a: "Every engagement is a fixed fee scoped to headcount and site count, agreed before we start. No hourly billing and no open-ended discovery phase. We do not publish figures because the honest range is wide. The number comes out of the Deployment Diagnostic, inside a business case with a spend baseline and the payback to expect.",
   },
   {
-    q: "What exactly is a Proof of Value?",
-    a: "A 30-day build that proves one AI use case against a KPI you choose. You get a working Claude solution, measured results, the code, and a clear go, pivot, or stop decision. If the numbers do not justify production, we say so.",
+    q: "What exactly is an AI Proof of Value?",
+    a: "A short, fixed-scope build that proves one AI use case against a KPI you choose. You get a working Claude solution, measured results, the code, and a clear go, pivot, or stop decision. If the numbers do not justify production, we say so.",
   },
   {
     q: "We've already tried AI and it didn't go anywhere. Is this different?",
@@ -20,7 +20,7 @@ const items: AccordionItem[] = [
   },
   {
     q: "We don't know where to start with AI.",
-    a: "Most organizations don't. We begin by identifying high-impact business opportunities, assessing your AI readiness, and creating a practical implementation roadmap.",
+    a: "Most organisations don't. We begin by identifying high-impact business opportunities, assessing your AI readiness, and creating a practical implementation roadmap.",
   },
   {
     q: "Will AI disrupt our existing workflows?",

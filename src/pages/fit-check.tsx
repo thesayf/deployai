@@ -1,4 +1,4 @@
-import Head from "next/head";
+import { Seo } from "@/components/site/Seo";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { CredBar } from "@/components/site/CredBar";
@@ -30,13 +30,11 @@ const credBadges = [
 export default function FitCheck() {
   return (
     <>
-      <Head>
-        <title>AI Fit Check: Deploy AI Studio</title>
-        <meta
-          name="description"
-          content="Ten minutes to a scored verdict on where AI fits. It scores five things: data readiness, workflow clarity, team capacity, governance, and existing tooling, then names the one workflow to start with. Add your email and your verdict and full write-up come straight back."
-        />
-      </Head>
+      <Seo
+        title="Free AI Fit Check | Deploy AI Studio"
+        description="Ten minutes to a scored verdict on where AI fits your business, and the one workflow to start with. Your write-up lands in your inbox."
+        path="/fit-check"
+      />
       <div className="site">
         <Navbar />
         <FitCheckHero />

@@ -1,4 +1,4 @@
-import Head from "next/head";
+import { Seo } from "@/components/site/Seo";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { CTABand } from "@/components/site/CTABand";
@@ -36,13 +36,11 @@ const jumpSections = [
 export default function Services() {
   return (
     <>
-      <Head>
-        <title>Services — The AI Deployment Path | Deploy AI Studio</title>
-        <meta
-          name="description"
-          content="We scope, build, and deliver AI systems, with a timeline that doesn't move. From AI strategy and readiness to agents, integration, and rollout. Fixed price, fixed scope."
-        />
-      </Head>
+      <Seo
+        title="Services | Deploy AI Studio"
+        description="Seven AI services, one path: prove value, build and modernise, enable your teams, and run AI in production. Fixed fee, scoped before we start."
+        path="/services"
+      />
       <div className="site">
         <Navbar />
         <ServicesHero />

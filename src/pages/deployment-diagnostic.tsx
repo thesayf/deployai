@@ -1,4 +1,4 @@
-import Head from "next/head";
+import { Seo } from "@/components/site/Seo";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { JumpNav } from "@/components/site/JumpNav";
@@ -40,13 +40,11 @@ const jumpSections = [
 export default function DeploymentDiagnostic() {
   return (
     <>
-      <Head>
-        <title>Deployment Diagnostic — Deploy AI Studio</title>
-        <meta
-          name="description"
-          content="A fixed-fee, two to three week diagnostic that ends in a costed deployment plan, not a strategy deck. We find the two to three places where AI creates the fastest ROI and turn ambition into measurable outcomes."
-        />
-      </Head>
+      <Seo
+        title="Deployment Diagnostic | Deploy AI Studio"
+        description="A fixed-fee diagnostic that finds the workflows where AI pays for itself first and ends in a costed deployment plan, not a strategy deck."
+        path="/deployment-diagnostic"
+      />
       <div className="site">
         <Navbar />
         <DiagnosticHero />

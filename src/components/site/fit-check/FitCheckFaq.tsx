@@ -20,7 +20,7 @@ const items: AccordionItem[] = [
   },
   {
     q: "What does deployment cost?",
-    a: "A fixed fee, agreed in writing before we start. You get the number on the first call.",
+    a: "A fixed fee, agreed in writing before we start. The figure comes out of the Deployment Diagnostic, with the business case behind it.",
   },
 ];
 

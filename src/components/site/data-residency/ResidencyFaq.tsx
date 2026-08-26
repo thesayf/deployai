@@ -22,7 +22,7 @@ const items = [
   },
   {
     q: '"What does this cost, and how fast can it go live?"',
-    a: "Both depend on scope. You get a real number on the first call, and the Deployment Path shows the timeline from a two-to-three-week start onward.",
+    a: "Both depend on scope. The Deployment Diagnostic puts a number and a payback period on it, and the Deployment Path shows the shape of the timeline from there.",
   },
 ];
 

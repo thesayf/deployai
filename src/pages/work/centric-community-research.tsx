@@ -1,6 +1,7 @@
-import Head from "next/head";
+import { Seo } from "@/components/site/Seo";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
+import { CaseNext } from "@/components/site/case/CaseNext";
 import { CaseHero } from "@/components/site/case/CaseHero";
 import { CaseGlance } from "@/components/site/case/CaseGlance";
 import { CaseInterlude } from "@/components/site/case/CaseInterlude";
@@ -20,15 +21,12 @@ function Shot({ src, alt }: { src: string; alt: string }) {
 export default function CentricCase() {
   return (
     <>
-      <Head>
-        <title>
-          Centric Community Research: tenders out in days | Deploy AI Studio
-        </title>
-        <meta
-          name="description"
-          content="How we built an AI-powered research platform for Centric Community Research: a searchable knowledge base of 50+ projects, proposal drafts in about 15 minutes, tenders out in days, live in five weeks."
-        />
-      </Head>
+      <Seo
+        title="Centric Community Research: tenders out in days"
+        description="How we built an AI research platform for Centric Community Research: 50+ projects searchable, proposal drafts in minutes, tenders out in days."
+        path="/work/centric-community-research"
+        ogImage="/site/og-case-centric.jpg"
+      />
       <div className="site">
         <Navbar />
 
@@ -241,6 +239,7 @@ export default function CentricCase() {
           }
         />
 
+        <CaseNext next="JB Luxe Detailing" nextHref="/work/jb-luxe-detailing" />
         <Footer />
       </div>
     </>
