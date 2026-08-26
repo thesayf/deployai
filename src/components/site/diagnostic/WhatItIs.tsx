@@ -4,24 +4,22 @@ export function WhatItIs() {
     <section className="whatis" id="what-it-is">
       <div className="wrap">
         <h2>
-          When AI flows across your data, systems, and teams, the whole business{" "}
-          <em>moves.</em>
+          We start with the <em>foundations.</em>
         </h2>
         <p className="lead">
-          The Diagnostic answers the key questions before anyone writes code: what
-          should we apply AI to, in what order, what will it cost and return, and who
-          owns it. The output is a costed deployment plan with a business case attached.
+          The Diagnostic answers the key questions before anyone writes code: what to
+          apply AI to, in what order, what it will cost and return, and who owns it.
         </p>
         <p className="lead">
-          We score on evidence, not a self-assessment. The scan is the same regardless
-          of engagement size; what changes is how many areas get the deep treatment and
-          how much evidence we gather.
+          Those answers depend on the ground AI will stand on. So we examine the
+          foundations and score each one against evidence from your real systems,
+          your data, and how your teams actually work.
         </p>
         <div
           className="eyebrow"
           style={{ color: "var(--grey)", marginBottom: 16 }}
         >
-          What we look at:
+          The foundations
         </div>
         <div className="wlrule" />
         <div className="bp">
@@ -41,7 +39,7 @@ export function WhatItIs() {
               letterSpacing="2"
               fill="#DEFF4D"
             >
-              THE DIAGNOSTIC
+              THE FOUNDATIONS
             </text>
             <line x1="480" y1="44" x2="480" y2="430" stroke="#0F1C41" strokeWidth="1.5" strokeDasharray="5 5" />
             <line x1="450" y1="140" x2="480" y2="140" stroke="#0F1C41" strokeWidth="1.5" strokeDasharray="5 5" />
@@ -69,7 +67,7 @@ export function WhatItIs() {
             <rect x="20" y="225" width="430" height="120" rx="10" fill="#fff" stroke="#0F1C41" strokeWidth="1.5" strokeDasharray="5 5" />
             <circle cx="44" cy="255" r="5" fill="#0C62FB" />
             <text x="62" y="261" fontFamily="Hanken Grotesk" fontSize="19" fontWeight="700" fill="#0F1C41">
-              Organization and culture
+              Organisation and culture
             </text>
             <text x="62" y="289" fontFamily="Hanken Grotesk" fontSize="15" fill="#696969">
               <tspan x="62" dy="0">What is the level of your AI literacy, workforce</tspan>

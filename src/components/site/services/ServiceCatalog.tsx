@@ -48,7 +48,7 @@ const services: Service[] = [
   },
   {
     id: "s2",
-    tab: "Claude Code Enablement",
+    tab: "Claude Code",
     name: "Claude Code Enablement",
     line: "Turn Claude Code licences into measured engineering delivery.",
     desc: "For engineering organisations where adoption is patchy, security blocks rollout, or nobody can measure the gain.",
@@ -89,7 +89,7 @@ const services: Service[] = [
   },
   {
     id: "s4",
-    tab: "AI Readiness Assessment",
+    tab: "AI Readiness",
     name: "AI Readiness Assessment",
     line: "Know exactly where you stand, and what to do first.",
     desc: "For any organisation that wants AI but isn't sure where to begin.",
@@ -106,6 +106,28 @@ const services: Service[] = [
       "Discovery: stakeholder interviews, infrastructure and data review",
       "Scoring: each dimension benchmarked, gaps ranked by impact",
       "Readout: an executive summary and a prioritised action plan",
+    ],
+  },
+  {
+    id: "s8",
+    tab: "AI Workshops",
+    name: "AI Workshops",
+    line: "Get your teams genuinely good at AI, on their own work.",
+    desc: "For organisations whose people are using AI ad hoc, or whose training so far changed nothing.",
+    bullets: [
+      "Get every team trained on their real work, role by role.",
+      "Take people from curious to fluent on the tools you pay for.",
+      "Grow in-house champions who keep the momentum going.",
+      "Leave with reusable role guides and adoption you can measure.",
+    ],
+    after: "Then: a standing enablement and change programme.",
+    ctaLabel: "Let's talk AI Workshops",
+    rail: [
+      "Scope: pick the departments, roles, and use cases",
+      "Install: Claude Enterprise set up and configured, where you need it",
+      "Train: hands-on sessions per team, on their own work",
+      "Champions: train the people who will carry it forward",
+      "Measure: usage reviewed after each wave, gaps retrained",
     ],
   },
   {
@@ -131,7 +153,7 @@ const services: Service[] = [
   },
   {
     id: "s6",
-    tab: "Shadow AI Assessment",
+    tab: "Shadow AI",
     name: "Shadow AI Assessment",
     line: "Know what AI your staff already use, and make it safe.",
     desc: "For organisations that know staff use AI but cannot see it.",

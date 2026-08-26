@@ -8,8 +8,8 @@ export function OnRamp() {
           design is what turns adoption into <em>outcomes.</em>
         </h2>
         <p className="lead">
-          This turns a wishlist into a ranked, scored backlog, and numbers a CFO will
-          fund, built from your spend.
+          The Diagnostic turns your wishlist into a ranked, scored backlog, with
+          numbers a CFO will fund.
         </p>
       </div>
     </section>

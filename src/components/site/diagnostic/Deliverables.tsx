@@ -1,7 +1,7 @@
 /** 6 · M13-variant deliverable cards (white) — M12 numerals, no CTA/meta/feature.
  *  #what-you-get. Nine numbered deliverables, verbatim from the mock. */
 const items = [
-  "An AI readiness assessment scored across the six areas.",
+  "Your foundations, scored on evidence.",
   "Gap analysis identifying where strategy, data, talent, and governance need strengthening.",
   "A stakeholder map.",
   "Process maps built from structured data, step by step, handoff by handoff.",

@@ -5,7 +5,6 @@ import { CredBar } from "@/components/site/CredBar";
 import { AboutHero } from "@/components/site/about/AboutHero";
 import { WhoWeServe } from "@/components/site/about/WhoWeServe";
 import { AboutFounder } from "@/components/site/about/AboutFounder";
-import { HowWeOperate } from "@/components/site/about/HowWeOperate";
 import { AnthropicRelationship } from "@/components/site/about/AnthropicRelationship";
 import { AboutCases } from "@/components/site/about/AboutCases";
 import { AboutHowWeWork } from "@/components/site/about/AboutHowWeWork";
@@ -41,7 +40,6 @@ export default function About() {
         <CredBar label="Certified across the Claude stack" badges={credBadges} />
         <WhoWeServe />
         <AboutFounder />
-        <HowWeOperate />
         <AnthropicRelationship />
         <AboutCases />
         <AboutHowWeWork />

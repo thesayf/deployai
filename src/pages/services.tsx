@@ -38,7 +38,7 @@ export default function Services() {
     <>
       <Seo
         title="Services | Deploy AI Studio"
-        description="Seven AI services, one path: prove value, build and modernise, enable your teams, and run AI in production. Fixed fee, scoped before we start."
+        description="Eight AI services, one path: prove value, build and modernise, train and enable your teams, and run AI in production. Fixed fee, scoped before we start."
         path="/services"
       />
       <div className="site">

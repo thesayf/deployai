@@ -1,22 +1,14 @@
 import { SiteLink } from "./SiteLink";
-import {
-  footerColumns,
-  footerTagline,
-  type NavItem,
-} from "./nav-config";
+import { footerColumns, type NavItem } from "./nav-config";
 
 type FooterProps = {
   columns?: { title: string; links: NavItem[] }[];
+  /** Optional credential line under the Trust column; off by default. */
   tagline?: string;
-  /** The slot for the registered legal name (open decision 11.5). */
   legalName?: string;
 };
 
-export function Footer({
-  columns = footerColumns,
-  tagline = footerTagline,
-  legalName,
-}: FooterProps) {
+export function Footer({ columns = footerColumns, tagline, legalName }: FooterProps) {
   return (
     <footer>
       <div className="foot-top">
@@ -38,13 +30,8 @@ export function Footer({
       </div>
       <div className="foot-bottom">
         <div className="wrap">
-          © 2026{" "}
-          {legalName ? (
-            legalName
-          ) : (
-            <span className="slot-label">[LEGAL NAME — open decision 11.5]</span>
-          )}{" "}
-          · Privacy
+          © 2026 {legalName ?? "Hinds Tech and Artificial Intelligence LLC"} ·
+          Privacy
         </div>
       </div>
     </footer>

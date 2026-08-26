@@ -7,7 +7,8 @@ import { CalendlyInline } from "@/components/site/CalendlyInline";
 import { Hero } from "@/components/site/home/Hero";
 import { PainCards } from "@/components/site/home/PainCards";
 import { JourneyPath } from "@/components/site/home/JourneyPath";
-import { OffersTabs } from "@/components/site/home/OffersTabs";
+import { ServicesPointer } from "@/components/site/home/ServicesPointer";
+import { CaseProof } from "@/components/site/home/CaseProof";
 import { ProofStats } from "@/components/site/home/ProofStats";
 import { DataResidency } from "@/components/site/home/DataResidency";
 import { Team } from "@/components/site/home/Team";
@@ -42,7 +43,8 @@ export default function Home() {
         <CredBar label="Certified across the Claude stack" badges={credBadges} />
         <PainCards />
         <JourneyPath />
-        <OffersTabs />
+        <ServicesPointer />
+        <CaseProof />
         <ProofStats />
         <DataResidency />
         <Team />

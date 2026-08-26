@@ -404,6 +404,9 @@ body {
 /* 4 · M20 service grid (white) */
 .svc h2 { margin-bottom:6px; }
 .svc .sub { font-size:20px; line-height:32px; color:var(--ink); margin-bottom:44px; }
+.svc .more { margin-top:44px; }
+.home-cases h2 { margin-bottom:48px; }
+
 .svc .rule { border-top:1px solid #ccc; margin-bottom:44px; }
 .grid20 { display:grid; grid-template-columns:repeat(4,1fr); gap:36px 16px; }
 .grid20 h4 { font-size:20px; line-height:28px; font-weight:700; margin-bottom:12px; }
@@ -721,22 +724,41 @@ body {
 .about-cases h2 { text-align:center; font-size:34px; line-height:1.24; font-weight:300; color:#fff; max-width:891px; margin:0 auto 24px; }
 @media(min-width:1024px){ .about-cases h2 { font-size:48px; line-height:60px; } }
 .about-cases .case-intro { font-size:20px; line-height:32px; font-weight:400; color:rgba(255,255,255,.75); text-align:center; max-width:760px; margin:0 auto 64px; }
-.about-cases .sc-row { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; max-width:1360px; margin:0 auto; }
-@media(max-width:860px){ .about-cases .sc-row { grid-template-columns:1fr; max-width:520px; } }
-.about-cases .scard { background:#0F1C41; border-radius:0 0 30px 30px; overflow:hidden; position:relative; cursor:pointer; transition:background .25s ease; }
-.about-cases .scard-link { display:block; text-decoration:none; color:inherit; }
-.about-cases .scard .sc-front { position:relative; opacity:1; transition:opacity .25s ease; }
-.about-cases .scard .sc-back { position:absolute; inset:0; opacity:0; pointer-events:none; display:flex; flex-direction:column; justify-content:space-between; padding:28px; transition:opacity .25s ease; }
-.about-cases .sc-img { width:100%; aspect-ratio:16 / 9; overflow:hidden; background:#0F1C41; }
-.about-cases .sc-shot { width:100%; height:100%; object-fit:cover; display:block; }
-.about-cases .sc-tag { font-size:14px; line-height:22px; color:#fff; padding:0 28px; margin:22px 0 10px; }
-.about-cases .sc-title { font-size:26px; line-height:32px; font-weight:700; color:#fff; padding:0 28px 30px; }
-.about-cases .sc-desc { font-size:26px; line-height:38px; color:#292929; }
-.about-cases .sc-desc b { font-weight:700; }
-.about-cases .sc-read { font-size:16px; line-height:22px; color:#292929; }
-.about-cases .scard:hover, .about-cases .scard:focus-within, .about-cases .scard.flip { background:#F5F5F5; }
-.about-cases .scard:hover .sc-front, .about-cases .scard:focus-within .sc-front, .about-cases .scard.flip .sc-front { opacity:0; pointer-events:none; }
-.about-cases .scard:hover .sc-back, .about-cases .scard:focus-within .sc-back, .about-cases .scard.flip .sc-back { opacity:1; pointer-events:auto; }
+.sc-cards .sc-row { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; max-width:1360px; margin:0 auto; }
+@media(max-width:860px){ .sc-cards .sc-row { grid-template-columns:1fr; max-width:520px; } }
+/* Accent cycle — positional and deterministic (Slalom's nth-child mechanism);
+   the five tokens are the only grounds where ink text passes AA. */
+.sc-cards .scard:nth-child(5n+1){ --accent:var(--peri); }
+.sc-cards .scard:nth-child(5n+2){ --accent:var(--cyan); }
+.sc-cards .scard:nth-child(5n+3){ --accent:var(--coral); }
+.sc-cards .scard:nth-child(5n+4){ --accent:var(--lavender); }
+.sc-cards .scard:nth-child(5n+5){ --accent:var(--lime); }
+.sc-cards .scard { background:var(--indigo); border-radius:0 0 30px 30px; overflow:hidden; position:relative; cursor:pointer; transition:background .25s ease; }
+.sc-cards .scard-link { display:block; text-decoration:none; color:inherit; }
+.sc-cards .scard .sc-front { position:relative; opacity:1; transition:opacity .25s ease; }
+.sc-cards .scard .sc-back { position:absolute; inset:0; opacity:0; pointer-events:none; display:flex; flex-direction:column; justify-content:space-between; padding:24px 24px 8px; transition:opacity .25s ease; }
+.sc-cards .sc-img { width:100%; aspect-ratio:4 / 5; overflow:hidden; background:var(--indigo); }
+.sc-cards .sc-shot { width:100%; height:100%; object-fit:cover; display:block; }
+.sc-cards .sc-tag { font-size:14px; line-height:22px; letter-spacing:2px; text-transform:uppercase; color:var(--white); padding:0 24px; margin:24px 0 12px; }
+.sc-cards .sc-title { font-size:26px; line-height:32px; font-weight:700; color:var(--white); padding:0 24px; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.sc-cards .sc-client { font-family:var(--serif); font-size:16px; line-height:26px; color:var(--white); padding:0 24px 24px; margin-top:4px; }
+.sc-cards .sc-back .sc-tag { color:var(--ink); padding:0; margin:0 0 12px; }
+.sc-cards .sc-desc { font-size:26px; line-height:38px; color:var(--ink); display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:32px; }
+.sc-cards .sc-desc b { font-weight:700; }
+.sc-cards .sc-meta { font-size:16px; line-height:22px; color:var(--ink); }
+.sc-cards .sc-meta b { display:block; font-weight:700; margin-bottom:8px; }
+.sc-cards .sc-foot { display:flex; align-items:baseline; justify-content:space-between; gap:4px 16px; flex-wrap:wrap; margin-bottom:16px; }
+.sc-cards .sc-read { font-size:20px; line-height:28px; font-weight:700; color:var(--ink); white-space:nowrap; }
+.sc-cards .sc-metric { font-size:16px; line-height:22px; color:var(--ink); white-space:nowrap; }
+.sc-cards .scard:hover, .sc-cards .scard:focus-within { background:var(--accent); }
+.sc-cards .scard:hover .sc-front, .sc-cards .scard:focus-within .sc-front { opacity:0; pointer-events:none; }
+.sc-cards .scard:hover .sc-back, .sc-cards .scard:focus-within .sc-back { opacity:1; pointer-events:auto; color:var(--ink); }
+@media (prefers-reduced-motion:reduce){ .sc-cards .scard, .sc-cards .scard .sc-front, .sc-cards .scard .sc-back { transition:none; } }
+@media (hover:none){
+  .sc-cards .scard .sc-back { display:none; }
+  .sc-cards .scard:hover .sc-front, .sc-cards .scard:focus-within .sc-front { opacity:1; pointer-events:auto; }
+  .sc-cards .scard { border-bottom:4px solid var(--accent); }
+}
 .about-cases .ctas { justify-content:center; margin-top:56px; }
 
 /* 9 · M17 final CTA (royal band, dual CTA, no calendar embed) */

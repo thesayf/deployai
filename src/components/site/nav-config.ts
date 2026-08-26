@@ -38,4 +38,3 @@ export const footerColumns: { title: string; links: NavItem[] }[] = [
   },
 ];
 
-export const footerTagline = "Anthropic Partner Network · Claude Certified Architect";
