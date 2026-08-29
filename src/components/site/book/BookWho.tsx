@@ -4,7 +4,7 @@
 const team = [
   {
     name: "Rudi Hinds",
-    role: "Claude Certified Architect",
+    role: "Co-Founder & Head of AI Engineering",
     src: "/site/team/rudi-hinds.jpg",
   },
   {

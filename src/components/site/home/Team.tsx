@@ -9,8 +9,7 @@ type Member = {
   role: ReactNode;
 };
 
-// Roles are placeholders — plausible titles for a senior boutique team (mix of
-// engagement leads who manage and engineers who deliver). Confirm/replace.
+// Titles confirmed 2026-08 (founders + Mudather); Nadya/Valeria still to confirm.
 const members: Member[] = [
   {
     name: "Nadya Nyagolova",
@@ -20,12 +19,12 @@ const members: Member[] = [
   {
     name: "Rudi Hinds",
     src: "/site/team/rudi-hinds.jpg",
-    role: "Claude Certified Architect",
+    role: "Co-Founder & Head of AI Engineering",
   },
   {
     name: "Rori Hinds",
     src: "/site/team/rori-hinds.jpg",
-    role: "Managing Partner",
+    role: "Co-Founder & AI Engineer",
   },
   {
     name: "Ammar Srour",
@@ -35,7 +34,7 @@ const members: Member[] = [
   {
     name: "Mudather Alhooti",
     src: "/site/team/mudather-alhooti.png",
-    role: "AI Solutions Engineer",
+    role: "Head of Business Development",
   },
   {
     name: "Valeria Piumatti",

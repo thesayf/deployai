@@ -16,7 +16,7 @@ export function AboutFounder() {
               loading="lazy"
               decoding="async"
               src="/site/team/rudi-hinds.jpg"
-              alt="Rudi Hinds, founder of Deploy AI Studio"
+              alt="Rudi Hinds, co-founder of Deploy AI Studio"
             />
           </div>
           <div className="qtext">
@@ -28,7 +28,8 @@ export function AboutFounder() {
             <div className="lab">
               <div className="lab-name">Rudi Hinds</div>
               <div className="lab-role">
-                Founder · Claude Certified Architect
+                Co-Founder &amp; Head of AI Engineering · Claude Certified
+                Architect
               </div>
               <a
                 className="exp-link"
