@@ -1,0 +1,4 @@
+/* Deploy AI Studio webfonts. The production site loads Hanken Grotesk + Lora
+   via next/font/google; here they come from the Google Fonts CDN (same source
+   families, same weights). No local font binaries exist in the codebase. */
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;700&family=Lora:ital,wght@1,400;1,500;1,700&display=swap');

@@ -1,0 +1,3 @@
+# Marketing site UI kit
+
+High-fidelity recreation of deployai.studio's marketing site (current Slalom-derived design language). Two screens: **Home** (P01 hero → cred band → pain cards → M20 service grid → P09 proof band → M25 case cards → M16 FAQ → M17 coral CTA → footer) and **Services** (M02 photo hero → jump-nav → M13 offer ladder → lavender stat ledger → CTA). Copy is verbatim from `src/components/site/**`. Composes the design-system primitives (Navbar, CredBar, JumpNav, ProofBand, CaseCard, Accordion, CTABand, Footer, Pill, TextLink); section markup mirrors `globals.css` mechanisms. The home hero uses the static hero photo — production plays an ambient MP4 (`public/site/hero-home.mp4`), not copied here.

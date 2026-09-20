@@ -1,0 +1,18 @@
+<!-- @dsCard group="Components" viewport="700x430" name="Atoms — Pill & TextLink" subtitle="Pill variants, sizes, and text links" -->
+<!DOCTYPE html><html><head>
+<meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;background:#fff}.row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:18px 24px}.drk{background:var(--navy)}.crl{background:var(--coral)}</style>
+</head><body class="site"><div id="root"></div>
+<script type="text/babel">
+const { Pill, TextLink } = window.DeployAIStudioDesignSystem_1a5dd6;
+ReactDOM.createRoot(document.getElementById('root')).render(<div>
+  <div className="row"><Pill variant="blue">Take the free AI Fit Check</Pill><Pill variant="ink">See solutions</Pill><Pill variant="blue" small>Free AI Fit Check</Pill></div>
+  <div className="row drk"><Pill variant="white">Take the free AI Fit Check</Pill><Pill variant="ghost">See solutions</Pill><TextLink tone="dark">Start with the free Fit Check</TextLink></div>
+  <div className="row"><TextLink>Start with the free Fit Check</TextLink><TextLink kind="arrow">See all services</TextLink><TextLink tone="ink">How we work</TextLink></div>
+  <div className="row crl"><Pill variant="ink">Book a call</Pill><TextLink tone="ink">Take the Fit Check first</TextLink></div>
+</div>);
+</script></body></html>

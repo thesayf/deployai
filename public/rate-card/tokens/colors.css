@@ -1,0 +1,28 @@
+/* Ported verbatim from src/styles/globals.css (:root). Never hard-code a hex. */
+:root {
+  /* base palette */
+  --blue:#0C62FB; --royal:#002FAF; --navy:#000A25; --indigo:#0F1C41;
+  --ltblue:#6DA1FD; --brightblue:#2472FB; --peri:#B6D0FE; --lime:#DEFF4D; --coral:#FF7987;
+  --cyan:#1BE1F2; --red:#FF4D5F; --lavender:#C7B9FF;
+  --ink:#292929; --white:#fff; --field:#F5F5F5; --grey:#696969;
+  --statnavy:#020A23;
+  /* case-card positional accent cycle (5-token nth-child rotation) */
+  --card-accent-1:var(--peri);
+  --card-accent-2:var(--cyan);
+  --card-accent-3:var(--coral);
+  --card-accent-4:var(--lavender);
+  --card-accent-5:var(--lime);
+  /* semantic aliases */
+  --text-body:var(--ink);
+  --text-on-dark:#fff;
+  --text-muted-on-dark:var(--peri);
+  --link:var(--blue);
+  --link-hover:var(--royal);
+  --surface-page:var(--white);
+  --surface-band-light:var(--field);
+  --surface-band-dark:var(--navy);
+  --surface-band-accent:var(--royal);
+  --surface-band-proof:var(--statnavy);
+  --surface-band-cta:var(--coral);
+  --accent-thread:var(--lime);
+}

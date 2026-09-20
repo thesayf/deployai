@@ -1,0 +1,231 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/atoms/**",
+              "components/bands/**",
+              "components/chrome/**",
+              "components/content/**",
+              "rate-card/**",
+              "ui_kits/marketing-site/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Hanken Grotesk|Lora))/i]",
+        "message": "Font not provided by the design system. Available: Hanken Grotesk, Lora."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Accordion'] > JSXAttribute > JSXIdentifier[name!=/^(?:items|key|ref|className|style|children)$/]",
+        "message": "<Accordion> doesn't accept that prop. Declared props: items."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CaseCard'] > JSXAttribute > JSXIdentifier[name!=/^(?:img|pos|href|title|client|desc|sector|metric|key|ref|className|style|children)$/]",
+        "message": "<CaseCard> doesn't accept that prop. Declared props: img, pos, href, title, client, desc, sector, metric."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CredBar'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|badges|key|ref|className|style|children)$/]",
+        "message": "<CredBar> doesn't accept that prop. Declared props: label, badges."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='CTABand'] > JSXAttribute > JSXIdentifier[name!=/^(?:id|heading|paragraphs|ctas|fineNote|calendarSlot|key|ref|className|style|children)$/]",
+        "message": "<CTABand> doesn't accept that prop. Declared props: id, heading, paragraphs, ctas, fineNote, calendarSlot."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Footer'] > JSXAttribute > JSXIdentifier[name!=/^(?:columns|tagline|legalName|key|ref|className|style|children)$/]",
+        "message": "<Footer> doesn't accept that prop. Declared props: columns, tagline, legalName."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='JumpNav'] > JSXAttribute > JSXIdentifier[name!=/^(?:sections|cta|key|ref|className|style|children)$/]",
+        "message": "<JumpNav> doesn't accept that prop. Declared props: sections, cta."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Navbar'] > JSXAttribute > JSXIdentifier[name!=/^(?:links|cta|variant|ctaVariant|logoBase|key|ref|className|style|children)$/]",
+        "message": "<Navbar> doesn't accept that prop. Declared props: links, cta, variant, ctaVariant, logoBase."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Navbar'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:dark|light)$/]",
+        "message": "<Navbar> variant must be one of 'dark' | 'light'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Navbar'] > JSXAttribute[name.name='ctaVariant'] > Literal[value!=/^(?:p-ghost|p-blue|p-white)$/]",
+        "message": "<Navbar> ctaVariant must be one of 'p-ghost' | 'p-blue' | 'p-white'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Pill'] > JSXAttribute > JSXIdentifier[name!=/^(?:variant|href|onClick|small|className|children|key|ref|className|style|children)$/]",
+        "message": "<Pill> doesn't accept that prop. Declared props: variant, href, onClick, small, className, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Pill'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:blue|white|ghost|ink)$/]",
+        "message": "<Pill> variant must be one of 'blue' | 'white' | 'ghost' | 'ink'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='ProofBand'] > JSXAttribute > JSXIdentifier[name!=/^(?:credStrip|heading|prose|statsIntro|stats|fine|ground|key|ref|className|style|children)$/]",
+        "message": "<ProofBand> doesn't accept that prop. Declared props: credStrip, heading, prose, statsIntro, stats, fine, ground."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='ProofBand'] > JSXAttribute[name.name='ground'] > Literal[value!=/^(?:statnavy|lavender)$/]",
+        "message": "<ProofBand> ground must be one of 'statnavy' | 'lavender'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='TextLink'] > JSXAttribute > JSXIdentifier[name!=/^(?:kind|tone|href|children|key|ref|className|style|children)$/]",
+        "message": "<TextLink> doesn't accept that prop. Declared props: kind, tone, href, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='TextLink'] > JSXAttribute[name.name='kind'] > Literal[value!=/^(?:tert|arrow)$/]",
+        "message": "<TextLink> kind must be one of 'tert' | 'arrow'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='TextLink'] > JSXAttribute[name.name='tone'] > Literal[value!=/^(?:blue|dark|ink)$/]",
+        "message": "<TextLink> tone must be one of 'blue' | 'dark' | 'ink'."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "Accordion": {
+        "replaces": []
+      },
+      "CaseCard": {
+        "replaces": []
+      },
+      "CredBar": {
+        "replaces": []
+      },
+      "CTABand": {
+        "replaces": []
+      },
+      "Footer": {
+        "replaces": []
+      },
+      "JumpNav": {
+        "replaces": []
+      },
+      "Navbar": {
+        "replaces": []
+      },
+      "Pill": {
+        "replaces": []
+      },
+      "ProofBand": {
+        "replaces": []
+      },
+      "TextLink": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--accent-thread",
+      "--blue",
+      "--brightblue",
+      "--card-accent-1",
+      "--card-accent-2",
+      "--card-accent-3",
+      "--card-accent-4",
+      "--card-accent-5",
+      "--coral",
+      "--cyan",
+      "--field",
+      "--grey",
+      "--indigo",
+      "--ink",
+      "--lavender",
+      "--lime",
+      "--link",
+      "--link-hover",
+      "--ltblue",
+      "--navy",
+      "--peri",
+      "--red",
+      "--royal",
+      "--sans",
+      "--serif",
+      "--statnavy",
+      "--surface-band-accent",
+      "--surface-band-cta",
+      "--surface-band-dark",
+      "--surface-band-light",
+      "--surface-band-proof",
+      "--surface-page",
+      "--text-body",
+      "--text-muted-on-dark",
+      "--text-on-dark",
+      "--white"
+    ],
+    "tokenKinds": {
+      "--blue": "color",
+      "--royal": "color",
+      "--navy": "color",
+      "--indigo": "color",
+      "--ltblue": "color",
+      "--brightblue": "color",
+      "--peri": "color",
+      "--lime": "color",
+      "--coral": "color",
+      "--cyan": "color",
+      "--red": "color",
+      "--lavender": "color",
+      "--ink": "color",
+      "--white": "color",
+      "--field": "color",
+      "--grey": "color",
+      "--statnavy": "color",
+      "--card-accent-1": "color",
+      "--card-accent-2": "color",
+      "--card-accent-3": "color",
+      "--card-accent-4": "color",
+      "--card-accent-5": "color",
+      "--text-body": "font",
+      "--text-on-dark": "font",
+      "--text-muted-on-dark": "font",
+      "--link": "color",
+      "--link-hover": "color",
+      "--surface-page": "color",
+      "--surface-band-light": "color",
+      "--surface-band-dark": "color",
+      "--surface-band-accent": "color",
+      "--surface-band-proof": "color",
+      "--surface-band-cta": "color",
+      "--accent-thread": "color",
+      "--sans": "font",
+      "--serif": "font"
+    },
+    "fontFamilies": [
+      "Hanken Grotesk",
+      "Lora"
+    ]
+  }
+}

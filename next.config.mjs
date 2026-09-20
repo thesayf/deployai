@@ -36,6 +36,11 @@ const nextConfig = {
   async redirects() {
     return legacyRedirects;
   },
+  // The Oman rate card is the design's own paged HTML (public/rate-card),
+  // served as-is so the web page and the printed PDF stay identical.
+  async rewrites() {
+    return [{ source: "/prices-oman", destination: "/rate-card/index.html" }];
+  },
   // Baseline hardening; HSTS/TLS come from Vercel. No CSP: GTM/Pixel inject inline scripts.
   async headers() {
     return [

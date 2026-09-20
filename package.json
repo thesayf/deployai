@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "rate-card:pdf": "scripts/export-rate-card-pdf.sh"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.57.0",
