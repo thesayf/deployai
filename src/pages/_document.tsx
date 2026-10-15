@@ -52,7 +52,7 @@ export default function Document() {
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '1019454986626890');
+              fbq('init', '934284716363535');
               fbq('track', 'PageView');
             `,
           }}
@@ -62,7 +62,7 @@ export default function Document() {
             height="1"
             width="1"
             style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=1019454986626890&ev=PageView&noscript=1"
+            src="https://www.facebook.com/tr?id=934284716363535&ev=PageView&noscript=1"
             alt=""
           />
         </noscript>
